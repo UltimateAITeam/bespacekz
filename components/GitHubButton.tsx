@@ -1,14 +1,15 @@
 import React from 'react';
-import {signIn} from "next-auth/react";
+import {signIn, SignInOptions} from "next-auth/react";
 
-type GitHubButtonProps = {
+interface GitHubButtonProps extends React.ComponentProps<"button">{
     text: string;
+    options?: SignInOptions;
 }
 
-function GitHubButton({text}: GitHubButtonProps) {
+function GitHubButton({text, onClick, className, options, ...props}: GitHubButtonProps) {
     return (
-        <button onClick={e => signIn("github")}
-                className="bg-gray-800 text-white rounded-md py-2 px-4 mb-4 w-full flex items-center justify-center space-x-2">
+        <button {...props} onClick={e => signIn("github", options)}
+                className={`${className} bg-gray-800 text-white rounded-md py-2 px-4 mb-4 w-full flex items-center justify-center space-x-2`}>
             <svg className="w-7 h-7" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100"
                  height="100" viewBox="0 0 32 32">
                 <path fill="evenodd"

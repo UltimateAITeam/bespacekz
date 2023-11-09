@@ -7,11 +7,11 @@ interface RoleSelectionProps extends React.ComponentProps<"div"> {
     role: "client" | "freelancer";
 }
 
-function RoleSelection({role, onClick, className, ...props}: RoleSelectionProps) {
+function RoleSelection({role, className, ...props}: RoleSelectionProps) {
 
 
     return (
-        <div onClick={onClick} className={`${className} p-2 w-44 cursor-pointer border-2 rounded transition-all border-gray-500 hover:border-purple-500`}>
+        <div {...props} className={`${className} p-2 w-44 cursor-pointer border-2 rounded transition-all border-gray-500 hover:border-purple-500`}>
             {role === "client" ? <p>Я заказчик, ищу людей на проект</p> : <p>Я фрилансер, готов вступить в проект</p>}
         </div>
     );
@@ -26,10 +26,8 @@ function SignupRoleSelection() {
         setShowForm(state === "Join as client" ? "client" : "freelance")
     }
 
-    if (showForm === "client") {
-        return <SignupForm type="client" />
-    } else if (showForm === "freelance") {
-        return <SignupForm type="freelance" />
+    if (showForm !== null) {
+        return <SignupForm type={showForm} />
     } else {
         return (
             <div className="flex flex-col m-auto sm:rounded items-center border-2 border-gray-500 p-5 w-2/3 max-w-2xl h-80">
