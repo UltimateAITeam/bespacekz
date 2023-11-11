@@ -4,6 +4,11 @@ import Link from "next/link";
 import {signIn} from "next-auth/react";
 import GoogleButton from "@/components/GoogleButton";
 import GitHubButton from "@/components/GitHubButton";
+import {RiLockPasswordFill} from "react-icons/ri";
+import LoginSignupHeader from "@/components/brenda_components/LoginSignupHeader";
+import { BsFillPersonFill } from "react-icons/bs";
+import LoginSignupFooter from "@/components/brenda_components/LoginSignupFooter";
+import HeadTag from "@/components/brenda_components/HeadTag";
 
 export default function LoginPage() {
 
@@ -16,50 +21,80 @@ export default function LoginPage() {
     }
 
     return <Fragment>
-        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 ">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img className="mx-auto h-10 w-auto"
-                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="BeSpace"/>
-                <h2 className="dark:text-white mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign
-                    in to your account</h2>
-            </div>
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <GitHubButton text={"Sign in with GitHub"} options={{redirect: false, callbackUrl: "/firststeps"}} />
-                <GoogleButton text={"Sign in with Google"} options={{redirect: false, callbackUrl: "/firststeps"}} />
-            </div>
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form onSubmit={signMeIn} className="space-y-6">
-                    <div>
-                        <label htmlFor="email"
-                               className="dark:text-white block text-sm font-medium leading-6 text-gray-900">Email
-                            address</label>
-                        <div className="mt-2">
-                            <input id="email" name="email" type="email" autoComplete="email" required
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                    </div>
+        <div className="min-h-screen bg-white flex flex-col">
 
-                    <div>
-                        <div className="flex items-center justify-between">
-                            <label htmlFor="password"
-                                   className="dark:text-white block text-sm font-medium leading-6 text-gray-900">Password</label>
-                            <div className="text-sm">
-                                <Link href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot
-                                    password?</Link>
+            {/* ============== Head Tag =============== */}
+            <HeadTag title="Log In - Brenda"/>
+
+            {/* ================== Header =================== */}
+            <LoginSignupHeader/>
+
+            {/* ================= Main ==================== */}
+            <main>
+                <section className="container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3 sm:flex sm:justify-center">
+                    <div className="sm:border border-gray-300 rounded-xl">
+                        <div className="sm:px-24 sm:pt-7 pb-7 flex flex-col justify-center items-center">
+                            {/* ================= Login title ==================== */}
+                            <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl">
+                                Log in to Brenda
+                            </h2>
+
+                            {/* ================= Login Email Form ==================== */}
+                            <form className="mt-7 space-y-4 sm:w-auto w-full" onSubmit={signMeIn}>
+                                <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg sm:w-[25rem] items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3]">
+                                    <BsFillPersonFill className="text-lg text-zinc-700 cursor-pointer hover:text-zinc-500"/>
+                                    <input
+                                        type="text"
+                                        name="email"
+                                        className="flex-grow appearance-none xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-white mx-3 text-zinc-700"
+                                        placeholder="Email"
+                                    />
+                                </div>
+                                <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg sm:w-[25rem] items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3]">
+                                    <RiLockPasswordFill className="text-lg text-zinc-700 cursor-pointer hover:text-zinc-500" />
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        className="flex-grow xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-transparent mx-3 text-zinc-700"
+                                        placeholder="Password"
+                                    />
+                                </div>
+                                <button className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
+                                    Continue with Email
+                                </button>
+                            </form>
+
+                            {/* ================= Or section ==================== */}
+                            <div className="flex w-full mt-5 items-center space-x-2">
+                                <span className="border-b w-full border-gray-300 mt-1"></span>
+                                <span className="text-zinc-600">or</span>
+                                <span className="border-b w-full border-gray-300 mt-1"></span>
+                            </div>
+
+                            {/* ================= Continue with section ==================== */}
+                            <GoogleButton text={"Continue with Google"} className={"border-2 mb-2 rounded-3xl font-semibold border-gray-600"}/>
+                            <GitHubButton text={"Continue with GitHub"} className={"border-2 bg-white text-black rounded-3xl font-semibold border-gray-600"} />
+                        </div>
+
+                        {/* ================= Don't have account section ================= */}
+                        <div className="lg:px-24 py-7 flex flex-col justify-center items-center border-t border-gray-300 mt-7">
+                            {/* ================= Or section ==================== */}
+                            <div className="flex w-full justify-center items-center">
+                                <span className="text-zinc-600"> Don't have an Brenda Account? </span>
+                            </div>
+                            {/* ============== */}
+                            <div className="sm:w-auto w-full">
+                                <Link href={"/signup"} className="w-full py-2 sm:px-20 px-3 border border-[#0C4A6E] rounded-full font-semibold text-[#0C4A6E] transition hover:border-[#0C4A6E] hover:text-[#0C4A6E] flex items-center justify-center mt-5">
+                                    Sign Up
+                                </Link>
                             </div>
                         </div>
-                        <div className="mt-2">
-                            <input id="password" name="password" type="password" autoComplete="current-password"
-                                   required
-                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
                     </div>
-                    <button type="submit" value="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
-                        in
-                    </button>
-                </form>
-            </div>
+                </section>
+            </main>
+
+            {/* ==================== Footer ====================== */}
+            <LoginSignupFooter/>
         </div>
     </Fragment>
 }
