@@ -17,6 +17,9 @@ export default function LoginPage() {
         const formData = new FormData(event.currentTarget);
         const email = formData.get("email");
         const password = formData.get("password");
+
+
+
         const res = await signIn('credentials', { password: password, email: email, redirect: true, callbackUrl: "/firststeps" })
     }
 
@@ -46,7 +49,7 @@ export default function LoginPage() {
                                     <input
                                         type="text"
                                         name="email"
-                                        className="flex-grow appearance-none xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-white mx-3 text-zinc-700"
+                                        className="flex-grow appearance-none focus:text-zinc-600 xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-transparent mx-3 text-zinc-700"
                                         placeholder="Email"
                                     />
                                 </div>

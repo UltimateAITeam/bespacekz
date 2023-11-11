@@ -16,12 +16,15 @@ import { HiX } from "react-icons/hi";
 import { GoChevronRight } from "react-icons/go";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {useSession} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
+import { limitText } from "@/libs/utils";
 
 const Navbar = () => {
 
     // ============= Router hooks ===================
     const router = useRouter();
+
+    const [dropdownState, setDropdownState] = useState(false);
 
     // =========== Search List state =================
     const [searchState, useSearchState] = useState("hidden");
@@ -397,10 +400,35 @@ const Navbar = () => {
                 {/* ==================== Right Login =========================== */}
                 {session.data?.user
                     ? <div className={"flex items-center"}>
-                        {/* TODO: ТУТ БУДЕТ ДРОПДАУН СО ВСЕМИ НУЖНЫМИ ОПЦИЯМИ*/}
-                        <button className={"xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700 transition-colors"}>
-                            Hello, {session.data.user.name}!
-                        </button>
+                        {/* TODO: ДОДЕЛАТЬ ВСЕ НОБХОДИМЫЕ ОПЦИИ */}
+                        <div className="relative inline-block text-left mr-6">
+                            <div>
+                                <button onClick={() => setDropdownState(!dropdownState)} type="button" className="align-text-bottom inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                    <Image
+                                        width={25}
+                                        height={25}
+                                        src={session.data.user.image || "/images/default_logo.png"}
+                                        alt={"LOGO"}
+                                        className={"rounded-3xl"}
+                                    />
+                                    <p>
+                                        {limitText(session.data.user.name, 10)}
+                                    </p>
+                                </button>
+                            </div>
+
+                            <div className={`absolute ${dropdownState ? "block" : "hidden"} right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                <div className="py-1" role="none">
+                                    <Link href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">
+                                        {session.data.user.role === "CLIENT" ? "Ваши заказы" : "Активные проекты"}
+                                    </Link>
+                                </div>
+                                <div className="py-1" role="none">
+                                    <button onClick={() => signOut({redirect: false})} className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-6">Sign out</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     : <div className="flex items-center">
                         <button className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700" onClick={() => router.push("/login")}>

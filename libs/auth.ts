@@ -11,10 +11,12 @@ export const authOptions: AuthOptions  = {
         GoogleProvider({
             clientId: process.env.GOOGLE_ID || "",
             clientSecret: process.env.GOOGLE_SECRET || "",
+            allowDangerousEmailAccountLinking: true,
         }),
         GithubProvider({
             clientId: process.env.GITHUB_ID || "",
             clientSecret: process.env.GITHUB_SECRET || "",
+            allowDangerousEmailAccountLinking: true,
         }),
         CredentialsProvider({
             name: "credentials",
