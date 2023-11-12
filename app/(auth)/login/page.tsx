@@ -27,7 +27,7 @@ export default function LoginPage() {
         <div className="min-h-screen bg-white flex flex-col">
 
             {/* ============== Head Tag =============== */}
-            <HeadTag title="Log In - Brenda"/>
+            <HeadTag title="Log In - Bespace"/>
 
             {/* ================== Header =================== */}
             <LoginSignupHeader/>
@@ -39,7 +39,7 @@ export default function LoginPage() {
                         <div className="sm:px-24 sm:pt-7 pb-7 flex flex-col justify-center items-center">
                             {/* ================= Login title ==================== */}
                             <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl">
-                                Log in to Brenda
+                                Log in to Bespace
                             </h2>
 
                             {/* ================= Login Email Form ==================== */}
@@ -83,7 +83,7 @@ export default function LoginPage() {
                         <div className="lg:px-24 py-7 flex flex-col justify-center items-center border-t border-gray-300 mt-7">
                             {/* ================= Or section ==================== */}
                             <div className="flex w-full justify-center items-center">
-                                <span className="text-zinc-600"> Don&apos;t have an Brenda Account? </span>
+                                <span className="text-zinc-600"> Don&apos;t have an Bespace Account? </span>
                             </div>
                             {/* ============== */}
                             <div className="sm:w-auto w-full">

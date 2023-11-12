@@ -251,7 +251,7 @@ export default function HomePage() {
                 transition={{ duration: 1 }}
               >
                 Why business <br />
-                turn to Brenda
+                turn to Bespace
               </motion.h2>
 
               <motion.div

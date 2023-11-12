@@ -52,7 +52,7 @@ function SignUp() {
         <div className="min-h-screen bg-white flex flex-col">
 
             {/* ============== Head Tag =============== */}
-            <HeadTag title="Create an Account - Brenda"/>
+            <HeadTag title="Create an Account - Bespace"/>
 
             {/* ================== Header =================== */}
             <LoginSignupHeader/>
