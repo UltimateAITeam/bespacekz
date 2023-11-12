@@ -535,19 +535,19 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="flex items-center">
-            <button
+            <Link
               className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
-              onClick={() => router.push("/login")}
+              href={"/login"}
             >
               LogIn
-            </button>
+            </Link>
 
-            <button
+            <Link
               className="font-semibold bg-gradient-to-tr from-sky-200 to-cyan-200 py-2 px-3 rounded-xl text-gray-800 hover:from-cyan-300 hover:to-sky-200"
-              onClick={() => router.push("/signup")}
+              href={"/signup"}
             >
               SignUp
-            </button>
+            </Link>
           </div>
         )}
       </div>
