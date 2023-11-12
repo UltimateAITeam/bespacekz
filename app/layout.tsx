@@ -8,8 +8,12 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Bespace',
-  
   description: 'Bespace is a platform for connecting professionals with clients.',
+  icons: {
+    icon: '/bespace/bespace-favicon.png',
+    shortcut: '/bespace/bespace-favicon.png',
+    apple: '/bespace/bespace-favicon.png'
+  }
 }
 
 export default function RootLayout({

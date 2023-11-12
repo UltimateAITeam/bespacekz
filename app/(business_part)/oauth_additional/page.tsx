@@ -107,7 +107,23 @@ function Oauth_additional() {
                                 >
                                     <option value="Astana" selected>Astana</option>
                                     <option value="Almaty">Almaty</option>
+                                    <option value="Aktau">Aktau</option>
+                                    <option value="Aktobe">Aktobe</option>
+                                    <option value="Atyrau">Atyrau</option>
                                     <option value="Kostanay">Kostanay</option>
+                                    <option value="Karaganda">Karaganda</option>
+                                    <option value="Kokshetau">Kokshetau</option>
+                                    <option value="Shymkent">Shymkent</option>
+                                    <option value="Uralsk">Uralsk</option>
+                                    <option value="Kyzylorda">Kyzylorda</option>
+                                    <option value="Semey">Semey</option>
+                                    <option value="Pavlodar">Pavlodar</option>
+                                    <option value="Oskemen">Oskemen</option>
+                                    <option value="Petropavlovsk">Petropavlovsk</option>
+                                    <option value="Taldykorgan">Taldykorgan</option>
+                                    <option value="Turkestan">Turkestan</option>
+                                    <option value="Taraz">Taraz</option>
+                                    <option value="Temirtau">Temirtau</option>
                                 </select>
 
                                 <button className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
