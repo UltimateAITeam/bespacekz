@@ -74,7 +74,7 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                     {/* ================= Continue with section ==================== */}
                     <GitHubButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with GitHub"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 mt-4"} />
                     <GoogleButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 "} />
-                    <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with LinkedIn"} className={"hover:bg-[#0c4a6e] transition-colors bg-white text-xl font-semibold border-2 mt-4 "} />
+                    <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with LinkedIn"} className={"hover:bg-[#0c4a6e] transition-colors text-xl font-semibold border-2 mt-4 "} />
 
                     {/* ================= Or section ==================== */}
                     <div className="flex w-full mt-5 items-center space-x-2">
