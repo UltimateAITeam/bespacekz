@@ -1,5 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import LinkedInProvider from "next-auth/providers/linkedin";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {AuthOptions} from "next-auth";
 import {prisma} from "@/libs/prisma";
@@ -17,6 +18,28 @@ export const authOptions: AuthOptions  = {
             clientId: process.env.GITHUB_ID || "",
             clientSecret: process.env.GITHUB_SECRET || "",
             allowDangerousEmailAccountLinking: true,
+        }),
+        LinkedInProvider({
+            clientId: process.env.LINKEDIN_ID || "",
+            clientSecret: process.env.LINKEDIN_SECRET || "",
+            allowDangerousEmailAccountLinking: true,
+            authorization: {
+                params: { scope: 'openid profile email' },
+            },
+            issuer: 'https://www.linkedin.com',
+            jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
+            // works fine
+            // @ts-ignore
+            profile(profile, tokens) {
+                const defaultImage =
+                    'https://cdn-icons-png.flaticon.com/512/174/174857.png';
+                return {
+                    id: profile.sub,
+                    name: profile.name,
+                    email: profile.email,
+                    image: profile.picture ?? defaultImage,
+                };
+            },
         }),
         CredentialsProvider({
             name: "credentials",

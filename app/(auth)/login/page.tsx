@@ -9,6 +9,7 @@ import LoginSignupHeader from "@/components/brenda_components/LoginSignupHeader"
 import { BsFillPersonFill } from "react-icons/bs";
 import LoginSignupFooter from "@/components/brenda_components/LoginSignupFooter";
 import HeadTag from "@/components/brenda_components/HeadTag";
+import LinkedInButton from "@/components/LinkedInButton";
 
 export default function LoginPage() {
     const [emailRequired, setEmailRequired] = useState(false);
@@ -116,7 +117,8 @@ export default function LoginPage() {
 
                             {/* ================= Continue with section ==================== */}
                             <GoogleButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with Google"} className={"border-2 mb-2 rounded-3xl font-semibold border-gray-600"}/>
-                            <GitHubButton options={{callbackUrl: "/oauth_additional"}} text={"Continue with GitHub"} className={"border-2 bg-white text-black rounded-3xl font-semibold border-gray-600"} />
+                            <GitHubButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with GitHub"} className={"border-2 text-black rounded-3xl font-semibold border-gray-600"} />
+                            <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with LinkedIn"} />
                         </div>
 
                         {/* ================= Don't have account section ================= */}
