@@ -83,7 +83,7 @@ export default function LoginPage() {
                         <div className="lg:px-24 py-7 flex flex-col justify-center items-center border-t border-gray-300 mt-7">
                             {/* ================= Or section ==================== */}
                             <div className="flex w-full justify-center items-center">
-                                <span className="text-zinc-600"> Don't have an Brenda Account? </span>
+                                <span className="text-zinc-600"> Don&apos;t have an Brenda Account? </span>
                             </div>
                             {/* ============== */}
                             <div className="sm:w-auto w-full">

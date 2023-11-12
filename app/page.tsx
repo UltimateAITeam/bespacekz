@@ -22,7 +22,7 @@ export default function HomePage() {
         <div className="min-h-screen flex flex-col">
 
             {/* ============== Head Tag =============== */}
-            <HeadTag title="Brenda - The World's Work Marketplace"/>
+            <HeadTag title="Bespace - The World's Work Marketplace"/>
 
             {/* ================= Header ================= */}
             <header className="header-bg">
@@ -64,7 +64,7 @@ export default function HomePage() {
                             <Link href="/jobs/todays-jobs">
                                 <div className="absolute lg:flex hidden flex-col items-center z-[9] bg-[#F3FFFC] shadow-2xl py-2 px-3 rounded-xl cursor-pointer left-[-3rem] top-0 transition hover:scale-105">
                     <span className="text-[11px] font-semibold text-zinc-700 mb-1">
-                      Today's Job
+                      Today&apos;s Job
                     </span>
                                     <Image src="/images/bag.png" height={30} width={40} alt="bag-image"/>
                                 </div>
