@@ -60,7 +60,7 @@ function Oauth_additional() {
     return (
         <div className={"min-h-screen bg-white flex flex-col"}>
             {/* ============== Head Tag =============== */}
-            <HeadTag title="Log In - Brenda"/>
+            <HeadTag title="Log In - Bespace"/>
 
 
             {/* ================= Main ==================== */}

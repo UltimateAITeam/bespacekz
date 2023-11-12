@@ -12,8 +12,8 @@ const LoginSignupHeader = () => {
                 <div>
                     <Link href={"/"}>
                         <Image
-                            src="/images/logo.png"
-                            width={60}
+                            src="/bespace/bespace-v3.png"
+                            width={170}
                             height={50}
                             alt="logo"
                             className="cursor-pointer"

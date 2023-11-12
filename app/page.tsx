@@ -99,7 +99,7 @@ export default function HomePage() {
       </header>
 
       {/* ================= Main ==================== */}
-      <main className="bg-[#F3FFFC]">
+      <main className="bg-mainBg">
         {/* ================= Trusted Company Section ================ */}
         <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
           <h3 className="text-zinc-500 font-semibold lg:text-2xl text-xl">

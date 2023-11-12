@@ -6,6 +6,8 @@ import {ErrorMessage} from "@hookform/error-message";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
 import LinkedInButton from "@/components/LinkedInButton";
+import { MdOutlineVisibility } from "react-icons/md";
+import {MdOutlineVisibilityOff} from "react-icons/md";
 
 interface FormValues {
     first_name: string;
@@ -72,9 +74,9 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                     </h2>
 
                     {/* ================= Continue with section ==================== */}
-                    <GitHubButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with GitHub"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 mt-4"} />
-                    <GoogleButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 "} />
-                    <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with LinkedIn"} className={"hover:bg-[#0c4a6e] transition-colors text-xl font-semibold border-2 mt-4 "} />
+                    <GitHubButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with GitHub"} className={"hover:bg-gray-100 transition-colors bg-gray-900 text-gray-100 text-lg font-semibold border-2 mt-9"} />
+                    <GoogleButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-lg font-semibold border-2 "} />
+                    <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with LinkedIn"} className={"hover:bg-[#0c4a6e] transition-colors text-lg font-semibold border-2 mt-4 "} />
 
                     {/* ================= Or section ==================== */}
                     <div className="flex w-full mt-5 items-center space-x-2">
@@ -146,16 +148,17 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                             <span
                                 style={{
                                     position: 'absolute',
-                                    right: '5px',
+                                    right: '24px',
                                     top: '50%',
                                     transform: 'translateY(-50%)',
                                     cursor: 'pointer',
                                     border: 'none',
                                     background: 'none',
                                 }}
+                                className='text-gray-500 text-xl'
                                 onClick={() => setShowPassword(!showPassword)}
                             >
-                                {showPassword ? '👀' : '👁️‍🗨️'}
+                                {showPassword ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/>}
                             </span>
                         </div>
                         {/* ============= confirm password input ============= */}
@@ -171,16 +174,17 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                             <span
                                 style={{
                                     position: 'absolute',
-                                    right: '5px',
+                                    right: '24px',
                                     top: '50%',
                                     transform: 'translateY(-50%)',
                                     cursor: 'pointer',
                                     border: 'none',
                                     background: 'none',
                                 }}
+                                className='text-gray-500 text-xl'
                                 onClick={() => setShowConfirm(!showConfirm)}
                             >
-                                {showConfirm ? '👀' : '👁️‍🗨️'}
+                                {showConfirm ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/>}
                             </span>
                         </div>
 
@@ -222,11 +226,11 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                             Create an Account
                         </button>
                     </form>
-
+                    {/* fix this part */}
                     <div className={"mt-7 text-zinc-600"}>
-                        Wanna join as {localType}?
+                        Want to join as {localType}?
                         <span
-                            className={"text-cyan-700 font-semibold cursor-pointer"}
+                            className={"text-cyan-700 ml-1 font-semibold cursor-pointer"}
                             onClick={() => {
                                 setLocalType(localType === "client" ? "freelance" : "client");
                             }}
@@ -240,7 +244,7 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                         <p className="text-zinc-800 text-center">
                             Already have an account?
                             <Link href="/login">
-                                <span className="font-semibold text-blue-700 hover:underline"> Log In </span>
+                                <span className="font-semibold ml-1 text-blue-700 hover:underline">Log In</span>
                             </Link>
                         </p>
                     </div>
