@@ -5,6 +5,7 @@ import GitHubButton from "@/components/GitHubButton";
 import {ErrorMessage} from "@hookform/error-message";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
+import LinkedInButton from "@/components/LinkedInButton";
 
 interface FormValues {
     first_name: string;
@@ -71,9 +72,9 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                     </h2>
 
                     {/* ================= Continue with section ==================== */}
-                    <GitHubButton options={{callbackUrl: "/oauth_additional"}} text={"Continue with GitHub"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 mt-4"} />
-                    <GoogleButton options={{callbackUrl: "/oauth_additional"}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 "} />
-
+                    <GitHubButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with GitHub"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 mt-4"} />
+                    <GoogleButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 "} />
+                    <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with LinkedIn"} className={"hover:bg-[#0c4a6e] transition-colors text-xl font-semibold border-2 mt-4 "} />
 
                     {/* ================= Or section ==================== */}
                     <div className="flex w-full mt-5 items-center space-x-2">
@@ -184,7 +185,11 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                         </div>
 
                         {/* ================= country select =============== */}
-                        <select id="Country" className="bg-transparent border-2 border-gray-300 text-zinc-800 text-sm rounded-lg focus:border-[#b8d8d4fd] block w-full px-3 py-2 cursor-pointer font-semibold">
+                        <select
+                            id="Country"
+                            className="bg-transparent border-2 border-gray-300 text-zinc-800 text-sm rounded-lg focus:border-[#b8d8d4fd] block w-full px-3 py-2 cursor-pointer font-semibold"
+                            {...register("location_city", {required: "Location is required!"})}
+                        >
                             <option value="Astana">Astana</option>
                             <option value="Almaty">Almaty</option>
                             <option value="Kostanay">Kostanay</option>

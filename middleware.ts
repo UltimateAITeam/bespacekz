@@ -4,6 +4,7 @@ export const config = {
     matcher: [
         "/dashboard",
         "/firststeps",
+        "/oauth_additional",
     ],
 
 }

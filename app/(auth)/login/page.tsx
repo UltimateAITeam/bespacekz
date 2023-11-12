@@ -1,5 +1,5 @@
 'use client';
-import {FormEvent, Fragment} from "react";
+import {FormEvent, Fragment, useState} from "react";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
 import GoogleButton from "@/components/GoogleButton";
@@ -9,18 +9,46 @@ import LoginSignupHeader from "@/components/brenda_components/LoginSignupHeader"
 import { BsFillPersonFill } from "react-icons/bs";
 import LoginSignupFooter from "@/components/brenda_components/LoginSignupFooter";
 import HeadTag from "@/components/brenda_components/HeadTag";
+import LinkedInButton from "@/components/LinkedInButton";
 
 export default function LoginPage() {
+    const [emailRequired, setEmailRequired] = useState(false);
+    const [invalidCredentials, setInvalidCredentials] = useState(false);
+    const [passwordRequired, setPasswordRequired] = useState(false);
 
     const signMeIn = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const email = formData.get("email");
-        const password = formData.get("password");
+        const email = formData.get("email")?.toString();
+        const password = formData.get("password")?.toString();
+        if (!email || !email
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            ))
+        {
+            setEmailRequired(true);
+            return
 
+        } else {
+            setEmailRequired(false);
+        }
+        if (!password) {
+            setPasswordRequired(true);
+            return
+        } else {
+            setPasswordRequired(false);
+        }
 
+        const res = signIn('credentials', { role: "login", password: password, email: email, redirect: true, callbackUrl: "/firststeps" })
+            .then((e) => {
+                if (e?.status !== 200) {
+                    setInvalidCredentials(true);
+                } else {
+                    setInvalidCredentials(false);
+                }
+            })
 
-        const res = await signIn('credentials', { password: password, email: email, redirect: true, callbackUrl: "/firststeps" })
     }
 
     return <Fragment>
@@ -41,24 +69,37 @@ export default function LoginPage() {
                             <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl">
                                 Log in to Bespace
                             </h2>
+                            <div className={invalidCredentials ? "bg-red-500 py-2 px-6 rounded mt-4" : "hidden"}>
+                                Invalid credentials!
+                            </div>
 
                             {/* ================= Login Email Form ==================== */}
-                            <form className="mt-7 space-y-4 sm:w-auto w-full" onSubmit={signMeIn}>
+                            <form className="mt-4 space-y-4 sm:w-auto w-full" onSubmit={signMeIn}>
+                                <label
+                                    className={emailRequired ? "text-red-600 block" : "text-red-600 hidden"}
+                                >
+                                    Email required
+                                </label>
                                 <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg sm:w-[25rem] items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3]">
                                     <BsFillPersonFill className="text-lg text-zinc-700 cursor-pointer hover:text-zinc-500"/>
                                     <input
                                         type="text"
                                         name="email"
-                                        className="flex-grow appearance-none focus:text-zinc-600 xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-transparent mx-3 text-zinc-700"
+                                        className={`${emailRequired ? "border-red-500" : ""} flex-grow appearance-none focus:text-zinc-600 xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-transparent mx-3 text-zinc-700`}
                                         placeholder="Email"
                                     />
                                 </div>
+                                <label
+                                    className={passwordRequired ? "text-red-600 block" : "text-red-600 hidden"}
+                                >
+                                    Password required
+                                </label>
                                 <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg sm:w-[25rem] items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3]">
                                     <RiLockPasswordFill className="text-lg text-zinc-700 cursor-pointer hover:text-zinc-500" />
                                     <input
                                         type="password"
                                         name="password"
-                                        className="flex-grow xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-transparent mx-3 text-zinc-700"
+                                        className={`${passwordRequired ? "border-red-500" : ""} flex-grow xl:w-full border-0 w-40 focus:ring-0 focus:outline-none bg-transparent mx-3 text-zinc-700`}
                                         placeholder="Password"
                                     />
                                 </div>
@@ -75,8 +116,9 @@ export default function LoginPage() {
                             </div>
 
                             {/* ================= Continue with section ==================== */}
-                            <GoogleButton text={"Continue with Google"} className={"border-2 mb-2 rounded-3xl font-semibold border-gray-600"}/>
-                            <GitHubButton text={"Continue with GitHub"} className={"border-2 bg-white text-black rounded-3xl font-semibold border-gray-600"} />
+                            <GoogleButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with Google"} className={"border-2 mb-2 rounded-3xl font-semibold border-gray-600"}/>
+                            <GitHubButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with GitHub"} className={"border-2 text-black rounded-3xl font-semibold border-gray-600"} />
+                            <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with LinkedIn"} className={"-mt-2"} />
                         </div>
 
                         {/* ================= Don't have account section ================= */}
