@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 
-const PreWork = (props) => {
+const PreWork = (props: { headText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; headDes: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; list: any[]; btn: { text: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }; imageI: any; imageII: any; imageIII: any; imageIv: any; imageV: any; imageVi: any; }) => {
 
     // ================= Hooks call =================
     const router = useRouter();
@@ -14,7 +14,7 @@ const PreWork = (props) => {
     const [listVi, useListVi] = useState(false);
 
     // ================== listHandle function =======================
-    const listHandle = (id) => {
+    const listHandle = (id: number) => {
 
         if (id == 1) {
             useListI(true);

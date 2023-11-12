@@ -4,37 +4,39 @@ import { useRef, useState } from "react"
 const Skills = () => {
 
     // ================= hoooks call ====================
-    const slider = useRef();
-    const [linkI, useLinkI] = useState(true);
-    const [linkII, useLinkII] = useState(false);
-    const [linkIII, useLinkIII] = useState(false);
+    const slider = useRef<HTMLDivElement>(null);
+    const [linkI, setLinkI] = useState(true);
+    const [linkII, setLinkII] = useState(false);
+    const [linkIII, setLinkIII] = useState(false);
 
     // ================== List Function =======================
     const HandleLinkI = () => {
-        useLinkI(true);
-        (linkII === true) ? useLinkII(false) : null;
-        (linkIII === true) ? useLinkIII(false) : null;
+        setLinkI(true);
+        (linkII === true) ? setLinkII(false) : null;
+        (linkIII === true) ? setLinkIII(false) : null;
     }
 
     const HandleLinkII = () => {
-        useLinkII(true);
-        (linkI === true) ? useLinkI(false) : null;
-        (linkIII === true) ? useLinkIII(false) : null;
+        setLinkII(true);
+        (linkI === true) ? setLinkI(false) : null;
+        (linkIII === true) ? setLinkIII(false) : null;
     }
 
     const HandleLinkIII = () => {
-        useLinkIII(true);
-        (linkI === true) ? useLinkI(false) : null;
-        (linkII === true) ? useLinkII(false) : null;
+        setLinkIII(true);
+        (linkI === true) ? setLinkI(false) : null;
+        (linkII === true) ? setLinkII(false) : null;
     }
 
     // =========================== scroll Function =======================
     const ScrollCen = () => {
+        if (slider.current) {
         if (slider.current.scrollLeft == 0) {
             slider.current.scrollLeft += 50
         } else if (slider.current.scrollLeft > 50) {
             slider.current.scrollLeft -= 50
         }
+    }
     }
 
     const ListI = {
@@ -149,10 +151,10 @@ const Skills = () => {
 
     return (
         <div className="flex md:flex-row flex-col my-7 md:items-start items-center md:space-y-0 space-y-7 2xl:justify-around justify-between">
-            <ul className="flex md:flex-col flex-row md:items-start items-center space-x-5 md:space-x-0 md:space-y-6 space-y-0 sm:w-auto sm:h-auto w-full h-full sm:overflow-hidden overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide" ref={slider}>
+            <ul className="flex md:flex-col flex-row md:items-start items-center space-x-5 md:space-x-0 md:space-y-6 space-y-0 sm:w-auto sm:h-auto w-full h-full sm:overflow-hidden overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide" ref={slider as any}>
                 <li 
                     className={`font-semibold xl:text-4xl lg:text-3xl text-2xl ${(linkI === true) ? "text-[#0C4A6E]" : "text-gray-300"}`}
-                    onClick={() => slider.current.scrollLeft -= 100}
+                    onClick={() => (slider.current) ? slider.current.scrollLeft -= 100 : null}
                 >
                    <span className="cursor-pointer" onClick={HandleLinkI}>
                         Top skills
@@ -168,7 +170,7 @@ const Skills = () => {
                 </li>
                 <li
                     className={`font-semibold xl:text-4xl lg:text-3xl text-2xl ${(linkIII === true) ? "text-[#0C4A6E]" : "text-gray-300"}`} 
-                    onClick={() => slider.current.scrollLeft += 100}
+                    onClick={() => (slider.current) ? slider.current.scrollLeft += 100 : null}
                 >
                     <span className="cursor-pointer" onClick={HandleLinkIII}>
                         Project Catlog
