@@ -20,7 +20,9 @@ function Oauth_additional() {
     else role = "client";
     const router = useRouter();
 
-    const {handleSubmit, control, register, formState: {errors, isValid} } = useForm<FormValues>();
+    const {handleSubmit, setValue, register, formState: {errors, isValid} } = useForm<FormValues>();
+
+    setValue("first_name", session.data?.user?.name as string);
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         if (isValid) {
@@ -85,7 +87,6 @@ function Oauth_additional() {
                                             type="text"
                                             className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
                                             placeholder="First name"
-                                            value={session.data?.user.name || ""}
                                             {...register("first_name", {required: "Name is required"})}
                                         />
                                     </div>
