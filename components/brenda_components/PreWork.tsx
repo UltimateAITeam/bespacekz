@@ -1,73 +1,73 @@
-import { useState } from "react";
+import { JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 
-const PreWork = (props) => {
+const PreWork = (props: { headText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; headDes: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; list: any[]; btn: { text: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }; imageI: any; imageII: any; imageIII: any; imageIv: any; imageV: any; imageVi: any; }) => {
 
     // ================= Hooks call =================
     const router = useRouter();
-    const [listI, useListI] = useState(true);
-    const [listII, useListII] = useState(false);
-    const [listIII, useListIII] = useState(false);
-    const [listIv, useListIv] = useState(false);
-    const [listV, useListV] = useState(false);
-    const [listVi, useListVi] = useState(false);
+    const [listI, setListI] = useState(true);
+    const [listII, setListII] = useState(false);
+    const [listIII, setListIII] = useState(false);
+    const [listIv, setListIv] = useState(false);
+    const [listV, setListV] = useState(false);
+    const [listVi, setListVi] = useState(false);
 
     // ================== listHandle function =======================
-    const listHandle = (id) => {
+    const listHandle = (id: number) => {
 
         if (id == 1) {
-            useListI(true);
-            (listII === true) ? useListII(false) : null;
-            (listIII === true) ? useListIII(false) : null;
-            (listIv === true) ? useListIv(false) : null;
-            (listV === true) ? useListV(false) : null;
-            (listVi === true) ? useListVi(false) : null;
+            setListI(true);
+            (listII === true) ? setListII(false) : null;
+            (listIII === true) ? setListIII(false) : null;
+            (listIv === true) ? setListIv(false) : null;
+            (listV === true) ? setListV(false) : null;
+            (listVi === true) ? setListVi(false) : null;
         }
 
         if (id == 2) {
-            useListII(true);
-            (listI === true) ? useListI(false) : null;
-            (listIII === true) ? useListIII(false) : null;
-            (listIv === true) ? useListIv(false) : null;
-            (listV === true) ? useListV(false) : null;
-            (listVi === true) ? useListVi(false) : null;
+            setListII(true);
+            (listI === true) ? setListI(false) : null;
+            (listIII === true) ? setListIII(false) : null;
+            (listIv === true) ? setListIv(false) : null;
+            (listV === true) ? setListV(false) : null;
+            (listVi === true) ? setListVi(false) : null;
         }
 
         if (id == 3) {
-            useListIII(true);
-            (listI === true) ? useListI(false) : null;
-            (listII === true) ? useListII(false) : null;
-            (listIv === true) ? useListIv(false) : null;
-            (listV === true) ? useListV(false) : null;
-            (listVi === true) ? useListVi(false) : null;
+            setListIII(true);
+            (listI === true) ? setListI(false) : null;
+            (listII === true) ? setListII(false) : null;
+            (listIv === true) ? setListIv(false) : null;
+            (listV === true) ? setListV(false) : null;
+            (listVi === true) ? setListVi(false) : null;
         }
 
         if (id == 4) {
-            useListIv(true);
-            (listI === true) ? useListI(false) : null;
-            (listII === true) ? useListII(false) : null;
-            (listIII === true) ? useListIII(false) : null;
-            (listV === true) ? useListV(false) : null;
-            (listVi === true) ? useListVi(false) : null;
+            setListIv(true);
+            (listI === true) ? setListI(false) : null;
+            (listII === true) ? setListII(false) : null;
+            (listIII === true) ? setListIII(false) : null;
+            (listV === true) ? setListV(false) : null;
+            (listVi === true) ? setListVi(false) : null;
         }
 
         if (id == 5) {
-            useListV(true);
-            (listI === true) ? useListI(false) : null;
-            (listII === true) ? useListII(false) : null;
-            (listIII === true) ? useListIII(false) : null;
-            (listIv === true) ? useListIv(false) : null;
-            (listVi === true) ? useListVi(false) : null;
+            setListV(true);
+            (listI === true) ? setListI(false) : null;
+            (listII === true) ? setListII(false) : null;
+            (listIII === true) ? setListIII(false) : null;
+            (listIv === true) ? setListIv(false) : null;
+            (listVi === true) ? setListVi(false) : null;
         }
 
         if (id == 6) {
-            useListVi(true);
-            (listI === true) ? useListI(false) : null;
-            (listII === true) ? useListII(false) : null;
-            (listIII === true) ? useListIII(false) : null;
-            (listIv === true) ? useListIv(false) : null;
-            (listV === true) ? useListV(false) : null;
+            setListVi(true);
+            (listI === true) ? setListI(false) : null;
+            (listII === true) ? setListII(false) : null;
+            (listIII === true) ? setListIII(false) : null;
+            (listIv === true) ? setListIv(false) : null;
+            (listV === true) ? setListV(false) : null;
         }
     }
 

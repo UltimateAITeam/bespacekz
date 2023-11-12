@@ -206,7 +206,7 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                         <div className="flex space-x-3 my-4">
                             <input id="yes" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-transparent rounded border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer mt-[2px]"/>
                             <label htmlFor="yes" className="text-zinc-800 cursor-pointer text-sm">
-                                Yes, I understand and agree to the Brenda Terms of Service , including the User Agreement and Privacy Policy
+                                Yes, I understand and agree to the Bespace Terms of Service , including the User Agreement and Privacy Policy
                             </label>
                         </div>
 

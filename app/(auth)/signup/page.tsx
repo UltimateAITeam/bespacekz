@@ -13,43 +13,37 @@ import SignupForm from "@/components/signup_elements/SignupForm";
 
 function SignUp() {
     // ==================== Hooks Call ===========================
-    const [client, useClient] = useState(false);
-    const [freelancer, useFreelancer] = useState(false);
-    const [btnText, useBtnText] = useState("Create Account");
+    const [client, setClient] = useState(false);
+    const [freelancer, setFreelancer] = useState(false);
+    const [btnText, setBtnText] = useState("Create Account");
     const [clientForm, setClientForm] = useState(false);
     const [freelancerForm, setFreelancerForm] = useState(false);
 
     // ================= Handle Function =========================
-    const ClientHandle = () => {
-        useClient(true);
-
-        freelancer ? useFreelancer(false) : null;
-        useBtnText("Join as a Client");
+    const handleClient = () => {
+        setClient(true);
+        if (freelancer) setFreelancer(false);
+        setBtnText("Join as a Client");
     }
 
-    const FreelancerHandle = () => {
-        useFreelancer(true);
-
-        client ? useClient(false) : null;
-        useBtnText("Apply as a Freelancer");
+    const handleFreelancer = () => {
+        setFreelancer(true);
+        if (client) setClient(false);
+        setBtnText("Apply as a Freelancer");
     }
 
-    const HandleForm = (e: { preventDefault: () => void; }) => {
+    const handleForm = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-
+        // Add form handling logic here
     }
 
-    const HandleConditionForm = (type?: string) => {
-        if ((type && type == "client") || client) {
+    const handleConditionForm = (type?: string) => {
+        if (type === "client" || client) {
             setClientForm(true);
-
-            (freelancerForm) ? setFreelancerForm(false) : null;
-        }
-
-        if ((type && type == "freelancer") || freelancer) {
+            if (freelancerForm) setFreelancerForm(false);
+        } else if (type === "freelancer" || freelancer) {
             setFreelancerForm(true);
-
-            (clientForm) ? setClientForm(false) : null;
+            if (clientForm) setClientForm(false);
         }
     }
 
@@ -58,7 +52,7 @@ function SignUp() {
         <div className="min-h-screen bg-white flex flex-col">
 
             {/* ============== Head Tag =============== */}
-            <HeadTag title="Create an Account - Brenda"/>
+            <HeadTag title="Create an Account - Bespace"/>
 
             {/* ================== Header =================== */}
             <LoginSignupHeader/>
@@ -78,7 +72,7 @@ function SignUp() {
                                 {/* ===================== Create account section ========================== */}
                                 <div className="flex md:flex-row flex-col items-center md:space-x-8 md:space-y-0 space-y-5 mt-10">
                                     {/* ========== client =========== */}
-                                    <div className={`${client ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={ClientHandle}>
+                                    <div className={`${client ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleClient}>
                                         <div>
                                             <FcConferenceCall className="text-5xl"/>
                                         </div>
@@ -90,7 +84,7 @@ function SignUp() {
                                     </div>
 
                                     {/* ========== client =========== */}
-                                    <div className={`${(freelancer == true) ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={FreelancerHandle}>
+                                    <div className={`${(freelancer == true) ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleFreelancer}>
                                         <div>
                                             <FcReadingEbook className="text-5xl"/>
                                         </div>
@@ -103,7 +97,7 @@ function SignUp() {
                                 </div>
 
                                 {/* =============== Button =================== */}
-                                <button className={`${(freelancer == true || client == true) ? "bg-[#0C4A6E] hover:bg-[#18465f] text-[#e5ecea]" : "bg-[#e5ecea] hover:bg-[#d1dfdb] text-gray-500"} py-2 md:px-20 px-3 mt-10 rounded-full font-semibold transition md:w-auto w-full`} onClick={() => HandleConditionForm()}>
+                                <button className={`${(freelancer == true || client == true) ? "bg-[#0C4A6E] hover:bg-[#18465f] text-[#e5ecea]" : "bg-[#e5ecea] hover:bg-[#d1dfdb] text-gray-500"} py-2 md:px-20 px-3 mt-10 rounded-full font-semibold transition md:w-auto w-full`} onClick={() => handleConditionForm()}>
                                     {btnText}
                                 </button>
 
