@@ -2,6 +2,7 @@
 @tailwind utilities;
 @tailwind components;
 
+
 input:-webkit-autofill {
   -webkit-text-fill-color: black !important;
 }
@@ -126,11 +127,6 @@ a {
   }
 }
 
-@layer base {
-  body {
-    @apply bg-[#F3FFFC];
-  }
-}
 
 @layer components {
   .header-bg {
