@@ -14,10 +14,10 @@ import {
 const Footer = () => {
 
     // ================ hooks call ======================
-    const [showI, useShowI] = useState(false);
-    const [showII, useShowII] = useState(false);
-    const [showIII, useShowIII] = useState(false);
-    const [showIv, useShowIv] = useState(false);
+    const [showI, setShowI] = useState(false);
+    const [showII, setShowII] = useState(false);
+    const [showIII, setShowIII] = useState(false);
+    const [showIv, setShowIv] = useState(false);
 
 
     // ==================== List Data Store =============================
@@ -63,7 +63,7 @@ const Footer = () => {
                     <div className="py-5 lg:px-3 border-b md:border-none border-zinc-400">
                         <div 
                             className="font-semibold text-zinc-800 flex md:block items-center justify-between"
-                            onClick={() => (showI === false) ? useShowI(true) : useShowI(false)}
+                            onClick={() => setShowI(!showI)}
                         >
                             For Clints
 
@@ -88,7 +88,7 @@ const Footer = () => {
                     <div className="py-5 lg:px-3 border-b md:border-none border-zinc-400">
                         <div 
                             className="font-semibold text-zinc-800 flex md:block items-center justify-between"
-                            onClick={() => (showII === false) ? useShowII(true) : useShowII(false)}
+                            onClick={() => setShowII(!showII)}
                         >
                             For talent
 
@@ -113,7 +113,7 @@ const Footer = () => {
                     <div className="py-5 lg:px-3 border-b md:border-none border-zinc-400">
                         <div 
                             className="font-semibold text-zinc-800 flex md:block items-center justify-between"
-                            onClick={() => (showIII === false) ? useShowIII(true) : useShowIII(false)}
+                            onClick={() => setShowIII(!setShowIII)}
                         >
                             For Clints
 
@@ -138,7 +138,7 @@ const Footer = () => {
                     <div className="py-5 lg:px-3 border-b md:border-none border-zinc-400">
                         <div 
                             className="font-semibold text-zinc-800 flex md:block items-center justify-between"
-                            onClick={() => (showIv === false) ? useShowIv(true) : useShowIv(false)}
+                            onClick={() => setShowIv(!setShowIv)}
                         >
                             For Clints
 
