@@ -355,7 +355,7 @@ export default function HomePage() {
                     4.9/5
                   </h3>
                   <span className="2xl:text-xl lg:text-md text-zinc-500">
-                    Clients rate professionals on Branda
+                    Clients rate professionals on Bespace
                   </span>
                 </div>
               </motion.div>

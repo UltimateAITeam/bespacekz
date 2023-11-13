@@ -427,7 +427,7 @@ const Navbar = () => {
                 }`}
                 onClick={ThirdLinkHandle}
               >
-                Why Branda
+                Why Bespace
                 <FaCaretDown
                   className={`mt-1 xl:ml-1 ml-[1px] transition ${
                     subLinksIII === true ? "rotate-180" : "rotate-0"
@@ -539,14 +539,14 @@ const Navbar = () => {
               className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
               href={"/login"}
             >
-              LogIn
+              Log in
             </Link>
 
             <Link
               className="font-semibold bg-gradient-to-tr from-sky-200 to-cyan-200 py-2 px-3 rounded-xl text-gray-800 hover:from-cyan-300 hover:to-sky-200"
               href={"/signup"}
             >
-              SignUp
+              Sign up
             </Link>
           </div>
         )}
@@ -868,7 +868,7 @@ const Navbar = () => {
                 }`}
                 onClick={ThirdLinkHandleMb}
               >
-                Why Branda
+                Why Bespace
                 <FaAngleDown
                   className={`transition ${
                     mobileSubListIII === true ? "rotate-180" : "rotate-0"
