@@ -1,6 +1,5 @@
 import {prisma} from "@/libs/prisma";
 import {NextResponse} from "next/server";
-import {getServerSession} from "next-auth";
 import {checkSessionAndGetData, getProfileBySession} from "@/libs/serverUtils";
 
 export async function POST(
@@ -9,21 +8,23 @@ export async function POST(
     try {
         const {data, session} = await checkSessionAndGetData(req);
         const FreelancerProfile = await getProfileBySession(session);
-        
+        const prices = await prisma.pricing.create({
+            data: {
+                projectRate: data.projectRate,
+                hourlyRate: data.hourlyRate,
+                freelancerProfileId: FreelancerProfile.id,
+            }
+        });
 
-        for (const education of data) {
-            const edu = await prisma.education.create({
-                data: {
-                    degree: education.degree,
-                    institution: education.institution,
-                    graduationYear: education.graduationYear,
-                    specialization: education.specialization,
-                    freelancerProfileId: FreelancerProfile.id,
-                }
-            });
-
-        }
-
+        const completedProfile = await prisma.freelancerProfile.update({
+            where: {
+                id: FreelancerProfile.id
+            },
+            data: {
+                completed: true,
+            }
+        })
+        console.log(completedProfile)
 
         return NextResponse.json({}, {status: 200});
     } catch (err) {

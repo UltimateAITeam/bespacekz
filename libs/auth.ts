@@ -6,6 +6,8 @@ import {AuthOptions} from "next-auth";
 import {prisma} from "@/libs/prisma";
 import bcrypt from "bcrypt";
 import {PrismaAdapter} from "@next-auth/prisma-adapter";
+import {JWT} from "next-auth/jwt";
+import jsonwebtoken from "jsonwebtoken";
 
 export const authOptions: AuthOptions  = {
     providers: [
@@ -90,9 +92,6 @@ export const authOptions: AuthOptions  = {
     session: {
         strategy: "jwt",
     },
-    jwt: {
-        maxAge: 24 * 60 * 60,
-    },
     adapter: PrismaAdapter(prisma),
     pages: {
         signIn: "/login",
@@ -107,13 +106,14 @@ export const authOptions: AuthOptions  = {
     callbacks: {
         jwt: async ({token, user}) => {
             if(user) {
+                token.id = user.id;
                 token.last_name = user.last_name;
                 token.role = user.role;
             }
-
             return token;
         },
         async session({session, token}) {
+            session.user.id = token.id;
             session.user.role = token.role;
             session.user.last_name = token.last_name;
             return session;

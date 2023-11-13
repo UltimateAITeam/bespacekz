@@ -52,12 +52,18 @@ model User {
   sessions          Session[]
 }
 
+// FREELANCER PROFILE
 model FreelancerProfile {
-  id        String      @id @default(cuid())
-  userId    String      @unique
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  //
-  Education Education[]
+  id        String @id @default(cuid())
+  userEmail String @unique
+  user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+
+  Education  Education[]
+  Experience Experience[]
+  Skill      Skill[]
+  Pricing    Pricing[]
+  Portfolio  Portfolio[]
+  completed  Boolean      @default(false)
 }
 
 model Education {
@@ -70,11 +76,46 @@ model Education {
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
 }
 
+model Experience {
+  id                  Int               @id @default(autoincrement())
+  name                String
+  roles               String[]
+  tasks               String
+  duration            String
+  company             String
+  freelancerProfileId String
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+}
+
+model Skill {
+  id                  Int               @id @default(autoincrement())
+  name                String
+  proficiencyLevel    String
+  freelancerProfileId String
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+}
+
+model Pricing {
+  id                  Int               @id @default(autoincrement())
+  hourlyRate          Float
+  projectRate         Float
+  freelancerProfileId String
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+}
+
+model Portfolio {
+  id                  Int               @id @default(autoincrement())
+  links               String[]
+  freelancerProfileId String
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+}
+
+// END FREELANCER PROFILE
+
 model ClientProfile {
   id     String @id @default(cuid())
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  //   info about client
 }
 
 model VerificationToken {

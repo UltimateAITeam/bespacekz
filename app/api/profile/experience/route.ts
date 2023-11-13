@@ -9,21 +9,20 @@ export async function POST(
     try {
         const {data, session} = await checkSessionAndGetData(req);
         const FreelancerProfile = await getProfileBySession(session);
-        
 
-        for (const education of data) {
-            const edu = await prisma.education.create({
+        for (const experience of data) {
+            const exp = await prisma.experience.create({
                 data: {
-                    degree: education.degree,
-                    institution: education.institution,
-                    graduationYear: education.graduationYear,
-                    specialization: education.specialization,
+                    company: experience.company,
+                    name: experience.name,
+                    tasks: experience.tasks,
+                    duration: experience.duration,
+                    roles: [...experience.roles],
                     freelancerProfileId: FreelancerProfile.id,
                 }
             });
 
         }
-
 
         return NextResponse.json({}, {status: 200});
     } catch (err) {
