@@ -40,7 +40,8 @@ export default function HomePage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.9 }}
               >
-                How Work <br /> Should Work
+                Работа Нового <br /> Поколения
+                {/* Соединяя Таланты <br /> с AI! */}
               </motion.h1>
               <motion.h6
                 className="text-zinc-500 xl:text-3xl lg:text-xl text-lg font-semibold"
@@ -48,9 +49,9 @@ export default function HomePage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5 }}
               >
-                Forget the old rules. You can have the best people.{" "}
+                Забудьте старые правила.{" "}
                 <br className="lg:block md:hidden block" />
-                Right now. Right here.
+                Здесь и сейчас – место для ведущих экспертов.
               </motion.h6>
               <motion.button
                 className={
