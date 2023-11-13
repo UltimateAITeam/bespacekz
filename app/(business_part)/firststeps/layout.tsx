@@ -2,14 +2,20 @@
 import React, {useState} from 'react';
 import {useSession} from "next-auth/react";
 import Spinner from "@/components/Spinner";
-import {redirect, usePathname} from "next/navigation";
+import {redirect, usePathname, useRouter} from "next/navigation";
 import {AnimatePresence} from "framer-motion";
 import Link from "next/link";
 import HeadTag from "@/components/brenda_components/HeadTag";
 import LoginSignupHeader from "@/components/brenda_components/LoginSignupHeader";
+import useEducationFormStore from "@/store/educationFormStore";
+import useExperienceStore from "@/store/experienceFormState";
+import useSkillsStore from "@/store/skillFormStore";
+import usePricingStore from "@/store/pricingFormStore";
+import usePortfolioStore from "@/store/profileFormStore";
+import {useFirstStepsLoading} from "@/libs/utils";
 
 function Layout({children}: {children: React.ReactNode}) {
-
+    const router = useRouter();
     const session = useSession();
     const pages = [
         {
@@ -25,26 +31,148 @@ function Layout({children}: {children: React.ReactNode}) {
             next: "Next",
         },
         {
-            path: "/firststeps/test2",
+            path: "/firststeps/experience",
             back: "Back",
             skip: true,
-            next: "",
+            next: "Next",
+        },
+        {
+            path: "/firststeps/skills",
+            back: "Back",
+            skip: true,
+            next: "Next",
+        },
+        {
+            path: "/firststeps/portfolio",
+            back: "Back",
+            skip: true,
+            next: "Next",
+        },
+        {
+            path: "/firststeps/price",
+            back: "Back",
+            skip: false,
+            next: "Submit",
         }
     ]
-
-
     const pathName = usePathname();
     const pageIndex = pages.findIndex((value) => {
         return value.path === pathName
     })
-    const [page, setPage] = useState(pageIndex);
+    const { educations } = useEducationFormStore();
+    const { experience } = useExperienceStore();
+    const { skills } = useSkillsStore();
+    const { projectRate, hourlyRate } = usePricingStore();
+    const { links } = usePortfolioStore();
+
+    const isFilledEdu = educations.length >= 1 && educations.every((item) => {
+        return item.degree !== "" && item.institution !== "" && item.graduationYear !== 0 && item.specialization !== ""
+    })
+    const isFilledExp = experience.length >= 1 && experience.every((item) => {
+        return item.company !== "" && item.name !== "" && item.roles.length !== 0 && item.tasks !== "" && item.duration !== ""
+    })
+    const isFilledSkills = skills.length >= 1 && skills.every((item) => {
+        return item.name !== "" && item.proficiencyLevel !== ""
+    })
+
+    const postData = async (url: string, data: any) => {
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then((value) => {
+                if (value.ok) Promise.resolve("success")
+                else Promise.reject(value.status)
+            })
+            .catch((reason) => {
+                Promise.reject(reason);
+            })
+    }
+
+    const couldNext = () => {
+        switch (pages[pageIndex].path) {
+            case "/firststeps/education":
+                return isFilledEdu;
+            case "/firststeps":
+                return true;
+            case "/firststeps/experience":
+                return isFilledExp;
+            case "/firststeps/skills":
+                return isFilledSkills;
+            case "/firststeps/price":
+                return projectRate >= 500 && hourlyRate >= 500;
+            case "/firststeps/portfolio":
+                return links.length >= 1 && links.every((item) => {
+                    return item.match(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/)
+                });
+        }
+    }
+
+    const handleNext = () => {
+        switch (pages[pageIndex].path) {
+            case "/firststeps/education":
+                postData("/api/profile/education", educations)
+                    .then((value) => {
+                        router.push(pages[pageIndex+1].path);
+                    })
+                    .catch((reason) => {
+                        console.log(reason);
+                    })
+                break;
+            case "/firststeps":
+                router.push(pages[pageIndex+1].path);
+                break;
+            case "/firststeps/experience":
+                postData("/api/profile/experience", experience)
+                    .then((value) => {
+                        router.push(pages[pageIndex+1].path);
+                    })
+                    .catch((reason) => {
+                        console.log(reason);
+                    })
+                break;
+            case "/firststeps/skills":
+                postData("/api/profile/skills", skills)
+                    .then((value) => {
+                        router.push(pages[pageIndex+1].path);
+                    })
+                    .catch((reason) => {
+                        console.log(reason);
+                    })
+                break;
+            case "/firststeps/price":
+                postData("/api/profile/price", {projectRate: projectRate, hourlyRate: hourlyRate})
+                    .then((value) => {
+                        router.push("/");
+                    })
+                    .catch((reason) => {
+                        console.log(reason);
+                    })
+                break;
+            case "/firststeps/portfolio":
+                postData("/api/profile/portfolio", {links: links})
+                    .then((value) => {
+                        router.push(pages[pageIndex+1].path);
+                    })
+                    .catch((reason) => {
+                        console.log(reason);
+                    })
+                break;
+        }
+
+    }
+
+    const loading = useFirstStepsLoading();
 
     if (session.status === "loading") {
         return <Spinner width="w-20" height="w-20" />
     } else if (session.status === "unauthenticated") {
         return redirect("/login")
     } else {
-        return <AnimatePresence>
+
+        if (loading || session.data?.user.role === "CLIENT") {
+            return redirect("/")
+        } else return <AnimatePresence>
             <div className="min-h-screen bg-white flex flex-col">
                 {/* ============== Head Tag =============== */}
                 <HeadTag title="Log In - Bespace"/>
@@ -61,29 +189,28 @@ function Layout({children}: {children: React.ReactNode}) {
                 <footer className="mt-auto border-t border-gray-400">
                     <div className="container flex justify-between font-semibold text-lg mx-auto py-5 md:px-5 sm:px-7 px-3">
                         <Link
-                            className={`${page == 0 ? "" : "border-2 text-[#4ea8bc] px-6 py-2"}`}
-                            onClick={() => setPage(page-1)}
-                            href={page >= 1 ? pages[page-1].path : ""}
+                            className={`${pageIndex == 0 ? "" : "border-2 text-[#4ea8bc] px-6 py-2"}`}
+                            onClick={() => router.push(pages[pageIndex-1].path)}
+                            href={pageIndex >= 1 ? pages[pageIndex-1].path : ""}
                         >
-                            {pages[page].back}
+                            {pages[pageIndex].back}
                         </Link>
                         <div className={"flex items-center"}>
-                            {pages[page].skip &&
+                            {pages[pageIndex].skip &&
                                 <Link
-                                    className={`${page === pages.length-1 ? "" : "mr-6 text-[#4ea8bc]"}`}
-                                    onClick={() => setPage(page+1)}
-                                    href={page !== pages.length-1 ? pages[page+1].path : ""}
+                                    className={`mr-6 text-[#4ea8bc]`}
+                                    onClick={() => router.push(pages[pageIndex+1].path)}
+                                    href={pageIndex !== pages.length-1 ? pages[pageIndex+1].path : ""}
                                 >
                                     Skip this now
                                 </Link>
                             }
-                            <Link
-                                className={`${page === pages.length-1 ? "" : "px-6 py-2 bg-[#4ea8bc] border-2 border-amber-white rounded-3xl"}`}
-                                onClick={() => setPage(page+1)}
-                                href={page !== pages.length-1 ? pages[page+1].path : ""}
+                            <span
+                                className={`${couldNext() ? "cursor-pointer px-6 py-2 bg-[#4ea8bc] border-2 border-amber-white rounded-3xl" : "pointer-events-none border-2 border-amber-white rounded-3xl px-6 py-2 bg-gray-300 text-white"}`}
+                                onClick={handleNext}
                             >
-                                {pages[page].next}
-                            </Link>
+                        {pages[pageIndex].next}
+                    </span>
                         </div>
                     </div>
                 </footer>
