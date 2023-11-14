@@ -18,7 +18,7 @@ function Page() {
         >
             <div className={"m-auto flex flex-col justify-center items-center"}>
                 <form className={"flex flex-col w-1/3 -mt-4"} onSubmit={onSubmit}>
-                    {links.map((link, index) => (
+                    {links.map((link:any, index:number) => (
                         <div key={index} className={"mt-4"}>
                             <label htmlFor={`specialization-${index}`}>Link {index+1}:</label>
                             <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">

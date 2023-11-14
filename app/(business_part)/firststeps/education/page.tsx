@@ -19,7 +19,7 @@ function Page() {
         >
             <div className={"m-auto flex flex-col justify-center items-center"}>
                 <form className={"flex flex-col w-1/3 -mt-4"} onSubmit={onSubmit}>
-                    {educations.map((item, index) => (
+                    {educations.map((item:any, index:number) => (
                         <div key={index} className={"mt-4"}>
                             <h1 className={"text-lg font-semibold"}>Education {index+1}</h1>
                             <label htmlFor={`degree-${index}`}>Degree:</label>

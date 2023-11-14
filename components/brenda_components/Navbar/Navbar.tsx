@@ -470,7 +470,11 @@ const Navbar = () => {
         </div>
 
         {/* ==================== Right Login =========================== */}
-        {session.data?.user ? (
+        {session.status == "loading" ? (
+          <div className="flex items-center">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
+          </div>
+        ) : session.data?.user ? (
           <div className={"flex items-center"}>
             {/* TODO: ДОДЕЛАТЬ ВСЕ НОБХОДИМЫЕ ОПЦИИ */}
             <div className="relative inline-block text-left mr-6">
@@ -533,7 +537,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-        ) : (
+        ) : session.status == "unauthenticated" ? (
           <div className="flex items-center">
             <Link
               className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
@@ -549,6 +553,8 @@ const Navbar = () => {
               Sign up
             </Link>
           </div>
+        ) : (
+          <></>
         )}
       </div>
 
