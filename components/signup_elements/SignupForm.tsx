@@ -217,7 +217,7 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                             <option value="Semey">Semey</option>
                             <option value="Shymkent">Shymkent</option>
                             <option value="Taraz">Taraz</option>
-                            <option value="Ural'sk">Ural'sk</option>
+                            <option value="Ural'sk">Ural&apos;sk</option>
                             <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
                         </select>
 
