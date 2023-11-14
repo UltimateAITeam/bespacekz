@@ -15,6 +15,7 @@ import { ImCheckmark, ImGoogle } from "react-icons/im";
 import Footer from "@/components/brenda_components/Footer";
 import Skills from "@/components/brenda_components/Skills";
 import { SiAdobe, SiUdacity } from "react-icons/si";
+import ThreeTierPricing from "@/components/home_page/Pricing";
 
 export default function HomePage() {
   const session = useSession();
@@ -121,14 +122,14 @@ export default function HomePage() {
                   alt="paypal-img"
                 />
               </span>
-              <span>
+              {/* <span>
                 <Image
                   src="/images/adobe.png"
                   height={30}
                   width={90}
                   alt="adobe-img"
                 />
-              </span>
+              </span> */}
               <span>
                 <Image
                   src="/images/oracle.png"
@@ -190,7 +191,7 @@ export default function HomePage() {
             </Link>
           </span>
 
-          <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 2xl:gap-x-20 gap-x-10 xl:gap-y-7 sm:gap-y-4 gap-y-3 lg:mt-10 mt-7 md:px-0 sm:px-7">
+          <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 2xl:gap-x-18 gap-x-10 xl:gap-y-7 sm:gap-y-4 gap-y-3 lg:mt-10 mt-7 md:px-0 sm:px-7">
             {/* ========== category component ========= */}
             <Category />
           </div>
@@ -382,6 +383,11 @@ export default function HomePage() {
               </motion.div>
             </div>
           </div>
+        </section>
+
+        {/* =================== Pricing Section ===================== */}
+        <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
+          <ThreeTierPricing />
         </section>
 
         {/* ====================== oppertunity section ==============================  */}

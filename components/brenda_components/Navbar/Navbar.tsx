@@ -18,6 +18,23 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { limitText } from "@/libs/utils";
+import {
+  Menu,
+  MenuButton,
+  Button,
+  MenuList,
+  MenuItem,
+  MenuGroup,
+  MenuDivider,
+  Center,
+  Avatar,
+  HStack,
+  VStack,
+  Box,
+  Text,
+  IconButton
+} from "@chakra-ui/react";
+import { FiChevronDown, FiSettings, FiInbox, FiLogOut, FiBell } from "react-icons/fi";
 
 const Navbar = () => {
   // ============= Router hooks ===================
@@ -475,69 +492,156 @@ const Navbar = () => {
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
           </div>
         ) : session.data?.user ? (
-          <div className={"flex items-center"}>
-            {/* TODO: ДОДЕЛАТЬ ВСЕ НОБХОДИМЫЕ ОПЦИИ */}
-            <div className="relative inline-block text-left mr-6">
-              <div>
-                <button
-                  onClick={() => setDropdownState(!dropdownState)}
-                  type="button"
-                  className="align-text-bottom inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  id="menu-button"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                >
-                  <Image
-                    width={25}
-                    height={25}
-                    // session.data.user.image ||
-                    src={"/images/default_logo.png"}
-                    alt={"LOGO"}
-                    className={"rounded-3xl"}
+          <HStack spacing={{ base: '0', md: '6' }}>
+            <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+          <Menu>
+            {/* <MenuButton
+                  as={Button}
+                  rounded={'full'}
+                  variant={'link'}
+                  cursor={'pointer'}
+                  minW={0}>
+                  <Avatar
+                    size={'sm'}
+                    src={session.data.user.image ? session.data.user.image :'https://avatars.dicebear.com/api/male/username.svg'}
                   />
-                  {session.data.user.name && (
-                    <p>{limitText(session.data.user.name, 10)}</p>
-                  )}
-                </button>
-              </div>
+                </MenuButton> */}
+            <MenuButton
+              
+              py={2}
+              transition="all 0.3s"
+              _focus={{ boxShadow: "none" }}
+            >
+              <HStack>
+                <Avatar
+                  size={"sm"}
+                  src={
+                    session.data.user.image
+                      ? session.data.user.image
+                      : "https://avatars.dicebear.com/api/male/username.svg"
+                  }
+                />
+                <VStack
+                  display={{ base: "none", md: "flex" }}
+                  alignItems="flex-start"
+                  spacing="1px"
+                  ml="2"
+                >
+                  <Text fontSize="sm">{session.data.user.name ? session.data.user.name : session.data.user.email}</Text>
+                  {session.data.user.role && 
+                  <Text fontSize="xs" color="gray.600">
+                    {session.data.user.role}
+                  </Text>
+                  }
+                </VStack>
+                <Box display={{ base: "none", md: "flex" }}>
+                  <FiChevronDown />
+                </Box>
+              </HStack>
+            </MenuButton>
+            <MenuList zIndex={9999} alignItems={"center"} className="text-sm">
+              <br />
+              <Center>
+                <Avatar
+                  size={"lg"}
+                  src={
+                    session.data.user.image
+                      ? session.data.user.image
+                      : "https://avatars.dicebear.com/api/male/username.svg"
+                  }
+                />
+              </Center>
+              <br />
+              {session.data.user.name && (
+                <Center>
+                  <p>{session.data.user.name}</p>
+                </Center>
+              )}
 
-              <div
-                className={`absolute ${
-                  dropdownState ? "block" : "hidden"
-                } right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="menu-button"
-                tabIndex={-1}
-              >
-                <div className="py-1" role="none">
-                  <Link
-                    href="#"
-                    className="text-gray-700 block px-4 py-2 text-sm"
-                    role="menuitem"
-                    tabIndex={-1}
-                    id="menu-item-0"
-                  >
-                    {session.data.user.role === "CLIENT"
-                      ? "Ваши заказы"
-                      : "Активные проекты"}
-                  </Link>
-                </div>
-                <div className="py-1" role="none">
-                  <button
-                    onClick={() => signOut({ redirect: false })}
-                    className="text-gray-700 block px-4 py-2 text-sm"
-                    role="menuitem"
-                    tabIndex={-1}
-                    id="menu-item-6"
-                  >
-                    Sign out
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : session.status == "unauthenticated" ? (
+              {session.data.user.email && (
+                <Center className="mt-1 text-xs font-extralight">
+                  <p>{session.data.user.email}</p>
+                </Center>
+              )}
+
+              <br />
+              <MenuDivider />
+              <MenuItem icon={<FiInbox />}>
+                {session.data.user.role === "CLIENT"
+                  ? "Ваши заказы"
+                  : "Активные проекты"}
+              </MenuItem>
+              <MenuItem icon={<FiSettings />}>Настройки профиля</MenuItem>
+              <MenuDivider />
+              <MenuItem icon={<FiLogOut />} onClick={() => signOut({ redirect: false })}>
+                Logout
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          </HStack>
+        ) : // <div className={"flex items-center"}>
+        //   {/* TODO: ДОДЕЛАТЬ ВСЕ НОБХОДИМЫЕ ОПЦИИ */}
+        //   <div className="relative inline-block text-left mr-6">
+        //     <div>
+        //       <button
+        //         onClick={() => setDropdownState(!dropdownState)}
+        //         type="button"
+        //         className="align-text-bottom inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        //         id="menu-button"
+        //         aria-expanded="true"
+        //         aria-haspopup="true"
+        //       >
+        //         <Image
+        //           width={25}
+        //           height={25}
+        //           // session.data.user.image ||
+        //           src={"/images/default_logo.png"}
+        //           alt={"LOGO"}
+        //           className={"rounded-3xl"}
+        //         />
+        //         {session.data.user.name && (
+        //           <p>{limitText(session.data.user.name, 10)}</p>
+        //         )}
+        //       </button>
+        //     </div>
+
+        //     <div
+        //       className={`absolute ${
+        //         dropdownState ? "block" : "hidden"
+        //       } right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+        //       role="menu"
+        //       aria-orientation="vertical"
+        //       aria-labelledby="menu-button"
+        //       tabIndex={-1}
+        //     >
+        //       <div className="py-1" role="none">
+        //         <Link
+        //           href="#"
+        //           className="text-gray-700 block px-4 py-2 text-sm"
+        //           role="menuitem"
+        //           tabIndex={-1}
+        //           id="menu-item-0"
+        //         >
+        //           {session.data.user.role === "CLIENT"
+        //             ? "Ваши заказы"
+        //             : "Активные проекты"}
+        //         </Link>
+        //       </div>
+        //       <div className="py-1" role="none">
+        //         <button
+        //           onClick={() => signOut({ redirect: false })}
+        //           className="text-gray-700 block px-4 py-2 text-sm"
+        //           role="menuitem"
+        //           tabIndex={-1}
+        //           id="menu-item-6"
+        //         >
+        //           Sign out
+        //         </button>
+        //       </div>
+        //     </div>
+        //   </div>
+        // </div>
+        session.status == "unauthenticated" ? (
           <div className="flex items-center">
             <Link
               className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
@@ -792,7 +896,6 @@ const Navbar = () => {
                                   <li key={curSubVal.id}>
                                     <Link href={curSubVal.link}>
                                       <div className="flex space-x-4 items-center border rounded-md cursor-pointer hover:shadow-sm hover:bg-[#e1f7fa]">
-                                        
                                         {/* <Image
                                           src={curSubVal.img}
                                           height={65}

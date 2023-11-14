@@ -65,7 +65,7 @@ const Footer = () => {
                             className="font-semibold text-zinc-800 flex md:block items-center justify-between"
                             onClick={() => setShowI(!showI)}
                         >
-                            For Clints
+                            For Clients
 
                             <FaChevronDown className={`md:hidden block transition ${(showI === true) ? "rotate-180" : "rotate-0"}`}/>
                         </div>
@@ -115,7 +115,7 @@ const Footer = () => {
                             className="font-semibold text-zinc-800 flex md:block items-center justify-between"
                             onClick={() => setShowIII(!setShowIII)}
                         >
-                            For Clints
+                            For Clients
 
                             <FaChevronDown className={`md:hidden block transition ${(showIII === true) ? "rotate-180" : "rotate-0"}`}/>
                         </div>
@@ -140,7 +140,7 @@ const Footer = () => {
                             className="font-semibold text-zinc-800 flex md:block items-center justify-between"
                             onClick={() => setShowIv(!setShowIv)}
                         >
-                            For Clints
+                            For Clients
 
                             <FaChevronDown className={`md:hidden block transition ${(showIv === true) ? "rotate-180" : "rotate-0"}`}/>
                         </div>

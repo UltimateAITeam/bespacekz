@@ -17,6 +17,7 @@ export const checkSessionAndGetData = async (req: Request) => {
 export const getProfileBySession = async (session: Session) => {
     return prisma.freelancerProfile.upsert({
         where: {
+            // userEmail
             userEmail: session.user.email,
         },
         create: {
