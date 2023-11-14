@@ -742,12 +742,86 @@ const Navbar = () => {
             </div>
 
             {/* ========= Left ========= */}
-            <button
-              className="font-semibold py-1 px-3 rounded-xl text-gray-800 hover:text-cyan-800"
-              onClick={() => router.push("/account-security/signup")}
+            {session.status == "loading" ? (
+          <div className="flex items-center">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
+          </div>
+        ) : session.data?.user ? (
+          <HStack spacing={{ base: '0', md: '6' }}>
+            <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+          <Menu>
+            <MenuButton
+                  as={Button}
+                  rounded={'full'}
+                  variant={'link'}
+                  cursor={'pointer'}
+                  minW={0}>
+                  <Avatar
+                    size={'sm'}
+                    src={session.data.user.image ? session.data.user.image :'https://avatars.dicebear.com/api/male/username.svg'}
+                  />
+                </MenuButton>
+            
+            <MenuList zIndex={9999} alignItems={"center"} className="text-sm">
+              <br />
+              <Center>
+                <Avatar
+                  size={"lg"}
+                  src={
+                    session.data.user.image
+                      ? session.data.user.image
+                      : "https://avatars.dicebear.com/api/male/username.svg"
+                  }
+                />
+              </Center>
+              <br />
+              {session.data.user.name && (
+                <Center>
+                  <p>{session.data.user.name}</p>
+                </Center>
+              )}
+
+              {session.data.user.email && (
+                <Center className="mt-1 text-xs font-extralight">
+                  <p>{session.data.user.email}</p>
+                </Center>
+              )}
+
+              <br />
+              <MenuDivider />
+              <MenuItem icon={<FiInbox />}>
+                {session.data.user.role === "CLIENT"
+                  ? "Ваши заказы"
+                  : "Активные проекты"}
+              </MenuItem>
+              <MenuItem icon={<FiSettings />}>Настройки профиля</MenuItem>
+              <MenuDivider />
+              <MenuItem icon={<FiLogOut />} onClick={() => signOut({ redirect: false })}>
+                Logout
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          </HStack>
+        ) : session.status == "unauthenticated" ? (
+          <div className="flex items-center">
+            <Link
+              className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
+              href={"/login"}
             >
-              SignUp
-            </button>
+              Log in
+            </Link>
+
+            <Link
+              className="font-semibold bg-gradient-to-tr from-sky-200 to-cyan-200 py-2 px-3 rounded-xl text-gray-800 hover:from-cyan-300 hover:to-sky-200"
+              href={"/signup"}
+            >
+              Sign up
+            </Link>
+          </div>
+        ) : (
+          <></>
+        )}
+            
           </div>
         </div>
 

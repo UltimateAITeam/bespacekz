@@ -8,8 +8,8 @@ interface PricingStore {
 }
 
 const usePricingStore = create<PricingStore>((set) => ({
-    hourlyRate: 5000.0,
-    projectRate: 50000.0,
+    hourlyRate: 0.0,
+    projectRate: 0.0,
     updateHourlyRate: (updatedPricing) =>
         set((state) => ({
             hourlyRate: updatedPricing,

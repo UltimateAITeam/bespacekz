@@ -25,7 +25,8 @@ function Page() {
                         <span className={"ml-4"}>₸</span>
                         <input
                             type="text"
-                            value={projectRate.toString()}
+                            placeholder='Ex: 1000'
+                            value={projectRate.toString() == '0' ? "" : projectRate.toString()}
                             className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
                             onChange={(e) => updateProjectRate(Number(e.target.value) | 1000)}
                             required
@@ -36,7 +37,8 @@ function Page() {
                         <span className={"ml-4"}>₸</span>
                         <input
                             type="text"
-                            value={hourlyRate.toString()}
+                            placeholder='Ex: 500'
+                            value={hourlyRate.toString() == '0' ? "" : hourlyRate.toString()}
                             className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
                             onChange={(e) => updateHourlyRate(Number(e.target.value) | 500)}
                             required

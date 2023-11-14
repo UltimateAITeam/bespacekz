@@ -22,37 +22,37 @@ function Layout({children}: {children: React.ReactNode}) {
             path: "/firststeps",
             back: "",
             skip: false,
-            next: "Next"
+            next: "Следующий шаг"
         },
         {
             path: "/firststeps/education",
-            back: "Back",
+            back: "Назад",
             skip: true,
-            next: "Next",
+            next: "Следующий шаг",
         },
         {
             path: "/firststeps/experience",
-            back: "Back",
+            back: "Назад",
             skip: true,
-            next: "Next",
+            next: "Следующий шаг",
         },
         {
             path: "/firststeps/skills",
-            back: "Back",
+            back: "Назад",
             skip: true,
-            next: "Next",
+            next: "Следующий шаг",
         },
         {
             path: "/firststeps/portfolio",
-            back: "Back",
+            back: "Назад",
             skip: true,
-            next: "Next",
+            next: "Следующий шаг",
         },
         {
             path: "/firststeps/price",
-            back: "Back",
+            back: "Назад",
             skip: false,
-            next: "Submit",
+            next: "Следующий шаг",
         }
     ]
     const pathName = usePathname();
@@ -187,9 +187,9 @@ function Layout({children}: {children: React.ReactNode}) {
                     </section>
                 </main>
                 <footer className="mt-auto border-t border-gray-400">
-                    <div className="container flex justify-between font-semibold text-lg mx-auto py-5 md:px-5 sm:px-7 px-3">
+                    <div className="container flex justify-between font-semibold text-sm md:text-lg mx-auto py-5 md:px-5 sm:px-7 px-3">
                         <Link
-                            className={`${pageIndex == 0 ? "" : "border-2 text-[#4ea8bc] px-6 py-2"}`}
+                            className={`${pageIndex == 0 ? "" : "border-2 rounded-xl md:rounded-3xl text-zinc-950 px-2 md:px-6 py-2"}`}
                             onClick={() => router.push(pages[pageIndex-1].path)}
                             href={pageIndex >= 1 ? pages[pageIndex-1].path : ""}
                         >
@@ -198,15 +198,15 @@ function Layout({children}: {children: React.ReactNode}) {
                         <div className={"flex items-center"}>
                             {pages[pageIndex].skip &&
                                 <Link
-                                    className={`mr-6 text-[#4ea8bc]`}
+                                    className={`mr-2 md:mr-6 text-zinc-950`}
                                     onClick={() => router.push(pages[pageIndex+1].path)}
                                     href={pageIndex !== pages.length-1 ? pages[pageIndex+1].path : ""}
                                 >
-                                    Skip this now
+                                    Пропустить
                                 </Link>
                             }
                             <span
-                                className={`${couldNext() ? "cursor-pointer px-6 py-2 bg-[#4ea8bc] border-2 border-amber-white rounded-3xl" : "pointer-events-none border-2 border-amber-white rounded-3xl px-6 py-2 bg-gray-300 text-white"}`}
+                                className={`${couldNext() ? "cursor-pointer px-6 py-2 bg-[#4ea8bc] border-2 border-amber-white rounded-xl md:rounded-3xl" : "pointer-events-none border-2 border-amber-white rounded-3xl px-6 py-2 bg-gray-300 text-white"}`}
                                 onClick={handleNext}
                             >
                         {pages[pageIndex].next}
