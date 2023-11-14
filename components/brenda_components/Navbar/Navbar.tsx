@@ -732,8 +732,8 @@ const Navbar = () => {
               </span>
 
               <Image
-                src="/images/logo.png"
-                width={55}
+                src="/bespace/bespace-v3.png"
+                width={120}
                 height={45}
                 alt="logo"
                 className="cursor-pointer mr-2"
@@ -1086,12 +1086,14 @@ const Navbar = () => {
             </li>
           </ul>
 
+          <Link href={"/login"}>
           <button
             className="text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700 inline-flex sm:mx-0 mx-1"
-            onClick={() => router.push("/account-security/login")}
+            // onClick={() => router.push("/account-security/login")}
           >
             Login
           </button>
+          </Link>
         </div>
       </div>
       {/* ==================== Mobile Nav Bar end ====================== */}
