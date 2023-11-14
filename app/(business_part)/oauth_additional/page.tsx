@@ -14,17 +14,15 @@ interface FormValues {
 function Oauth_additional() {
     const session = useSession();
     const searchParams = useSearchParams();
-    let role = searchParams.get("role");
+    let role = searchParams.get("role") || "client";
 
-    if (role === "client" || role === "freelancer" || !role) {}
-    else role = "client";
     const router = useRouter();
 
     const {handleSubmit, setValue, register, formState: {errors, isValid} } = useForm<FormValues>();
 
     useEffect(() => {
         setValue("first_name", session.data?.user?.name as string);
-    })
+    }, [])
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         if (isValid) {
