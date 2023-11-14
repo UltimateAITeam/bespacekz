@@ -10,11 +10,13 @@ import { BsFillPersonFill } from "react-icons/bs";
 import LoginSignupFooter from "@/components/brenda_components/LoginSignupFooter";
 import HeadTag from "@/components/brenda_components/HeadTag";
 import LinkedInButton from "@/components/LinkedInButton";
+import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
     const [emailRequired, setEmailRequired] = useState(false);
     const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [passwordRequired, setPasswordRequired] = useState(false);
+    const router = useRouter();
 
     const signMeIn = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -40,13 +42,9 @@ export default function LoginPage() {
             setPasswordRequired(false);
         }
 
-        const res = signIn('credentials', { role: "login", password: password, email: email, redirect: true, callbackUrl: "/firststeps" })
+        signIn('credentials', { role: "login", password: password, email: email})
             .then((e) => {
-                if (e?.status !== 200) {
-                    setInvalidCredentials(true);
-                } else {
-                    setInvalidCredentials(false);
-                }
+                e?.ok ? router.push('/firststeps') : setInvalidCredentials(true);
             })
 
     }
