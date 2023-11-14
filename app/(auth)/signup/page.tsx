@@ -101,10 +101,6 @@ function SignUp() {
                                     {btnText}
                                 </button>
 
-                                <div className={"mt-7"}>
-                                    Wanna join as {}
-                                </div>
-
                                 {/* ================ alread have account section ================== */}
                                 <div className="mt-7">
                                     <p className="text-zinc-800 text-center">
