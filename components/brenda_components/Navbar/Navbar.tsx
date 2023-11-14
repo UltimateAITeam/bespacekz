@@ -34,7 +34,7 @@ import {
   Text,
   IconButton
 } from "@chakra-ui/react";
-import { FiChevronDown, FiSettings, FiInbox, FiLogOut, FiBell } from "react-icons/fi";
+import { FiChevronDown, FiSettings, FiInbox, FiLogOut, FiBell, FiUser } from "react-icons/fi";
 
 const Navbar = () => {
   // ============= Router hooks ===================
@@ -763,31 +763,18 @@ const Navbar = () => {
                 </MenuButton>
             
             <MenuList zIndex={9999} alignItems={"center"} className="text-sm">
-              <br />
-              <Center>
-                <Avatar
-                  size={"lg"}
-                  src={
-                    session.data.user.image
-                      ? session.data.user.image
-                      : "https://avatars.dicebear.com/api/male/username.svg"
-                  }
-                />
-              </Center>
-              <br />
+              
               {session.data.user.name && (
-                <Center>
-                  <p>{session.data.user.name}</p>
-                </Center>
+                <MenuItem>
+                  {session.data.user.name}
+                </MenuItem>
               )}
 
               {session.data.user.email && (
-                <Center className="mt-1 text-xs font-extralight">
-                  <p>{session.data.user.email}</p>
-                </Center>
+                <MenuItem className="text-xs font-extralight">
+                  {session.data.user.email}
+                </MenuItem>
               )}
-
-              <br />
               <MenuDivider />
               <MenuItem icon={<FiInbox />}>
                 {session.data.user.role === "CLIENT"

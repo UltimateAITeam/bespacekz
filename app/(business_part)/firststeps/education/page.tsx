@@ -93,7 +93,7 @@ function Page() {
                     <button
                         type="button"
                         onClick={() => addEducation()}
-                        className="border-2 py-2 px-4 mt-4 hover:bg-[#397b8a] bg-[#4fa9bd] rounded-xl flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 hover:text-white focus:ring-0"
+                        className="border-2 py-2 px-4 mt-4 hover:bg-[#397b8a] bg-[#4fa9bd] rounded-xl flex-grow w-full focus:outline-none bg-transparent text-zinc-700 hover:text-white focus:ring-0"
                     >
                         Add education
                     </button>
