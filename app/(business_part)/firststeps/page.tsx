@@ -15,11 +15,11 @@ function FirstStepsForms() {
         initial={{ x: -300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 300, opacity: 0 }}
-        className={"flex flex-row justify-between"}
+        className={"flex flex-col md:flex-row justify-between"}
     >
         <div className={"sm:mt-36 mt-0 sm:ml-52 m-auto flex flex-col"}>
             <span className={"font-semibold font-zinc-950 2xl:font-bold lg:text-5xl text-4xl"}>
-                Расскажите нам <br/> больше о себе!
+                Расскажите нам <br/> о себе больше!
                 </span>
             <span className={"text-xl mt-4"}>
                 Заполните краткую анкету для вашего профиля
