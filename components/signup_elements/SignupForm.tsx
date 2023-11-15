@@ -268,8 +268,8 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                         </Button>
                     </form>
                     {/* fix this part */}
-                    <div className={"mt-7 text-zinc-600"}>
-                        Want to join as {localType}?
+                    {/* <div className={"mt-7 text-zinc-600"}>
+                        Want to join as {localType == 'client' ? 'freelancer' : 'client'}?
                         <span
                             className={"text-cyan-700 ml-1 font-semibold cursor-pointer"}
                             onClick={() => {
@@ -278,7 +278,7 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                         >
                             Click
                         </span>
-                    </div>
+                    </div> */}
 
                     {/* ================ alread have account section ================== */}
                     <div className="mt-7">

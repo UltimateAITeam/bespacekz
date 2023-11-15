@@ -72,7 +72,7 @@ function SignUp() {
                                 {/* ===================== Create account section ========================== */}
                                 <div className="flex md:flex-row flex-col items-center md:space-x-8 md:space-y-0 space-y-5 mt-10">
                                     {/* ========== client =========== */}
-                                    <div className={`${client ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleClient}>
+                                    {/* <div className={`${client ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleClient}>
                                         <div>
                                             <FcConferenceCall className="text-5xl"/>
                                         </div>
@@ -81,7 +81,7 @@ function SignUp() {
                                                 I’m a client, hiring for a project
                                             </h4>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     {/* ========== client =========== */}
                                     <div className={`${(freelancer == true) ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleFreelancer}>

@@ -663,7 +663,8 @@ const Navbar = () => {
       </div>
 
       {/* ==================== Second Nav Bar ===================== */}
-      <div className="container mx-auto py-3 px-3 hidden lg:block">
+      
+      {/* <div className="container mx-auto py-3 px-3 hidden lg:block">
         <ul className="flex items-center 2xl:space-x-20 xl:space-x-12 space-x-9">
           {SecondLink.map((curVal) => (
             <li
@@ -674,7 +675,6 @@ const Navbar = () => {
             </li>
           ))}
 
-          {/* ================ Dropdown More ================= */}
           {MoreLink.map((curVal) => (
             <li key={curVal.id} className="relative">
               <button
@@ -695,7 +695,6 @@ const Navbar = () => {
                 </span>
               </button>
 
-              {/* =========== More Dropdown List =============== */}
               <ul
                 className={`${moreDp} absolute font-semibold text-md bg-[#F3FFFC] shadow-lg border rounded-sm text-zinc-700 min-w-[17rem] right-[-1rem] top-7 z-10`}
               >
@@ -711,7 +710,7 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
 
       {/* ==================== Mobile Nav Bar Start ====================== */}
       <div className="lg:hidden">
