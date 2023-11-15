@@ -114,9 +114,9 @@ export default function LoginPage() {
                             </div>
 
                             {/* ================= Continue with section ==================== */}
-                            <GoogleButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with Google"} className={"border-2 mb-2 rounded-3xl font-semibold border-gray-600"}/>
-                            <GitHubButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with GitHub"} className={"border-2 text-black rounded-3xl font-semibold border-gray-600"} />
-                            <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional"}} text={"Continue with LinkedIn"} className={"-mt-2 font-semibold text-white"} />
+                            <GoogleButton options={{redirect: true, callbackUrl: "/moreinfo"}} text={"Continue with Google"} className={"border-2 mb-2 rounded-3xl font-semibold border-gray-600"}/>
+                            <GitHubButton options={{redirect: true, callbackUrl: "/moreinfo"}} text={"Continue with GitHub"} className={"border-2 text-black rounded-3xl font-semibold border-gray-600"} />
+                            <LinkedInButton options={{redirect: true, callbackUrl: "/moreinfo"}} text={"Continue with LinkedIn"} className={"-mt-2 font-semibold text-white"} />
                         </div>
 
                         {/* ================= Don't have account section ================= */}

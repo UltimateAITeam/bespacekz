@@ -95,13 +95,7 @@ export const authOptions: AuthOptions  = {
     adapter: PrismaAdapter(prisma),
     pages: {
         signIn: "/login",
-        signOut: "/signout",
-        newUser: "/firststeps"
-    },
-    events: {
-        signIn(message) {
-            console.log(message.user, message.account)
-        }
+        signOut: "/signout"
     },
     callbacks: {
         jwt: async ({token, user}) => {
@@ -109,6 +103,7 @@ export const authOptions: AuthOptions  = {
                 token.id = user.id;
                 token.last_name = user.last_name;
                 token.role = user.role;
+                token.location = user.location;
             }
             return token;
         },
@@ -117,6 +112,9 @@ export const authOptions: AuthOptions  = {
             session.user.role = token.role;
             session.user.last_name = token.last_name;
             return session;
+        },
+        async redirect({url, baseUrl}) {
+            return url.startsWith(baseUrl) ? url : baseUrl + url;
         }
     }
 
