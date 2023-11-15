@@ -9,7 +9,7 @@ function Layout({children}: {children: React.ReactNode}) {
     const session = useSession();
     if (session.status === "loading") {
         return <Spinner width="w-20" height="w-20"/>
-    } else if (session.data?.user.location) {
+    } else if (session.data?.user.role) {
         return redirect("/firststeps")
     } else {
         return children

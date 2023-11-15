@@ -558,11 +558,15 @@ const Navbar = () => {
                 </Center>
               )}
 
-              {session.data.user.email && (
+              <Center className="mt-1 text-xs font-extralight px-4">
+                {session.data.user.location}
+              </Center>
+
+              {/* {session.data.user && (
                 <Center className="mt-1 text-xs font-extralight px-4">
-                  <p>{session.data.user.email}</p>
+                  <p>{JSON.stringify(session.data.user)}</p>
                 </Center>
-              )}
+              )} */}
 
               <br />
               <MenuDivider />
