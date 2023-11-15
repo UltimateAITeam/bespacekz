@@ -1,7 +1,7 @@
 'use client';
-import React, {FormEvent} from 'react';
+import React, {useEffect} from 'react';
 import HeadTag from "@/components/brenda_components/HeadTag";
-import {signIn, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {SubmitHandler, useForm} from "react-hook-form";
 
@@ -14,15 +14,15 @@ interface FormValues {
 function Oauth_additional() {
     const session = useSession();
     const searchParams = useSearchParams();
-    let role = searchParams.get("role");
+    let role = searchParams.get("role") || "client";
 
-    if (role === "client" || role === "freelancer" || !role) {}
-    else role = "client";
     const router = useRouter();
 
     const {handleSubmit, setValue, register, formState: {errors, isValid} } = useForm<FormValues>();
 
-    setValue("first_name", session.data?.user?.name as string);
+    useEffect(() => {
+        setValue("first_name", session.data?.user?.name as string);
+    }, [])
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         if (isValid) {
