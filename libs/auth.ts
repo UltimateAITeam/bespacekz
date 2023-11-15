@@ -103,7 +103,6 @@ export const authOptions: AuthOptions  = {
                 token.id = user.id;
                 token.last_name = user.last_name;
                 token.role = user.role;
-                token.location = user.location;
             }
             return token;
         },
