@@ -15,7 +15,7 @@ interface FormValues {
 function Oauth_additional() {
     const session = useSession();
     const searchParams = useSearchParams();
-    let role = searchParams.get("role") || "freelance";
+    let role = searchParams.get("role") || "freelancer";
 
     const router = useRouter();
 
@@ -121,10 +121,11 @@ function Oauth_additional() {
                                         <label htmlFor='location_city' className='font-medium px-1 pb-1'>Location:</label>
                                 <select
                                     id="Country"
+                                    defaultValue={"Astana"}
                                     {...register("location_city", {required: "Location is required"})}
                                     className="px-8 py-4 bg-transparent border-2 border-gray-300 text-zinc-800 text-md rounded-lg focus:border-[#b8d8d4fd] block w-full cursor-pointer font-medium"
                                 >
-                                    <option value="Astana" selected>Astana</option>
+                                    <option value="Astana">Astana</option>
                                     <option value="Almaty">Almaty</option>
                                     <option value="Aktau">Aktau</option>
                                     <option value="Aktobe">Aktobe</option>

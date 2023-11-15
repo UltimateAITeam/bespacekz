@@ -559,7 +559,7 @@ const Navbar = () => {
               )}
 
               {session.data.user.email && (
-                <Center className="mt-1 text-xs font-extralight">
+                <Center className="mt-1 text-xs font-extralight px-4">
                   <p>{session.data.user.email}</p>
                 </Center>
               )}
