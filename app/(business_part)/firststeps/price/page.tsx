@@ -24,11 +24,11 @@ function Page() {
                     <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
                         <span className={"ml-4"}>₸</span>
                         <input
-                            type="text"
+                            type="number"
                             placeholder='Ex: 1000'
                             value={projectRate.toString() == '0' ? "" : projectRate.toString()}
                             className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                            onChange={(e) => updateProjectRate(Number(e.target.value) | 1000)}
+                            onChange={(e) => updateProjectRate(Number(e.target.value))}
                             required
                         />
                     </div>
@@ -36,11 +36,11 @@ function Page() {
                     <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
                         <span className={"ml-4"}>₸</span>
                         <input
-                            type="text"
+                            type="number"
                             placeholder='Ex: 500'
                             value={hourlyRate.toString() == '0' ? "" : hourlyRate.toString()}
                             className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                            onChange={(e) => updateHourlyRate(Number(e.target.value) | 500)}
+                            onChange={(e) => updateHourlyRate(Number(e.target.value))}
                             required
                         />
                     </div>
