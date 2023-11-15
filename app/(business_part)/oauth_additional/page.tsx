@@ -4,6 +4,7 @@ import HeadTag from "@/components/brenda_components/HeadTag";
 import {useSession} from "next-auth/react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {SubmitHandler, useForm} from "react-hook-form";
+import { Button, Spinner } from '@chakra-ui/react';
 
 interface FormValues {
     first_name: string;
@@ -14,7 +15,7 @@ interface FormValues {
 function Oauth_additional() {
     const session = useSession();
     const searchParams = useSearchParams();
-    let role = searchParams.get("role") || "client";
+    let role = searchParams.get("role") || "freelance";
 
     const router = useRouter();
 
@@ -23,8 +24,9 @@ function Oauth_additional() {
     useEffect(() => {
         setValue("first_name", session.data?.user?.name as string);
     }, [])
-
+    const [isLoadingSubmit, setIsLoadingSubmit] = React.useState(false);
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        setIsLoadingSubmit(true);
         if (isValid) {
             const req_data = {
                 role: role,
@@ -44,9 +46,15 @@ function Oauth_additional() {
 
             if (response.ok) {
                 router.push("/firststeps")
+                setIsLoadingSubmit(false);
             }
+            setIsLoadingSubmit(false);
 
+        } else {
+            console.log("error with form on outh_additional")
+            setIsLoadingSubmit(false);
         }
+
     };
 
     let displayErrors: any = []
@@ -82,7 +90,11 @@ function Oauth_additional() {
                                 </div>
                                 <div className="grid md:grid-cols-2 md:gap-x-5 gap-y-5">
                                     {/* ================= first name input =============== */}
+                                    <div className='flex flex-col'>
+                                        <label htmlFor='first_name' className='font-medium px-1 pb-1'>First name:</label>
+                                    
                                     <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
+
                                         <input
                                             type="text"
                                             className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
@@ -90,8 +102,11 @@ function Oauth_additional() {
                                             {...register("first_name", {required: "Name is required"})}
                                         />
                                     </div>
+                                    </div>
 
                                     {/* ================= last name input =============== */}
+                                    <div className='flex flex-col'>
+                                        <label htmlFor='last_name' className='font-medium px-1 pb-1'>Last name:</label>
                                     <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
                                         <input
                                             type="text"
@@ -100,11 +115,14 @@ function Oauth_additional() {
                                             {...register("last_name", {required: "Last name is required"})}
                                         />
                                     </div>
+                                    </div>
                                 </div>
+                                <div className='flex flex-col'>
+                                        <label htmlFor='location_city' className='font-medium px-1 pb-1'>Location:</label>
                                 <select
                                     id="Country"
                                     {...register("location_city", {required: "Location is required"})}
-                                    className="bg-transparent border-2 border-gray-300 text-zinc-800 text-sm rounded-lg focus:border-[#b8d8d4fd] block w-full px-3 py-2 cursor-pointer font-semibold"
+                                    className="px-8 py-4 bg-transparent border-2 border-gray-300 text-zinc-800 text-md rounded-lg focus:border-[#b8d8d4fd] block w-full cursor-pointer font-medium"
                                 >
                                     <option value="Astana" selected>Astana</option>
                                     <option value="Almaty">Almaty</option>
@@ -126,10 +144,10 @@ function Oauth_additional() {
                                     <option value="Taraz">Taraz</option>
                                     <option value="Temirtau">Temirtau</option>
                                 </select>
-
-                                <button className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
+                                </div>
+                                <Button colorScheme='facebook' isLoading={isLoadingSubmit} isDisabled={!isValid} className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
                                     Continue
-                                </button>
+                                </Button>
                             </form>
 
                             {/* ================= Or section ==================== */}
