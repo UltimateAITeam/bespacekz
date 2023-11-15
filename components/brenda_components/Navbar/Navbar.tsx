@@ -527,7 +527,14 @@ const Navbar = () => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">{session.data.user.name || session.data.user.last_name ? session.data.user.name + ' ' + session.data.user.last_name : session.data.user.email}</Text>
+                  <Text fontSize="sm">
+                    {
+                    (session.data.user.name && session.data.user.last_name) ? 
+                    session.data.user.name + ' ' + session.data.user.last_name :
+                    session.data.user.name ? session.data.user.name 
+                    : session.data.user.email
+                    }
+                    </Text>
                   {session.data.user.role && 
                   <Text fontSize="xs" color="gray.600">
                     {session.data.user.role}
@@ -554,19 +561,19 @@ const Navbar = () => {
               <br />
               {(session.data.user.name || session.data.user.last_name) && (
                 <Center>
-                  <p>{session.data.user.name}{" "}{session.data.user.last_name && session.data.user.last_name}</p>
+                  <p>{session.data.user.name}{" "}{session.data.user.last_name != null && session.data.user.last_name}</p>
                 </Center>
               )}
 
-              <Center className="mt-1 text-xs font-extralight px-4">
+              {/* <Center className="mt-1 text-xs font-extralight px-4">
                 {session.data.user.location}
-              </Center>
+              </Center> */}
 
-              {/* {session.data.user && (
+              {session.data.user.email && (
                 <Center className="mt-1 text-xs font-extralight px-4">
-                  <p>{JSON.stringify(session.data.user)}</p>
+                  <p>{session.data.user.email}</p>
                 </Center>
-              )} */}
+              )}
 
               <br />
               <MenuDivider />
