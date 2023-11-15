@@ -554,7 +554,7 @@ const Navbar = () => {
               <br />
               {(session.data.user.name || session.data.user.last_name) && (
                 <Center>
-                  <p>{session.data.user.name}{" "}{session.data.user.last_name}</p>
+                  <p>{session.data.user.name}{" "}{session.data.user.last_name && session.data.user.last_name}</p>
                 </Center>
               )}
 
