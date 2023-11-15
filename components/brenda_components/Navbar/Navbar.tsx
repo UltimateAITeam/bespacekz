@@ -527,7 +527,7 @@ const Navbar = () => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">{session.data.user.name ? session.data.user.name : session.data.user.email}</Text>
+                  <Text fontSize="sm">{session.data.user.name || session.data.user.last_name ? session.data.user.name + ' ' + session.data.user.last_name : session.data.user.email}</Text>
                   {session.data.user.role && 
                   <Text fontSize="xs" color="gray.600">
                     {session.data.user.role}
@@ -552,9 +552,9 @@ const Navbar = () => {
                 />
               </Center>
               <br />
-              {session.data.user.name && (
+              {(session.data.user.name || session.data.user.last_name) && (
                 <Center>
-                  <p>{session.data.user.name}</p>
+                  <p>{session.data.user.name}{" "}{session.data.user.last_name}</p>
                 </Center>
               )}
 
