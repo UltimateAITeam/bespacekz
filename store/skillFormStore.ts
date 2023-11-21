@@ -13,22 +13,30 @@ interface SkillsStore {
     removeSkill: (index: number) => void;
 }
 
+function getSkillsInitial(): Skill[] {
+    const data = localStorage.getItem('skills');
+    return data ? JSON.parse(data) : [];
+}
+
 const useSkillsStore = create<SkillsStore>((set) => ({
-    skills: [],
+    skills: getSkillsInitial(),
     updateSkill: (index, updatedSkill) =>
         set((state) => {
             const newSkills = [...state.skills];
             newSkills[index] = { ...newSkills[index], ...updatedSkill };
+            localStorage.setItem("skills", JSON.stringify(newSkills));
             return { skills: newSkills };
         }),
     addSkill: (newSkill) =>
         set((state) => {
+            localStorage.setItem("skills", JSON.stringify([...state.skills, newSkill]));
             return { skills: [...state.skills, newSkill] };
         }),
     removeSkill: (index) =>
         set((state) => {
             const newSkills = [...state.skills];
             newSkills.splice(index, 1);
+            localStorage.setItem("skills", JSON.stringify(newSkills));
             return { skills: newSkills };
         }),
 }));

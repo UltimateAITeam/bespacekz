@@ -100,6 +100,7 @@ export const authOptions: AuthOptions  = {
     callbacks: {
         jwt: async ({token, user}) => {
             if(user) {
+                console.log(user)
                 token.id = user.id;
                 token.last_name = user.last_name;
                 token.role = user.role;
@@ -107,9 +108,11 @@ export const authOptions: AuthOptions  = {
             return token;
         },
         async session({session, token}) {
-            session.user.id = token.id;
-            session.user.role = token.role;
-            session.user.last_name = token.last_name;
+            if (token) {
+                session.user.id = token.id;
+                session.user.role = token.role;
+                session.user.last_name = token.last_name;
+            }
             return session;
         },
         async redirect({url, baseUrl}) {

@@ -15,12 +15,19 @@ interface ExperienceStore {
     removeExperience: (index: number) => void;
 }
 
+function getInitialExperience(): Experience[] {
+    const data = localStorage.getItem('experience') || '';
+    return data ? JSON.parse(data) : [];
+}
+
 const useExperienceStore = create<ExperienceStore>((set) => ({
-    experience: [],
+    experience: getInitialExperience(),
     updateExperience: (index, updatedExperience) =>
         set((state) => {
             const newExperience = [...state.experience];
             newExperience[index] = updatedExperience;
+
+            localStorage.setItem('experience', JSON.stringify(newExperience));
             return { experience: newExperience };
         }),
     addExperience: () =>
@@ -31,13 +38,15 @@ const useExperienceStore = create<ExperienceStore>((set) => ({
                 roles: [],
                 tasks: '',
                 duration: '',
-        };
-        return { experience: [...state.experience, newExperience] };
+            };
+            localStorage.setItem("experience", JSON.stringify([...state.experience, newExperience]));
+            return { experience: [...state.experience, newExperience] };
     }),
     removeExperience: (index) =>
         set((state) => {
             const newExperience = [...state.experience];
             newExperience.splice(index, 1);
+            localStorage.setItem('experience', JSON.stringify(newExperience));
             return { experience: newExperience };
         }),
 }));

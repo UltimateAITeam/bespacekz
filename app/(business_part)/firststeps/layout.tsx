@@ -152,6 +152,7 @@ function Layout({children}: {children: React.ReactNode}) {
             case "/firststeps/portfolio":
                 postData("/api/profile/portfolio", {links: links})
                     .then((value) => {
+                        localStorage.clear();
                         router.push(pages[pageIndex+1].path);
                     })
                     .catch((reason) => {

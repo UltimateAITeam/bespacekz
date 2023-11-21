@@ -7,22 +7,34 @@ interface LinksStore {
     removeLink: (index: number) => void;
 }
 
+function getInitialLinks(): string[] {
+    const links = localStorage.getItem('links');
+    if (links) {
+        return JSON.parse(links);
+    }
+    return [];
+}
+
 const useLinksStore = create<LinksStore>((set) => ({
-    links: [],
+    links: getInitialLinks(),
     addLink: (newLink) =>
-        set((state) => ({
-            links: [...state.links, newLink],
-        })),
+        set((state) => {
+            localStorage.setItem('links', JSON.stringify([...state.links, newLink]));
+            return {links: [...state.links, newLink]}
+        }),
     updateLink: (index, updatedLink) =>
         set((state) => {
             const newLinks = [...state.links];
             newLinks[index] = updatedLink;
+            localStorage.setItem("links", JSON.stringify(newLinks));
             return { links: newLinks };
         }),
     removeLink: (index) =>
-        set((state) => ({
-            links: state.links.filter((_, i) => i !== index),
-        })),
+        set((state) => {
+            localStorage.setItem("links", JSON.stringify(state.links.filter((_, i) => i !== index)));
+
+            return {links: state.links.filter((_, i) => i !== index)}
+        }),
 }));
 
 export default useLinksStore;
