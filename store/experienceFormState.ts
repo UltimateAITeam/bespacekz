@@ -16,6 +16,7 @@ interface ExperienceStore {
 }
 
 function getInitialExperience(): Experience[] {
+    if (typeof window === 'undefined') return []
     const data = localStorage.getItem('experience') || '';
     return data ? JSON.parse(data) : [];
 }
@@ -27,11 +28,12 @@ const useExperienceStore = create<ExperienceStore>((set) => ({
             const newExperience = [...state.experience];
             newExperience[index] = updatedExperience;
 
-            localStorage.setItem('experience', JSON.stringify(newExperience));
+            if (typeof window !== 'undefined') localStorage.setItem('experience', JSON.stringify(newExperience));
             return { experience: newExperience };
         }),
     addExperience: () =>
         set((state) => {
+            console.log(typeof window === 'undefined')
             const newExperience: Experience = {
                 company: '',
                 name: '',
@@ -39,14 +41,14 @@ const useExperienceStore = create<ExperienceStore>((set) => ({
                 tasks: '',
                 duration: '',
             };
-            localStorage.setItem("experience", JSON.stringify([...state.experience, newExperience]));
+            if (typeof window !== 'undefined') localStorage.setItem("experience", JSON.stringify([...state.experience, newExperience]));
             return { experience: [...state.experience, newExperience] };
     }),
     removeExperience: (index) =>
         set((state) => {
             const newExperience = [...state.experience];
             newExperience.splice(index, 1);
-            localStorage.setItem('experience', JSON.stringify(newExperience));
+            if (typeof window !== 'undefined') localStorage.setItem('experience', JSON.stringify(newExperience));
             return { experience: newExperience };
         }),
 }));

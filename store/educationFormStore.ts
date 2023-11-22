@@ -1,4 +1,5 @@
 import {create} from 'zustand';
+import {win} from "posthog-js/lib/src/utils/globals";
 
 type Education = {
     degree: string;
@@ -15,7 +16,8 @@ type EducationStore = {
 };
 
 const getInitialEdu = (): Education[] => {
-    const data = localStorage.getItem('educations') || null;
+    if (typeof window === 'undefined') return []
+    const data = localStorage.getItem('education') || null;
     return data ? JSON.parse(data) : [];
 };
 
@@ -24,12 +26,14 @@ const useEducationStore = create<EducationStore>((set) => ({
     addEducation: () =>
         set((state) => {
 
-            localStorage.setItem('educations', JSON.stringify([...state.educations, {
-                degree: '',
-                institution: '',
-                graduationYear: 0,
-                specialization: ''
-            }]));
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('education', JSON.stringify([...state.educations, {
+                    degree: '',
+                    institution: '',
+                    graduationYear: 0,
+                    specialization: ''
+                }]));
+            }
 
             return {
                 educations: [...state.educations, {
@@ -42,14 +46,14 @@ const useEducationStore = create<EducationStore>((set) => ({
         }),
     removeEducation: (index) =>
         set((state) => {
-            localStorage.setItem('educations', JSON.stringify(state.educations.filter((_, i) => i !== index)));
+            if (typeof window !== 'undefined') localStorage.setItem('education', JSON.stringify(state.educations.filter((_, i) => i !== index)));
             return {educations: state.educations.filter((_, i) => i !== index)}
         }),
     updateEducation: (index, field, value) =>
         set((state) => {
             const updatedEducations = [...state.educations];
             updatedEducations[index][field] = value as never; // Use type assertion to 'never' to handle the error
-            localStorage.setItem('educations', JSON.stringify(updatedEducations));
+            if (typeof window !== 'undefined') localStorage.setItem('education', JSON.stringify(updatedEducations));
             return { educations: updatedEducations };
     }),
 

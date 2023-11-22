@@ -8,6 +8,7 @@ interface PricingStore {
 }
 
 function getRateInitial(key: string): number {
+    if (typeof window === 'undefined') return 0.0
     const data = localStorage.getItem(key);
     return data ? Number.parseFloat(data) : 0.0;
 }
@@ -18,7 +19,7 @@ const usePricingStore = create<PricingStore>((set) => ({
     updateHourlyRate: (updatedPricing) =>
         set((state) => {
 
-            localStorage.setItem("hourlyRate", updatedPricing.toString());
+            if (typeof window !== 'undefined') localStorage.setItem("hourlyRate", updatedPricing.toString());
             return {
                 hourlyRate: updatedPricing,
                 projectRate: state.projectRate
@@ -27,7 +28,7 @@ const usePricingStore = create<PricingStore>((set) => ({
     updateProjectRate: (updatedPricing) =>
         set((state) => {
 
-            localStorage.setItem("projectRate", updatedPricing.toString());
+            if (typeof window !== 'undefined') localStorage.setItem("projectRate", updatedPricing.toString());
             return {
                 projectRate: updatedPricing,
                 hourlyRate: state.hourlyRate

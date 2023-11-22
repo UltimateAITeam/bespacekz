@@ -73,7 +73,7 @@ model Education {
   graduationYear      Int
   specialization      String
   freelancerProfileId String
-  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
 
 model Experience {
@@ -84,7 +84,7 @@ model Experience {
   duration            String
   company             String
   freelancerProfileId String
-  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
 
 model Skill {
@@ -92,7 +92,7 @@ model Skill {
   name                String
   proficiencyLevel    String
   freelancerProfileId String
-  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
 
 model Pricing {
@@ -100,14 +100,14 @@ model Pricing {
   hourlyRate          Float
   projectRate         Float
   freelancerProfileId String
-  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
 
 model Portfolio {
   id                  Int               @id @default(autoincrement())
   links               String[]
   freelancerProfileId String
-  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id])
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
 
 // END FREELANCER PROFILE

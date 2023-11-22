@@ -143,6 +143,9 @@ function Layout({children}: {children: React.ReactNode}) {
             case "/firststeps/price":
                 postData("/api/profile/price", {projectRate: projectRate, hourlyRate: hourlyRate})
                     .then((value) => {
+                        localStorage.removeItem("projectRate");
+                        localStorage.removeItem("hourlyRate");
+                        localStorage.clear();
                         router.push("/");
                     })
                     .catch((reason) => {
@@ -152,7 +155,6 @@ function Layout({children}: {children: React.ReactNode}) {
             case "/firststeps/portfolio":
                 postData("/api/profile/portfolio", {links: links})
                     .then((value) => {
-                        localStorage.clear();
                         router.push(pages[pageIndex+1].path);
                     })
                     .catch((reason) => {
@@ -170,7 +172,6 @@ function Layout({children}: {children: React.ReactNode}) {
     } else if (session.status === "unauthenticated") {
         return redirect("/login")
     } else {
-
         if (loading || session.data?.user.role === "CLIENT") {
             return redirect("/")
         } else return <AnimatePresence>
@@ -200,7 +201,13 @@ function Layout({children}: {children: React.ReactNode}) {
                             {pages[pageIndex].skip &&
                                 <Link
                                     className={`mr-2 md:mr-6 text-zinc-950`}
-                                    onClick={() => router.push(pages[pageIndex+1].path)}
+                                    onClick={() => {
+                                        const page = pages[pageIndex].path.split("/")[-1];
+                                        if (typeof window !== "undefined") {
+                                            localStorage.removeItem(page);
+                                        }
+                                        router.push(pages[pageIndex + 1].path)
+                                    }}
                                     href={pageIndex !== pages.length-1 ? pages[pageIndex+1].path : ""}
                                 >
                                     Пропустить
@@ -210,8 +217,8 @@ function Layout({children}: {children: React.ReactNode}) {
                                 className={`${couldNext() ? "cursor-pointer px-6 py-2 bg-[#4ea8bc] border-2 border-amber-white rounded-xl md:rounded-3xl" : "pointer-events-none border-2 border-amber-white rounded-3xl px-6 py-2 bg-gray-300 text-white"}`}
                                 onClick={handleNext}
                             >
-                        {pages[pageIndex].next}
-                    </span>
+                                {pages[pageIndex].next}
+                            </span>
                         </div>
                     </div>
                 </footer>

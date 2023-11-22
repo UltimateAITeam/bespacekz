@@ -8,7 +8,8 @@ interface LinksStore {
 }
 
 function getInitialLinks(): string[] {
-    const links = localStorage.getItem('links');
+    if (typeof window === 'undefined') return []
+    const links = localStorage.getItem('portfolio');
     if (links) {
         return JSON.parse(links);
     }
@@ -19,19 +20,19 @@ const useLinksStore = create<LinksStore>((set) => ({
     links: getInitialLinks(),
     addLink: (newLink) =>
         set((state) => {
-            localStorage.setItem('links', JSON.stringify([...state.links, newLink]));
+            if (typeof window !== 'undefined') localStorage.setItem('portfolio', JSON.stringify([...state.links, newLink]));
             return {links: [...state.links, newLink]}
         }),
     updateLink: (index, updatedLink) =>
         set((state) => {
             const newLinks = [...state.links];
             newLinks[index] = updatedLink;
-            localStorage.setItem("links", JSON.stringify(newLinks));
+            if (typeof window !== 'undefined') localStorage.setItem("portfolio", JSON.stringify(newLinks));
             return { links: newLinks };
         }),
     removeLink: (index) =>
         set((state) => {
-            localStorage.setItem("links", JSON.stringify(state.links.filter((_, i) => i !== index)));
+            if (typeof window !== 'undefined') localStorage.setItem("portfolio", JSON.stringify(state.links.filter((_, i) => i !== index)));
 
             return {links: state.links.filter((_, i) => i !== index)}
         }),
