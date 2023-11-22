@@ -112,11 +112,36 @@ model Portfolio {
 
 // END FREELANCER PROFILE
 
+// CLIENT PROFILE
 model ClientProfile {
-  id     String @id @default(cuid())
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String    @id @default(cuid())
+  userEmail String    @unique
+  user      User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  Vacancy   Vacancy[]
+
+  isCompany    Boolean @default(false)
+  companyInfo  String?
+  sphereOfWork String?
 }
+
+// Vacancies
+model Vacancy {
+  id            String        @id @default(cuid())
+  clientId      String        @unique
+  clientProfile ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  title          String
+  aboutVacancy   String
+  priceFrom      Float
+  priceTo        Float
+  currency       String  @default("KZT")
+  isClear        Boolean @default(false) // if true - then after taxes, else - before taxes
+  experience     String
+  specialization String
+  city           String  @default("remote") // if remote - then freelancer can work from any city
+}
+
+// END CLIENT PROFILE
 
 model VerificationToken {
   identifier String

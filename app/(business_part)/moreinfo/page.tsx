@@ -1,15 +1,22 @@
 'use client';
-import React, {useEffect} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import HeadTag from "@/components/brenda_components/HeadTag";
 import {useSession} from "next-auth/react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {SubmitHandler, useForm} from "react-hook-form";
-import { Button, Spinner } from '@chakra-ui/react';
+import {Button, Checkbox, Spinner, Textarea} from '@chakra-ui/react';
+import ClientForm from "@/components/signup_elements/ClientForm";
 
 interface FormValues {
     first_name: string;
     last_name: string;
     location_city: string;
+}
+
+interface ClientValues extends FormValues {
+    isCompany?: boolean;
+    companyInfo?: string;
+    sphereOfWork?: string;
 }
 
 function Oauth_additional() {
@@ -19,13 +26,14 @@ function Oauth_additional() {
 
     const router = useRouter();
 
-    const {handleSubmit, setValue, register, formState: {errors, isValid} } = useForm<FormValues>();
+
+    const {handleSubmit, setValue, register, formState: {errors, isValid} } = useForm<ClientValues>();
 
     useEffect(() => {
         setValue("first_name", session.data?.user?.name as string);
-    }, [])
+    }, [session.data?.user?.name, setValue])
     const [isLoadingSubmit, setIsLoadingSubmit] = React.useState(false);
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const onSubmit: SubmitHandler<ClientValues> = async (data) => {
         setIsLoadingSubmit(true);
         if (isValid) {
             const req_data = {
@@ -36,6 +44,21 @@ function Oauth_additional() {
                 location: data?.location_city,
             }
 
+            if (role === "client") {
+                const client_data = {
+                    email: session.data?.user.email,
+                    isCompany: data?.isCompany,
+                    companyInfo: data?.companyInfo,
+                    sphereOfWork: data?.sphereOfWork,
+                };
+                await fetch("/api/client_info", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(client_data),
+                });
+            }
             const response = await fetch("/api/oauth_additional", {
                 method: 'POST',
                 headers: {
@@ -45,6 +68,15 @@ function Oauth_additional() {
             });
 
             if (response.ok) {
+                await session.update(
+                    {
+                        ...session.data,
+                        user: {
+                            ...session.data?.user,
+                            role: role,
+                        }
+                    }
+                );
                 router.push("/firststeps")
                 setIsLoadingSubmit(false);
             }
@@ -60,8 +92,8 @@ function Oauth_additional() {
     let displayErrors: any = []
 
     Object.values(errors).forEach((error, index) => {
-        if (error.type === "minLength") displayErrors.push(<li key={index}>Length must be more than 8 symbols</li>)
-        if (error.message) displayErrors.push(<li key={index}>{error.message}</li>)
+        if (error?.type === "minLength") displayErrors.push(<li key={index}>Length must be more than 8 symbols</li>)
+        if (error?.message) displayErrors.push(<li key={index}>{error.message as ReactNode}</li>)
     })
 
 
@@ -146,6 +178,21 @@ function Oauth_additional() {
                                     <option value="Temirtau">Temirtau</option>
                                 </select>
                                 </div>
+                                {role === "client" &&
+                                    <div>
+                                        <Checkbox className={"mb-2"} {...register("isCompany")}>Is it a company account?</Checkbox>
+                                        <Textarea
+                                            placeholder={"Write something about you/your company as a Client."}
+                                            className={"mb-2"}
+                                            {...register("companyInfo", {required: "Company info is required"})}
+                                        />
+                                        <Textarea
+                                            placeholder={"Your sphere of work."}
+                                            className={"mb-2"}
+                                            {...register("sphereOfWork", {required: "Sphere of work is required"})}
+                                        />
+                                    </div>
+                                }
                                 <Button colorScheme='facebook' isLoading={isLoadingSubmit} isDisabled={!isValid} className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
                                     Continue
                                 </Button>

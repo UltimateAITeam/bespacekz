@@ -17,7 +17,8 @@ export async function POST(
                     location: data.location,
                     role: data.role.toUpperCase()
                 }
-            })
+            });
+
             return NextResponse.json({message: "User created"}, {status: 200});
         } else {
             throw new Error("INVALID ROLE")

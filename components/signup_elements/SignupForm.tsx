@@ -50,10 +50,10 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                 last_name: data.last_name,
                 password: data.password,
                 phone: data.phone,
-                location: data.location_city,
                 role: data.role,
+                location: data.location_city,
                 redirect: true,
-                callbackUrl: "/firststeps",
+                callbackUrl: "/moreinfo?role="+data.role,
             }).then((res) => {
                 if (res?.status === 401) {
                     setIsLoadingSubmit(false);
