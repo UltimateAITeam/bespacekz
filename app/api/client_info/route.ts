@@ -17,7 +17,7 @@ export async function POST(
                 isCompany: data?.isCompany as boolean,
                 companyInfo: data?.companyInfo as string,
                 sphereOfWork: data?.sphereOfWork as string,
-            }
+            } as any
         });
 
         return NextResponse.json({message: "User created"}, {status: 200});

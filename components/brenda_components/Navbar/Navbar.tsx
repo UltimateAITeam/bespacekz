@@ -32,9 +32,11 @@ import {
   VStack,
   Box,
   Text,
-  IconButton
+  IconButton,
+  useDisclosure
 } from "@chakra-ui/react";
 import { FiChevronDown, FiSettings, FiInbox, FiLogOut, FiBell, FiUser } from "react-icons/fi";
+import VacancyCreateModal from "@/components/modals/VacancyCreateModal";
 
 const Navbar = () => {
   // ============= Router hooks ===================
@@ -200,7 +202,15 @@ const Navbar = () => {
 
   const session = useSession();
 
+  const { 
+    isOpen : isOpenVacancyCreateModal, 
+    onOpen : onOpenVacancyCreateModal, 
+    onClose : onCloseVacancyCreateModal
+  } = useDisclosure()
+
+
   return (
+    <div>
     <nav>
       {/* ============================ First Nav Bar ================================ */}
       <div className="container mx-auto py-3 px-3 lg:flex items-center justify-between border-b hidden">
@@ -493,6 +503,17 @@ const Navbar = () => {
           </div>
         ) : session.data?.user ? (
           <HStack spacing={{ base: '0', md: '6' }}>
+            {(session.data.user.role === "CLIENT" || localStorage.getItem('userRole') == "CLIENT") && (
+              <Button
+                onClick={onOpenVacancyCreateModal}
+                fontSize={'sm'}
+                fontWeight={400}
+                variant={'solid'}
+                colorScheme={'teal'}
+              >
+                Создать вакансию
+              </Button>
+            )}
             <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
           <Menu>
             {/* <MenuButton
@@ -535,11 +556,16 @@ const Navbar = () => {
                     : session.data.user.email
                     }
                     </Text>
-                  {session.data.user.role && 
-                  <Text fontSize="xs" color="gray.600">
-                    {session.data.user.role}
+                  {session.data.user.role ? 
+                  <Text fontSize="xs" color="gray.600" className="capitalize">
+                    {session.data.user.role as string}
                   </Text>
-                  }
+                  : localStorage.getItem('userRole') ? 
+                  <Text fontSize="xs" color="gray.600" className="capitalize">
+                    {localStorage.getItem('userRole')}
+                  </Text>
+                  : <></>
+                }
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
@@ -565,8 +591,8 @@ const Navbar = () => {
                 </Center>
               )}
 
-              {/* <Center className="mt-1 text-xs font-extralight px-4">
-                {session.data.user.location}
+              {/* <Center className="mt-1 text-xs font-extralight px-4 capitalize">
+                {session.data.user.role as string}
               </Center> */}
 
               {session.data.user.email && (
@@ -1095,6 +1121,8 @@ const Navbar = () => {
       </div>
       {/* ==================== Mobile Nav Bar end ====================== */}
     </nav>
+    <VacancyCreateModal isOpen={isOpenVacancyCreateModal} onClose={onCloseVacancyCreateModal} />
+    </div>
   );
 };
 
