@@ -20,11 +20,26 @@ type ModalProps = {
 };
 
 const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  
+  const [isLoadingForm, setIsLoadingForm] = React.useState(false);
   const initialRef = React.useRef(null)
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: any) => {
+    setIsLoadingForm(true);
     console.log(data);
     // Handle the form submission here (e.g., send to an API)
+    // submit the data to  /api/add_vacancy endpoint
+    // then close the modal
+    const resVacancyAPI = await fetch('/api/add_vacancy', {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+    if (resVacancyAPI.ok) {
+      const resVacancy = await resVacancyAPI.json();
+      console.log(resVacancy);
+    } else {
+      console.log(resVacancyAPI.status);
+    }
+    onClose();
+    setIsLoadingForm(false);
   };
   return (
     <Modal
@@ -41,7 +56,7 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <VacancyForm onSubmit={handleSubmit} onCloseModal={onClose} />
+            <VacancyForm onSubmit={handleSubmit} onCloseModal={onClose} isLoadingButton={isLoadingForm}/>
           </ModalBody>
           {/* <ModalFooter>
             <Button onClick={onClose} mr={3}>Отмена</Button>

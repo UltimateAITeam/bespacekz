@@ -503,6 +503,7 @@ const Navbar = () => {
           </div>
         ) : session.data?.user ? (
           <HStack spacing={{ base: '0', md: '6' }}>
+            {/* fix this, when logging in as freelancer does not change role in localstorage */}
             {(session.data.user.role === "CLIENT" || localStorage.getItem('userRole') == "CLIENT") && (
               <Button
                 onClick={onOpenVacancyCreateModal}
