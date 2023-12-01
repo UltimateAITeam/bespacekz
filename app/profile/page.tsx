@@ -69,7 +69,7 @@ function Page() {
                             </div>
                             <div className={"flex w-full md:flex-row flex-col"}>
                                 <Stack direction={"column"}>
-                                    <Avatar size={"2xl"} className={"m-auto md:m-none"} />
+                                    <Avatar size={"2xl"} className={"m-auto md:m-none"} src={data.image!} />
                                     <button className={"text-blue-500"}>Изменить</button>
                                 </Stack>
                                 <Grid
