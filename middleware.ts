@@ -5,6 +5,8 @@ export const config = {
         "/dashboard",
         "/firststeps",
         "/moreinfo",
+        "/profile",
+
     ],
 
 }

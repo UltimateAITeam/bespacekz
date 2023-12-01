@@ -127,7 +127,7 @@ model ClientProfile {
 // Vacancies
 model Vacancy {
   id            String        @id @default(cuid())
-  clientId      String        @unique
+  clientId      String
   clientProfile ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
   title          String

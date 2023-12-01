@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SubLinks1, SubLinks2, SubLinks3 } from "./LinkData";
 import SearchLink from "./SearchLink";
-import SecondLink, { MoreLink } from "./SecondLink";
+import { CgProfile } from "react-icons/cg";
 import {
   FaCaretDown,
   FaSearch,
@@ -576,6 +576,10 @@ const Navbar = () => {
               )}
 
               <br />
+              <MenuDivider />
+              <MenuItem as={Link} href={"/profile"} icon={<CgProfile />}>
+                Профиль
+              </MenuItem>
               <MenuDivider />
               <MenuItem icon={<FiInbox />}>
                 {session.data.user.role === "CLIENT"
