@@ -39,9 +39,11 @@ function SignUp() {
 
     const handleConditionForm = (type?: string) => {
         if (type === "client" || client) {
+            localStorage.setItem("userRole", "CLIENT");
             setClientForm(true);
             if (freelancerForm) setFreelancerForm(false);
         } else if (type === "freelancer" || freelancer) {
+            localStorage.setItem("userRole", "FREELANCER");
             setFreelancerForm(true);
             if (clientForm) setClientForm(false);
         }
@@ -72,7 +74,7 @@ function SignUp() {
                                 {/* ===================== Create account section ========================== */}
                                 <div className="flex md:flex-row flex-col items-center md:space-x-8 md:space-y-0 space-y-5 mt-10">
                                     {/* ========== client =========== */}
-                                    {/* <div className={`${client ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleClient}>
+                                    <div className={`${client ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleClient}>
                                         <div>
                                             <FcConferenceCall className="text-5xl"/>
                                         </div>
@@ -81,7 +83,7 @@ function SignUp() {
                                                 I’m a client, hiring for a project
                                             </h4>
                                         </div>
-                                    </div> */}
+                                    </div>
 
                                     {/* ========== client =========== */}
                                     <div className={`${(freelancer == true) ? "bg-[#0C4A6E]" : "bg-[#e5ecea] hover:bg-[#d1dfdb]"} rounded-xl py-7 sm:px-8 px-5 flex flex-col items-center space-y-4 md:max-w-[17rem] md:w-auto w-full cursor-pointer transition`} onClick={handleFreelancer}>
@@ -97,7 +99,7 @@ function SignUp() {
                                 </div>
 
                                 {/* =============== Button =================== */}
-                                <button className={`${(freelancer == true || client == true) ? "bg-[#0C4A6E] hover:bg-[#18465f] text-[#e5ecea]" : "bg-[#e5ecea] hover:bg-[#d1dfdb] text-gray-500"} py-2 md:px-20 px-3 mt-10 rounded-full font-semibold transition md:w-auto w-full`} onClick={() => handleConditionForm()}>
+                                <button className={`${(freelancer == true || client == true) ? "bg-[#0C4A6E] hover:bg-[#18465f] text-white" : "bg-[#e5ecea] hover:bg-[#d1dfdb] text-gray-500"} py-2 md:px-20 px-3 mt-10 rounded-full font-semibold transition md:w-auto w-full`} onClick={() => handleConditionForm()}>
                                     {btnText}
                                 </button>
 

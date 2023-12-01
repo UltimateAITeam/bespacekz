@@ -30,8 +30,13 @@ function Oauth_additional() {
     const {handleSubmit, setValue, register, formState: {errors, isValid} } = useForm<ClientValues>();
 
     useEffect(() => {
-        setValue("first_name", session.data?.user?.name as string);
+        if (!session.data?.user?.name || session.data?.user?.name == "") return;
+        let firstName = session.data?.user?.name?.split(" ")[1];
+        let lastName = session.data?.user?.name?.split(" ")[0];
+        setValue("first_name", firstName as string);
+        setValue("last_name", lastName as string);
     }, [session.data?.user?.name, setValue])
+
     const [isLoadingSubmit, setIsLoadingSubmit] = React.useState(false);
     const onSubmit: SubmitHandler<ClientValues> = async (data) => {
         setIsLoadingSubmit(true);
@@ -179,15 +184,18 @@ function Oauth_additional() {
                                 </select>
                                 </div>
                                 {role === "client" &&
-                                    <div>
-                                        <Checkbox className={"mb-2"} {...register("isCompany")}>Is it a company account?</Checkbox>
+                                    <div className='flex flex-col'>
+                                        {/* <p className='font-medium px-1 pb-1'>Last name:</p> */}
+                                        <Checkbox className={"mb-4"} {...register("isCompany")}>Is it a company account?</Checkbox>
+                                        <p className='font-medium px-1 pb-1'>Данные о компании:</p>
                                         <Textarea
-                                            placeholder={"Write something about you/your company as a Client."}
+                                            placeholder={"Write something about you/your company..."}
                                             className={"mb-2"}
                                             {...register("companyInfo", {required: "Company info is required"})}
                                         />
+                                        <p className='font-medium px-1 pb-1'>Сфера деятельности:</p>
                                         <Textarea
-                                            placeholder={"Your sphere of work."}
+                                            placeholder={"Краткое описание отрасли или области..."}
                                             className={"mb-2"}
                                             {...register("sphereOfWork", {required: "Sphere of work is required"})}
                                         />
