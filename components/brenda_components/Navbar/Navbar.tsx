@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SubLinks1, SubLinks2, SubLinks3 } from "./LinkData";
 import SearchLink from "./SearchLink";
-import { CgProfile } from "react-icons/cg";
+import SecondLink, { MoreLink } from "./SecondLink";
 import {
   FaCaretDown,
   FaSearch,
@@ -18,25 +18,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { limitText } from "@/libs/utils";
-import {
-  Menu,
-  MenuButton,
-  Button,
-  MenuList,
-  MenuItem,
-  MenuGroup,
-  MenuDivider,
-  Center,
-  Avatar,
-  HStack,
-  VStack,
-  Box,
-  Text,
-  IconButton,
-  useDisclosure
-} from "@chakra-ui/react";
-import { FiChevronDown, FiSettings, FiInbox, FiLogOut, FiBell, FiUser } from "react-icons/fi";
-import VacancyCreateModal from "@/components/modals/VacancyCreateModal";
 
 const Navbar = () => {
   // ============= Router hooks ===================
@@ -202,15 +183,7 @@ const Navbar = () => {
 
   const session = useSession();
 
-  const { 
-    isOpen : isOpenVacancyCreateModal, 
-    onOpen : onOpenVacancyCreateModal, 
-    onClose : onCloseVacancyCreateModal
-  } = useDisclosure()
-
-
   return (
-    <div>
     <nav>
       {/* ============================ First Nav Bar ================================ */}
       <div className="container mx-auto py-3 px-3 lg:flex items-center justify-between border-b hidden">
@@ -218,8 +191,8 @@ const Navbar = () => {
         <div className="flex items-center">
           <div>
             <Image
-              src="/bespace/bespace-v3.png"
-              width={170}
+              src="/images/logo.png"
+              width={60}
               height={50}
               alt="logo"
               className="cursor-pointer"
@@ -454,7 +427,7 @@ const Navbar = () => {
                 }`}
                 onClick={ThirdLinkHandle}
               >
-                Why Bespace
+                Why Branda
                 <FaCaretDown
                   className={`mt-1 xl:ml-1 ml-[1px] transition ${
                     subLinksIII === true ? "rotate-180" : "rotate-0"
@@ -497,215 +470,90 @@ const Navbar = () => {
         </div>
 
         {/* ==================== Right Login =========================== */}
-        {session.status == "loading" ? (
-          <div className="flex items-center">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
-          </div>
-        ) : session.data?.user ? (
-          <HStack spacing={{ base: '0', md: '6' }}>
-            {(session.data.user.role === "CLIENT" || localStorage.getItem('userRole') == "CLIENT") && (
-              <Button
-                onClick={onOpenVacancyCreateModal}
-                fontSize={'sm'}
-                fontWeight={400}
-                variant={'solid'}
-                colorScheme={'teal'}
-              >
-                Создать вакансию
-              </Button>
-            )}
-            <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
-          <Menu>
-            {/* <MenuButton
-                  as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
-                  minW={0}>
-                  <Avatar
-                    size={'sm'}
-                    src={session.data.user.image ? session.data.user.image :'https://avatars.dicebear.com/api/male/username.svg'}
-                  />
-                </MenuButton> */}
-            <MenuButton
-              
-              py={2}
-              transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
-              <HStack>
-                <Avatar
-                  size={"sm"}
-                  src={
-                    session.data.user.image
-                      ? session.data.user.image
-                      : "https://avatars.dicebear.com/api/male/username.svg"
-                  }
-                />
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
+        {session.data?.user ? (
+          <div className={"flex items-center"}>
+            {/* TODO: ДОДЕЛАТЬ ВСЕ НОБХОДИМЫЕ ОПЦИИ */}
+            <div className="relative inline-block text-left mr-6">
+              <div>
+                <button
+                  onClick={() => setDropdownState(!dropdownState)}
+                  type="button"
+                  className="align-text-bottom inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  id="menu-button"
+                  aria-expanded="true"
+                  aria-haspopup="true"
                 >
-                  <Text fontSize="sm">
-                    {
-                    (session.data.user.name && session.data.user.last_name) ? 
-                    session.data.user.name + ' ' + session.data.user.last_name :
-                    session.data.user.name ? session.data.user.name 
-                    : session.data.user.email
-                    }
-                    </Text>
-                  {session.data.user.role ? 
-                  <Text fontSize="xs" color="gray.600" className="capitalize">
-                    {session.data.user.role as string}
-                  </Text>
-                  : localStorage.getItem('userRole') ? 
-                  <Text fontSize="xs" color="gray.600" className="capitalize">
-                    {localStorage.getItem('userRole')}
-                  </Text>
-                  : <></>
-                }
-                </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList zIndex={9999} alignItems={"center"} className="text-sm">
-              <br />
-              <Center>
-                <Avatar
-                  size={"lg"}
-                  src={
-                    session.data.user.image
-                      ? session.data.user.image
-                      : "https://avatars.dicebear.com/api/male/username.svg"
-                  }
-                />
-              </Center>
-              <br />
-              {(session.data.user.name || session.data.user.last_name) && (
-                <Center>
-                  <p>{session.data.user.name}{" "}{session.data.user.last_name != null && session.data.user.last_name}</p>
-                </Center>
-              )}
+                  <Image
+                    width={25}
+                    height={25}
+                    // session.data.user.image ||
+                    src={"/images/default_logo.png"}
+                    alt={"LOGO"}
+                    className={"rounded-3xl"}
+                  />
+                  {session.data.user.name && (
+                    <p>{limitText(session.data.user.name, 10)}</p>
+                  )}
+                </button>
+              </div>
 
-              {/* <Center className="mt-1 text-xs font-extralight px-4 capitalize">
-                {session.data.user.role as string}
-              </Center> */}
-
-              {session.data.user.email && (
-                <Center className="mt-1 text-xs font-extralight px-4">
-                  <p>{session.data.user.email}</p>
-                </Center>
-              )}
-
-              <br />
-              <MenuDivider />
-              <MenuItem as={Link} href={"/profile"} icon={<CgProfile />}>
-                Профиль
-              </MenuItem>
-              <MenuDivider />
-              <MenuItem icon={<FiInbox />}>
-                {session.data.user.role === "CLIENT"
-                  ? "Ваши заказы"
-                  : "Активные проекты"}
-              </MenuItem>
-              <MenuItem icon={<FiSettings />}>Настройки профиля</MenuItem>
-              <MenuDivider />
-              <MenuItem icon={<FiLogOut />} onClick={() => signOut({ redirect: false })}>
-                Logout
-              </MenuItem>
-            </MenuList>
-          </Menu>
-          </HStack>
-        ) : // <div className={"flex items-center"}>
-        //   {/* TODO: ДОДЕЛАТЬ ВСЕ НОБХОДИМЫЕ ОПЦИИ */}
-        //   <div className="relative inline-block text-left mr-6">
-        //     <div>
-        //       <button
-        //         onClick={() => setDropdownState(!dropdownState)}
-        //         type="button"
-        //         className="align-text-bottom inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-        //         id="menu-button"
-        //         aria-expanded="true"
-        //         aria-haspopup="true"
-        //       >
-        //         <Image
-        //           width={25}
-        //           height={25}
-        //           // session.data.user.image ||
-        //           src={"/images/default_logo.png"}
-        //           alt={"LOGO"}
-        //           className={"rounded-3xl"}
-        //         />
-        //         {session.data.user.name && (
-        //           <p>{limitText(session.data.user.name, 10)}</p>
-        //         )}
-        //       </button>
-        //     </div>
-
-        //     <div
-        //       className={`absolute ${
-        //         dropdownState ? "block" : "hidden"
-        //       } right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
-        //       role="menu"
-        //       aria-orientation="vertical"
-        //       aria-labelledby="menu-button"
-        //       tabIndex={-1}
-        //     >
-        //       <div className="py-1" role="none">
-        //         <Link
-        //           href="#"
-        //           className="text-gray-700 block px-4 py-2 text-sm"
-        //           role="menuitem"
-        //           tabIndex={-1}
-        //           id="menu-item-0"
-        //         >
-        //           {session.data.user.role === "CLIENT"
-        //             ? "Ваши заказы"
-        //             : "Активные проекты"}
-        //         </Link>
-        //       </div>
-        //       <div className="py-1" role="none">
-        //         <button
-        //           onClick={() => signOut({ redirect: false })}
-        //           className="text-gray-700 block px-4 py-2 text-sm"
-        //           role="menuitem"
-        //           tabIndex={-1}
-        //           id="menu-item-6"
-        //         >
-        //           Sign out
-        //         </button>
-        //       </div>
-        //     </div>
-        //   </div>
-        // </div>
-        session.status == "unauthenticated" ? (
+              <div
+                className={`absolute ${
+                  dropdownState ? "block" : "hidden"
+                } right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="menu-button"
+                tabIndex={-1}
+              >
+                <div className="py-1" role="none">
+                  <Link
+                    href="#"
+                    className="text-gray-700 block px-4 py-2 text-sm"
+                    role="menuitem"
+                    tabIndex={-1}
+                    id="menu-item-0"
+                  >
+                    {session.data.user.role === "CLIENT"
+                      ? "Ваши заказы"
+                      : "Активные проекты"}
+                  </Link>
+                </div>
+                <div className="py-1" role="none">
+                  <button
+                    onClick={() => signOut({ redirect: false })}
+                    className="text-gray-700 block px-4 py-2 text-sm"
+                    role="menuitem"
+                    tabIndex={-1}
+                    id="menu-item-6"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
           <div className="flex items-center">
             <Link
               className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
               href={"/login"}
             >
-              Log in
+              LogIn
             </Link>
 
             <Link
               className="font-semibold bg-gradient-to-tr from-sky-200 to-cyan-200 py-2 px-3 rounded-xl text-gray-800 hover:from-cyan-300 hover:to-sky-200"
               href={"/signup"}
             >
-              Sign up
+              SignUp
             </Link>
           </div>
-        ) : (
-          <></>
         )}
       </div>
 
       {/* ==================== Second Nav Bar ===================== */}
-      
-      {/* <div className="container mx-auto py-3 px-3 hidden lg:block">
+      <div className="container mx-auto py-3 px-3 hidden lg:block">
         <ul className="flex items-center 2xl:space-x-20 xl:space-x-12 space-x-9">
           {SecondLink.map((curVal) => (
             <li
@@ -716,6 +564,7 @@ const Navbar = () => {
             </li>
           ))}
 
+          {/* ================ Dropdown More ================= */}
           {MoreLink.map((curVal) => (
             <li key={curVal.id} className="relative">
               <button
@@ -736,6 +585,7 @@ const Navbar = () => {
                 </span>
               </button>
 
+              {/* =========== More Dropdown List =============== */}
               <ul
                 className={`${moreDp} absolute font-semibold text-md bg-[#F3FFFC] shadow-lg border rounded-sm text-zinc-700 min-w-[17rem] right-[-1rem] top-7 z-10`}
               >
@@ -751,7 +601,7 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-      </div> */}
+      </div>
 
       {/* ==================== Mobile Nav Bar Start ====================== */}
       <div className="lg:hidden">
@@ -772,8 +622,8 @@ const Navbar = () => {
               </span>
 
               <Image
-                src="/bespace/bespace-v3.png"
-                width={120}
+                src="/images/logo.png"
+                width={55}
                 height={45}
                 alt="logo"
                 className="cursor-pointer mr-2"
@@ -782,73 +632,12 @@ const Navbar = () => {
             </div>
 
             {/* ========= Left ========= */}
-            {session.status == "loading" ? (
-          <div className="flex items-center">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
-          </div>
-        ) : session.data?.user ? (
-          <HStack spacing={{ base: '0', md: '6' }}>
-            <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
-          <Menu>
-            <MenuButton
-                  as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
-                  minW={0}>
-                  <Avatar
-                    size={'sm'}
-                    src={session.data.user.image ? session.data.user.image :'https://avatars.dicebear.com/api/male/username.svg'}
-                  />
-                </MenuButton>
-            
-            <MenuList zIndex={9999} alignItems={"center"} className="text-sm">
-              
-              {session.data.user.name && (
-                <MenuItem>
-                  {session.data.user.name}
-                </MenuItem>
-              )}
-
-              {session.data.user.email && (
-                <MenuItem className="text-xs font-extralight">
-                  {session.data.user.email}
-                </MenuItem>
-              )}
-              <MenuDivider />
-              <MenuItem icon={<FiInbox />}>
-                {session.data.user.role === "CLIENT"
-                  ? "Ваши заказы"
-                  : "Активные проекты"}
-              </MenuItem>
-              <MenuItem icon={<FiSettings />}>Настройки профиля</MenuItem>
-              <MenuDivider />
-              <MenuItem icon={<FiLogOut />} onClick={() => signOut({ redirect: false })}>
-                Logout
-              </MenuItem>
-            </MenuList>
-          </Menu>
-          </HStack>
-        ) : session.status == "unauthenticated" ? (
-          <div className="flex items-center">
-            <Link
-              className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
-              href={"/login"}
+            <button
+              className="font-semibold py-1 px-3 rounded-xl text-gray-800 hover:text-cyan-800"
+              onClick={() => router.push("/account-security/signup")}
             >
-              Log in
-            </Link>
-
-            <Link
-              className="font-semibold bg-gradient-to-tr from-sky-200 to-cyan-200 py-2 px-3 rounded-xl text-gray-800 hover:from-cyan-300 hover:to-sky-200"
-              href={"/signup"}
-            >
-              Sign up
-            </Link>
-          </div>
-        ) : (
-          <></>
-        )}
-            
+              SignUp
+            </button>
           </div>
         </div>
 
@@ -997,6 +786,7 @@ const Navbar = () => {
                                   <li key={curSubVal.id}>
                                     <Link href={curSubVal.link}>
                                       <div className="flex space-x-4 items-center border rounded-md cursor-pointer hover:shadow-sm hover:bg-[#e1f7fa]">
+                                        
                                         {/* <Image
                                           src={curSubVal.img}
                                           height={65}
@@ -1078,7 +868,7 @@ const Navbar = () => {
                 }`}
                 onClick={ThirdLinkHandleMb}
               >
-                Why Bespace
+                Why Branda
                 <FaAngleDown
                   className={`transition ${
                     mobileSubListIII === true ? "rotate-180" : "rotate-0"
@@ -1113,20 +903,16 @@ const Navbar = () => {
             </li>
           </ul>
 
-          <Link href={"/login"}>
           <button
             className="text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700 inline-flex sm:mx-0 mx-1"
-            // onClick={() => router.push("/account-security/login")}
+            onClick={() => router.push("/account-security/login")}
           >
             Login
           </button>
-          </Link>
         </div>
       </div>
       {/* ==================== Mobile Nav Bar end ====================== */}
     </nav>
-    <VacancyCreateModal isOpen={isOpenVacancyCreateModal} onClose={onCloseVacancyCreateModal} />
-    </div>
   );
 };
 

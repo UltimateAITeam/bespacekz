@@ -6,10 +6,6 @@ import {ErrorMessage} from "@hookform/error-message";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
 import LinkedInButton from "@/components/LinkedInButton";
-import { MdOutlineVisibility } from "react-icons/md";
-import {MdOutlineVisibilityOff} from "react-icons/md";
-import {Button} from "@chakra-ui/react";
-import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 
 interface FormValues {
     first_name: string;
@@ -18,11 +14,11 @@ interface FormValues {
     phone: string;
     location_city: string;
     password: string;
-    role: "client" | "freelancer";
+    role: "client" | "freelance";
 }
 
 
-function SignupForm({type}: {type: "client" | "freelancer"}) {
+function SignupForm({type}: {type: "client" | "freelance"}) {
 
     const [localType, setLocalType] = useState(type);
     const [password, setPassword] = useState("")
@@ -30,17 +26,12 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
-    const [isTermsChecked, setIsTermsChecked] = useState(false);
-
     const { setError, handleSubmit, control, register, formState: {errors, isValid} } = useForm<FormValues>();
     const passwordRegister = register("password", {required: "Password is required", minLength: 8})
 
-    const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        setIsLoadingSubmit(true);
         if (password !== confirmPassword) {
             setError("password", {type: "custom", message: "Passwords doesn't match"})
-            setIsLoadingSubmit(false);
             return null;
         }
         if (isValid ) {
@@ -50,17 +41,15 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                 last_name: data.last_name,
                 password: data.password,
                 phone: data.phone,
-                role: data.role,
                 location: data.location_city,
+                role: data.role,
                 redirect: true,
-                callbackUrl: "/moreinfo?role="+data.role,
+                callbackUrl: "/firststeps",
             }).then((res) => {
                 if (res?.status === 401) {
-                    setIsLoadingSubmit(false);
                     setError("password", {type: "custom", message: "Incorrect password"})
                     return;
                 }
-                setIsLoadingSubmit(false);
             })
 
         }
@@ -79,13 +68,13 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
             <div className="sm:border border-gray-300 rounded-xl">
                 <div className="sm:px-7 sm:pt-10 pb-10 flex flex-col justify-center md:items-center">
                     <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl text-center">
-                        {localType === "freelancer" ? "Sign up to find work you love" : "Sign up to find Freelancers you want"}
+                        {localType === "freelance" ? "Sign up to find work you love" : "Sign up to find Freelancers you want"}
                     </h2>
 
                     {/* ================= Continue with section ==================== */}
-                    <GitHubButton options={{callbackUrl: "/moreinfo?role="+localType}} text={"Continue with GitHub"} className={"hover:bg-gray-800 transition-colors bg-gray-900 text-gray-100 text-lg font-semibold border-2 mt-9"} />
-                    <GoogleButton options={{callbackUrl: "/moreinfo?role="+localType}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-lg font-semibold border-2 "} />
-                    <LinkedInButton options={{callbackUrl: "/moreinfo?role="+localType}} text={"Continue with LinkedIn"} className={"hover:bg-[#0c4a6e] transition-colors text-gray-100 text-lg font-semibold border-2 mt-4 "} />
+                    <GitHubButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with GitHub"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 mt-4"} />
+                    <GoogleButton options={{callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 "} />
+                    <LinkedInButton options={{redirect: true, callbackUrl: "/oauth_additional?role="+localType}} text={"Continue with LinkedIn"} className={"hover:bg-[#0c4a6e] transition-colors text-xl font-semibold border-2 mt-4 "} />
 
                     {/* ================= Or section ==================== */}
                     <div className="flex w-full mt-5 items-center space-x-2">
@@ -157,17 +146,16 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                             <span
                                 style={{
                                     position: 'absolute',
-                                    right: '24px',
+                                    right: '5px',
                                     top: '50%',
                                     transform: 'translateY(-50%)',
                                     cursor: 'pointer',
                                     border: 'none',
                                     background: 'none',
                                 }}
-                                className='text-gray-500 text-xl'
                                 onClick={() => setShowPassword(!showPassword)}
                             >
-                                {showPassword ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/>}
+                                {showPassword ? '👀' : '👁️‍🗨️'}
                             </span>
                         </div>
                         {/* ============= confirm password input ============= */}
@@ -183,73 +171,44 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                             <span
                                 style={{
                                     position: 'absolute',
-                                    right: '24px',
+                                    right: '5px',
                                     top: '50%',
                                     transform: 'translateY(-50%)',
                                     cursor: 'pointer',
                                     border: 'none',
                                     background: 'none',
                                 }}
-                                className='text-gray-500 text-xl'
                                 onClick={() => setShowConfirm(!showConfirm)}
                             >
-                                {showConfirm ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/>}
+                                {showConfirm ? '👀' : '👁️‍🗨️'}
                             </span>
                         </div>
 
                         {/* ================= country select =============== */}
                         <select
-                            defaultValue={"Astana"}
                             id="Country"
-                            className="bg-transparent border-2 border-gray-300 text-zinc-800 rounded-lg focus:border-[#b8d8d4fd] block w-full xl:px-8 px-3 py-4 cursor-pointer"
+                            className="bg-transparent border-2 border-gray-300 text-zinc-800 text-sm rounded-lg focus:border-[#b8d8d4fd] block w-full px-3 py-2 cursor-pointer font-semibold"
                             {...register("location_city", {required: "Location is required!"})}
                         >
-                            <option value="Aktobe">Aktobe</option>
-                            <option value="Almaty">Almaty</option>
                             <option value="Astana">Astana</option>
-                            <option value="Atyrau">Atyrau</option>
-                            <option value="Karaganda">Karaganda</option>
-                            <option value="Kokshetau">Kokshetau</option>
+                            <option value="Almaty">Almaty</option>
                             <option value="Kostanay">Kostanay</option>
-                            <option value="Kyzylorda">Kyzylorda</option>
-                            <option value="Pavlodar">Pavlodar</option>
-                            <option value="Petropavl">Petropavl</option>
-                            <option value="Semey">Semey</option>
-                            <option value="Shymkent">Shymkent</option>
-                            <option value="Taraz">Taraz</option>
-                            <option value="Ural'sk">Ural&apos;sk</option>
-                            <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
                         </select>
 
                         {/* ================= send me checkbox =============== */}
-                        <div className="flex my-4">
-                            {/* <input id="sendmeemail" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-transparent rounded border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer mt-[2px]"/>
+                        <div className="flex space-x-3 my-4">
+                            <input id="sendmeemail" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-transparent rounded border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer mt-[2px]"/>
                             <label htmlFor="sendmeemail" className="text-zinc-800 cursor-pointer text-sm">
                                 Send me emails with tips on how to find talent that fits my needs.
-                            </label> */}
-                            <Checkbox 
-                                // isChecked={isTermsChecked} 
-                                // onChange={(e) => setIsTermsChecked(e.target.checked)}
-                                >
-                                <span className='text-zinc-800 cursor-pointer text-sm'>
-                                Send me emails with tips on how to find talent that fits my needs.
-                                </span>
-                            </Checkbox>
+                            </label>
                         </div>
+
                         {/* ================= yes checkbox =============== */}
-                        <div className="flex my-4">
-                            {/* <input id="yes" type="checkbox" className="w-4 h-4 text-blue-600 bg-transparent rounded border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer mt-[2px]"/>
+                        <div className="flex space-x-3 my-4">
+                            <input id="yes" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-transparent rounded border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer mt-[2px]"/>
                             <label htmlFor="yes" className="text-zinc-800 cursor-pointer text-sm">
                                 Yes, I understand and agree to the Bespace Terms of Service , including the User Agreement and Privacy Policy
-                            </label> */}
-                            <Checkbox 
-                                isChecked={isTermsChecked} 
-                                onChange={(e) => setIsTermsChecked(e.target.checked)}
-                                >
-                                <span className='text-zinc-800 cursor-pointer text-sm'>
-                                Yes, I understand and agree to the Bespace Terms of Service , including the User Agreement and Privacy Policy
-                                </span>
-                            </Checkbox>
+                            </label>
                         </div>
 
                         <input
@@ -259,33 +218,29 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                         />
 
                         {/* ================= create account button =============== */}
-                        <Button
-                            isDisabled={!isTermsChecked}
-                            isLoading={isLoadingSubmit}
-                            loadingText="Creating..."
-                            className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
+                        <button className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
                             Create an Account
-                        </Button>
+                        </button>
                     </form>
-                    {/* fix this part */}
-                    {/* <div className={"mt-7 text-zinc-600"}>
-                        Want to join as {localType == 'client' ? 'freelancer' : 'client'}?
+
+                    <div className={"mt-7 text-zinc-600"}>
+                        Wanna join as {localType}?
                         <span
-                            className={"text-cyan-700 ml-1 font-semibold cursor-pointer"}
+                            className={"text-cyan-700 font-semibold cursor-pointer"}
                             onClick={() => {
-                                setLocalType(localType === "client" ? "freelancer" : "client");
+                                setLocalType(localType === "client" ? "freelance" : "client");
                             }}
                         >
                             Click
                         </span>
-                    </div> */}
+                    </div>
 
                     {/* ================ alread have account section ================== */}
                     <div className="mt-7">
                         <p className="text-zinc-800 text-center">
                             Already have an account?
                             <Link href="/login">
-                                <span className="font-semibold ml-1 text-blue-700 hover:underline">Log In</span>
+                                <span className="font-semibold text-blue-700 hover:underline"> Log In </span>
                             </Link>
                         </p>
                     </div>
