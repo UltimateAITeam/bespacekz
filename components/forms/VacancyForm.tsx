@@ -17,11 +17,13 @@ import {
 interface VacancyFormProps {
   onSubmit: (data: any) => void;
   onCloseModal?: () => void;
+  isLoadingButton?: boolean;
 }
 
 const VacancyForm: React.FC<VacancyFormProps> = ({
   onSubmit,
   onCloseModal,
+  isLoadingButton,
 }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -61,6 +63,25 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
     });
   };
 
+  const handleFloatInputChange = (name: string, valueString: string) => {
+    // Convert the input value to a float
+    const floatValue = parseFloat(valueString);
+  
+    // Check if the parsed value is a valid number
+    if (!isNaN(floatValue)) {
+      setFormData({
+        ...formData,
+        [name]: floatValue
+      });
+    } else {
+      // If not a number, set to 0 or handle appropriately
+      setFormData({
+        ...formData,
+        [name]: 0
+      });
+    }
+  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,7 +113,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
             <NumberInputField
                 name="priceFrom"
                 value={formData.priceFrom}
-                onChange={handleChange}
+                onChange={(valueString) => handleFloatInputChange('priceFrom', valueString as any)}
                 placeholder="Ex: 100000"
             />
             </NumberInput>
@@ -104,7 +125,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
             <NumberInputField
                 name="priceTo"
                 value={formData.priceTo}
-                onChange={handleChange}
+                onChange={(valueString) => handleFloatInputChange('priceTo', valueString as any)}
                 placeholder="Ex: 200000"
             />
             </NumberInput>
@@ -168,7 +189,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
         <Button type="button" onClick={onCloseModal}>
           Отмена
         </Button>
-        <Button colorScheme="blue" type="submit">
+        <Button isLoading={isLoadingButton} colorScheme="blue" type="submit">
           Сохранить
         </Button>
       </Flex>
