@@ -6,16 +6,16 @@ import {FiPlusCircle} from "react-icons/fi";
 function BlockComponent(
     {
         openModal,
-        editModal,
-        addModal,
+        editForm,
+        addForm,
         children,
         title,
         isAddable,
         isEditable
     }: {
-        editModal?: React.ReactNode,
-        addModal?: React.ReactNode,
-        openModal?: (content: React.ReactNode) => void,
+        editForm?: string,
+        addForm?: string,
+        openModal?: (content: string) => void,
         isAddable: boolean,
         isEditable: boolean,
         children: React.ReactNode,
@@ -27,8 +27,8 @@ function BlockComponent(
             <div className={"flex flex-row justify-between w-full pb-8"}>
                 <h1 className={"text-2xl font-bold"}>{title}</h1>
                 <Stack direction={"row"}>
-                    {isEditable && openModal && editModal && <LuPencilLine onClick={() => openModal(editModal)} className={"w-7 h-7"}/>}
-                    {isAddable && openModal && addModal && <FiPlusCircle onClick={() => openModal(addModal)} className={"w-7 h-7"}/>}
+                    {isEditable && openModal && editForm && <LuPencilLine onClick={() => openModal(editForm)} className={"cursor-pointer w-7 h-7"}/>}
+                    {isAddable && openModal && addForm && <FiPlusCircle onClick={() => openModal(addForm)} className={"cursor-pointer w-7 h-7"}/>}
                 </Stack>
             </div>
             {children}

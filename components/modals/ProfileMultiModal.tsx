@@ -1,24 +1,41 @@
-import React, {ReactNode} from 'react';
-import {
-    Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button,
-} from "@chakra-ui/react";
+import React, {ReactElement} from 'react';
+import {Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay,} from "@chakra-ui/react";
+import ProfileInfoForm from "@/components/forms/ProfileInfoForm";
+import ProfileEducationEditForm from "@/components/forms/ProfileEducationEditForm";
+import ProfileExperienceEditForm from "@/components/forms/ProfileExperienceEditForm";
+import ProfileSkillsEditForm from "@/components/forms/ProfileSkillsEditForm";
 
-function ProfileMultiModal({modal, isOpen, onClose}: {modal: ReactNode, isOpen: boolean, onClose: () => void}) {
+function ProfileMultiModal({form, isOpen, onClose}: { form: string, isOpen: boolean, onClose: () => void }) {
+
+    function handleSubmit(data: any) {
+        console.log(data)
+    }
+
+    const forms: { [index: string]: ReactElement } = {
+        "edit-info": <ProfileInfoForm onSubmit={handleSubmit} onClose={onClose}/>,
+        "add-experience": <div>ADD EXP</div>,
+        "edit-experience": <ProfileExperienceEditForm onSubmit={handleSubmit} onClose={onClose}/>,
+        "add-education": <div>ADD EDU</div>,
+        "edit-education": <ProfileEducationEditForm onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-skills": <ProfileSkillsEditForm onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-about": <div>EDIT ABOUT</div>,
+    }
+    if (!forms.hasOwnProperty(form)) return null;
+
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
+        <Modal
+            size={'xl'}
+            blockScrollOnMount={false}
+            isOpen={isOpen}
+            onClose={onClose}
+        >
+            <ModalOverlay/>
             <ModalContent>
                 <ModalHeader>Edit profile</ModalHeader>
-                <ModalCloseButton />
+                <ModalCloseButton/>
                 <ModalBody>
-                    {modal}
+                    {forms[form]}
                 </ModalBody>
-                <ModalFooter>
-                    <Button variant="ghost" mr={3} onClick={onClose}>
-                        Cancel
-                    </Button>
-                    <Button colorScheme="green">Save</Button>
-                </ModalFooter>
             </ModalContent>
         </Modal>
     );
