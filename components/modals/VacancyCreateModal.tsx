@@ -11,8 +11,24 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  IconButton,
+  Flex,
+  Box,
+  Text,
 } from '@chakra-ui/react'
 import VacancyForm from '../forms/VacancyForm';
+import { useToast } from '@chakra-ui/react'
+import { BsStars } from "react-icons/bs";
+import { BiSend } from "react-icons/bi";
 
 type ModalProps = {
   isOpen: boolean;
@@ -22,6 +38,48 @@ type ModalProps = {
 const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [isLoadingForm, setIsLoadingForm] = React.useState(false);
   const initialRef = React.useRef(null)
+  const toast = useToast()
+
+  const [aiPrompt, setAIPrompt] = React.useState('');
+  const [aiResponse, setAIResponse] = React.useState('');
+  const [isLoadingAIDescription, setIsLoadingAIDescription] = React.useState(false);
+
+  // Handle change in AI prompt input
+  const handleAIPromptChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setAIPrompt(e.target.value);
+  };
+
+  // Handle submission to OpenAI API
+  const handleAISubmit = async () => {
+    try {
+      setIsLoadingAIDescription(true);
+      const response = await fetch('/api/generate-description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: aiPrompt }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+        setIsLoadingAIDescription(false);
+      }
+      const data = await response.json();
+      setAIResponse(data.generatedText);
+      setIsLoadingAIDescription(false);
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: "Failed to generate description.",
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      setIsLoadingAIDescription(false);
+    }
+  };
+
   const handleSubmit = async (data: any) => {
     setIsLoadingForm(true);
     console.log(data);
@@ -34,9 +92,24 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     });
     if (resVacancyAPI.ok) {
       const resVacancy = await resVacancyAPI.json();
-      console.log(resVacancy);
+      // console.log(resVacancy);
+      toast({
+        title: 'Вакансия создана.',
+        description: "Ваша вакансия успешно создана и теперь доступна кандидатам.",
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      })
+
     } else {
       console.log(resVacancyAPI.status);
+      toast({
+        title: 'Ошибка при создании вакансии.',
+        description: "Пожалуйста, попробуйте еще раз.",
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
     }
     onClose();
     setIsLoadingForm(false);
@@ -52,10 +125,49 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            Создать вакансию
+            <Flex className='items-center gap-6 w-full'>
+              Создать вакансию
+              <Popover>
+              <PopoverTrigger>
+                <Button leftIcon={<BsStars />} colorScheme='pink' size='sm'>Ask AI</Button>
+              </PopoverTrigger>
+              <PopoverContent className='md:min-w-[510px]'>
+                <PopoverArrow />
+                {/* <PopoverCloseButton /> */}
+                {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
+                <PopoverBody className='text-md'>
+                  <Flex className='items-center gap-2'>
+                    <BsStars />
+                    <Input
+                      value={aiPrompt}
+                      onChange={handleAIPromptChange} 
+                      variant='unstyled' 
+                      placeholder='Ask AI to generate vacancy description...'
+                      size='sm'
+                      borderColor="transparent"
+                      focusBorderColor="transparent"
+                      _placeholder={{ color: 'gray.400', fontSize: 'sm' }}
+                      _focus={{ border: 'none', boxShadow: 'none' }} // Remove border and boxShadow on focus
+                      _hover={{ border: 'none' }} // Remove border on hover
+                      _active={{ border: 'none' }} // Remove border on active
+                      />
+                    <IconButton aria-label='Send to AI' icon={<BiSend />} onClick={handleAISubmit}/>
+                  </Flex>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+            </Flex>
+            
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
+            {aiResponse && aiResponse !== '' && (
+              <Box className='p-5 bg-slate-400 rounded-lg shadow-md'>
+                <Text>
+                  {aiResponse}
+                </Text>
+              </Box>
+            )}
             <VacancyForm onSubmit={handleSubmit} onCloseModal={onClose} isLoadingButton={isLoadingForm}/>
           </ModalBody>
           {/* <ModalFooter>
