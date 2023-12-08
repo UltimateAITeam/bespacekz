@@ -24,11 +24,17 @@ import {
   Flex,
   Box,
   Text,
+  Spacer,
 } from '@chakra-ui/react'
 import VacancyForm from '../forms/VacancyForm';
 import { useToast } from '@chakra-ui/react'
 import { BsStars } from "react-icons/bs";
 import { BiSend } from "react-icons/bi";
+import { useChat } from 'ai/react';
+import { MemoizedReactMarkdown } from '../../components/ui/markdown'
+import { Message } from 'ai'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 
 type ModalProps = {
   isOpen: boolean;
@@ -43,42 +49,6 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [aiPrompt, setAIPrompt] = React.useState('');
   const [aiResponse, setAIResponse] = React.useState('');
   const [isLoadingAIDescription, setIsLoadingAIDescription] = React.useState(false);
-
-  // Handle change in AI prompt input
-  const handleAIPromptChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setAIPrompt(e.target.value);
-  };
-
-  // Handle submission to OpenAI API
-  const handleAISubmit = async () => {
-    try {
-      setIsLoadingAIDescription(true);
-      const response = await fetch('api/generate_ai_vacancy_description', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt: aiPrompt }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-        setIsLoadingAIDescription(false);
-      }
-      const data = await response.json();
-      setAIResponse(data.generatedText);
-      setIsLoadingAIDescription(false);
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: "Failed to generate description.",
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-      setIsLoadingAIDescription(false);
-    }
-  };
 
   const handleSubmit = async (data: any) => {
     setIsLoadingForm(true);
@@ -114,9 +84,12 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     onClose();
     setIsLoadingForm(false);
   };
+
+  const { messages, input, handleInputChange, handleSubmit: handleSubmitChat } = useChat();
+
   return (
     <Modal
-      size={'xl'} 
+      size={'2xl'} 
       blockScrollOnMount={false} 
       onClose={onClose} 
       isOpen={isOpen} 
@@ -125,46 +98,64 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Flex className='items-center gap-6 w-full'>
+            <Flex className='items-center gap-20 w-full'>
               Создать вакансию
               <Popover>
               <PopoverTrigger>
                 <Button leftIcon={<BsStars />} colorScheme='pink' size='sm'>Ask AI</Button>
               </PopoverTrigger>
-              <PopoverContent className='md:min-w-[510px]'>
+              <PopoverContent className='md:min-w-[800px]'>
                 <PopoverArrow />
                 {/* <PopoverCloseButton /> */}
                 {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
                 <PopoverBody className='text-md'>
+                  
+                  <form onSubmit={handleSubmitChat}>
                   <Flex className='items-center gap-2'>
                     <BsStars />
                     <Input
-                      value={aiPrompt}
-                      onChange={handleAIPromptChange} 
+                      value={input}
+                      onChange={handleInputChange} 
                       variant='unstyled' 
                       placeholder='Ask AI to generate vacancy description...'
                       size='sm'
                       borderColor="transparent"
-                      focusBorderColor="transparent"
-                      _placeholder={{ color: 'gray.400', fontSize: 'sm' }}
-                      _focus={{ border: 'none', boxShadow: 'none' }} // Remove border and boxShadow on focus
+                      border={0}
+                      fontWeight={400}
+                      _placeholder={{ color: 'gray.400', fontSize: 'sm', fontWeight: 'normal' }}
+                      _focus={{ border: 'none', boxShadow: 'none', outline: 'none' }} // Remove border, boxShadow, and outline on focus
                       _hover={{ border: 'none' }} // Remove border on hover
                       _active={{ border: 'none' }} // Remove border on active
                       />
-                    <IconButton aria-label='Send to AI' icon={<BiSend />} onClick={handleAISubmit}/>
-                  </Flex>
-                  {aiResponse && aiResponse !== '' && (
-                    <div className='pt-4'>
-                    <Box className='p-5 bg-gradient-to-tr from-[#CCFBF1] to-[#CFFAFE] rounded-lg shadow-md'>
-                      <Text className='text-sm font-semibold'>
-                        AI Response:
+                    <IconButton aria-label='Send to AI' icon={<BiSend />} type='submit'/>
+                    </Flex>
+                    </form>
+                  
+                  {messages.slice(-2).map(message => (
+
+                   
+                    <div className='pt-4 pb-4'>
+                    <Box className={`p-5 bg-gradient-to-tr ${message.role == 'assistant' ? 'from-[#E0F7FA] to-[#E0F2F1]' : 'from-[#FDE2E4] to-[#FAE1DD]'} rounded-lg shadow-md`}>
+                      <Text className='text-sm font-semibold pt-2'>
+                        { message.role == 'assistant' ? 'AI HR:' : 'Пользователь:'}
                       </Text>
-                      <Text className='text-[1rem] font-normal'>
-                        {aiResponse}
-                      </Text>
+                      {/* <Text className='text-[1rem] font-normal'>
+                        {message.content}
+                      </Text> */}
+                      <MemoizedReactMarkdown
+                        className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
+                        remarkPlugins={[remarkGfm, remarkMath]}
+                        components={{
+                          p({ children }) {
+                            return <p className="mb-2 last:mb-0">{children}</p>
+                          },
+                        }}
+                      >
+                        {message.content}
+                      </MemoizedReactMarkdown>
                     </Box>
                     </div>
-                  )}
+                  ))}
                 </PopoverBody>
               </PopoverContent>
             </Popover>
