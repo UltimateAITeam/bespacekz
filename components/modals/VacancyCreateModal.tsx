@@ -53,7 +53,7 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const handleAISubmit = async () => {
     try {
       setIsLoadingAIDescription(true);
-      const response = await fetch('/api/generate-description', {
+      const response = await fetch('api/generate_ai_vacancy_description', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -153,6 +153,18 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                       />
                     <IconButton aria-label='Send to AI' icon={<BiSend />} onClick={handleAISubmit}/>
                   </Flex>
+                  {aiResponse && aiResponse !== '' && (
+                    <div className='pt-4'>
+                    <Box className='p-5 bg-gradient-to-tr from-[#CCFBF1] to-[#CFFAFE] rounded-lg shadow-md'>
+                      <Text className='text-sm font-semibold'>
+                        AI Response:
+                      </Text>
+                      <Text className='text-[1rem] font-normal'>
+                        {aiResponse}
+                      </Text>
+                    </Box>
+                    </div>
+                  )}
                 </PopoverBody>
               </PopoverContent>
             </Popover>
@@ -161,13 +173,6 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            {aiResponse && aiResponse !== '' && (
-              <Box className='p-5 bg-slate-400 rounded-lg shadow-md'>
-                <Text>
-                  {aiResponse}
-                </Text>
-              </Box>
-            )}
             <VacancyForm onSubmit={handleSubmit} onCloseModal={onClose} isLoadingButton={isLoadingForm}/>
           </ModalBody>
           {/* <ModalFooter>
