@@ -10,6 +10,6 @@ export default function Logout()  {
             router.push("/");
         })
 
-    }, [])
+    }, [router])
     return <></>
 }

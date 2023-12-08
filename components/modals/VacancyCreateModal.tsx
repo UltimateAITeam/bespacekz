@@ -134,8 +134,8 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   {messages.slice(-2).map(message => (
 
                    
-                    <div className='pt-4 pb-4'>
-                    <Box className={`p-5 bg-gradient-to-tr ${message.role == 'assistant' ? 'from-[#E0F7FA] to-[#E0F2F1]' : 'from-[#FDE2E4] to-[#FAE1DD]'} rounded-lg shadow-md`}>
+                    <div key={message.id} className='pt-4 pb-4'>
+                    <Box key={message.id + 'box'} className={`p-5 bg-gradient-to-tr ${message.role == 'assistant' ? 'from-[#E0F7FA] to-[#E0F2F1]' : 'from-[#FDE2E4] to-[#FAE1DD]'} rounded-lg shadow-md`}>
                       <Text className='text-sm font-semibold pt-2'>
                         { message.role == 'assistant' ? 'AI HR:' : 'Пользователь:'}
                       </Text>
