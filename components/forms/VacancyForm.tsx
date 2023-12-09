@@ -30,7 +30,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
     aboutVacancy: "",
     priceFrom: 0,
     priceTo: 0,
-    currency: "",
+    currency: "KZT",
     isClear: false,
     experience: "",
     specialization: "",
@@ -66,6 +66,8 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
   const handleFloatInputChange = (name: string, valueString: string) => {
     // Convert the input value to a float
     const floatValue = parseFloat(valueString);
+
+    console.log(floatValue);
   
     // Check if the parsed value is a valid number
     if (!isNaN(floatValue)) {
@@ -113,7 +115,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
             <NumberInputField
                 name="priceFrom"
                 value={formData.priceFrom}
-                onChange={(valueString) => handleFloatInputChange('priceFrom', valueString as any)}
+                onChange={(e) => handleFloatInputChange('priceFrom', e.target.value as string)}
                 placeholder="Ex: 100000"
             />
             </NumberInput>
@@ -125,7 +127,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
             <NumberInputField
                 name="priceTo"
                 value={formData.priceTo}
-                onChange={(valueString) => handleFloatInputChange('priceTo', valueString as any)}
+                onChange={(e) => handleFloatInputChange('priceTo', e.target.value as any)}
                 placeholder="Ex: 200000"
             />
             </NumberInput>
@@ -137,7 +139,6 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
         <Select
           name="currency"
           value={formData.currency}
-          defaultValue={"KZT"}
           onChange={handleSelectChange}
         >
           <option value="KZT">KZT</option>

@@ -504,7 +504,7 @@ const Navbar = () => {
         ) : session.data?.user ? (
           <HStack spacing={{ base: '0', md: '6' }}>
             {/* fix this, when logging in as freelancer does not change role in localstorage */}
-            {(session.data.user.role === "CLIENT" || localStorage.getItem('userRole') == "CLIENT") && (
+            {session.data.user.role === "CLIENT" ? (
               <Button
                 onClick={onOpenVacancyCreateModal}
                 fontSize={'sm'}
@@ -514,6 +514,18 @@ const Navbar = () => {
               >
                 Создать вакансию
               </Button>
+            ) : (!session.data.user.role && localStorage.getItem('userRole') == "CLIENT") ? (
+              <Button
+                onClick={onOpenVacancyCreateModal}
+                fontSize={'sm'}
+                fontWeight={400}
+                variant={'solid'}
+                colorScheme={'teal'}
+              >
+                Создать вакансию
+              </Button>
+            ) : (
+              <></>
             )}
             <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
           <Menu>
