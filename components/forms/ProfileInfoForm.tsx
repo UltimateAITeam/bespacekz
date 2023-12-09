@@ -3,7 +3,7 @@ import {Box, Button, Flex, FormControl, FormHelperText, FormLabel, Input, Spacer
 import {ChakraPhoneInput} from "@/components/ChakraPhoneInput";
 
 interface FormData {
-    first_name: string;
+    name: string;
     last_name: string;
     location: string;
     phone: string;
@@ -18,7 +18,7 @@ interface FormProps {
 function ProfileInfoForm({onSubmit, onClose}: FormProps) {
     const data = JSON.parse(localStorage.getItem('profile_data') || '[]');
     const [formData, setFormData] = React.useState<FormData>({
-        first_name: data.name || '',
+        name: data.name || '',
         last_name: data.last_name || '',
         location: data.location,
         phone: data.phone || '',
@@ -27,7 +27,11 @@ function ProfileInfoForm({onSubmit, onClose}: FormProps) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(formData);
+        onSubmit({
+            info: formData,
+            action: "edit",
+            table: "user"
+        });
 
     };
 
@@ -52,7 +56,7 @@ function ProfileInfoForm({onSubmit, onClose}: FormProps) {
             <Flex gap={4}>
                 <FormControl id="first_name" isRequired>
                     <FormLabel>Имя</FormLabel>
-                    <Input name="first_name" onChange={handleChange} value={formData.first_name}/>
+                    <Input name="name" onChange={handleChange} value={formData.name}/>
                 </FormControl>
                 <FormControl id="last_name" isRequired>
                     <FormLabel>Фамилия</FormLabel>
@@ -66,7 +70,7 @@ function ProfileInfoForm({onSubmit, onClose}: FormProps) {
             <Flex gap={4} mt={2}>
                 <FormControl id="phone" isRequired>
                     <FormLabel>Телефон</FormLabel>
-                    <FormHelperText mt={-2} mb={2}>Пример: +7 771 172-99-24</FormHelperText>
+                    <FormHelperText mt={-2} mb={2}>Пример: +7 771 234-56-78</FormHelperText>
                     <ChakraPhoneInput onChange={phoneHandleChange} value={formData.phone}/>
                 </FormControl>
                 <FormControl id="email" isRequired>

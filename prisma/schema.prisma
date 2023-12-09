@@ -4,9 +4,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  // url      = env("DATABASE_URL")
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Account {
@@ -41,29 +40,28 @@ model User {
   password          String?
   emailVerified     DateTime?
   image             String?
-  name              String?
   last_name         String?
   location          String?
   phone             String?
-  accounts          Account[]
+  name              String?
+  about             String?
   role              Role?
+  accounts          Account[]
   clientProfile     ClientProfile?
   freelancerProfile FreelancerProfile?
   sessions          Session[]
 }
 
-// FREELANCER PROFILE
 model FreelancerProfile {
-  id        String @id @default(cuid())
-  userEmail String @unique
-  user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-
+  id         String       @id @default(cuid())
+  completed  Boolean      @default(false)
+  userEmail  String       @unique
   Education  Education[]
   Experience Experience[]
-  Skill      Skill[]
-  Pricing    Pricing[]
+  user       User         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   Portfolio  Portfolio[]
-  completed  Boolean      @default(false)
+  Pricing    Pricing[]
+  Skill      Skill[]
 }
 
 model Education {
@@ -110,38 +108,30 @@ model Portfolio {
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
 
-// END FREELANCER PROFILE
-
-// CLIENT PROFILE
 model ClientProfile {
-  id        String    @id @default(cuid())
-  userEmail String    @unique
-  user      User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  Vacancy   Vacancy[]
-
-  isCompany    Boolean @default(false)
+  id           String    @id @default(cuid())
   companyInfo  String?
+  isCompany    Boolean   @default(false)
   sphereOfWork String?
+  userEmail    String    @unique
+  user         User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  Vacancy      Vacancy[]
 }
 
-// Vacancies
 model Vacancy {
-  id            String        @id @default(cuid())
-  clientId      String
-  clientProfile ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
-
+  id             String        @id @default(cuid())
+  clientId       String
   title          String
   aboutVacancy   String
   priceFrom      Float
   priceTo        Float
-  currency       String  @default("KZT")
-  isClear        Boolean @default(false) // if true - then after taxes, else - before taxes
+  currency       String        @default("KZT")
+  isClear        Boolean       @default(false)
   experience     String
   specialization String
-  city           String  @default("remote") // if remote - then freelancer can work from any city
+  city           String        @default("remote")
+  clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
 }
-
-// END CLIENT PROFILE
 
 model VerificationToken {
   identifier String

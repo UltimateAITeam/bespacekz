@@ -4,21 +4,57 @@ import ProfileInfoForm from "@/components/forms/ProfileInfoForm";
 import ProfileEducationEditForm from "@/components/forms/ProfileEducationEditForm";
 import ProfileExperienceEditForm from "@/components/forms/ProfileExperienceEditForm";
 import ProfileSkillsEditForm from "@/components/forms/ProfileSkillsEditForm";
+import ProfileAboutEditForm from "@/components/forms/ProfileAboutEditForm";
+import ProfileEducationAddForm from "@/components/forms/ProfileEducationAddForm";
+import ProfileExperienceAddForm from "@/components/forms/ProfileExperienceAddForm";
 
-function ProfileMultiModal({form, isOpen, onClose}: { form: string, isOpen: boolean, onClose: () => void }) {
+interface HandleData {
+    info: any;
+    action: 'add' | 'edit' | 'delete';
+    table: string;
+}
 
-    function handleSubmit(data: any) {
-        console.log(data)
+function ProfileMultiModal({form, isOpen, onClose, setData, setLoading}: { form: string, isOpen: boolean, onClose: () => void, setData: (data: any) => void, setLoading: (data: boolean) => void}){
+
+    async function handleSubmit(data: HandleData) {
+        onClose();
+        setLoading(true);
+        let method;
+        switch (data.action) {
+            case "add":
+                method = "POST";
+                break;
+            case "edit":
+                method = "PUT";
+                break;
+            case "delete":
+                method = "DELETE";
+                break;
+        }
+        if (!method) {
+            console.log(data);
+            return;
+        }
+        const resp = await fetch('/api/crud_profile/crud', {
+            method: method,
+            body: JSON.stringify({info: data.info, type: data.table})
+        })
+        if (resp.status !== 200) console.log(resp.body)
+        const res = await fetch("/api/get_freelancer_profile");
+        const dta = await res.json();
+        localStorage.setItem("profile_data", JSON.stringify(dta));
+        setData(dta);
+        setLoading(false);
     }
 
     const forms: { [index: string]: ReactElement } = {
         "edit-info": <ProfileInfoForm onSubmit={handleSubmit} onClose={onClose}/>,
-        "add-experience": <div>ADD EXP</div>,
+        "add-experience": <ProfileExperienceAddForm onSubmit={handleSubmit} onClose={onClose} />,
         "edit-experience": <ProfileExperienceEditForm onSubmit={handleSubmit} onClose={onClose}/>,
-        "add-education": <div>ADD EDU</div>,
+        "add-education": <ProfileEducationAddForm onSubmit={handleSubmit} onClose={onClose} />,
         "edit-education": <ProfileEducationEditForm onSubmit={handleSubmit} onClose={onClose} />,
         "edit-skills": <ProfileSkillsEditForm onSubmit={handleSubmit} onClose={onClose} />,
-        "edit-about": <div>EDIT ABOUT</div>,
+        "edit-about": <ProfileAboutEditForm  onSubmit={handleSubmit} onClose={onClose} />,
     }
     if (!forms.hasOwnProperty(form)) return null;
 

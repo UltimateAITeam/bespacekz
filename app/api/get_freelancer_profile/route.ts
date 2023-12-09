@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
             email: true,
             image: true,
             location: true,
+            about: true,
         }
     })
     if (!profile || !userInfo) return NextResponse.json({"error": "User not found"}, {status: 404});

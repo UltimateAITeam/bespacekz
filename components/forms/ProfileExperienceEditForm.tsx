@@ -9,13 +9,14 @@ import {
     Spacer,
     SimpleGrid,
     Card,
-    CardHeader, Text, Heading, FormHelperText,
+    CardHeader, Text, Heading, FormHelperText, VStack,
 } from "@chakra-ui/react";
+import {FaRegTrashAlt} from "react-icons/fa";
 
 interface FormData {
     "id": number;
     "name": string;
-    "roles": string[];
+    "roles": string;
     "tasks": string;
     "duration": string,
     "company": string,
@@ -29,8 +30,15 @@ interface FormProps {
 function ProfileExperienceEditForm({onSubmit}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: need to be logically correct with backend checking
-        onSubmit(selectedExperience);
+        if (!selectedExperience) return;
+        onSubmit({
+            info: {
+                ...selectedExperience,
+                roles: selectedExperience.roles,
+            },
+            action: 'edit',
+            table: 'experience',
+        });
     };
 
     // не берем инфу с базы, а с локал стораджа
@@ -48,6 +56,14 @@ function ProfileExperienceEditForm({onSubmit}: FormProps) {
         });
     };
 
+    const handleDelete = (id: number) => {
+        onSubmit({
+            info: {id: id},
+            action: 'delete',
+            table: 'experience',
+        });
+    }
+
 
     return (
         <Box as="form" onSubmit={handleSubmit} gap={4}>
@@ -56,12 +72,29 @@ function ProfileExperienceEditForm({onSubmit}: FormProps) {
                     {experience.map((data) => (
                         <Card
                             key={data.id}
-                            className={"cursor-pointer hover:shadow-md transition-shadow"}
-                            onClick={() => setSelectedExperience(data)}
+                            className={"hover:shadow-md transition-shadow"}
                         >
                             <CardHeader>
-                                <Heading size="md" style={{textTransform: "capitalize"}}>{data.company} - {data.duration} мес.</Heading>
-                                <Text>{data.name}</Text>
+                                <Flex>
+                                    <VStack
+                                        align={"start"} flex="1" gap={'4'}
+                                        className={'cursor-pointer'}
+                                        onClick={() => setSelectedExperience(data)}
+                                    >
+                                        <Heading size="md" style={{textTransform: "capitalize"}}>{data.company} - {data.duration} мес.</Heading>
+                                        <Text>{data.name}</Text>
+                                    </VStack>
+                                    <Flex
+                                        alignItems={"start"}
+                                        onClick={() => handleDelete(data.id)}
+                                    >
+                                        <div
+                                            className={'hover:bg-gray-200 cursor-pointer hover:outline-offset-2 transition-colors p-1 rounded-xl'}
+                                        >
+                                            <FaRegTrashAlt/>
+                                        </div>
+                                    </Flex>
+                                </Flex>
                             </CardHeader>
                         </Card>
                     ))}
@@ -70,26 +103,26 @@ function ProfileExperienceEditForm({onSubmit}: FormProps) {
                     <FormControl mt={2} id="degree" isRequired>
                         <FormLabel>Место работы</FormLabel>
                         <Input
-                            name="degree"
+                            name="company"
                             type="text"
                             value={selectedExperience.company}
                             onChange={handleChange}
                         />
                     </FormControl>
-                    <FormControl mt={2} id="degree" isRequired>
+                    <FormControl mt={2} id="roles" isRequired>
                         <FormLabel>Должности</FormLabel>
                         <FormHelperText mt={-2} mb={2}>Для указания нескольких, перечисляйте через запятую</FormHelperText>
                         <Input
-                            name="degree"
+                            name="roles"
                             type="text"
                             value={selectedExperience.roles}
                             onChange={handleChange}
                         />
                     </FormControl>
-                    <FormControl mt={2} id="degree" isRequired>
+                    <FormControl mt={2} id="duration" isRequired>
                         <FormLabel>Рабочий стаж (в мес.)</FormLabel>
                         <Input
-                            name="degree"
+                            name="duration"
                             type="text"
                             value={selectedExperience.duration}
                             onChange={handleChange}

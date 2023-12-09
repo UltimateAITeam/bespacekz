@@ -10,9 +10,9 @@ import {
     Spacer,
     SimpleGrid,
     Card,
-    CardHeader, Text, Heading,
+    CardHeader, Text, Heading, Select,
 } from "@chakra-ui/react";
-
+import { FaRegTrashAlt } from "react-icons/fa";
 interface FormData {
     id: number;
     degree: string;
@@ -29,8 +29,15 @@ interface FormProps {
 function ProfileEducationEditForm({onSubmit, onClose}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: need to be logically correct with backend checking
-        onSubmit(selectedEducation);
+        if (!selectedEducation) return;
+        onSubmit({
+            info: {
+                ...selectedEducation,
+                graduationYear: parseInt(selectedEducation?.graduationYear)
+            },
+            action: 'edit',
+            table: 'education',
+        });
     };
 
     // не берем инфу с базы, а с локал стораджа
@@ -39,7 +46,7 @@ function ProfileEducationEditForm({onSubmit, onClose}: FormProps) {
 
     const [selectedEducation, setSelectedEducation] = React.useState<FormData>();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const target = e.target as HTMLInputElement;
         const value = target.type === "checkbox" ? target.checked : target.value;
         setSelectedEducation({
@@ -48,6 +55,13 @@ function ProfileEducationEditForm({onSubmit, onClose}: FormProps) {
         });
     };
 
+    const handleDelete = (id: number) => {
+        onSubmit({
+            info: id,
+            action: 'delete',
+            table: 'education',
+        });
+    }
 
 
     return (
@@ -57,12 +71,29 @@ function ProfileEducationEditForm({onSubmit, onClose}: FormProps) {
                     {educations.map((data) => (
                         <Card
                             key={data.id}
-                            className={"cursor-pointer hover:shadow-md transition-shadow"}
-                            onClick={() => setSelectedEducation(data)}
+                            className={"hover:shadow-md transition-shadow"}
                         >
                             <CardHeader>
-                                <Heading size="md" style={{textTransform: "capitalize"}}>{data.institution} - {data.degree}</Heading>
-                                <Text>{data.graduationYear}</Text>
+                                <Flex>
+                                    <VStack
+                                        align={"start"} flex="1" gap={'4'}
+                                        className={'cursor-pointer'}
+                                        onClick={() => setSelectedEducation(data)}
+                                    >
+                                        <Heading size="md" style={{textTransform: "capitalize"}}>{data.institution} - {data.degree}</Heading>
+                                        <Text>{data.graduationYear}</Text>
+                                    </VStack>
+                                    <Flex
+                                        alignItems={"start"}
+                                        onClick={() => handleDelete(data.id)}
+                                    >
+                                        <div
+                                            className={'hover:bg-gray-200 cursor-pointer hover:outline-offset-2 transition-colors p-1 rounded-xl'}
+                                        >
+                                            <FaRegTrashAlt/>
+                                        </div>
+                                    </Flex>
+                                </Flex>
                             </CardHeader>
                         </Card>
                     ))}
@@ -70,12 +101,16 @@ function ProfileEducationEditForm({onSubmit, onClose}: FormProps) {
                 : <Box key={selectedEducation.id}>
                     <FormControl id="degree" isRequired>
                         <FormLabel>Степень</FormLabel>
-                        <Input
+                        <Select
                             name="degree"
-                            type="text"
                             value={selectedEducation.degree}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="Primary">Primary school</option>
+                            <option value="Bachelor">Bachelor</option>
+                            <option value="Master">Master</option>
+                            <option value="Doctor">Doctor</option>
+                        </Select>
                     </FormControl>
                     <FormControl id="institution" isRequired>
                         <FormLabel>Учебное заведение</FormLabel>

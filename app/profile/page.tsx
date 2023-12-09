@@ -1,10 +1,20 @@
 'use client';
-import React, {ReactNode, useEffect} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import HeadTag from "@/components/brenda_components/HeadTag";
-import {Avatar, Grid, GridItem, HStack, Stack, Tag, Textarea, Tooltip, useDisclosure, VStack} from "@chakra-ui/react";
-import { FiTrash } from "react-icons/fi";
+import {
+    Avatar, Box,
+    Grid,
+    GridItem,
+    SimpleGrid,
+    Spinner,
+    Stack,
+    Tag,
+    Textarea,
+    Tooltip,
+    useDisclosure,
+    VStack
+} from "@chakra-ui/react";
 import NewHeader from "@/components/brenda_components/NewHeader";
-import Spinner from "@/components/Spinner";
 import {Prisma} from "@prisma/client";
 import BlockComponent from "@/components/BlockComponent";
 import ProfileMultiModal from "@/components/modals/ProfileMultiModal";
@@ -28,6 +38,7 @@ type UserInfoType = Prisma.UserGetPayload<{
         email: true,
         image: true,
         location: true,
+        about: true,
     }
 }>
 
@@ -36,7 +47,7 @@ function Page() {
     const [data, setData] = React.useState<FreelancerProfileType & UserInfoType>();
     const [formType, setFormType] = React.useState<string>('');
     const {isOpen, onClose, onOpen} = useDisclosure();
-
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -73,8 +84,16 @@ function Page() {
 
             {/* Header */}
             <NewHeader />
-
-            <ProfileMultiModal form={formType} isOpen={isOpen} onClose={onClose} />
+            {loading
+                && <Box className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <Spinner
+                        thickness={"5px"}
+                        color="cyan.500"
+                        size='xl'
+                    />
+                </Box>
+            }
+            <ProfileMultiModal form={formType} isOpen={isOpen} setLoading={(data: boolean) => {setLoading(data)}} onClose={onClose} setData={(data: any) => {setData(data)}} />
 
             <main>
                 <section className={'container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 md:px-5 px-3 sm:flex sm:justify-center'}>
@@ -90,7 +109,7 @@ function Page() {
                                 <Grid
                                     templateColumns={"repeat(2, 1fr)"}
                                     templateRows={"repeat(2, 1fr)"}
-                                    className={"md:ml-40 "}
+                                    className={"xl:ml-40 md:ml-20"}
                                     gap={4}
                                     columnGap={20}
                                 >
@@ -118,8 +137,9 @@ function Page() {
                             <VStack gap={4}>
                                 {educations.length > 0 && educations.map(
                                     (education) => (
-                                        <Stack key={education.id} direction={"row"} className={"w-full justify-between"}>
-                                            <HStack
+                                        <Stack mb={4} key={education.id} direction={"row"} className={"w-full justify-between"}>
+                                            <SimpleGrid
+                                                columns={4}
                                                 gap={{xl: 20, sm: 5}}
                                                 className={"justify-start w-full"}
                                             >
@@ -139,10 +159,7 @@ function Page() {
                                                     <p className={"font-bold"}>Год выпуска</p>
                                                     <p>{education.graduationYear}</p>
                                                 </div>
-                                            </HStack>
-                                            <div>
-                                                <FiTrash className={"w-8 h-8"} />
-                                            </div>
+                                            </SimpleGrid>
                                         </Stack>
                                     )
                                 )}
@@ -153,8 +170,9 @@ function Page() {
                             <VStack>
                                 {experiences && experiences.map(
                                     (exp) => (
-                                        <Stack key={exp.id} direction={"row"} className={"w-full justify-between"}>
-                                            <HStack
+                                        <Stack mb={4} key={exp.id} direction={"row"} className={"w-full justify-between"}>
+                                            <SimpleGrid
+                                                columns={3}
                                                 gap={{xl: 20, sm: 5}}
                                                 className={"justify-start w-full"}
                                             >
@@ -164,16 +182,13 @@ function Page() {
                                                 </div>
                                                 <div>
                                                     <p className={"font-bold"}>Занимаемая должность</p>
-                                                    <p>{exp.roles}</p>
+                                                    <p>{exp.roles.join(',')}</p>
                                                 </div>
                                                 <div>
                                                     <p className={"font-bold"}>Стаж работы</p>
                                                     <p>{exp.duration + " месяцев"}</p>
                                                 </div>
-                                            </HStack>
-                                            <div>
-                                                <FiTrash className={"w-8 h-8"} />
-                                            </div>
+                                            </SimpleGrid>
                                         </Stack>
                                     )
                                 )}
@@ -181,22 +196,24 @@ function Page() {
                         </BlockComponent>
                         {/* BLOCK TAG */}
                         <BlockComponent editForm={"edit-skills"} openModal={openModal} isAddable={false} isEditable={true} title={"Способности"}>
-                            <Stack direction={"row"} gap={4}>
+                            <Grid templateColumns="repeat(5, 1fr)" gap={4}>
 
                                 {skills.map(
                                     (skill) => (
-                                        <Tooltip placement={"top"} key={skill.id} label={skill.proficiencyLevel.toUpperCase()}>
-                                            <Tag className={"cursor-default"} key={skill.name}>
-                                                {skill.name}
-                                            </Tag>
-                                        </Tooltip>
+                                        <GridItem key={skill.id}>
+                                            <Tooltip placement={"top"} className={"h-fit"} label={skill.proficiencyLevel.toUpperCase()}>
+                                                <Tag className={"cursor-default h-fit"}>
+                                                    {skill.name}
+                                                </Tag>
+                                            </Tooltip>
+                                        </GridItem>
                                     )
                                 )}
-                            </Stack>
+                            </Grid>
                         </BlockComponent>
                         {/* BLOCK TAG */}
                         <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false} isEditable={true} title={"О себе"}>
-                            <Textarea isDisabled={true} resize={"vertical"} placeholder={"Напишите что нибудь о себе"} />
+                            <Textarea value={data.about || ''} isDisabled={true} resize={"vertical"} placeholder={"Напишите что нибудь о себе"} />
                         </BlockComponent>
                     </Stack>
                 </section>
