@@ -48,6 +48,7 @@ function Oauth_additional() {
                 last_name: data?.last_name,
                 name: data?.first_name,
                 location: data?.location_city,
+                phone: data?.phone,
             }
 
             if (role === "client") {
