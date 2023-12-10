@@ -191,12 +191,15 @@ function Oauth_additional() {
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='phone' className='font-medium px-1 pb-1'>Phone:</label>
-                                    <input
-                                        type="text"
-                                        className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                        placeholder="Last name"
-                                        {...register('phone', {required: "Phone is required", min: 11})}
-                                    />
+                                    <div
+                                        className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
+                                        <input
+                                            type="text"
+                                            className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
+                                            placeholder="Phone number"
+                                            {...register('phone', {required: "Phone is required", min: 11})}
+                                        />
+                                    </div>
                                 </div>
                                 {role === "client" &&
                                     <div className='flex flex-col'>
