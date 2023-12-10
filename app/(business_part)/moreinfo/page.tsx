@@ -83,7 +83,8 @@ function Oauth_additional() {
                         }
                     }
                 );
-                router.push("/firststeps")
+                if (role === "client") router.push("/")
+                else router.push("/firststeps")
                 setIsLoadingSubmit(false);
             }
             setIsLoadingSubmit(false);
