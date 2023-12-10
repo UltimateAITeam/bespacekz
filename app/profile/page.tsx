@@ -52,14 +52,9 @@ function Page() {
     useEffect(() => {
         (async () => {
             setLoading(true)
-            const savedData = localStorage.getItem('profile_data');
-            if (typeof window !== undefined && savedData !== null) {
-                setData(JSON.parse(savedData));
-            } else {
-                const resp = await fetch("/api/get_freelancer_profile?userId=1");
-                const dta = await resp.json();
-                setData(dta);
-            }
+            const resp = await fetch("/api/get_freelancer_profile?userId=1");
+            const dta = await resp.json();
+            setData(dta);
             setLoading(false)
         })();
     }, [])
