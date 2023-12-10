@@ -145,7 +145,10 @@ function Layout({children}: {children: React.ReactNode}) {
                     .then((value) => {
                         localStorage.removeItem("projectRate");
                         localStorage.removeItem("hourlyRate");
-                        localStorage.clear();
+                        localStorage.removeItem("educations");
+                        localStorage.removeItem("experience");
+                        localStorage.removeItem("skills");
+                        localStorage.removeItem("portfolio");
                         router.push("/");
                     })
                     .catch((reason) => {

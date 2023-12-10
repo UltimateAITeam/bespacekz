@@ -4,13 +4,14 @@ import HeadTag from "@/components/brenda_components/HeadTag";
 import {useSession} from "next-auth/react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Button, Checkbox, Spinner, Textarea} from '@chakra-ui/react';
-import ClientForm from "@/components/signup_elements/ClientForm";
+import {Button, Checkbox, Textarea} from '@chakra-ui/react';
+import {ChakraPhoneInput} from "@/components/ChakraPhoneInput";
 
 interface FormValues {
     first_name: string;
     last_name: string;
     location_city: string;
+    phone: string;
 }
 
 interface ClientValues extends FormValues {
@@ -27,7 +28,7 @@ function Oauth_additional() {
     const router = useRouter();
 
 
-    const {handleSubmit, setValue, register, formState: {errors, isValid} } = useForm<ClientValues>();
+    const {handleSubmit, setValue, register, formState: {errors, isValid}} = useForm<ClientValues>();
 
     useEffect(() => {
         if (!session.data?.user?.name || session.data?.user?.name == "") return;
@@ -110,7 +111,8 @@ function Oauth_additional() {
 
             {/* ================= Main ==================== */}
             <main>
-                <section className="container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3 sm:flex sm:justify-center">
+                <section
+                    className="container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3 sm:flex sm:justify-center">
                     <div className="sm:border border-gray-300 rounded-xl">
                         <div className="sm:px-24 sm:pt-7 pb-7 flex flex-col justify-center items-center">
                             {/* ================= Form title ==================== */}
@@ -120,7 +122,8 @@ function Oauth_additional() {
 
                             {/* ================= Login Email Form ==================== */}
                             <form className="mt-4 space-y-4 sm:w-auto w-full" onSubmit={handleSubmit(onSubmit)}>
-                                <div className={`bg-red-500 border-0 rounded text-center px-6 py-2 ${displayErrors.length > 0 ? "block" : "hidden"}`}>
+                                <div
+                                    className={`bg-red-500 border-0 rounded text-center px-6 py-2 ${displayErrors.length > 0 ? "block" : "hidden"}`}>
                                     <ul>
                                         {displayErrors}
                                     </ul>
@@ -128,65 +131,78 @@ function Oauth_additional() {
                                 <div className="grid md:grid-cols-2 md:gap-x-5 gap-y-5">
                                     {/* ================= first name input =============== */}
                                     <div className='flex flex-col'>
-                                        <label htmlFor='first_name' className='font-medium px-1 pb-1'>First name:</label>
-                                    
-                                    <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
+                                        <label htmlFor='first_name' className='font-medium px-1 pb-1'>First
+                                            name:</label>
 
-                                        <input
-                                            type="text"
-                                            className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                            placeholder="First name"
-                                            {...register("first_name", {required: "Name is required"})}
-                                        />
-                                    </div>
+                                        <div
+                                            className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
+
+                                            <input
+                                                type="text"
+                                                className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
+                                                placeholder="First name"
+                                                {...register("first_name", {required: "Name is required"})}
+                                            />
+                                        </div>
                                     </div>
 
                                     {/* ================= last name input =============== */}
                                     <div className='flex flex-col'>
                                         <label htmlFor='last_name' className='font-medium px-1 pb-1'>Last name:</label>
-                                    <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
-                                        <input
-                                            type="text"
-                                            className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                            placeholder="Last name"
-                                            {...register("last_name", {required: "Last name is required"})}
-                                        />
-                                    </div>
+                                        <div
+                                            className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
+                                            <input
+                                                type="text"
+                                                className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
+                                                placeholder="Last name"
+                                                {...register("last_name", {required: "Last name is required"})}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className='flex flex-col'>
-                                        <label htmlFor='location_city' className='font-medium px-1 pb-1'>Location:</label>
-                                <select
-                                    id="Country"
-                                    defaultValue={"Astana"}
-                                    {...register("location_city", {required: "Location is required"})}
-                                    className="px-8 py-4 bg-transparent border-2 border-gray-300 text-zinc-800 text-md rounded-lg focus:border-[#b8d8d4fd] block w-full cursor-pointer font-medium"
-                                >
-                                    <option value="Astana">Astana</option>
-                                    <option value="Almaty">Almaty</option>
-                                    <option value="Aktau">Aktau</option>
-                                    <option value="Aktobe">Aktobe</option>
-                                    <option value="Atyrau">Atyrau</option>
-                                    <option value="Kostanay">Kostanay</option>
-                                    <option value="Karaganda">Karaganda</option>
-                                    <option value="Kokshetau">Kokshetau</option>
-                                    <option value="Shymkent">Shymkent</option>
-                                    <option value="Uralsk">Uralsk</option>
-                                    <option value="Kyzylorda">Kyzylorda</option>
-                                    <option value="Semey">Semey</option>
-                                    <option value="Pavlodar">Pavlodar</option>
-                                    <option value="Oskemen">Oskemen</option>
-                                    <option value="Petropavlovsk">Petropavlovsk</option>
-                                    <option value="Taldykorgan">Taldykorgan</option>
-                                    <option value="Turkestan">Turkestan</option>
-                                    <option value="Taraz">Taraz</option>
-                                    <option value="Temirtau">Temirtau</option>
-                                </select>
+                                    <label htmlFor='location_city' className='font-medium px-1 pb-1'>Location:</label>
+                                    <select
+                                        id="Country"
+                                        defaultValue={"Astana"}
+                                        {...register("location_city", {required: "Location is required"})}
+                                        className="px-8 py-4 bg-transparent border-2 border-gray-300 text-zinc-800 text-md rounded-lg focus:border-[#b8d8d4fd] block w-full cursor-pointer font-medium"
+                                    >
+                                        <option value="Astana">Astana</option>
+                                        <option value="Almaty">Almaty</option>
+                                        <option value="Aktau">Aktau</option>
+                                        <option value="Aktobe">Aktobe</option>
+                                        <option value="Atyrau">Atyrau</option>
+                                        <option value="Kostanay">Kostanay</option>
+                                        <option value="Karaganda">Karaganda</option>
+                                        <option value="Kokshetau">Kokshetau</option>
+                                        <option value="Shymkent">Shymkent</option>
+                                        <option value="Uralsk">Uralsk</option>
+                                        <option value="Kyzylorda">Kyzylorda</option>
+                                        <option value="Semey">Semey</option>
+                                        <option value="Pavlodar">Pavlodar</option>
+                                        <option value="Oskemen">Oskemen</option>
+                                        <option value="Petropavlovsk">Petropavlovsk</option>
+                                        <option value="Taldykorgan">Taldykorgan</option>
+                                        <option value="Turkestan">Turkestan</option>
+                                        <option value="Taraz">Taraz</option>
+                                        <option value="Temirtau">Temirtau</option>
+                                    </select>
+                                </div>
+                                <div className='flex flex-col'>
+                                    <label htmlFor='phone' className='font-medium px-1 pb-1'>Phone:</label>
+                                    <input
+                                        type="text"
+                                        className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
+                                        placeholder="Last name"
+                                        {...register('phone', {required: "Phone is required", min: 11})}
+                                    />
                                 </div>
                                 {role === "client" &&
                                     <div className='flex flex-col'>
                                         {/* <p className='font-medium px-1 pb-1'>Last name:</p> */}
-                                        <Checkbox className={"mb-4"} {...register("isCompany")}>Is it a company account?</Checkbox>
+                                        <Checkbox className={"mb-4"} {...register("isCompany")}>Is it a company
+                                            account?</Checkbox>
                                         <p className='font-medium px-1 pb-1'>Данные о компании:</p>
                                         <Textarea
                                             placeholder={"Write something about you/your company..."}
@@ -201,7 +217,9 @@ function Oauth_additional() {
                                         />
                                     </div>
                                 }
-                                <Button colorScheme='facebook' isLoading={isLoadingSubmit} isDisabled={!isValid} className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
+                                <Button colorScheme='facebook' isLoading={isLoadingSubmit} isDisabled={!isValid}
+                                        className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]"
+                                        type="submit">
                                     Continue
                                 </Button>
                             </form>
