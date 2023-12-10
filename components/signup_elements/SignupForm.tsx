@@ -14,11 +14,11 @@ interface FormValues {
     phone: string;
     location_city: string;
     password: string;
-    role: "client" | "freelance";
+    role: "client" | "freelancer";
 }
 
 
-function SignupForm({type}: {type: "client" | "freelance"}) {
+function SignupForm({type}: {type: "client" | "freelancer"}) {
 
     const [localType, setLocalType] = useState(type);
     const [password, setPassword] = useState("")
@@ -68,7 +68,7 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
             <div className="sm:border border-gray-300 rounded-xl">
                 <div className="sm:px-7 sm:pt-10 pb-10 flex flex-col justify-center md:items-center">
                     <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl text-center">
-                        {localType === "freelance" ? "Sign up to find work you love" : "Sign up to find Freelancers you want"}
+                        {localType === "freelancer" ? "Sign up to find work you love" : "Sign up to find Freelancers you want"}
                     </h2>
 
                     {/* ================= Continue with section ==================== */}
@@ -228,7 +228,7 @@ function SignupForm({type}: {type: "client" | "freelance"}) {
                         <span
                             className={"text-cyan-700 font-semibold cursor-pointer"}
                             onClick={() => {
-                                setLocalType(localType === "client" ? "freelance" : "client");
+                                setLocalType(localType === "client" ? "freelancer" : "client");
                             }}
                         >
                             Click

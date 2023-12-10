@@ -121,7 +121,7 @@ function SignUp() {
                 {clientForm && <SignupForm type={"client"} />}
 
                 {/* ======================== Freelancer Form ====================== */}
-                {freelancerForm && <SignupForm type={"freelance"} />}
+                {freelancerForm && <SignupForm type={"freelancer"} />}
 
             </main>
 
