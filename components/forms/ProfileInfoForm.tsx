@@ -13,10 +13,10 @@ interface FormData {
 interface FormProps {
     onSubmit: (data: any) => void;
     onClose: () => void;
+    data: any
 }
 
-function ProfileInfoForm({onSubmit, onClose}: FormProps) {
-    const data = JSON.parse(localStorage.getItem('profile_data') || '[]');
+function ProfileInfoForm({onSubmit, onClose, data}: FormProps) {
     const [formData, setFormData] = React.useState<FormData>({
         name: data.name || '',
         last_name: data.last_name || '',

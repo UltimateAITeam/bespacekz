@@ -25,9 +25,10 @@ interface FormData {
 interface FormProps {
     onSubmit: (data: any) => void;
     onClose: () => void;
+    data: any
 }
 
-function ProfileExperienceEditForm({onSubmit}: FormProps) {
+function ProfileExperienceEditForm({onSubmit, data}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!selectedExperience) return;
@@ -41,8 +42,6 @@ function ProfileExperienceEditForm({onSubmit}: FormProps) {
         });
     };
 
-    // не берем инфу с базы, а с локал стораджа
-    const data = JSON.parse(localStorage.getItem('profile_data') || '[]');
     const experience = data.Experience as FormData[] || [];
 
     const [selectedExperience, setSelectedExperience] = React.useState<FormData>();

@@ -23,9 +23,10 @@ interface FormData {
 interface FormProps {
     onSubmit: (data: any) => void;
     onClose: () => void;
+    data: any
 }
 
-function ProfileExperienceAddForm({onSubmit, onClose}: FormProps) {
+function ProfileExperienceAddForm({onSubmit, onClose, data}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         try {

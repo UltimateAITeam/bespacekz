@@ -93,7 +93,7 @@ function NewHeader() {
                             </MenuItem>
                             <MenuItem icon={<FiSettings />}>Настройки профиля</MenuItem>
                             <MenuDivider />
-                            <MenuItem icon={<FiLogOut />} onClick={() => signOut({ redirect: true, callbackUrl: '/' })}>
+                            <MenuItem icon={<FiLogOut />} onClick={() => signOut({ callbackUrl: '/' })}>
                                 Logout
                             </MenuItem>
                         </MenuList>

@@ -22,9 +22,10 @@ interface FormData {
 interface FormProps {
     onSubmit: (data: any) => void;
     onClose: () => void;
+    data: any
 }
 
-function ProfileEducationAddForm({onSubmit, onClose}: FormProps) {
+function ProfileEducationAddForm({onSubmit, onClose, data}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -42,7 +43,7 @@ function ProfileEducationAddForm({onSubmit, onClose}: FormProps) {
     };
 
     const [education, setEducation] = useState<FormData>({
-        degree: '',
+        degree: 'Primary',
         institution: '',
         specialization: '',
         graduationYear: '',
@@ -66,10 +67,11 @@ function ProfileEducationAddForm({onSubmit, onClose}: FormProps) {
                 <FormLabel>Степень</FormLabel>
                 <Select
                     name="degree"
+                    defaultValue={"Primary"}
                     value={education.degree}
                     onChange={handleChange}
                 >
-                    <option value="Primary">Primary school</option>
+                    <option value="Primary" selected={true}>Primary school</option>
                     <option value="Bachelor">Bachelor</option>
                     <option value="Master">Master</option>
                     <option value="Doctor">Doctor</option>

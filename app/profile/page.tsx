@@ -51,15 +51,16 @@ function Page() {
 
     useEffect(() => {
         (async () => {
+            setLoading(true)
             const savedData = localStorage.getItem('profile_data');
             if (typeof window !== undefined && savedData !== null) {
                 setData(JSON.parse(savedData));
             } else {
                 const resp = await fetch("/api/get_freelancer_profile?userId=1");
                 const dta = await resp.json();
-                localStorage.setItem("profile_data", JSON.stringify(dta));
                 setData(dta);
             }
+            setLoading(false)
         })();
     }, [])
 
@@ -67,7 +68,13 @@ function Page() {
     const skills = data?.Skill || []
     const experiences = data?.Experience || []
 
-    if (!data) return <Spinner width="w-20" height="w-20" />
+    if (!data) return <Box className="fixed top-0 left-0 w-screen h-screen bg-white flex items-center justify-center z-50">
+        <Spinner
+            thickness={"5px"}
+            color="cyan.500"
+            size='xl'
+        />
+    </Box>
 
 
     function openModal(content: string) {
@@ -93,7 +100,7 @@ function Page() {
                     />
                 </Box>
             }
-            <ProfileMultiModal form={formType} isOpen={isOpen} setLoading={(data: boolean) => {setLoading(data)}} onClose={onClose} setData={(data: any) => {setData(data)}} />
+            <ProfileMultiModal form={formType} data={data} isOpen={isOpen} setLoading={(data: boolean) => {setLoading(data)}} onClose={onClose} setData={(data: any) => {setData(data)}} />
 
             <main>
                 <section className={'container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 md:px-5 px-3 sm:flex sm:justify-center'}>

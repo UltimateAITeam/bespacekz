@@ -14,7 +14,7 @@ interface HandleData {
     table: string;
 }
 
-function ProfileMultiModal({form, isOpen, onClose, setData, setLoading}: { form: string, isOpen: boolean, onClose: () => void, setData: (data: any) => void, setLoading: (data: boolean) => void}){
+function ProfileMultiModal({data, form, isOpen, onClose, setData, setLoading}: { data: any, form: string, isOpen: boolean, onClose: () => void, setData: (data: any) => void, setLoading: (data: boolean) => void}){
 
     async function handleSubmit(data: HandleData) {
         onClose();
@@ -42,19 +42,18 @@ function ProfileMultiModal({form, isOpen, onClose, setData, setLoading}: { form:
         if (resp.status !== 200) console.log(resp.body)
         const res = await fetch("/api/get_freelancer_profile");
         const dta = await res.json();
-        localStorage.setItem("profile_data", JSON.stringify(dta));
         setData(dta);
         setLoading(false);
     }
 
     const forms: { [index: string]: ReactElement } = {
-        "edit-info": <ProfileInfoForm onSubmit={handleSubmit} onClose={onClose}/>,
-        "add-experience": <ProfileExperienceAddForm onSubmit={handleSubmit} onClose={onClose} />,
-        "edit-experience": <ProfileExperienceEditForm onSubmit={handleSubmit} onClose={onClose}/>,
-        "add-education": <ProfileEducationAddForm onSubmit={handleSubmit} onClose={onClose} />,
-        "edit-education": <ProfileEducationEditForm onSubmit={handleSubmit} onClose={onClose} />,
-        "edit-skills": <ProfileSkillsEditForm onSubmit={handleSubmit} onClose={onClose} />,
-        "edit-about": <ProfileAboutEditForm  onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-info": <ProfileInfoForm data={data} onSubmit={handleSubmit} onClose={onClose}/>,
+        "add-experience": <ProfileExperienceAddForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-experience": <ProfileExperienceEditForm data={data} onSubmit={handleSubmit} onClose={onClose}/>,
+        "add-education": <ProfileEducationAddForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-education": <ProfileEducationEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-skills": <ProfileSkillsEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-about": <ProfileAboutEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
     }
     if (!forms.hasOwnProperty(form)) return null;
 

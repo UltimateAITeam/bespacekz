@@ -15,9 +15,10 @@ import {
 interface FormProps {
     onSubmit: (data: any) => void;
     onClose: () => void;
+    data: any;
 }
 
-function ProfileAboutEditForm({onSubmit, onClose}: FormProps) {
+function ProfileAboutEditForm({onSubmit, onClose, data}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit({
@@ -27,8 +28,6 @@ function ProfileAboutEditForm({onSubmit, onClose}: FormProps) {
         });
     };
 
-    // не берем инфу с базы, а с локал стораджа
-    const data = JSON.parse(localStorage.getItem('profile_data') || '[]');
     const [about, setAbout] = useState<string>(data.about as string || '');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

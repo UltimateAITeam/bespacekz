@@ -23,9 +23,10 @@ interface FormData {
 interface FormProps {
     onSubmit: (data: any) => void;
     onClose: () => void;
+    data: any
 }
 
-function ProfileSkillsEditForm({onSubmit, onClose}: FormProps) {
+function ProfileSkillsEditForm({onSubmit, onClose, data}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedSkill?.id === 0) onSubmit({
@@ -40,8 +41,6 @@ function ProfileSkillsEditForm({onSubmit, onClose}: FormProps) {
         });
     };
 
-    // не берем инфу с базы, а с локал стораджа
-    const data = JSON.parse(localStorage.getItem('profile_data') || '[]');
     const skill = data.Skill as FormData[] || [];
 
     const [formData, setFormData] = React.useState<FormData[]>(skill);

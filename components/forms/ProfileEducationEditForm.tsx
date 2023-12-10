@@ -24,9 +24,10 @@ interface FormData {
 interface FormProps {
     onSubmit: (data: any) => void;
     onClose: () => void;
+    data: any
 }
 
-function ProfileEducationEditForm({onSubmit, onClose}: FormProps) {
+function ProfileEducationEditForm({onSubmit, onClose, data}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!selectedEducation) return;
@@ -40,8 +41,6 @@ function ProfileEducationEditForm({onSubmit, onClose}: FormProps) {
         });
     };
 
-    // не берем инфу с базы, а с локал стораджа
-    const data = JSON.parse(localStorage.getItem('profile_data') || '[]');
     const educations = data.Education as FormData[] || [];
 
     const [selectedEducation, setSelectedEducation] = React.useState<FormData>();
