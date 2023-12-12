@@ -16,6 +16,7 @@ import Footer from "@/components/brenda_components/Footer";
 import Skills from "@/components/brenda_components/Skills";
 import { SiAdobe, SiUdacity } from "react-icons/si";
 import ThreeTierPricing from "@/components/home_page/Pricing";
+import VacancyList from "@/components/brenda_components/VacancyList";
 
 export default function HomePage() {
   const session = useSession();
@@ -549,7 +550,7 @@ export default function HomePage() {
         </section>
 
         <section className="container mx-auto lg:my-7 my-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
-          <Skills />
+          <VacancyList />
         </section>
       </main>
 

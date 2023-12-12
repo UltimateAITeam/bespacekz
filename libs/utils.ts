@@ -8,6 +8,15 @@ function limitText(originalText: string, maxCharacters: number) {
     }
 }
 
+function currencyConverter(currency: string, amount: number) {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currency,
+    });
+
+    return formatter.format(amount);
+}
+
 function useFirstStepsLoading() {
     const [lotteries, setLotteries] = useState(false);
 
@@ -20,6 +29,7 @@ function useFirstStepsLoading() {
 }
 
 export {
+    currencyConverter,
     limitText,
     useFirstStepsLoading,
 }
