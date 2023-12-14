@@ -13,6 +13,7 @@ import useSkillsStore from "@/store/skillFormStore";
 import usePricingStore from "@/store/pricingFormStore";
 import usePortfolioStore from "@/store/profileFormStore";
 import {useFirstStepsLoading} from "@/libs/utils";
+import useTitleStore from "@/store/titleFormStateStore";
 
 function Layout({children}: {children: React.ReactNode}) {
     const router = useRouter();
@@ -23,6 +24,12 @@ function Layout({children}: {children: React.ReactNode}) {
             back: "",
             skip: false,
             next: "Следующий шаг"
+        },
+        {
+            path: "/firststeps/title",
+            back: "Назад",
+            skip: true,
+            next: "Следующий шаг",
         },
         {
             path: "/firststeps/education",
@@ -64,6 +71,8 @@ function Layout({children}: {children: React.ReactNode}) {
     const { skills } = useSkillsStore();
     const { projectRate, hourlyRate } = usePricingStore();
     const { links } = usePortfolioStore();
+    const { title } = useTitleStore();
+
 
     const isFilledEdu = educations.length >= 1 && educations.every((item) => {
         return item.degree !== "" && item.institution !== "" && item.graduationYear !== 0 && item.specialization !== ""
@@ -93,6 +102,8 @@ function Layout({children}: {children: React.ReactNode}) {
         switch (pages[pageIndex].path) {
             case "/firststeps/education":
                 return isFilledEdu;
+            case "/firststeps/title":
+                return title.length > 5;
             case "/firststeps":
                 return true;
             case "/firststeps/experience":
@@ -121,6 +132,15 @@ function Layout({children}: {children: React.ReactNode}) {
                 break;
             case "/firststeps":
                 router.push(pages[pageIndex+1].path);
+                break;
+            case "/firststeps/title":
+                postData("/api/profile/title", {title: title})
+                    .then((value) => {
+                        router.push(pages[pageIndex+1].path);
+                    })
+                    .catch((reason) => {
+                        console.log(reason);
+                    })
                 break;
             case "/firststeps/experience":
                 postData("/api/profile/experience", experience)

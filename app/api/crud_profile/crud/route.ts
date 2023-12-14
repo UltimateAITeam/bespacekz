@@ -100,6 +100,16 @@ export async function PUT(
                     about: info
                 }
             })
+        } else if (type === "jobTitle") {
+            console.log("INFO", info)
+            await prisma.freelancerProfile.update({
+                where: {
+                    userEmail: session.user.email,
+                },
+                data: {
+                    jobTitle: info
+                }
+            })
         }
         return NextResponse.json({"status": "ok"}, {status: 200})
     } catch (e) {

@@ -7,6 +7,7 @@ import ProfileSkillsEditForm from "@/components/forms/ProfileSkillsEditForm";
 import ProfileAboutEditForm from "@/components/forms/ProfileAboutEditForm";
 import ProfileEducationAddForm from "@/components/forms/ProfileEducationAddForm";
 import ProfileExperienceAddForm from "@/components/forms/ProfileExperienceAddForm";
+import ProfileTitleEditForm from "@/components/forms/ProfileTitleEditForm";
 
 interface HandleData {
     info: any;
@@ -47,6 +48,7 @@ function ProfileMultiModal({data, form, isOpen, onClose, setData, setLoading}: {
     }
 
     const forms: { [index: string]: ReactElement } = {
+        "edit-jobTitle": <ProfileTitleEditForm data={data} onSubmit={handleSubmit} onClose={onClose}/>,
         "edit-info": <ProfileInfoForm data={data} onSubmit={handleSubmit} onClose={onClose}/>,
         "add-experience": <ProfileExperienceAddForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
         "edit-experience": <ProfileExperienceEditForm data={data} onSubmit={handleSubmit} onClose={onClose}/>,

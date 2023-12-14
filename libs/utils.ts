@@ -16,6 +16,11 @@ function currencyConverter(currency: string, amount: number) {
 
     return formatter.format(amount);
 }
+function currencyConverterNumber(currency: string, amount: number) {
+    const formatter = new Intl.NumberFormat('en-US');
+
+    return formatter.format(amount);
+}
 
 function useFirstStepsLoading() {
     const [lotteries, setLotteries] = useState(false);
@@ -29,6 +34,7 @@ function useFirstStepsLoading() {
 }
 
 export {
+    currencyConverterNumber,
     currencyConverter,
     limitText,
     useFirstStepsLoading,

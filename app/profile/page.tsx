@@ -4,7 +4,7 @@ import HeadTag from "@/components/brenda_components/HeadTag";
 import {
     Avatar, Box,
     Grid,
-    GridItem,
+    GridItem, HStack,
     SimpleGrid,
     Spinner,
     Stack,
@@ -18,6 +18,7 @@ import NewHeader from "@/components/brenda_components/NewHeader";
 import {Prisma} from "@prisma/client";
 import BlockComponent from "@/components/BlockComponent";
 import ProfileMultiModal from "@/components/modals/ProfileMultiModal";
+import {LuPencilLine} from "react-icons/lu";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
@@ -52,7 +53,7 @@ function Page() {
     useEffect(() => {
         (async () => {
             setLoading(true)
-            const resp = await fetch("/api/get_freelancer_profile?userId=1");
+            const resp = await fetch("/api/get_freelancer_profile");
             const dta = await resp.json();
             setData(dta);
             setLoading(false)
@@ -100,7 +101,11 @@ function Page() {
             <main>
                 <section className={'container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 md:px-5 px-3 sm:flex sm:justify-center'}>
                     <Stack spacing={4} className={'lg:w-3/5 sm:w-4/5 w-full'}>
-                        <h1 className={"text-3xl mb-5 font-bold"}>Просмотр аккаунта</h1>
+                        <HStack>
+                            <h1 className={"text-3xl mb-5 font-bold"}>{data.jobTitle}</h1>
+                            <LuPencilLine onClick={() => openModal("edit-jobTitle")} className={"-mt-4 cursor-pointer w-7 h-7"}/>
+                        </HStack>
+
                         {/* BLOCK TAG */}
                         <BlockComponent title={"Личные данные"} isEditable={true} editForm={"edit-info"} openModal={openModal} isAddable={false}>
                             <div className={"flex w-full md:flex-row flex-col"}>

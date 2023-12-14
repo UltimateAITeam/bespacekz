@@ -9,7 +9,7 @@ import {
     Spinner,
     HStack, Box
 } from "@chakra-ui/react";
-import {currencyConverter} from "@/libs/utils";
+import {currencyConverter, currencyConverterNumber} from "@/libs/utils";
 import { ImLocation2 } from "react-icons/im";
 import { FaBriefcase } from "react-icons/fa";
 import {useRouter} from "next/navigation";
@@ -41,7 +41,7 @@ function VacancyList() {
     }, [page])
 
     return (
-        <div>
+        <Stack spacing={4}>
 
             {loading && (
                 <HStack justifyContent={"center"} >
@@ -86,7 +86,7 @@ function VacancyList() {
                                     <Text color={"green.600"}>
                                         {currencyConverter(vacancy.currency, vacancy.priceFrom)}
                                         -
-                                        {currencyConverter(vacancy.currency, vacancy.priceTo).slice(1, )}
+                                        {currencyConverterNumber(vacancy.currency, vacancy.priceTo)}
                                     </Text>
                                 </HStack>
 
@@ -157,7 +157,7 @@ function VacancyList() {
                 </HStack>
 
             </Stack>
-        </div>
+        </Stack>
     );
 }
 
