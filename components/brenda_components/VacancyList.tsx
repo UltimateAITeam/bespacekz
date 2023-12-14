@@ -62,7 +62,7 @@ function VacancyList() {
                     overflow='hidden'
                     variant='outline'
                     key={vacancy.id}
-                    className={"cursor-pointer"}
+                    className={"cursor-pointer mb-4"}
                     onClick={() => router.push(`/vacancies/${vacancy.id}`)}
                 >
                     <CardBody>
