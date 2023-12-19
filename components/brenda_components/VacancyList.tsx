@@ -15,8 +15,11 @@ import { FaBriefcase } from "react-icons/fa";
 import {useRouter} from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa6";
+import GridLoader from "react-spinners/GridLoader";
 
 type Vacancy = Prisma.VacancyGetPayload<{}>;
+
+const ITEMS_PER_PAGE = 10;
 
 function VacancyList() {
 
@@ -25,35 +28,62 @@ function VacancyList() {
     const [page, setPage] = useState<number>(1);
     const [data, setData] = useState<Vacancy[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [totalItems, setTotalItems] = useState<number>(0);
 
     useEffect(() => {
 
         (async () => {
             setLoading(true);
             setData([]);
-            const res = await fetch(`/api/vacancies?page=${page}&limit=10`);
+            if (totalItems == 0) {
+                const resTotalVacancy = await fetch(`/api/vacancies?page=0&limit=0`);
+                if (resTotalVacancy.status !== 200) console.log('Error get total vacancies');
+                const resp_json_total = await resTotalVacancy.json();
+                setTotalItems(resp_json_total.count);
+            }
+            const res = await fetch(`/api/vacancies?page=${page}&limit=${ITEMS_PER_PAGE}`);
             if (res.status !== 200) return;
             const resp_json = await res.json();
             setData(resp_json.data);
             setLoading(false);
         })()
 
-    }, [page])
+    }, [page, totalItems])
+
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
+
+    const renderPagination = () => {
+        let pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(
+                <Box
+                    key={i}
+                    className={`px-2 py-1 border ${page === i ? 'bg-gray-300' : 'bg-white hover:bg-white/20 cursor-pointer'}`}
+                    onClick={() => setPage(i)}
+                >
+                    {i}
+                </Box>
+            );
+        }
+        return pages;
+    };
 
     return (
         <Stack spacing={4}>
 
-            {loading && (
-                <HStack justifyContent={"center"} >
-                    <Spinner
-                        size={"xl"}
-                        thickness={"4px"}
-                        speed={"0.65s"}
-                        emptyColor={"gray.200"}
-                        color={"blue.500"}
-                        className={"mx-auto"}
-                    />
+            {(loading ) && (
+                <HStack justifyContent={"left"} className='py-12' >
+                    <GridLoader color="#36d7b7" className='mx-auto' />
                 </HStack>
+            )}
+
+            {!loading && (
+                <HStack justifyContent={"left"} className='' >
+                    <Text fontSize={"lg"} fontWeight={"medium"}>
+                        Всего вакансий: {totalItems}
+                    </Text>
+                </HStack>
+            
             )}
 
             {data.length > 0 && data.map((vacancy) => (
@@ -104,59 +134,27 @@ function VacancyList() {
                     </CardBody>
                 </Card>
             ))}
-            <Stack
-                className={"mx-auto w-fit my-4"}
-            >
-
+            
+            {!loading && totalItems > ITEMS_PER_PAGE && (
+            
+            <Stack className={'mx-auto w-fit my-4'}>
                 <HStack>
                     <button
                         onClick={() => setPage(page - 1)}
-                        className={`${page === 1 ? "text-gray-400" : "cursor-pointer" }`}
                         disabled={page === 1}
+                        className={`px-2 py-1 ${page === 1 ? 'text-gray-400' : 'cursor-pointer'}`}
                     >
                         <FaArrowLeft />
                     </button>
 
+                    {renderPagination()}
 
-                    {page > 1 && (
-                        <>
-                            <Box
-                                key={1}
-                                className={`${page === 1 ? "bg-gray-300" : "bg-white hover:bg-white/20 cursor-pointer"} border px-2 py-1`}
-                                onClick={() => setPage(1)}
-                            >
-                                1
-                            </Box>
-
-                            {page > 2 && (
-                                <Box>
-                                    ...
-                                </Box>
-                            )}
-                        </>
-                    )}
-
-
-                    {[page, page+1, page+2, page+3, page+4, page+5,].map((elem, index) => (
-                        <Box
-                            key={index}
-                            className={`${page === elem ? "bg-gray-300" : "bg-white hover:bg-white/20 cursor-pointer"} border px-2 py-1`}
-                            onClick={() => setPage(elem)}
-                        >
-                            {elem}
-                        </Box>
-                    ))}
-
-
-                    <button
-                        onClick={() => setPage(page + 1)}
-                        className={"cursor-pointer"}
-                    >
+                    <button onClick={() => setPage(page + 1)} className={'px-2 py-1 cursor-pointer'}>
                         <FaArrowRight />
                     </button>
                 </HStack>
-
             </Stack>
+            )}
         </Stack>
     );
 }

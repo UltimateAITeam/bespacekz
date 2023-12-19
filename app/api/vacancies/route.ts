@@ -11,12 +11,18 @@ export async function GET(
 
     try {
         if (!limit || !page ) return NextResponse.json({error: "no limit or page provided"}, {status: 400})
-
-        const data = await prisma.vacancy.findMany({
+        if (limit == "0" && page == "0") {
+            const vacancyCount = await prisma.vacancy.count();
+            console.log(vacancyCount)
+            return NextResponse.json({count: vacancyCount}, {status: 200})
+        } else {
+            const data = await prisma.vacancy.findMany({
             skip: parseInt(limit) * (parseInt(page) - 1),
             take: parseInt(limit),
         })
         return NextResponse.json({data: data}, {status: 200})
+        }
+        
     } catch (e) {
         return NextResponse.json({error: e?.toString}, {status: 500});
     }
