@@ -130,6 +130,8 @@ model Vacancy {
   isClear        Boolean       @default(false)
   experience     String
   specialization String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
   city           String        @default("remote")
   clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
 }

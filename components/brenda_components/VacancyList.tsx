@@ -9,7 +9,7 @@ import {
     Spinner,
     HStack, Box
 } from "@chakra-ui/react";
-import {currencyConverter, currencyConverterNumber} from "@/libs/utils";
+import {currencyConverter, currencyConverterNumber, getRelativeTime} from "@/libs/utils";
 import { ImLocation2 } from "react-icons/im";
 import { FaBriefcase } from "react-icons/fa";
 import {useRouter} from "next/navigation";
@@ -97,7 +97,11 @@ function VacancyList() {
                 >
                     <CardBody>
                         <Stack spacing={2}>
-                            <Heading size='md'>{vacancy.title}</Heading>
+
+                            <HStack>
+                                <Heading size='md'>{vacancy.title}</Heading>
+                                <Text>{getRelativeTime(new Date(vacancy.createdAt))}</Text>
+                            </HStack>
 
                             <Text size={"xs"}>
                                 {vacancy.specialization}

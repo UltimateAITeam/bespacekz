@@ -17,13 +17,17 @@ export async function GET(
             return NextResponse.json({count: vacancyCount}, {status: 200})
         } else {
             const data = await prisma.vacancy.findMany({
-            skip: parseInt(limit) * (parseInt(page) - 1),
-            take: parseInt(limit),
-        })
-        return NextResponse.json({data: data}, {status: 200})
+                skip: parseInt(limit) * (parseInt(page) - 1),
+                take: parseInt(limit),
+                orderBy: {
+                    createdAt: 'desc',
+                },
+            })
+            return NextResponse.json({data: data}, {status: 200})
         }
         
     } catch (e) {
+        console.log("Пойман на ошибке", e);
         return NextResponse.json({error: e?.toString}, {status: 500});
     }
 }
