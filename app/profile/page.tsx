@@ -27,7 +27,7 @@ type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
         Skill: true,
         Pricing: true,
         Portfolio: true,
-
+        jobTitle: true,
     },
 }>;
 

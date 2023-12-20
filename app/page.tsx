@@ -550,6 +550,9 @@ export default function HomePage() {
         </section>
 
         <section className="container mx-auto lg:my-7 my-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
+          <h2 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold mb-7">
+            Вакансии дня на платформе
+          </h2>
           <VacancyList />
         </section>
       </main>
