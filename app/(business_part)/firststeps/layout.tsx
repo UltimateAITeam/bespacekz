@@ -28,7 +28,7 @@ function Layout({children}: {children: React.ReactNode}) {
         {
             path: "/firststeps/title",
             back: "Назад",
-            skip: true,
+            skip: false,
             next: "Следующий шаг",
         },
         {
