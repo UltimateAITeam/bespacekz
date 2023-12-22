@@ -56,6 +56,7 @@ const Footer = () => {
     ]
 
     return (
+        // m-5 rounded-xl
         <footer className="bg-gradient-to-tr from-[#BAE6FD] to-[#CFFAFE] mt-auto">
             <div className="container mx-auto py-3 md:px-5 sm:px-7 px-3">
                 <div className="flex md:flex-row flex-col justify-between md:space-x-5 md:px-0 sm:px-10 px-3">
