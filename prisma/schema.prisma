@@ -110,13 +110,16 @@ model Portfolio {
 }
 
 model ClientProfile {
-  id           String    @id @default(cuid())
-  companyInfo  String?
-  isCompany    Boolean   @default(false)
-  sphereOfWork String?
-  userEmail    String    @unique
-  user         User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  Vacancy      Vacancy[]
+  id                 String    @id @default(cuid())
+  companyInfo        String?
+  isCompany          Boolean   @default(false)
+  sphereOfWork       String?
+  address            String?
+  mailIndex          String?
+  companyDescription String?
+  userEmail          String    @unique
+  user               User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  Vacancy            Vacancy[]
 }
 
 model Vacancy {

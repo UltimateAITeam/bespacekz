@@ -1,3 +1,4 @@
+'use client';
 import React, {ReactElement} from 'react';
 import {Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay,} from "@chakra-ui/react";
 import ProfileInfoForm from "@/components/forms/ProfileInfoForm";
@@ -8,6 +9,11 @@ import ProfileAboutEditForm from "@/components/forms/ProfileAboutEditForm";
 import ProfileEducationAddForm from "@/components/forms/ProfileEducationAddForm";
 import ProfileExperienceAddForm from "@/components/forms/ProfileExperienceAddForm";
 import ProfileTitleEditForm from "@/components/forms/ProfileTitleEditForm";
+import ProfileCompanyInfoEditForm from "@/components/forms/ProfileCompanyInfoEditForm";
+import {Role} from "@prisma/client";
+import ProfileCompanyDescriptionEditForm from "@/components/forms/ProfileCompanyDescriptionEditForm";
+import ProfileCompanyVacancyEditForm from "@/components/forms/ProfileCompanyVacancyEditForm";
+import ProfileCompanyVacancyAddForm from "@/components/forms/ProfileCompanyVacancyAddForm";
 
 interface HandleData {
     info: any;
@@ -15,7 +21,7 @@ interface HandleData {
     table: string;
 }
 
-function ProfileMultiModal({data, form, isOpen, onClose, setData, setLoading}: { data: any, form: string, isOpen: boolean, onClose: () => void, setData: (data: any) => void, setLoading: (data: boolean) => void}){
+function ProfileMultiModal({data, role, form, isOpen, onClose, setData, setLoading}: { data: any, role: string, form: string, isOpen: boolean, onClose: () => void, setData: (data: any) => void, setLoading: (data: boolean) => void}){
 
     async function handleSubmit(data: HandleData) {
         onClose();
@@ -32,16 +38,17 @@ function ProfileMultiModal({data, form, isOpen, onClose, setData, setLoading}: {
                 method = "DELETE";
                 break;
         }
+
         if (!method) {
             console.log(data);
             return;
         }
-        const resp = await fetch('/api/crud_profile/crud', {
+        const resp = await fetch(role === Role.FREELANCER ? '/api/crud_profile/crud' : '/api/crud_profile/client_crud', {
             method: method,
             body: JSON.stringify({info: data.info, type: data.table})
         })
         if (resp.status !== 200) console.log(resp.body)
-        const res = await fetch("/api/get_freelancer_profile");
+        const res = await fetch(role === Role.FREELANCER ? "/api/get_freelancer_profile" : "/api/get_client_profile");
         const dta = await res.json();
         setData(dta);
         setLoading(false);
@@ -56,6 +63,10 @@ function ProfileMultiModal({data, form, isOpen, onClose, setData, setLoading}: {
         "edit-education": <ProfileEducationEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
         "edit-skills": <ProfileSkillsEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
         "edit-about": <ProfileAboutEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-company-info": <ProfileCompanyInfoEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-company-description": <ProfileCompanyDescriptionEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "add-vacancy": <ProfileCompanyVacancyAddForm data={data} onSubmit={handleSubmit} onCloseModal={onClose} />,
+        "edit-vacancy": <ProfileCompanyVacancyEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
     }
     if (!forms.hasOwnProperty(form)) return null;
 
