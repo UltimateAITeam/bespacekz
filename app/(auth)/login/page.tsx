@@ -130,6 +130,7 @@ export default function LoginPage() {
                                 <Link href={"/signup"} className="w-full py-2 sm:px-20 px-3 border border-[#0C4A6E] rounded-full font-semibold text-[#0C4A6E] transition hover:border-[#0C4A6E] hover:text-[#0C4A6E] flex items-center justify-center mt-5">
                                     Sign Up
                                 </Link>
+                                {/*  */}
                             </div>
                         </div>
                     </div>
