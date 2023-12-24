@@ -81,6 +81,7 @@ function ProfileCompanyVacancyEditForm({onSubmit, onClose, data}: FormProps) {
             });
         } else {
             // If not a number, set to 0 or handle appropriately
+            // hello
             setSelectedVacancy({
                 ...selectedVacancy,
                 [name]: 0
