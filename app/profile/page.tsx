@@ -59,12 +59,13 @@ function Page() {
     const [loading, setLoading] = useState(false);
     const session = useSession();
     const [data, setData] = React.useState<FreelancerProfileType & UserInfoType & ClientProfileType>();
+    const role = session.data?.user.role || localStorage.getItem("userRole");
 
     useEffect(() => {
         (async () => {
             setLoading(true)
             let resp: Response;
-            if (session.data?.user.role === Role.FREELANCER) resp = await fetch("/api/get_freelancer_profile");
+            if (role === Role.FREELANCER) resp = await fetch("/api/get_freelancer_profile");
             else resp = await fetch("/api/get_client_profile");
             const dta = await resp.json();
             setData(dta);
@@ -77,7 +78,7 @@ function Page() {
     const skills = data?.Skill || []
     const experiences = data?.Experience || []
 
-    if (!data) return <Box
+    if (!data || loading) return <Box
         className="fixed top-0 left-0 w-screen h-screen bg-white flex items-center justify-center z-50">
         <Spinner
             thickness={"5px"}
@@ -112,7 +113,7 @@ function Page() {
                     />
                 </Box>
             }
-            <ProfileMultiModal role={session.data?.user.role || Role.CLIENT} form={formType} data={data} isOpen={isOpen} setLoading={(data: boolean) => {
+            <ProfileMultiModal role={role || Role.CLIENT} form={formType} data={data} isOpen={isOpen} setLoading={(data: boolean) => {
                 setLoading(data)
             }} onClose={onClose} setData={(data: any) => {
                 setData(data)
@@ -164,7 +165,7 @@ function Page() {
                                 </Grid>
                             </div>
                         </BlockComponent>
-                        {session?.data?.user?.role === Role.FREELANCER
+                        {role === Role.FREELANCER
                             && <>
                             <BlockComponent editForm={"edit-education"} addForm={"add-education"} openModal={openModal}
                                             title={"Образование"} isEditable={true} isAddable={true}>
@@ -258,7 +259,7 @@ function Page() {
                             </BlockComponent>
                         </>}
                         {/*CLIENT PART*/}
-                        {session?.data?.user?.role === Role.CLIENT
+                        {role === Role.CLIENT
                             && <>
                                 <BlockComponent editForm={"edit-company-info"} openModal={openModal} isAddable={false}
                                                 isEditable={true} title={"Данные Компании"}>
