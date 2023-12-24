@@ -31,14 +31,13 @@ type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
         Pricing: true,
         Portfolio: true,
         jobTitle: true,
+        mailIndex: true,
+        address: true,
+        sphereOfWork: true,
+        companyDescription: true,
+        Vacancy: true,
     },
 }>;
-
-type ClientProfileType = Prisma.ClientProfileGetPayload<{
-    include: {
-        Vacancy: true,
-    }
-}>
 
 type UserInfoType = Prisma.UserGetPayload<{
     select: {
@@ -58,7 +57,7 @@ function Page() {
     const {isOpen, onClose, onOpen} = useDisclosure();
     const [loading, setLoading] = useState(false);
     const session = useSession();
-    const [data, setData] = React.useState<FreelancerProfileType & UserInfoType & ClientProfileType>();
+    const [data, setData] = React.useState<FreelancerProfileType & UserInfoType>();
     const role = session.data?.user.role || localStorage.getItem("userRole");
 
     useEffect(() => {
@@ -77,6 +76,7 @@ function Page() {
     const educations = data?.Education || []
     const skills = data?.Skill || []
     const experiences = data?.Experience || []
+    const vacancies = data?.Vacancy || []
 
     if (!data || loading) return <Box
         className="fixed top-0 left-0 w-screen h-screen bg-white flex items-center justify-center z-50">
@@ -290,7 +290,7 @@ function Page() {
                                                 openModal={openModal} addForm={"add-vacancy"} title={"Ваши вакансии"}
                                 >
                                     <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(250px, 1fr))'>
-                                        {data.Vacancy.map((vacancy: any) => (
+                                        {vacancies && vacancies.length > 0 && vacancies.map((vacancy: any) => (
                                             <Card
                                                 key={vacancy.id}
                                                 className={"hover:shadow-md transition-shadow"}
