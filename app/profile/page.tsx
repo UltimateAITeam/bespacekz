@@ -22,7 +22,6 @@ import BlockComponent from "@/components/BlockComponent";
 import ProfileMultiModal from "@/components/modals/ProfileMultiModal";
 import {LuPencilLine} from "react-icons/lu";
 import {useSession} from "next-auth/react";
-import {FaRegTrashAlt} from "react-icons/fa";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
@@ -34,6 +33,12 @@ type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
         jobTitle: true,
     },
 }>;
+
+type ClientProfileType = Prisma.ClientProfileGetPayload<{
+    include: {
+        Vacancy: true,
+    }
+}>
 
 type UserInfoType = Prisma.UserGetPayload<{
     select: {
@@ -53,7 +58,7 @@ function Page() {
     const {isOpen, onClose, onOpen} = useDisclosure();
     const [loading, setLoading] = useState(false);
     const session = useSession();
-    const [data, setData] = React.useState<FreelancerProfileType & UserInfoType>();
+    const [data, setData] = React.useState<FreelancerProfileType & UserInfoType & ClientProfileType>();
 
     useEffect(() => {
         (async () => {

@@ -15,7 +15,7 @@ import {
 import { FaRegTrashAlt } from "react-icons/fa";
 
 interface FormDataType {
-    id: string
+    id: string,
     title: string,
     aboutVacancy: string,
     priceFrom: number,
@@ -53,6 +53,7 @@ function ProfileCompanyVacancyEditForm({onSubmit, onClose, data}: FormProps) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const target = e.target as HTMLInputElement;
         const value = target.value;
+        if (!selectedVacancy) return;
         setSelectedVacancy({
             ...selectedVacancy,
             [e.target.name]: value,
@@ -60,6 +61,7 @@ function ProfileCompanyVacancyEditForm({onSubmit, onClose, data}: FormProps) {
     };
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if (!selectedVacancy) return;
         setSelectedVacancy({
             ...selectedVacancy,
             [e.target.name]: e.target.value,
@@ -69,6 +71,7 @@ function ProfileCompanyVacancyEditForm({onSubmit, onClose, data}: FormProps) {
     const handleFloatInputChange = (name: string, valueString: string) => {
         // Convert the input value to a float
         const floatValue = parseFloat(valueString);
+        if (!selectedVacancy) return;
 
         // Check if the parsed value is a valid number
         if (!isNaN(floatValue)) {
