@@ -58,7 +58,8 @@ function Page() {
     const [loading, setLoading] = useState(false);
     const session = useSession();
     const [data, setData] = React.useState<FreelancerProfileType & UserInfoType>();
-    const role = session.data?.user.role || localStorage.getItem("userRole");
+    // || localStorage.getItem("userRole")
+    const role = session.data?.user.role;
 
     useEffect(() => {
         (async () => {
