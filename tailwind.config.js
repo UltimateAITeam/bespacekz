@@ -15,7 +15,8 @@ module.exports = {
       colors: {
         mainBg: '#F3FFFC',
         'mainText': '#1A3353',
-        'neutral-4': '#F0F0F0'
+        'neutral-4': '#F0F0F0',
+        'primary-10': '#002766'
       }
     },
   },

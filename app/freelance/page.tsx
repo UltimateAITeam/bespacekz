@@ -16,9 +16,15 @@ import {
     Input,
     InputGroup,
     InputRightElement,
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
 } from '@chakra-ui/react';
 import {IoSearchSharp} from 'react-icons/io5';
-import {categoriesData, citiesOptions} from './filterData';
+import {categoriesData, citiesOptions, employmentOptions} from './filterData';
+import VacancyCard from '@/components/VacancyCard';
 
 export default function FreelancePage() {
     /* ========================== Categories State ========================= */
@@ -32,6 +38,15 @@ export default function FreelancePage() {
     const isAllCheckedCities = useMemo(() => checkedCities.length === citiesOptions.length, [checkedCities]);
     /* ========================== Favorites State ========================= */
     const [checkedFavorites, setCheckedFavorites] = useState<boolean>(false);
+    /* ========================== Employment State ========================= */
+    const [checkedEmployments, setCheckedEmployments] = useState<string[]>([employmentOptions[0]]);
+    const isAllCheckedEmployments = useMemo(
+        () => checkedEmployments.length === employmentOptions.length,
+        [checkedEmployments]
+    );
+     /* ========================== Price State ========================= */
+     const [startPrice, setStartPrice] = useState<number>(0);
+     const [endPrice, setEndPrice] = useState<number>(0);
 
     /* ================== Categories checkbox changes ================== */
     const handleCheckboxChangeCategories = (e: ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +72,18 @@ export default function FreelancePage() {
         if (e.target.checked) return setCheckedCities(citiesOptions);
         setCheckedCities([]);
     };
+    /* ================== Employments checkbox changes ================== */
+    const handleCheckboxChangeEmployments = (e: ChangeEvent<HTMLInputElement>) => {
+        if (checkedEmployments.includes(e.target.value) && !e.target.checked) {
+            setCheckedEmployments(checkedEmployments.filter((item) => item !== e.target.value));
+        } else {
+            setCheckedEmployments([...checkedEmployments, e.target.value]);
+        }
+    };
+    const handleSelectAllEmployments = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) return setCheckedEmployments(employmentOptions);
+        setCheckedEmployments([]);
+    };
 
     return (
         <div className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3 font-roboto">
@@ -78,10 +105,10 @@ export default function FreelancePage() {
                 </InputGroup>
             </div>
 
-            <section className="flex !mt-16">
+            <section className="flex gap-8 !mt-16">
                 {/* ================= Filter Side ======================== */}
                 <div className="w-[300px]">
-                    <Accordion defaultIndex={[0,2]} allowMultiple>
+                    <Accordion defaultIndex={[0, 2]} allowMultiple>
                         <AccordionItem className="!border-none">
                             <h2 className="title_filter">
                                 <AccordionButton>
@@ -89,27 +116,29 @@ export default function FreelancePage() {
                                     <AccordionIcon />
                                 </AccordionButton>
                             </h2>
-                            <AccordionPanel pb={4} className="max-h-[300px] overflow-y-auto">
-                                <Checkbox
-                                    value="all-categories"
-                                    colorScheme="primary-6"
-                                    className="mb-2"
-                                    isChecked={isAllCheckedCategories}
-                                    onChange={handleSelectAllCategories}>
-                                    Все категории
-                                </Checkbox>
-                                <CheckboxGroup colorScheme="primary-6" value={checkedCategories}>
-                                    <div className="flex flex-col gap-2">
-                                        {categoriesData.map((categoryItem) => (
-                                            <Checkbox
-                                                value={categoryItem}
-                                                key={categoryItem}
-                                                onChange={handleCheckboxChangeCategories}>
-                                                {categoryItem}
-                                            </Checkbox>
-                                        ))}
-                                    </div>
-                                </CheckboxGroup>
+                            <AccordionPanel pb={4}>
+                                <div className="max-h-[300px] overflow-y-auto">
+                                    <Checkbox
+                                        value="all-categories"
+                                        colorScheme="primary-6"
+                                        className="mb-2"
+                                        isChecked={isAllCheckedCategories}
+                                        onChange={handleSelectAllCategories}>
+                                        Все категории
+                                    </Checkbox>
+                                    <CheckboxGroup colorScheme="primary-6" value={checkedCategories}>
+                                        <div className="flex flex-col gap-2">
+                                            {categoriesData.map((categoryItem) => (
+                                                <Checkbox
+                                                    value={categoryItem}
+                                                    key={categoryItem}
+                                                    onChange={handleCheckboxChangeCategories}>
+                                                    {categoryItem}
+                                                </Checkbox>
+                                            ))}
+                                        </div>
+                                    </CheckboxGroup>
+                                </div>
                             </AccordionPanel>
                         </AccordionItem>
 
@@ -172,10 +201,66 @@ export default function FreelancePage() {
                                 </Checkbox>
                             </AccordionPanel>
                         </AccordionItem>
+
+                        <AccordionItem className="!border-none">
+                            <h2 className="title_filter">
+                                <AccordionButton>
+                                    <span>Вид занятости</span>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h2>
+                            <AccordionPanel pb={4}>
+                                <div className="max-h-[300px] overflow-y-auto">
+                                    <Checkbox
+                                        value="all-categories"
+                                        colorScheme="primary-6"
+                                        className="mb-2"
+                                        isChecked={isAllCheckedEmployments}
+                                        onChange={handleSelectAllEmployments}>
+                                        Все
+                                    </Checkbox>
+                                    <CheckboxGroup colorScheme="primary-6" value={checkedEmployments}>
+                                        <div className="flex flex-col gap-2">
+                                            {employmentOptions.map((employmentItem) => (
+                                                <Checkbox
+                                                    value={employmentItem}
+                                                    key={employmentItem}
+                                                    onChange={handleCheckboxChangeEmployments}>
+                                                    {employmentItem}
+                                                </Checkbox>
+                                            ))}
+                                        </div>
+                                    </CheckboxGroup>
+                                </div>
+                            </AccordionPanel>
+                        </AccordionItem>
+
+                        <AccordionItem className="!border-none">
+                            <h2 className="title_filter">
+                                <AccordionButton>
+                                    <span>Цена</span>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h2>
+                            <AccordionPanel pb={4}>
+                                <div className="flex flex-col gap-2">
+                                    <span>Начальная цена, ₸</span>
+                                    <NumberInput value={startPrice} onChange={(_, v) => setStartPrice(v || 0)} size='sm' defaultValue={0} min={0} max={endPrice} clampValueOnBlur={false}>
+                                        <NumberInputField />
+                                    </NumberInput>
+                                    <span>Конечная цена, ₸</span>
+                                    <NumberInput value={endPrice} onChange={(_, v) => setEndPrice(v || 0)} size='sm' defaultValue={0} min={startPrice} clampValueOnBlur={false}>
+                                        <NumberInputField  />
+                                    </NumberInput>
+                                </div>
+                            </AccordionPanel>
+                        </AccordionItem>
                     </Accordion>
                 </div>
 
-                <div></div>
+                <div className='flex-1'>
+                    <VacancyCard />
+                </div>
             </section>
         </div>
     );
