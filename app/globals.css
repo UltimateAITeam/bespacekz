@@ -20,6 +20,11 @@ input:focus {
 }
 
 :root {
+  --Primary-10: #002766;
+  --Primary-text: #1A3353;
+  --Primary-6: #366EF6;
+
+
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',

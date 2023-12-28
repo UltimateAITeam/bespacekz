@@ -1,0 +1,21 @@
+.chakra-checkbox__label {
+    @apply text-mainText  font-roboto  whitespace-nowrap truncate	
+}
+
+.title_filter span {
+    @apply text-left flex-1 font-roboto font-medium text-base text-[#001E00]
+}
+
+div::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  div::-webkit-scrollbar-track {
+    border-radius: 100px;
+    @apply bg-neutral-4
+  }
+  
+  div::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    @apply bg-[#C1C1C1];
+  }

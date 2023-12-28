@@ -12,7 +12,7 @@ import useExperienceStore from "@/store/experienceFormState";
 import useSkillsStore from "@/store/skillFormStore";
 import usePricingStore from "@/store/pricingFormStore";
 import usePortfolioStore from "@/store/profileFormStore";
-import {useFirstStepsLoading} from "@/libs/utils";
+import {useFirstStepsLoading} from "@/libs/hooks";
 import useTitleStore from "@/store/titleFormStateStore";
 
 function Layout({children}: {children: React.ReactNode}) {
