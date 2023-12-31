@@ -72,6 +72,8 @@ model Education {
   institution         String
   graduationYear      Int
   specialization      String
+  from                DateTime          @default(now())
+  to                  DateTime          @default(now())
   freelancerProfileId String
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
@@ -83,6 +85,8 @@ model Experience {
   tasks               String
   duration            String
   company             String
+  from                DateTime          @default(now())
+  to                  DateTime          @default(now())
   freelancerProfileId String
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }

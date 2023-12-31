@@ -1,18 +1,18 @@
 import {create} from 'zustand';
-import {win} from "posthog-js/lib/src/utils/globals";
-
 type Education = {
     degree: string;
     institution: string;
     graduationYear: number;
     specialization: string;
+    from: Date;
+    to: Date;
 };
 
 type EducationStore = {
     educations: Education[];
     addEducation: () => void;
     removeEducation: (index: number) => void;
-    updateEducation: (index: number, field: keyof Education, value: string | number) => void;
+    updateEducation: (index: number, field: keyof Education, value: string | number | Date) => void;
 };
 
 const getInitialEdu = (): Education[] => {
@@ -31,7 +31,9 @@ const useEducationStore = create<EducationStore>((set) => ({
                     degree: '',
                     institution: '',
                     graduationYear: 0,
-                    specialization: ''
+                    specialization: '',
+                    from: new Date(),
+                    to: new Date(),
                 }]));
             }
 
@@ -40,7 +42,9 @@ const useEducationStore = create<EducationStore>((set) => ({
                     degree: '',
                     institution: '',
                     graduationYear: 0,
-                    specialization: ''
+                    specialization: '',
+                    from: new Date(),
+                    to: new Date(),
                 }]
             }
         }),

@@ -18,6 +18,8 @@ export async function POST(
                     tasks: experience.tasks,
                     duration: experience.duration,
                     roles: [...experience.roles],
+                    from: experience.from,
+                    to: experience.to,
                     freelancerProfileId: FreelancerProfile.id,
                 }
             });

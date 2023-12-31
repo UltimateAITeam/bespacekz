@@ -11,7 +11,6 @@ import useEducationFormStore from "@/store/educationFormStore";
 import useExperienceStore from "@/store/experienceFormState";
 import useSkillsStore from "@/store/skillFormStore";
 import usePricingStore from "@/store/pricingFormStore";
-import usePortfolioStore from "@/store/profileFormStore";
 import {useFirstStepsLoading} from "@/libs/utils";
 import useTitleStore from "@/store/titleFormStateStore";
 
@@ -49,12 +48,12 @@ function Layout({children}: {children: React.ReactNode}) {
             skip: true,
             next: "Следующий шаг",
         },
-        {
-            path: "/firststeps/portfolio",
-            back: "Назад",
-            skip: true,
-            next: "Следующий шаг",
-        },
+        // {
+        //     path: "/firststeps/portfolio", // TODO: replace with new pages
+        //     back: "Назад",
+        //     skip: true,
+        //     next: "Следующий шаг",
+        // },
         {
             path: "/firststeps/price",
             back: "Назад",
@@ -70,7 +69,6 @@ function Layout({children}: {children: React.ReactNode}) {
     const { experience } = useExperienceStore();
     const { skills } = useSkillsStore();
     const { projectRate, hourlyRate } = usePricingStore();
-    const { links } = usePortfolioStore();
     const { title } = useTitleStore();
 
 
@@ -112,10 +110,6 @@ function Layout({children}: {children: React.ReactNode}) {
                 return isFilledSkills;
             case "/firststeps/price":
                 return projectRate >= 500 && hourlyRate >= 500;
-            case "/firststeps/portfolio":
-                return links.length >= 1 && links.every((item) => {
-                    return item.match(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/)
-                });
         }
     }
 
@@ -168,17 +162,7 @@ function Layout({children}: {children: React.ReactNode}) {
                         localStorage.removeItem("educations");
                         localStorage.removeItem("experience");
                         localStorage.removeItem("skills");
-                        localStorage.removeItem("portfolio");
                         router.push("/");
-                    })
-                    .catch((reason) => {
-                        console.log(reason);
-                    })
-                break;
-            case "/firststeps/portfolio":
-                postData("/api/profile/portfolio", {links: links})
-                    .then((value) => {
-                        router.push(pages[pageIndex+1].path);
                     })
                     .catch((reason) => {
                         console.log(reason);
