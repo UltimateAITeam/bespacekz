@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amir04lm26/react-modern-calendar-date-picker": "^1.0.1",
     "@auth/prisma-adapter": "^1.0.5",
     "@chakra-ui/next-js": "^2.2.0",
     "@chakra-ui/react": "^2.8.2",
@@ -21,6 +22,9 @@
     "@vercel/postgres": "^0.5.1",
     "ai": "^2.2.28",
     "bcrypt": "^5.1.1",
+    "chakra-dayzed-datepicker": "^0.2.10",
+    "date-fns": "^3.0.6",
+    "dayzed": "^3.2.3",
     "framer-motion": "^10.16.4",
     "jsonwebtoken": "^9.0.2",
     "next": "14.0.1",

@@ -47,7 +47,7 @@ model User {
   about             String?
   role              Role?
   accounts          Account[]
-  date              DateTime?          @default(now())
+  birthdate         DateTime?          @default(now())
   clientProfile     ClientProfile?
   freelancerProfile FreelancerProfile?
   sessions          Session[]

@@ -6,14 +6,16 @@ import {useRouter, useSearchParams} from "next/navigation";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Avatar, Button, Checkbox, Textarea, useDisclosure, VStack} from '@chakra-ui/react';
 import { LuDownload } from "react-icons/lu";
-import Image from "next/image";
 import MoreInfoAvatarModal from "@/components/modals/MoreInfoAvatarModal";
+import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
+import DatePicker, {DayValue} from "@amir04lm26/react-modern-calendar-date-picker";
 
 interface FormValues {
     first_name: string;
     last_name: string;
     location_city: string;
     phone: string;
+    date_of_birth?: Date;
 }
 
 interface ClientValues extends FormValues {
@@ -24,6 +26,7 @@ interface ClientValues extends FormValues {
 
 function Oauth_additional() {
     const session = useSession();
+    const [date, setDate] = React.useState<DayValue>(null);
     const searchParams = useSearchParams();
     const { isOpen, onOpen, onClose } = useDisclosure();
     let role = searchParams.get("role") || "freelancer";
@@ -44,7 +47,7 @@ function Oauth_additional() {
     const [isLoadingSubmit, setIsLoadingSubmit] = React.useState(false);
     const onSubmit: SubmitHandler<ClientValues> = async (data) => {
         setIsLoadingSubmit(true);
-        if (isValid) {
+        if (isValid && date) {
             const req_data = {
                 role: role,
                 email: session.data?.user.email,
@@ -52,6 +55,7 @@ function Oauth_additional() {
                 name: data?.first_name,
                 location: data?.location_city,
                 phone: data?.phone,
+                birthdate: new Date(date.year, date.month - 1, date.day),
             }
 
             if (role === "client") {
@@ -217,8 +221,14 @@ function Oauth_additional() {
                                             />
                                         </div>
                                     </div>
-                                    <div>
-                                        
+                                    <div className='flex flex-col'>
+                                        <label htmlFor='birthdate' className='font-medium px-1 pb-1'>Birth date:</label>
+                                        <DatePicker
+                                            value={date}
+                                            onChange={setDate}
+                                            inputPlaceholder="Select a day"
+                                            inputClassName={"flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"}
+                                        />
                                     </div>
                                     {role === "client" &&
                                         <div className='flex flex-col'>
@@ -239,7 +249,7 @@ function Oauth_additional() {
                                             />
                                         </div>
                                     }
-                                    <Button colorScheme='facebook' isLoading={isLoadingSubmit} isDisabled={!isValid}
+                                    <Button colorScheme='facebook' isLoading={isLoadingSubmit} isDisabled={!isValid || !date}
                                             className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]"
                                             type="submit">
                                         Continue
