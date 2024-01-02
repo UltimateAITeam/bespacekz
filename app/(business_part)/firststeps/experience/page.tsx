@@ -34,7 +34,7 @@ function Page() {
                 </span>
                 <form className={"grid grid-cols-4 gap-4 w-full md:w-1/2 -mt-4"} onSubmit={onSubmit}>
                     {experience.map((exp: any, index: number) => (
-                        <Box className={"max-w-xs w-full bg-gray-300/10 max-h-32 h-32 p-2"}>
+                        <Box key={index} className={"max-w-xs w-full bg-gray-300/10 max-h-32 h-32 p-2"}>
                             <HStack className={"h-10"} justify={"end"}>
                                 <HStack align={"start"} className={"h-10 text-2xl"}>
                                     <AiFillEdit
