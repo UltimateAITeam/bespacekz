@@ -37,13 +37,11 @@ function Oauth_additional() {
     const {handleSubmit, setValue, register, formState: {errors, isValid}} = useForm<ClientValues>();
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
             if (!session.data?.user?.name || session.data?.user?.name == "") return;
             let firstName = session.data?.user?.name?.split(" ")[1];
             let lastName = session.data?.user?.name?.split(" ")[0];
             setValue("first_name", firstName as string);
             setValue("last_name", lastName as string);
-        }
     }, [session.data?.user?.name, setValue])
 
     const [isLoadingSubmit, setIsLoadingSubmit] = React.useState(false);
