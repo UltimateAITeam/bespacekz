@@ -83,10 +83,12 @@ model Experience {
   name                String
   roles               String[]
   tasks               String
-  duration            String
   company             String
+  country             String            @default("Kazakhstan")
+  city                String?
   from                DateTime          @default(now())
   to                  DateTime          @default(now())
+  link                String?
   freelancerProfileId String
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }

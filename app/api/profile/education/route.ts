@@ -12,6 +12,7 @@ export async function POST(
         
 
         for (const education of data) {
+            console.log("LOG: education", education)
             const edu = await prisma.education.create({
                 data: {
                     degree: education.degree,

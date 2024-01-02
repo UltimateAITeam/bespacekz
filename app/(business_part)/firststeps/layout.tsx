@@ -73,10 +73,10 @@ function Layout({children}: {children: React.ReactNode}) {
 
 
     const isFilledEdu = educations.length >= 1 && educations.every((item) => {
-        return item.degree !== "" && item.institution !== "" && item.graduationYear !== 0 && item.specialization !== ""
+        return item.degree.length > 5 && item.institution.length > 3  && item.graduationYear > 1900 && item.specialization.length > 4
     })
     const isFilledExp = experience.length >= 1 && experience.every((item) => {
-        return item.company !== "" && item.name !== "" && item.roles.length !== 0 && item.tasks !== "" && item.duration !== ""
+        return item.company !== "" && item.name.length > 5 && item.roles.length !== 0 && item.tasks.length > 5  && item.company.length > 4
     })
     const isFilledSkills = skills.length >= 1 && skills.every((item) => {
         return item.name !== "" && item.proficiencyLevel !== ""
