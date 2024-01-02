@@ -54,9 +54,9 @@ function getSectionSuggestions(section: typeof titles[0]) {
     return [section];
 }
 
-function JobTitleAutoSuggest() {
+function JobTitleAutoSuggest({title, setTitle}: { title: string, setTitle: (val: string) => void }) {
     const [suggestions, setSuggestions] = React.useState<typeof titles>([]);
-    const [value, setValue] = React.useState('');
+
     const onSuggestionsFetchRequested = ({value}: { value: string }) => {
         setSuggestions(
             getSuggestions(value)
@@ -69,8 +69,8 @@ function JobTitleAutoSuggest() {
     const inputProps = {
         placeholder: "Senior Frontend Developer",
         className: "my-4 flex md:w-1/2 w-full flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] mb-4",
-        value,
-        onChange: (event: any, {newValue}: { newValue: string }) => setValue(newValue)
+        value: title,
+        onChange: (event: any, {newValue}: { newValue: string }) => setTitle(newValue)
     };
 
     return (
