@@ -9,10 +9,10 @@ import HeadTag from "@/components/brenda_components/HeadTag";
 import LoginSignupHeader from "@/components/brenda_components/LoginSignupHeader";
 import useEducationFormStore from "@/store/educationFormStore";
 import useExperienceStore from "@/store/experienceFormState";
-import useSkillsStore from "@/store/skillFormStore";
 import usePricingStore from "@/store/pricingFormStore";
 import {useFirstStepsLoading} from "@/libs/utils";
 import useTitleStore from "@/store/titleFormStateStore";
+import useLanguagesStore from "@/store/languagesFormStore";
 
 function Layout({children}: {children: React.ReactNode}) {
     const router = useRouter();
@@ -43,7 +43,7 @@ function Layout({children}: {children: React.ReactNode}) {
             next: "Следующий шаг",
         },
         {
-            path: "/firststeps/skills",
+            path: "/firststeps/languages",
             back: "Назад",
             skip: true,
             next: "Следующий шаг",
@@ -67,7 +67,7 @@ function Layout({children}: {children: React.ReactNode}) {
     })
     const { educations } = useEducationFormStore();
     const { experience } = useExperienceStore();
-    const { skills } = useSkillsStore();
+    const { languages } = useLanguagesStore();
     const { projectRate, hourlyRate } = usePricingStore();
     const { title } = useTitleStore();
 
@@ -78,8 +78,8 @@ function Layout({children}: {children: React.ReactNode}) {
     const isFilledExp = experience.length >= 1 && experience.every((item) => {
         return item.company !== "" && item.name.length > 5 && item.roles.length !== 0 && item.tasks.length > 5  && item.company.length > 4
     })
-    const isFilledSkills = skills.length >= 1 && skills.every((item) => {
-        return item.name !== "" && item.proficiencyLevel !== ""
+    const isFilledLanguages = languages.length >= 1 && languages.every((item) => {
+        return item.name.length > 3
     })
 
     const postData = async (url: string, data: any) => {
@@ -106,8 +106,8 @@ function Layout({children}: {children: React.ReactNode}) {
                 return true;
             case "/firststeps/experience":
                 return isFilledExp;
-            case "/firststeps/skills":
-                return isFilledSkills;
+            case "/firststeps/languages":
+                return isFilledLanguages;
             case "/firststeps/price":
                 return projectRate >= 500 && hourlyRate >= 500;
         }
@@ -145,8 +145,8 @@ function Layout({children}: {children: React.ReactNode}) {
                         console.log(reason);
                     })
                 break;
-            case "/firststeps/skills":
-                postData("/api/profile/skills", skills)
+            case "/firststeps/languages":
+                postData("/api/profile/languages", languages)
                     .then((value) => {
                         router.push(pages[pageIndex+1].path);
                     })
@@ -161,7 +161,7 @@ function Layout({children}: {children: React.ReactNode}) {
                         localStorage.removeItem("hourlyRate");
                         localStorage.removeItem("educations");
                         localStorage.removeItem("experience");
-                        localStorage.removeItem("skills");
+                        localStorage.removeItem("languages");
                         router.push("/");
                     })
                     .catch((reason) => {

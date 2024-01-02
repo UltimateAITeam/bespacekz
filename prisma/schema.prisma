@@ -62,8 +62,9 @@ model FreelancerProfile {
   Experience Experience[]
   user       User         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   Portfolio  Portfolio[]
+  Skills     String[]
   Pricing    Pricing[]
-  Skill      Skill[]
+  Languages  Language[]
 }
 
 model Education {
@@ -93,10 +94,10 @@ model Experience {
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
 
-model Skill {
+model Language {
   id                  Int               @id @default(autoincrement())
   name                String
-  proficiencyLevel    String
+  proficiencyLevel    ProficiencyLevel
   freelancerProfileId String
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
@@ -157,4 +158,13 @@ model VerificationToken {
 enum Role {
   FREELANCER
   CLIENT
+}
+
+enum ProficiencyLevel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
 }

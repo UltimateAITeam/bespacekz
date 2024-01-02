@@ -13,7 +13,6 @@ import { IoLogoUsd } from "react-icons/io";
 import { BsFillTrophyFill, BsWordpress } from "react-icons/bs";
 import { ImCheckmark, ImGoogle } from "react-icons/im";
 import Footer from "@/components/brenda_components/Footer";
-import Skills from "@/components/brenda_components/Skills";
 import { SiAdobe, SiUdacity } from "react-icons/si";
 import ThreeTierPricing from "@/components/home_page/Pricing";
 import VacancyList from "@/components/brenda_components/VacancyList";

@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
         include: {
             Education: true,
             Experience: true,
-            Skill: true,
+            Languages: true,
             Pricing: true,
             Portfolio: true,
         },

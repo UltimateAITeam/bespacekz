@@ -25,9 +25,10 @@ import {useSession} from "next-auth/react";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
+        Languages: true,
         Education: true,
         Experience: true,
-        Skill: true,
+        Skills: true,
         Pricing: true,
         Portfolio: true,
         jobTitle: true,
@@ -79,7 +80,7 @@ function Page() {
     }, [])
 
     const educations = data?.Education || []
-    const skills = data?.Skill || []
+    const languages = data?.Languages || []
     const experiences = data?.Experience || []
     const vacancies = data?.Vacancy || []
 
@@ -227,10 +228,10 @@ function Page() {
                                                         <p className={"font-bold"}>Занимаемая должность</p>
                                                         <p>{exp.roles.join(',')}</p>
                                                     </div>
-                                                    <div>
-                                                        <p className={"font-bold"}>Стаж работы</p>
-                                                        <p>{exp.duration + " месяцев"}</p>
-                                                    </div>
+                                                    {/*<div>*/}
+                                                    {/*    <p className={"font-bold"}>Стаж работы</p>*/}
+                                                    {/*    <p>{exp.duration + " месяцев"}</p>*/}
+                                                    {/*</div>*/}
                                                 </SimpleGrid>
                                             </Stack>
                                         )
@@ -242,13 +243,13 @@ function Page() {
                                             isEditable={true} title={"Способности"}>
                                 <Grid templateColumns="repeat(5, 1fr)" gap={4}>
 
-                                    {skills.map(
-                                        (skill) => (
-                                            <GridItem key={skill.id}>
+                                    {languages.map(
+                                        (lang) => (
+                                            <GridItem key={lang.id}>
                                                 <Tooltip placement={"top"} className={"h-fit"}
-                                                         label={skill.proficiencyLevel.toUpperCase()}>
+                                                         label={lang.proficiencyLevel}>
                                                     <Tag className={"cursor-default h-fit"}>
-                                                        {skill.name}
+                                                        {lang.name}
                                                     </Tag>
                                                 </Tooltip>
                                             </GridItem>

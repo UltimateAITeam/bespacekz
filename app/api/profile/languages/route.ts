@@ -8,10 +8,10 @@ export async function POST(
     try {
         const {data, session} = await checkSessionAndGetData(req);
         const FreelancerProfile = await getProfileBySession(session);
-        for (const skill of data) {
-            await prisma.skill.create({
+        for (const language of data) {
+            await prisma.language.create({
                 data: {
-                    ...skill,
+                    ...language,
                     freelancerProfileId: FreelancerProfile.id,
                 }
             });
