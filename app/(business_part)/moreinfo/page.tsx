@@ -166,7 +166,7 @@ function Oauth_additional() {
                                             </div>
                                         </div>
 
-                                        {/* ================= last name input =============== */}
+                                        {/* ================= last name input  =============== */}
                                         <div className='flex flex-col'>
                                             <label htmlFor='last_name' className='font-medium px-1 pb-1'>Last name:</label>
                                             <div
