@@ -88,7 +88,7 @@ function Page() {
             console.log("DATA:", dta);
             setLoading(false)
         })();
-    }, [session.status])
+    }, [session.status, role, session.data?.user.role])
 
     const educations = data?.Education || []
     const languages = data?.Languages || []
@@ -257,7 +257,7 @@ function Page() {
                                     <Grid templateColumns="repeat(5, 1fr)" gap={4}>
 
                                         {languages.map(
-                                            (lang) => (
+                                            (lang:any) => (
                                                 <GridItem key={lang.id}>
                                                     <Tooltip placement={"top"} className={"h-fit"}
                                                              label={lang.proficiencyLevel}>
