@@ -52,7 +52,7 @@ function renderSuggestionsContainer({containerProps, children, query}: {
     if (!children) return;
     return (
         <VStack align={"left"} justifyItems={"left"} {...containerProps} divider={<Divider/>}
-                className={"p-2 border-2 rounded-lg md:w-1/2 w-full"}>
+                className={"absolute bg-white z-50 p-2 border-2 rounded-lg md:w-1/2 w-full"}>
             {children}
         </VStack>
     );

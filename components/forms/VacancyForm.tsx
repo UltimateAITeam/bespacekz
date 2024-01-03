@@ -13,6 +13,7 @@ import {
   Spacer,
   Textarea,
 } from "@chakra-ui/react";
+import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 
 interface VacancyFormProps {
   onSubmit: (data: any) => void;
@@ -55,6 +56,12 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
       [e.target.name]: value,
     });
   };
+const handleTitleChange = (value: string) => {
+    setFormData({
+        ...formData,
+        "title": value,
+    })
+}
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({
@@ -94,7 +101,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
     <Box as="form" onSubmit={handleSubmit}>
       <FormControl id="title" isRequired>
         <FormLabel>Title</FormLabel>
-        <Input name="title" value={formData.title} onChange={handleChange} placeholder="Ex: Senior Developer" />
+        <JobTitleAutoSuggest setTitle={handleTitleChange} title={formData.title}/>
       </FormControl>
 
       <FormControl mt={4} id="aboutVacancy" isRequired>
