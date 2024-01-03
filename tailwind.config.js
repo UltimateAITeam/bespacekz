@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       colors: {
         mainBg: '#F3FFFC',
+        firstStepsBg: '#F0F5FF',
       }
     },
   },

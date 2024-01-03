@@ -182,14 +182,14 @@ function Layout({children}: {children: React.ReactNode}) {
         if (loading || session.data?.user.role === "CLIENT") {
             return redirect("/")
         } else return <AnimatePresence>
-            <div className="min-h-screen bg-white flex flex-col">
+            <div className="min-h-screen bg-firstStepsBg flex flex-col">
                 {/* ============== Head Tag =============== */}
                 <HeadTag title="Log In - Bespace"/>
 
                 {/* ================== Header =================== */}
                 <LoginSignupHeader />
                 <main>
-                    <section className="container bg-white mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3">
+                    <section className="container bg-firstStepsBg mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3">
                         <div className={"text-zinc-950 font-semibold"}>
                             {children}
                         </div>

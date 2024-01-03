@@ -29,12 +29,12 @@ function Page() {
             {stateIndex !== null && <ExperienceModal  isOpen={isOpen} onClose={onClose} index={stateIndex}/>}
             <div className={"m-auto flex flex-col justify-center items-center"}>
                 <span
-                    className={"w-full md:w-1/2 font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl mb-10"}>
+                    className={"w-full md:w-3/4 font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl mb-10"}>
                     Теперь добавьте опыт вашей работы.
                 </span>
-                <form className={"grid grid-cols-4 gap-4 w-full md:w-1/2 -mt-4"} onSubmit={onSubmit}>
+                <form className={"grid grid-cols-4 gap-4 w-full md:w-3/4 -mt-4"} onSubmit={onSubmit}>
                     {experience.map((exp: any, index: number) => (
-                        <Box key={index} className={"max-w-xs w-full bg-gray-300/10 max-h-32 h-32 p-2"}>
+                        <Box key={index} className={"max-w-xs w-full bg-white max-h-48 h-48 p-2 rounded-lg border border-[#E4EBE4]"}>
                             <HStack className={"h-10"} justify={"end"}>
                                 <HStack align={"start"} className={"h-10 text-2xl"}>
                                     <AiFillEdit
@@ -54,13 +54,15 @@ function Page() {
                                     />
                                 </HStack>
                             </HStack>
+                            <Box className="pt-auto px-2">
                             <Text className={"mt-auto"} fontSize={"large"}>
                                 {exp.company}
                             </Text>
+                            </Box>
                         </Box>
                     ))}
                     <Box
-                        className={"max-w-xs w-full bg-gray-300/10 max-h-32 h-32 p-2"}
+                        className={"max-w-xs w-full bg-white max-h-48 h-48 p-2 rounded-lg border border-[#E4EBE4]"}
                     >
                         <HStack className={'h-10'} justify={"end"}>
                             <HStack align={"start"} className={'h-10 text-2xl'}>
@@ -74,9 +76,11 @@ function Page() {
                                 />
                             </HStack>
                         </HStack>
+                        <Box className="pt-auto px-2">
                         <Text fontSize={"large"}>
                             Добавить ваш опыт
                         </Text>
+                        </Box>
                     </Box>
                 </form>
             </div>
