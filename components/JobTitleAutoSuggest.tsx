@@ -26,13 +26,21 @@ function getSuggestionValue(suggestion: typeof titles[0]) {
 
 function renderSuggestion(suggestion: typeof titles[0]) {
     return (
-        <strong>{suggestion.title}</strong>
+        <div
+         className={"p-2 pt-0 border-2 border-t-0 cursor-pointer"}
+        >
+            <strong>{suggestion.title}</strong>
+        </div>
     );
 }
 
 function renderSectionTitle(section: typeof titles[0]) {
     return (
-        <span>{section.category}</span>
+        <div
+            className={"p-2 pb-0 border-2 border-b-0"}
+        >
+            {section.category}
+        </div>
     );
 }
 
@@ -41,10 +49,10 @@ function renderSuggestionsContainer({containerProps, children, query}: {
     children: any,
     query: string
 }) {
-
+    if (!children) return;
     return (
-        <VStack justifyItems={"left"} {...containerProps} divider={<Divider/>}
-                className={"p-2 cursor-pointer md:w-1/2 w-full"}>
+        <VStack align={"left"} justifyItems={"left"} {...containerProps} divider={<Divider/>}
+                className={"p-2 border-2 rounded-lg md:w-1/2 w-full"}>
             {children}
         </VStack>
     );
@@ -67,7 +75,7 @@ function JobTitleAutoSuggest({title, setTitle}: { title: string, setTitle: (val:
     };
 
     const inputProps = {
-        placeholder: "Senior Frontend Developer",
+        placeholder: "Frontend Developer",
         className: "my-4 flex md:w-1/2 w-full flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] mb-4",
         value: title,
         onChange: (event: any, {newValue}: { newValue: string }) => setTitle(newValue)
