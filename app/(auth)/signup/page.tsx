@@ -69,6 +69,7 @@ function SignUp() {
                                 {/* ================= Login title ==================== */}
                                 <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl text-center">
                                     Join as a client or freelancer
+                                    {/* Регистрация  */}
                                 </h2>
 
                                 {/* ===================== Create account section ========================== */}

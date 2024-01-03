@@ -6,6 +6,7 @@ import {ErrorMessage} from "@hookform/error-message";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
 import LinkedInButton from "@/components/LinkedInButton";
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md';
 
 interface FormValues {
     first_name: string;
@@ -72,12 +73,14 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                     </h2>
 
                     {/* ================= Continue with section ==================== */}
-                    <GitHubButton options={{callbackUrl: "/moreinfo?role="+localType}} text={"Continue with GitHub"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 mt-4"} />
-                    <GoogleButton options={{callbackUrl: "/moreinfo?role="+localType}} text={"Continue with Google"} className={"hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 "} />
-                    <LinkedInButton options={{redirect: true, callbackUrl: "/moreinfo?role="+localType}} text={"Continue with LinkedIn"} className={"transition-colors text-xl font-semibold border-2 mt-4 "} />
+                    <div className='flex flex-row gap-6 w-full items-center py-8'>
+                    <GitHubButton options={{callbackUrl: "/moreinfo?role="+localType}} text={"Continue with GitHub"} className={""} />
+                    <GoogleButton options={{callbackUrl: "/moreinfo?role="+localType}} text={"Continue with Google"} className={""} />
+                    <LinkedInButton options={{redirect: true, callbackUrl: "/moreinfo?role="+localType}} text={"Continue with LinkedIn"} className={""} />
+                    </div>
 
                     {/* ================= Or section ==================== */}
-                    <div className="flex w-full mt-5 items-center space-x-2">
+                    <div className="flex w-full items-center space-x-2">
                         <span className="border-b w-full border-gray-300 mt-1"></span>
                         <span className="text-zinc-600">or</span>
                         <span className="border-b w-full border-gray-300 mt-1"></span>
@@ -146,7 +149,7 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                             <span
                                 style={{
                                     position: 'absolute',
-                                    right: '5px',
+                                    right: '24px',
                                     top: '50%',
                                     transform: 'translateY(-50%)',
                                     cursor: 'pointer',
@@ -155,7 +158,7 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                                 }}
                                 onClick={() => setShowPassword(!showPassword)}
                             >
-                                {showPassword ? '👀' : '👁️‍🗨️'}
+                                {showPassword ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/>}
                             </span>
                         </div>
                         {/* ============= confirm password input ============= */}
@@ -171,7 +174,7 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                             <span
                                 style={{
                                     position: 'absolute',
-                                    right: '5px',
+                                    right: '24px',
                                     top: '50%',
                                     transform: 'translateY(-50%)',
                                     cursor: 'pointer',
@@ -180,12 +183,39 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                                 }}
                                 onClick={() => setShowConfirm(!showConfirm)}
                             >
-                                {showConfirm ? '👀' : '👁️‍🗨️'}
+                                {showConfirm ? <MdOutlineVisibility/> : <MdOutlineVisibilityOff/>}
                             </span>
                         </div>
 
                         {/* ================= country select =============== */}
                         <select
+                            id="Country"
+                            defaultValue={"Astana"}
+                            {...register("location_city", {required: "Location is required!"})}
+                            className="px-8 py-4 bg-transparent border-2 border-gray-300 text-zinc-800 text-md rounded-lg focus:border-[#b8d8d4fd] block w-full cursor-pointer font-medium"
+                        >
+                            <option value="Astana">Astana</option>
+                            <option value="Almaty">Almaty</option>
+                            <option value="Aktau">Aktau</option>
+                            <option value="Aktobe">Aktobe</option>
+                            <option value="Atyrau">Atyrau</option>
+                            <option value="Kostanay">Kostanay</option>
+                            <option value="Karaganda">Karaganda</option>
+                            <option value="Kokshetau">Kokshetau</option>
+                            <option value="Shymkent">Shymkent</option>
+                            <option value="Uralsk">Uralsk</option>
+                            <option value="Kyzylorda">Kyzylorda</option>
+                            <option value="Semey">Semey</option>
+                            <option value="Pavlodar">Pavlodar</option>
+                            <option value="Oskemen">Oskemen</option>
+                            <option value="Petropavlovsk">Petropavlovsk</option>
+                            <option value="Taldykorgan">Taldykorgan</option>
+                            <option value="Turkestan">Turkestan</option>
+                            <option value="Taraz">Taraz</option>
+                            <option value="Temirtau">Temirtau</option>
+                        </select>
+
+                        {/* <select
                             id="Country"
                             className="bg-transparent border-2 border-gray-300 text-zinc-800 text-sm rounded-lg focus:border-[#b8d8d4fd] block w-full px-3 py-2 cursor-pointer font-semibold"
                             {...register("location_city", {required: "Location is required!"})}
@@ -193,13 +223,14 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                             <option value="Astana">Astana</option>
                             <option value="Almaty">Almaty</option>
                             <option value="Kostanay">Kostanay</option>
-                        </select>
+                        </select> */}
 
                         {/* ================= send me checkbox =============== */}
                         <div className="flex space-x-3 my-4">
                             <input id="sendmeemail" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-transparent rounded border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer mt-[2px]"/>
                             <label htmlFor="sendmeemail" className="text-zinc-800 cursor-pointer text-sm">
-                                Send me emails with tips on how to find talent that fits my needs.
+                                {/* Send me emails with tips on how to find talent that fits my needs. */}
+                                Присылайте мне электронные письма с советами о том, как найти талант, который подходит моим потребностям.
                             </label>
                         </div>
 
@@ -207,7 +238,12 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                         <div className="flex space-x-3 my-4">
                             <input id="yes" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-transparent rounded border-gray-300 focus:ring-blue-500 focus:ring-2 cursor-pointer mt-[2px]"/>
                             <label htmlFor="yes" className="text-zinc-800 cursor-pointer text-sm">
-                                Yes, I understand and agree to the Bespace Terms of Service , including the User Agreement and Privacy Policy
+                            Нажимая «Согласиться и присоединиться», вы принимаете условия 
+                            <a className='text-blue-500 hover:underline'> Пользовательского соглашения </a>, 
+                            <a className='text-blue-500 hover:underline'> Политики конфиденциальности </a> 
+                            и <a className='text-blue-500 hover:underline'> Политики использования файлов cookie </a> 
+                            Bespace.
+                                {/* Yes, I understand and agree to the Bespace Terms of Service , including the User Agreement and Privacy Policy */}
                             </label>
                         </div>
 
@@ -218,13 +254,14 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                         />
 
                         {/* ================= create account button =============== */}
-                        <button className="w-full py-2 px-3 bg-[#0C4A6E] rounded-full font-semibold text-white transition hover:bg-[#18465f]" type="submit">
-                            Create an Account
+                        <button className="w-full py-3 px-3 bg-[#0C4A6E] rounded-lg font-semibold text-white transition hover:bg-[#18465f]" type="submit">
+                            {/* Create an Account */}
+                            Продолжить
                         </button>
                     </form>
 
                     <div className={"mt-7 text-zinc-600"}>
-                        Wanna join as {localType}?
+                        Wanna join as {localType}?{" "}
                         <span
                             className={"text-cyan-700 font-semibold cursor-pointer"}
                             onClick={() => {
