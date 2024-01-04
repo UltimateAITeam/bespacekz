@@ -6,9 +6,9 @@ import {useRouter, useSearchParams} from "next/navigation";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Avatar, Button, Checkbox, Textarea, useDisclosure, VStack} from '@chakra-ui/react';
 import { LuDownload } from "react-icons/lu";
-import MoreInfoAvatarModal from "@/components/modals/MoreInfoAvatarModal";
-// import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
-// import DatePicker, {DayValue} from "@amir04lm26/react-modern-calendar-date-picker";
+// import MoreInfoAvatarModal from "@/components/modals/MoreInfoAvatarModal";
+import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
+import DatePicker, {DayValue} from "@amir04lm26/react-modern-calendar-date-picker";
 
 interface FormValues {
     first_name: string;
@@ -26,9 +26,7 @@ interface ClientValues extends FormValues {
 
 function Oauth_additional() {
     const session = useSession();
-    // const [date, setDate] = React.useState<DayValue>(null);
-    const [date, setDate] = React.useState<any>(null);
-
+    const [date, setDate] = React.useState<DayValue>(null);
     const searchParams = useSearchParams();
     const { isOpen, onOpen, onClose } = useDisclosure();
     let role = searchParams.get("role") || "freelancer";
@@ -119,7 +117,7 @@ function Oauth_additional() {
             {/* ============== Head Tag =============== */}
             <HeadTag title="Log In - Bespace"/>
 
-            <MoreInfoAvatarModal avatar={session.data?.user.image} isOpen={isOpen} onClose={onClose} />
+            {/* <MoreInfoAvatarModal avatar={session.data?.user.image} isOpen={isOpen} onClose={onClose} /> */}
 
             {/* ================= Main ==================== */}
             <main>
@@ -225,12 +223,12 @@ function Oauth_additional() {
                                     </div>
                                     <div className='flex flex-col'>
                                         <label htmlFor='birthdate' className='font-medium px-1 pb-1'>Birth date:</label>
-                                        {/* <DatePicker
+                                        <DatePicker
                                             value={date}
                                             onChange={setDate}
                                             inputPlaceholder="Select a day"
                                             inputClassName={"flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"}
-                                        /> */}
+                                        />
                                     </div>
                                     {role === "client" &&
                                         <div className='flex flex-col'>

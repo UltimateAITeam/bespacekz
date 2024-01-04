@@ -7,7 +7,7 @@ import {redirect} from "next/navigation";
 function Layout({children}: {children: React.ReactNode}) {
 
     const session = useSession();
-    console.log("session", session);
+    // console.log("session", session);
     if (session.status === "loading") {
         return <Spinner width="w-20" height="w-20"/>
     } else if (session.data?.user.role) {
