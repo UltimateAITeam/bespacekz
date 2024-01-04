@@ -7,6 +7,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {Avatar, Button, Checkbox, Textarea, useDisclosure, VStack} from '@chakra-ui/react';
 import { LuDownload } from "react-icons/lu";
 // import MoreInfoAvatarModal from "@/components/modals/MoreInfoAvatarModal";
+import dynamic from 'next/dynamic'
 import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
 import DatePicker, {DayValue} from "@amir04lm26/react-modern-calendar-date-picker";
 
@@ -32,6 +33,10 @@ function Oauth_additional() {
     let role = searchParams.get("role") || "freelancer";
 
     const router = useRouter();
+
+    const MoreInfoAvatarModal = dynamic(() => import('@/components/modals/MoreInfoAvatarModal'), {
+        ssr: false
+    })
 
 
     const {handleSubmit, setValue, register, formState: {errors, isValid}} = useForm<ClientValues>();
@@ -117,7 +122,7 @@ function Oauth_additional() {
             {/* ============== Head Tag =============== */}
             <HeadTag title="Log In - Bespace"/>
 
-            {/* <MoreInfoAvatarModal avatar={session.data?.user.image} isOpen={isOpen} onClose={onClose} /> */}
+            <MoreInfoAvatarModal avatar={session.data?.user.image} isOpen={isOpen} onClose={onClose} />
 
             {/* ================= Main ==================== */}
             <main>
