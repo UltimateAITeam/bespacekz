@@ -1,24 +1,26 @@
-import {Badge, Button, Card, CardBody} from '@chakra-ui/react';
+import {Badge, Button, ButtonGroup, Card, CardBody} from '@chakra-ui/react';
 import Image from 'next/image';
 import React from 'react';
-import { FaRegStar } from "react-icons/fa";
-import { IoLocationOutline } from "react-icons/io5";
-import { CiClock2, CiCalendar } from "react-icons/ci";
-import { IoIosSearch } from "react-icons/io";
-import { LuDot } from "react-icons/lu";
+import {FaRegStar, FaPlus } from 'react-icons/fa';
+import {IoLocationOutline} from 'react-icons/io5';
+import {CiClock2, CiCalendar} from 'react-icons/ci';
+import {IoIosSearch} from 'react-icons/io';
+import {LuDot} from 'react-icons/lu';
+import { Prisma } from '@prisma/client';
 
+type Vacancy = Prisma.VacancyGetPayload<{}>;
+interface IPropsVacancy extends Vacancy {
 
+}
+export default function VacancyCard(props: IPropsVacancy) {
+    const {aboutVacancy}  = props
 
-
-
-
-export default function VacancyCard() {
     return (
         <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full">
-            <div className='shrink-0'>
+            <div className="shrink-0">
                 <Image src="/images/Avatar.png" alt="Avatar" width={80} height={80} />
             </div>
-            <div className='flex-1'>
+            <div className="flex-1">
                 <div className="flex w-full">
                     <div>
                         <h2 className="text-[30px] font-medium font-roboto text-mainText">
@@ -28,33 +30,60 @@ export default function VacancyCard() {
                             <p className="text-base font-roboto text-mainText font-medium">
                                 <span className="font-normal">Компания:</span> ИП Чипина Александра
                             </p>
-                            <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px]">
+                            <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px] !font-roboto !font-medium">
                                 Новый пост
                             </Badge>
                         </div>
                     </div>
-                    <div className='ml-auto'>
-                        <Button leftIcon={<FaRegStar />} colorScheme="yellow" variant="outline" >
-                        В Избранное
+                    <div className="ml-auto">
+                        <Button leftIcon={<FaRegStar />} colorScheme="yellow" variant="outline">
+                            В Избранное
                         </Button>
-                        <Button colorScheme="messenger" variant="outline" className='ml-3'>
+                        <Button colorScheme="messenger" variant="outline" className="ml-3">
                             Подробнее
                         </Button>
                     </div>
                 </div>
-                <div className='flex items-center gap-6 mt-2 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10'>
-                    <div><IoLocationOutline /><span>Астана</span></div>
+                <div className="flex items-center gap-6 mt-2 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">
+                    <div>
+                        <IoLocationOutline />
+                        <span>Астана</span>
+                    </div>
                     <LuDot />
-                    <div><CiClock2 /><span>Полный график</span></div>
+                    <div>
+                        <CiClock2 />
+                        <span>Полный график</span>
+                    </div>
                     <LuDot />
-                    <div><IoIosSearch /><span>Сотрудник</span></div>
+                    <div>
+                        <IoIosSearch />
+                        <span>Сотрудник</span>
+                    </div>
                     <LuDot />
-                    <div><span>₸ 250-500k</span></div>
+                    <div>
+                        <span>₸ 250-500k</span>
+                    </div>
                     <LuDot />
-                    <div><CiCalendar/><span>2 дня назад</span></div>
+                    <div>
+                        <CiCalendar />
+                        <span>2 дня назад</span>
+                    </div>
                 </div>
-                <div className='flex mt-3'>
-                    <span>Кто нужен:</span>
+                <div className="flex mt-3 text-primary-10">
+                    <span className='font-roboto mr-1'>Кто нужен:</span>
+                    <ButtonGroup variant='solid' colorScheme="linkedin" size="xs" spacing="2">
+                        <Button ><span className='!leading-none text-sm'>Animated Explainer</span></Button>
+                        <Button ><span className='!leading-none text-sm'>2D Illustration</span></Button>
+                        <Button ><span className='!leading-none text-sm'>Animation for Streamers</span></Button>
+                        <Button ><span className='!leading-none text-sm'>Animation</span></Button>
+                        <Button leftIcon={<FaPlus  />}><span className='!leading-none text-sm'>3</span></Button>
+                    </ButtonGroup>
+                </div>
+                <div className='mt-3 text-primary-10 font-roboto'>
+                    <p>Требуемый опыт работы: <span>1–3 года</span></p>
+                </div>
+                <div className='mt-3 text-primary-10 font-roboto'>
+                <p>{aboutVacancy}</p>
                 </div>
             </div>
         </Card>

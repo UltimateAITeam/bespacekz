@@ -11,6 +11,7 @@ module.exports = {
       fontFamily: {
         roboto: ['var(--font-roboto)', ...fontFamily.sans],
         inter: ['var(--font-inter)', ...fontFamily.sans],
+        'dm-sans': ['var(--font-dm-sans)', ...fontFamily.sans],
       },
       colors: {
         mainBg: '#F3FFFC',

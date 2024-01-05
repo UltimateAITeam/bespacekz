@@ -1,4 +1,4 @@
-const categoriesData = [
+const categoriesOptions = [
     'Фронтенд-разработчик',
     'Бэкенд-разработчик',
     'Full-stack-разработчик',
@@ -13,6 +13,8 @@ const categoriesData = [
 ] 
 
 const citiesOptions = [
+    'Astana',
+    'Almaty',
     'Астана',
     'Алматы',
     'Шымкент',
@@ -33,7 +35,7 @@ const employmentOptions = [
     'Ищу работу'
 ]
 export {
-    categoriesData,
+    categoriesOptions,
     citiesOptions,
     employmentOptions
 }
