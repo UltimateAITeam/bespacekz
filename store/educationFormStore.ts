@@ -1,8 +1,8 @@
 import {create} from 'zustand';
+
 type Education = {
     degree: string;
     institution: string;
-    graduationYear: number;
     specialization: string;
     from: Date;
     to: Date;
@@ -18,7 +18,19 @@ type EducationStore = {
 const getInitialEdu = (): Education[] => {
     if (typeof window === 'undefined') return []
     const data = localStorage.getItem('education') || null;
-    return data ? JSON.parse(data) : [];
+    if (data) {
+        try {
+            const parsedData = JSON.parse(data);
+            return parsedData.map((edu: Education) => ({
+                ...edu,
+                from: new Date(edu.from),
+                to: new Date(edu.to),
+            }))
+        } catch (e) {
+            return []
+        }
+    }
+    return [];
 };
 
 const useEducationStore = create<EducationStore>((set) => ({

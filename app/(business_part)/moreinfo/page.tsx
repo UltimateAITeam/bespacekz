@@ -10,6 +10,7 @@ import { LuDownload } from "react-icons/lu";
 import dynamic from 'next/dynamic'
 import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
 import DatePicker, {DayValue} from "@amir04lm26/react-modern-calendar-date-picker";
+import CustomDatePicker from "@/components/CustomDatePicker";
 
 interface FormValues {
     first_name: string;
@@ -226,15 +227,16 @@ function Oauth_additional() {
                                             />
                                         </div>
                                     </div>
-                                    <div className='flex flex-col'>
-                                        <label htmlFor='birthdate' className='font-medium px-1 pb-1'>Birth date:</label>
-                                        <DatePicker
-                                            value={date}
-                                            onChange={setDate}
-                                            inputPlaceholder="Select a day"
-                                            inputClassName={"flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"}
-                                        />
-                                    </div>
+                                    {role !== "client" && <>
+                                        <div className='flex flex-col'>
+                                            <label htmlFor='birthdate' className='font-medium px-1 pb-1'>Birth
+                                                date:</label>
+                                            <CustomDatePicker
+                                                valueState={date}
+                                                onChange={setDate}
+                                            />
+                                        </div>
+                                    </>}
                                     {role === "client" &&
                                         <div className='flex flex-col'>
                                             {/* <p className='font-medium px-1 pb-1'>Last name:</p> */}

@@ -17,11 +17,10 @@ export async function POST(
                 data: {
                     degree: education.degree,
                     institution: education.institution,
-                    graduationYear: education.graduationYear,
                     specialization: education.specialization,
                     from: education.from,
                     to: education.to,
-                    freelancerProfileId: FreelancerProfile.id,
+                    freelancerProfileId: FreelancerProfile.id
                 }
             });
 

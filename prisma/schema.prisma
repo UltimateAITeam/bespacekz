@@ -71,7 +71,6 @@ model Education {
   id                  Int               @id @default(autoincrement())
   degree              String
   institution         String
-  graduationYear      Int
   specialization      String
   from                DateTime          @default(now())
   to                  DateTime          @default(now())
@@ -82,13 +81,14 @@ model Education {
 model Experience {
   id                  Int               @id @default(autoincrement())
   name                String
-  roles               String[]
+  skills              String[]
   tasks               String
   company             String
   country             String            @default("Kazakhstan")
   city                String?
   from                DateTime          @default(now())
-  to                  DateTime          @default(now())
+  stillWorking        Boolean           @default(false)
+  to                  DateTime?
   link                String?
   freelancerProfileId String
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)

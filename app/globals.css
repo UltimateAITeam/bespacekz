@@ -131,6 +131,10 @@ a {
 
 
 @layer components {
+  #react-select-3-input {
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
   .header-bg {
     background:  radial-gradient(58.85% 58.85% at 50% 15.63%, #CFFAFE 0%, rgba(254, 242, 242, 0.995677) 43.23%, rgba(243, 255, 252, 0.99) 100%);
   }

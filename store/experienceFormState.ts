@@ -2,13 +2,14 @@ import {create} from 'zustand';
 
 interface Experience {
     name: string;
-    roles: string[];
+    skills: string[];
     tasks: string;
     company: string;
     country: string;
     city? : string;
     link?: string;
     from: Date;
+    stillWorking?: boolean;
     to: Date;
 }
 
@@ -22,7 +23,19 @@ interface ExperienceStore {
 function getInitialExperience(): Experience[] {
     if (typeof window === 'undefined') return []
     const data = localStorage.getItem('experience') || '';
-    return data ? JSON.parse(data) : [];
+    if (data) {
+        try {
+            const parsedData = JSON.parse(data);
+            return parsedData.map((exp: Experience) => ({
+                ...exp,
+                from: new Date(exp.from),
+                to: new Date(exp.to),
+            }))
+        } catch (e) {
+            return []
+        }
+    }
+    return [];
 }
 
 const useExperienceStore = create<ExperienceStore>((set) => ({
@@ -41,11 +54,12 @@ const useExperienceStore = create<ExperienceStore>((set) => ({
             const newExperience: Experience = {
                 company: '',
                 name: '',
-                roles: [],
+                skills: [],
                 tasks: '',
                 city: '',
                 country: '',
                 link: '',
+                stillWorking: false,
                 to: new Date(),
                 from: new Date(),
             };

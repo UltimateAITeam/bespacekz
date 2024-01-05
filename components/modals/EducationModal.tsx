@@ -1,9 +1,21 @@
 'use client';
-import React from 'react';
-import {HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay} from "@chakra-ui/react";
+import React, {useState} from 'react';
+import {
+    HStack,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
+    Text,
+    VStack
+} from "@chakra-ui/react";
 import useEducationStore from "@/store/educationFormStore";
-import DatePicker, {DayRange} from "@amir04lm26/react-modern-calendar-date-picker";
+import {DayValue} from "@amir04lm26/react-modern-calendar-date-picker";
 import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
+import input from "@/components/ui/Input";
+import CustomDatePicker from "@/components/CustomDatePicker";
 
 function EducationModal({isOpen, onClose, index, educations}: {
     educations: any[],
@@ -15,21 +27,18 @@ function EducationModal({isOpen, onClose, index, educations}: {
     const item = educations[index];
     const from_date = new Date(item.from)
     const to_date = new Date(item.to)
-
-    const defaultFrom = {
-        year: from_date.getFullYear(),
-        month: from_date.getMonth()+1,
-        day: from_date.getDate()
-    }
-    const defaultTo = {
-        year: to_date.getFullYear(),
-        month: to_date.getMonth()+1,
-        day: to_date.getDate()
-    }
-    const [dayRange, setDayRange] = React.useState<DayRange>({
-        from: defaultFrom,
-        to: defaultTo,
+    const [fromState, setFromState] = useState<DayValue>({
+        day: from_date.getDate(),
+        month: from_date.getMonth() + 1,
+        year: from_date.getFullYear()
     });
+    const [toState, setToState] = useState<DayValue>({
+        day: to_date.getDate(),
+        month: to_date.getMonth() + 1,
+        year: to_date.getFullYear()
+    });
+
+
     return (
         <>
             <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
@@ -66,18 +75,6 @@ function EducationModal({isOpen, onClose, index, educations}: {
                             />
                         </div>
 
-                        <label htmlFor={`graduationYear-${index}`}>Your Graduation Year:</label>
-                        <div
-                            className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
-                            <input
-                                type="number"
-                                placeholder='Ex: 2021'
-                                className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                value={item.graduationYear == 0 ? "" : item.graduationYear}
-                                onChange={(e) => updateEducation(index, 'graduationYear', parseInt(e.target.value))}
-                            />
-                        </div>
-
                         <label htmlFor={`specialization-${index}`}>Your specialization:</label>
                         <div
                             className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
@@ -89,18 +86,40 @@ function EducationModal({isOpen, onClose, index, educations}: {
                                 onChange={(e) => updateEducation(index, 'specialization', e.target.value)}
                             />
                         </div>
-                        <HStack justify={"center"}>
-                            <DatePicker
+                        <HStack justify={"space-between"}>
+                            <VStack align={"start"}>
+                                <Text>Education start date</Text>
+                                {/*<DatePicker*/}
+                                {/*    calendarClassName={"w-full"}*/}
+                                {/*    inputClassName={"w-full flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4"}*/}
+                                {/*    value={dayRange}*/}
+                                {/*    onChange={(value) => {*/}
+                                {/*        setDayRange(value);*/}
+                                {/*        if (value.from) updateEducation(index, 'from', new Date(value.from.year, value.from.month-1, value.from.day));*/}
+                                {/*        if (value.to) updateEducation(index, 'to', new Date(value.to.year, value.to.month-1, value.to.day));*/}
+                                {/*    }}*/}
+                                {/*/>*/}
+                                <CustomDatePicker
+                                    valueState={fromState}
+                                    onChange={(value) => {
+                                        if (!value) return;
+                                        setFromState(value);
+                                        updateEducation(index, 'from', new Date(value.year, value.month - 1, value.day));
+                                    }}
+                                />
+                            </VStack>
+                            <VStack align={'start'}>
+                                <Text>Education end date</Text>
 
-                                calendarClassName={"w-full"}
-                                inputClassName={"w-full flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4"}
-                                value={dayRange}
-                                onChange={(value) => {
-                                    setDayRange(value);
-                                    if (value.from) updateEducation(index, 'from', new Date(value.from.year, value.from.month-1, value.from.day));
-                                    if (value.to) updateEducation(index, 'to', new Date(value.to.year, value.to.month-1, value.to.day));
-                                }}
-                            />
+                                <CustomDatePicker
+                                    valueState={toState}
+                                    onChange={(value) => {
+                                        if (!value) return;
+                                        setToState(value);
+                                        updateEducation(index, 'to', new Date(value.year, value.month - 1, value.day));
+                                    }}
+                                />
+                            </VStack>
                         </HStack>
                     </ModalBody>
                 </ModalContent>

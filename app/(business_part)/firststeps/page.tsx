@@ -1,9 +1,10 @@
 'use client';
-
 import React from 'react';
 import {useSession} from "next-auth/react";
 import {motion} from "framer-motion";
 import Image from "next/image";
+import {Role} from "@prisma/client";
+import {redirect} from "next/navigation";
 
 function FirstStepsForms() {
 
@@ -11,7 +12,7 @@ function FirstStepsForms() {
     const session = useSession();
 
     const role = session.data?.user.role?.toString();
-    if (!role) return <motion.div
+    if (role === Role.FREELANCER) return <motion.div
         initial={{ x: -300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 300, opacity: 0 }}
@@ -29,6 +30,7 @@ function FirstStepsForms() {
             <Image src={"/bespace/tell-us.jpeg"} width={400} height={400} alt={"logo url"} />
         </div>
     </motion.div>
+    else redirect("/")
  }
 
 export default FirstStepsForms;
