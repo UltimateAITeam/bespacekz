@@ -1,19 +1,17 @@
 import {Badge, Button, ButtonGroup, Card, CardBody} from '@chakra-ui/react';
 import Image from 'next/image';
 import React from 'react';
-import {FaRegStar, FaPlus } from 'react-icons/fa';
+import {FaRegStar, FaPlus} from 'react-icons/fa';
 import {IoLocationOutline} from 'react-icons/io5';
 import {CiClock2, CiCalendar} from 'react-icons/ci';
 import {IoIosSearch} from 'react-icons/io';
 import {LuDot} from 'react-icons/lu';
-import { Prisma } from '@prisma/client';
+import {Prisma} from '@prisma/client';
 
 type Vacancy = Prisma.VacancyGetPayload<{}>;
-interface IPropsVacancy extends Vacancy {
-
-}
+interface IPropsVacancy extends Vacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
-    const {aboutVacancy}  = props
+    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, title, experience, specialization} = props;
 
     return (
         <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full">
@@ -23,9 +21,7 @@ export default function VacancyCard(props: IPropsVacancy) {
             <div className="flex-1">
                 <div className="flex w-full">
                     <div>
-                        <h2 className="text-[30px] font-medium font-roboto text-mainText">
-                            Специалист по видеомонтажу
-                        </h2>
+                        <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2>
                         <div className="flex items-center">
                             <p className="text-base font-roboto text-mainText font-medium">
                                 <span className="font-normal">Компания:</span> ИП Чипина Александра
@@ -44,10 +40,10 @@ export default function VacancyCard(props: IPropsVacancy) {
                         </Button>
                     </div>
                 </div>
-                <div className="flex items-center gap-6 mt-2 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">
+                <div className="flex items-center gap-1 justify-between mt-2 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">
                     <div>
                         <IoLocationOutline />
-                        <span>Астана</span>
+                        <span>{city}</span>
                     </div>
                     <LuDot />
                     <div>
@@ -61,7 +57,9 @@ export default function VacancyCard(props: IPropsVacancy) {
                     </div>
                     <LuDot />
                     <div>
-                        <span>₸ 250-500k</span>
+                        <span>
+                            ₸ {priceFrom}-{priceTo} {currency}
+                        </span>
                     </div>
                     <LuDot />
                     <div>
@@ -70,20 +68,27 @@ export default function VacancyCard(props: IPropsVacancy) {
                     </div>
                 </div>
                 <div className="flex mt-3 text-primary-10">
-                    <span className='font-roboto mr-1'>Кто нужен:</span>
-                    <ButtonGroup variant='solid' colorScheme="linkedin" size="xs" spacing="2">
-                        <Button ><span className='!leading-none text-sm'>Animated Explainer</span></Button>
-                        <Button ><span className='!leading-none text-sm'>2D Illustration</span></Button>
-                        <Button ><span className='!leading-none text-sm'>Animation for Streamers</span></Button>
-                        <Button ><span className='!leading-none text-sm'>Animation</span></Button>
-                        <Button leftIcon={<FaPlus  />}><span className='!leading-none text-sm'>3</span></Button>
+                    <span className="font-roboto mr-1">Кто нужен:</span>
+                    <ButtonGroup variant="solid" colorScheme="linkedin" size="xs" spacing="2">
+                        {specialization.split(', ').map((s) => {
+                            return (
+                                <Button key={s}>
+                                    <span className="!leading-none text-sm">{s}</span>
+                                </Button>
+                            );
+                        })}
+                        <Button leftIcon={<FaPlus />}>
+                            <span className="!leading-none text-sm">3</span>
+                        </Button>
                     </ButtonGroup>
                 </div>
-                <div className='mt-3 text-primary-10 font-roboto'>
-                    <p>Требуемый опыт работы: <span>1–3 года</span></p>
+                <div className="mt-3 text-primary-10 font-roboto">
+                    <p>
+                        Требуемый опыт работы: <span>{experience} лет</span>
+                    </p>
                 </div>
-                <div className='mt-3 text-primary-10 font-roboto'>
-                <p>{aboutVacancy}</p>
+                <div className="mt-3 text-primary-10 font-roboto">
+                    <p>{aboutVacancy}</p>
                 </div>
             </div>
         </Card>

@@ -15,6 +15,7 @@ export async function GET(
     const page = req.nextUrl.searchParams.get("page");
 
 
+    console.log('cities', cities);
     try {
         if (!limit || !page ) return NextResponse.json({error: "no limit or page provided"}, {status: 400})
         if (limit == "0" && page == "0") {
@@ -30,8 +31,9 @@ export async function GET(
                 },
                 where: {
                     city: {
-                        in: cities, // Поиск вакансий, где город входит в массив выбранных городов
-                    }
+                        in: cities.length ? cities : undefined, // Поиск вакансий, где город входит в массив выбранных городов
+                    },
+                    
                 }
             })
             return NextResponse.json({data: data}, {status: 200})
