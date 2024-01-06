@@ -4,7 +4,9 @@ import {
     Button,
     Flex,
     FormControl,
-    FormLabel, Input, Select,
+    FormLabel,
+    Input,
+    Select,
     Spacer,
     Tag,
     TagCloseButton,
@@ -13,6 +15,7 @@ import {
     WrapItem,
 } from "@chakra-ui/react";
 import {FaPlus} from "react-icons/fa";
+import {ProficiencyLevel} from "@prisma/client";
 
 interface FormData {
     "id": number;
@@ -26,24 +29,24 @@ interface FormProps {
     data: any
 }
 
-function ProfileSkillsEditForm({onSubmit, onClose, data}: FormProps) {
+function ProfileLanguagesEditForm({onSubmit, onClose, data}: FormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedSkill?.id === 0) onSubmit({
             info: selectedSkill,
             action: "add",
-            table: "skill",
+            table: "languages",
         })
         else onSubmit({
             info: selectedSkill,
             action: "edit",
-            table: "skill",
+            table: "languages",
         });
     };
 
-    const skill = data.Skill as FormData[] || [];
+    const language = data.Languages as FormData[] || [];
 
-    const [formData, setFormData] = React.useState<FormData[]>(skill);
+    const [formData, setFormData] = React.useState<FormData[]>(language);
     const [selectedSkill, setSelectedSkill] = React.useState<FormData>();
 
     const handleSelectedChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -107,13 +110,15 @@ function ProfileSkillsEditForm({onSubmit, onClose, data}: FormProps) {
                         <FormControl isRequired>
                             <FormLabel>Уровень владения</FormLabel>
                             <Select
-                                defaultValue={"Beginner"}
+                                defaultValue={selectedSkill.proficiencyLevel}
                                 name={"proficiencyLevel"}
                                 onChange={handleSelectedChange}
                             >
-                                <option value={"Beginner"}>Начинающий</option>
-                                <option value={"Medium"}>Средний</option>
-                                <option value={"Pro"}>Профессиональный</option>
+                                {
+                                    Object.keys(ProficiencyLevel).map((key: string) => {
+                                        return <option key={key} value={key}>{key}</option>
+                                    })
+                                }
                             </Select>
                         </FormControl>
                     </Flex>
@@ -121,9 +126,9 @@ function ProfileSkillsEditForm({onSubmit, onClose, data}: FormProps) {
             }
             <Flex mt={6} gap={3}>
                 {selectedSkill
-                &&
+                    &&
                     <>
-                        <Button variant={"ghost"} onClick={() => setSelectedSkill(undefined )}>
+                        <Button variant={"ghost"} onClick={() => setSelectedSkill(undefined)}>
                             Назад
                         </Button>
                         <Spacer/>
@@ -137,4 +142,4 @@ function ProfileSkillsEditForm({onSubmit, onClose, data}: FormProps) {
     );
 }
 
-export default ProfileSkillsEditForm;
+export default ProfileLanguagesEditForm;

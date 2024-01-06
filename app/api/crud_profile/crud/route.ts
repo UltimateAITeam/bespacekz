@@ -33,8 +33,8 @@ export async function POST(
                     freelancerProfileId: profile.id,
                 }
             });
-        } else if (type === "skill") {
-            await prisma.skill.create({
+        } else if (type === "languages") {
+            await prisma.language.create({
                 data: {
                     name: info.name,
                     proficiencyLevel: info.proficiencyLevel,
@@ -110,6 +110,16 @@ export async function PUT(
                     jobTitle: info
                 }
             })
+        } else if (type === "languages") {
+            await prisma.language.update({
+                where: {
+                    id: info.id,
+                    freelancerProfileId: profile.id
+                },
+                data: {
+                    ...info
+                }
+            })
         }
         return NextResponse.json({"status": "ok"}, {status: 200})
     } catch (e) {
@@ -156,8 +166,8 @@ export async function DELETE(
                 }
             })
 
-        } else if (type === "skill") {
-            await prisma.skill.delete({
+        } else if (type === "languages") {
+            await prisma.language.delete({
                 where: {
                     id: info.id,
                     freelancerProfileId: profile.id,

@@ -11,13 +11,18 @@ export async function POST(
         const FreelancerProfile = await getProfileBySession(session);
 
         for (const experience of data) {
+            console.log("LOG: experience", experience)
             const exp = await prisma.experience.create({
                 data: {
                     company: experience.company,
                     name: experience.name,
                     tasks: experience.tasks,
-                    duration: experience.duration,
                     roles: [...experience.roles],
+                    link: experience.link,
+                    country: experience.country,
+                    city: experience.city || '',
+                    from: experience.from,
+                    to: experience.to,
                     freelancerProfileId: FreelancerProfile.id,
                 }
             });

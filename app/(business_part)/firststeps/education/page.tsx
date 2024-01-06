@@ -1,107 +1,122 @@
-'use client';
-import React, {FormEvent, useEffect} from 'react';
-import {motion} from "framer-motion";
+"use client";
+import React, { FormEvent, useEffect } from "react";
+import { motion } from "framer-motion";
 import useEducationStore from "@/store/educationFormStore";
-import {IconButton} from "@chakra-ui/react";
-import { MdDelete } from "react-icons/md";
+import { Box, HStack, Spacer, Text, useDisclosure } from "@chakra-ui/react";
+import { AiFillEdit } from "react-icons/ai";
+import { RxCross2 } from "react-icons/rx";
+import EducationModal from "@/components/modals/EducationModal";
 
 function Page() {
-    const { addEducation, educations, updateEducation, removeEducation } = useEducationStore();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { addEducation, educations, removeEducation } = useEducationStore();
+  const [stateIndex, setStateIndex] = React.useState<number | null>(null);
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-    };
-
-    return (
-        <motion.div
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}
+  useEffect(() => {
+    console.log("EDUCATION", educations);
+  }, [educations]);
+  return (
+    <motion.div
+      initial={{ x: 300, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -300, opacity: 0 }}
+    >
+      {stateIndex !== null && (
+        <EducationModal
+          educations={educations}
+          isOpen={isOpen}
+          onClose={onClose}
+          index={stateIndex}
+        />
+      )}
+      <div className={"m-auto flex flex-col justify-center items-center"}>
+        <span
+          className={
+            "w-full md:w-3/4 font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl mb-14"
+          }
         >
-            <div className={"m-auto flex flex-col justify-center items-center"}>
-                <form className={"flex flex-col w-full md:w-1/2 -mt-4"} onSubmit={onSubmit}>
-                    {educations.map((item:any, index:number) => (
-                        <div key={index} className={"mt-4 border-2 border-gray-200 shadow-sm rounded-2xl p-6 font-medium"}>
-                            <div className='flex justify-between'>
-                            <h1 className={"text-lg font-semibold mb-2"}>
-                                {item.institution ? item.institution : "Education "}
-                            </h1>
-                            <IconButton
-                                aria-label="Delete education" 
-                                icon={<MdDelete />} 
-                                onClick={() => removeEducation(index)} 
-                                variant='ghost'
-                               />
+          Клиентам нравится знать то, что знаете вы — добавьте сюда свое
+          образование.
+        </span>
+        <form
+          className={"grid grid-cols-4 gap-4 w-full md:w-3/4 -mt-4"}
+          onSubmit={onSubmit}
+        >
+          {educations.map((item: any, index: number) => (
+            <Box
+              key={index}
+              className={
+                "max-w-xs w-full bg-white max-h-48 h-48 p-2 rounded-lg border border-[#E4EBE4]"
+              }
+            >
+              <HStack className={"h-10"} justify={"end"}>
+                <HStack align={"start"} className={"h-10 text-2xl"}>
+                  <AiFillEdit
+                    className={"cursor-pointer text-gray-400"}
+                    onClick={() => {
+                      setStateIndex(index);
+                      onOpen();
+                    }}
+                  />
+                  <RxCross2
+                    className={
+                      "cursor-pointer rounded-xl p-0.5 bg-red-500 text-white"
+                    }
+                    onClick={() => {
+                      setStateIndex(null);
+                      removeEducation(index);
+                    }}
+                  />
+                </HStack>
+              </HStack>
+              <Box className="pt-auto px-2">
+                <Text fontSize={"large"} fontWeight={"semibold"}>
+                  {item.institution}
+                </Text>
+                <Text fontSize={"large"} fontWeight={"light"}>
+                  {item.degree}
+                </Text>
+              </Box>
+            </Box>
+          ))}
 
-                            </div>
-                            <label htmlFor={`degree-${index}`}>Degree:</label>
-                            <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
-                                <select
-                                    value={item.degree == '' ? "none" : item.degree}
-                                    className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                    onChange={(e) => updateEducation(index, 'degree', e.target.value)}
-                                >
-                                    <option value="none" selected disabled hidden>Select an Option</option> 
-                                    <option value="Primary">Primary school</option>
-                                    <option value="Bachelor">Bachelor</option>
-                                    <option value="Master">Master</option>
-                                    <option value="Doctor">Doctor</option>
-                                </select>
-                            </div>
-
-                            <label htmlFor={`institution-${index}`}>Your Institution:</label>
-                            <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
-                                <input
-                                    type="text"
-                                    placeholder='Ex: Nazarbayev University'
-                                    className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                    value={item.institution}
-                                    onChange={(e) => updateEducation(index, 'institution', e.target.value)}
-                                />
-                            </div>
-
-                            <label htmlFor={`graduationYear-${index}`}>Your Graduation Year:</label>
-                            <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
-                                <input
-                                    type="number"
-                                    placeholder='Ex: 2021'
-                                    className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                    value={item.graduationYear == 0 ? "" : item.graduationYear}
-                                    onChange={(e) => updateEducation(index, 'graduationYear', parseInt(e.target.value))}
-                                />
-                            </div>
-
-                            <label htmlFor={`specialization-${index}`}>Your specialization:</label>
-                            <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
-                                <input
-                                    type="text"
-                                    placeholder='Ex: Computer Science'
-                                    className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                                    value={item.specialization}
-                                    onChange={(e) => updateEducation(index, 'specialization', e.target.value)}
-                                />
-                            </div>
-
-                            {/* <button type="button" onClick={() => removeEducation(index)}>
-                                Remove education
-                            </button> */}
-                            
-                        </div>
-                    ))}
-
-                    <button
-                        type="button"
-                        onClick={() => addEducation()}
-                        className="border-2 py-2 px-4 mt-4 hover:bg-[#397b8a] bg-[#4fa9bd] rounded-xl flex-grow w-full focus:outline-none bg-transparent text-zinc-700 hover:text-white focus:ring-0"
-                    >
-                        Add education
-                    </button>
-
-                </form>
-            </div>
-        </motion.div>
-    );
+          <Box
+            className={
+              "max-w-xs w-full bg-white max-h-48 h-48 p-2 rounded-lg border border-[#E4EBE4]"
+            }
+          >
+            <HStack className={"h-10"} justify={"end"}>
+              <HStack align={"start"} className={"h-10 text-2xl"}>
+                <RxCross2
+                  onClick={() => {
+                    addEducation();
+                    setStateIndex(educations.length);
+                    onOpen();
+                  }}
+                  className={
+                    "rotate-45 cursor-pointer rounded-xl p-0.5 bg-[#1a3353] text-white"
+                  }
+                />
+              </HStack>
+            </HStack>
+            <Box className="pt-auto px-2">
+              <Text fontSize={"large"}>Добавить ваше образование</Text>
+            </Box>
+          </Box>
+          {/*<button*/}
+          {/*    type="button"*/}
+          {/*    onClick={() => addEducation()}*/}
+          {/*    className="border-2 py-2 px-4 mt-4 hover:bg-[#397b8a] bg-[#4fa9bd] rounded-xl flex-grow w-full focus:outline-none bg-transparent text-zinc-700 hover:text-white focus:ring-0"*/}
+          {/*>*/}
+          {/*    Add education*/}
+          {/*</button>*/}
+        </form>
+      </div>
+    </motion.div>
+  );
 }
 
 export default Page;

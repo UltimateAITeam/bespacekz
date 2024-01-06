@@ -9,11 +9,11 @@ import HeadTag from "@/components/brenda_components/HeadTag";
 import LoginSignupHeader from "@/components/brenda_components/LoginSignupHeader";
 import useEducationFormStore from "@/store/educationFormStore";
 import useExperienceStore from "@/store/experienceFormState";
-import useSkillsStore from "@/store/skillFormStore";
 import usePricingStore from "@/store/pricingFormStore";
 import usePortfolioStore from "@/store/profileFormStore";
 import {useFirstStepsLoading} from "@/libs/hooks";
 import useTitleStore from "@/store/titleFormStateStore";
+import useLanguagesStore from "@/store/languagesFormStore";
 
 function Layout({children}: {children: React.ReactNode}) {
     const router = useRouter();
@@ -44,17 +44,17 @@ function Layout({children}: {children: React.ReactNode}) {
             next: "Следующий шаг",
         },
         {
-            path: "/firststeps/skills",
+            path: "/firststeps/languages",
             back: "Назад",
             skip: true,
             next: "Следующий шаг",
         },
-        {
-            path: "/firststeps/portfolio",
-            back: "Назад",
-            skip: true,
-            next: "Следующий шаг",
-        },
+        // {
+        //     path: "/firststeps/portfolio", // TODO: replace with new pages
+        //     back: "Назад",
+        //     skip: true,
+        //     next: "Следующий шаг",
+        // },
         {
             path: "/firststeps/price",
             back: "Назад",
@@ -68,20 +68,19 @@ function Layout({children}: {children: React.ReactNode}) {
     })
     const { educations } = useEducationFormStore();
     const { experience } = useExperienceStore();
-    const { skills } = useSkillsStore();
+    const { languages } = useLanguagesStore();
     const { projectRate, hourlyRate } = usePricingStore();
-    const { links } = usePortfolioStore();
     const { title } = useTitleStore();
 
 
     const isFilledEdu = educations.length >= 1 && educations.every((item) => {
-        return item.degree !== "" && item.institution !== "" && item.graduationYear !== 0 && item.specialization !== ""
+        return item.degree.length > 5 && item.institution.length > 3  && item.graduationYear > 1900 && item.specialization.length > 4
     })
     const isFilledExp = experience.length >= 1 && experience.every((item) => {
-        return item.company !== "" && item.name !== "" && item.roles.length !== 0 && item.tasks !== "" && item.duration !== ""
+        return item.company !== "" && item.name.length > 5 && item.roles.length !== 0 && item.tasks.length > 5  && item.company.length > 4
     })
-    const isFilledSkills = skills.length >= 1 && skills.every((item) => {
-        return item.name !== "" && item.proficiencyLevel !== ""
+    const isFilledLanguages = languages.length >= 1 && languages.every((item) => {
+        return item.name.length > 3
     })
 
     const postData = async (url: string, data: any) => {
@@ -108,14 +107,10 @@ function Layout({children}: {children: React.ReactNode}) {
                 return true;
             case "/firststeps/experience":
                 return isFilledExp;
-            case "/firststeps/skills":
-                return isFilledSkills;
+            case "/firststeps/languages":
+                return isFilledLanguages;
             case "/firststeps/price":
                 return projectRate >= 500 && hourlyRate >= 500;
-            case "/firststeps/portfolio":
-                return links.length >= 1 && links.every((item) => {
-                    return item.match(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/)
-                });
         }
     }
 
@@ -151,8 +146,8 @@ function Layout({children}: {children: React.ReactNode}) {
                         console.log(reason);
                     })
                 break;
-            case "/firststeps/skills":
-                postData("/api/profile/skills", skills)
+            case "/firststeps/languages":
+                postData("/api/profile/languages", languages)
                     .then((value) => {
                         router.push(pages[pageIndex+1].path);
                     })
@@ -167,18 +162,8 @@ function Layout({children}: {children: React.ReactNode}) {
                         localStorage.removeItem("hourlyRate");
                         localStorage.removeItem("educations");
                         localStorage.removeItem("experience");
-                        localStorage.removeItem("skills");
-                        localStorage.removeItem("portfolio");
+                        localStorage.removeItem("languages");
                         router.push("/");
-                    })
-                    .catch((reason) => {
-                        console.log(reason);
-                    })
-                break;
-            case "/firststeps/portfolio":
-                postData("/api/profile/portfolio", {links: links})
-                    .then((value) => {
-                        router.push(pages[pageIndex+1].path);
                     })
                     .catch((reason) => {
                         console.log(reason);
@@ -189,7 +174,7 @@ function Layout({children}: {children: React.ReactNode}) {
     }
 
     const loading = useFirstStepsLoading();
-
+    console.log("LOADING", loading)
     if (session.status === "loading") {
         return <Spinner width="w-20" height="w-20" />
     } else if (session.status === "unauthenticated") {
@@ -198,14 +183,14 @@ function Layout({children}: {children: React.ReactNode}) {
         if (loading || session.data?.user.role === "CLIENT") {
             return redirect("/")
         } else return <AnimatePresence>
-            <div className="min-h-screen bg-white flex flex-col">
+            <div className="min-h-screen bg-firstStepsBg flex flex-col">
                 {/* ============== Head Tag =============== */}
                 <HeadTag title="Log In - Bespace"/>
 
                 {/* ================== Header =================== */}
                 <LoginSignupHeader />
                 <main>
-                    <section className="container bg-white mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3">
+                    <section className="container bg-firstStepsBg mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3">
                         <div className={"text-zinc-950 font-semibold"}>
                             {children}
                         </div>

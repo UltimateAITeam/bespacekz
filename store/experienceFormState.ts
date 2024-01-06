@@ -4,8 +4,12 @@ interface Experience {
     name: string;
     roles: string[];
     tasks: string;
-    duration: string;
     company: string;
+    country: string;
+    city? : string;
+    link?: string;
+    from: Date;
+    to: Date;
 }
 
 interface ExperienceStore {
@@ -39,7 +43,11 @@ const useExperienceStore = create<ExperienceStore>((set) => ({
                 name: '',
                 roles: [],
                 tasks: '',
-                duration: '',
+                city: '',
+                country: '',
+                link: '',
+                to: new Date(),
+                from: new Date(),
             };
             if (typeof window !== 'undefined') localStorage.setItem("experience", JSON.stringify([...state.experience, newExperience]));
             return { experience: [...state.experience, newExperience] };

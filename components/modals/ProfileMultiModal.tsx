@@ -4,7 +4,7 @@ import {Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOver
 import ProfileInfoForm from "@/components/forms/ProfileInfoForm";
 import ProfileEducationEditForm from "@/components/forms/ProfileEducationEditForm";
 import ProfileExperienceEditForm from "@/components/forms/ProfileExperienceEditForm";
-import ProfileSkillsEditForm from "@/components/forms/ProfileSkillsEditForm";
+import ProfileLanguagesEditForm from "@/components/forms/ProfileLanguagesEditForm";
 import ProfileAboutEditForm from "@/components/forms/ProfileAboutEditForm";
 import ProfileEducationAddForm from "@/components/forms/ProfileEducationAddForm";
 import ProfileExperienceAddForm from "@/components/forms/ProfileExperienceAddForm";
@@ -61,7 +61,7 @@ function ProfileMultiModal({data, role, form, isOpen, onClose, setData, setLoadi
         "edit-experience": <ProfileExperienceEditForm data={data} onSubmit={handleSubmit} onClose={onClose}/>,
         "add-education": <ProfileEducationAddForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
         "edit-education": <ProfileEducationEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
-        "edit-skills": <ProfileSkillsEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
+        "edit-languages": <ProfileLanguagesEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
         "edit-about": <ProfileAboutEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
         "edit-company-info": <ProfileCompanyInfoEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,
         "edit-company-description": <ProfileCompanyDescriptionEditForm data={data} onSubmit={handleSubmit} onClose={onClose} />,

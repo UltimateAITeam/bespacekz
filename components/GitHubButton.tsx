@@ -10,9 +10,10 @@ interface GitHubButtonProps extends React.ComponentProps<"button">{
 function GitHubButton({text, onClick, className, options, ...props}: GitHubButtonProps) {
     return (
         <button {...props} onClick={e => signIn("github", options)}
-                className={`${className} bg-black text-white rounded-md py-2 px-4 mb-4 w-full flex items-center justify-center space-x-2`}>
-            <BsGithub className={"w-6 h-6 mr-2"} />
-            {text}
+                // bg-black text-white
+                className={`${className} hover:bg-gray-100 transition-colors bg-white text-zinc-950 text-xl font-semibold border-2 rounded-lg py-3 px-4 w-full flex items-center justify-center space-x-2`}>
+            <BsGithub className={"w-8 h-8"} />
+            {/* {text} */}
         </button>
     );
 }

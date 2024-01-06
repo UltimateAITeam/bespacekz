@@ -3,14 +3,19 @@ import React, {useEffect, useState} from 'react';
 import HeadTag from "@/components/brenda_components/HeadTag";
 import {
     Avatar,
-    Box, Card, CardHeader, Flex,
+    Box,
+    Card,
+    CardHeader,
+    Flex,
     Grid,
-    GridItem, Heading,
+    GridItem,
+    Heading,
     HStack,
     SimpleGrid,
     Spinner,
     Stack,
-    Tag, Text,
+    Tag,
+    Text,
     Textarea,
     Tooltip,
     useDisclosure,
@@ -25,9 +30,10 @@ import {useSession} from "next-auth/react";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
+        Languages: true,
         Education: true,
         Experience: true,
-        Skill: true,
+        Skills: true,
         Pricing: true,
         Portfolio: true,
         jobTitle: true,
@@ -65,25 +71,31 @@ function Page() {
     useEffect(() => {
         const storedRole = typeof window !== 'undefined' ? localStorage.getItem("userRole") : null;
         setRole(session.data?.user.role || storedRole);
+        if (session.status !== "authenticated" || !role) {
+            return;
+        }
+        setLoading(true);
+
 
         (async () => {
-            setLoading(true)
+            console.log("FETCH", role)
             let resp: Response;
             if (role === Role.FREELANCER) resp = await fetch("/api/get_freelancer_profile");
             else resp = await fetch("/api/get_client_profile");
             const dta = await resp.json();
             setData(dta);
-            console.log(dta)
+
+            console.log("DATA:", dta);
             setLoading(false)
         })();
-    }, [])
+    }, [session.status, role, session.data?.user.role])
 
     const educations = data?.Education || []
-    const skills = data?.Skill || []
+    const languages = data?.Languages || []
     const experiences = data?.Experience || []
     const vacancies = data?.Vacancy || []
 
-    if (!data || loading) return <Box
+    if (!data || loading || !role) return <Box
         className="fixed top-0 left-0 w-screen h-screen bg-white flex items-center justify-center z-50">
         <Spinner
             thickness={"5px"}
@@ -97,7 +109,6 @@ function Page() {
         setFormType(content);
         onOpen();
     }
-
 
 
     return (
@@ -118,9 +129,10 @@ function Page() {
                     />
                 </Box>
             }
-            <ProfileMultiModal role={role || Role.CLIENT} form={formType} data={data} isOpen={isOpen} setLoading={(data: boolean) => {
-                setLoading(data)
-            }} onClose={onClose} setData={(data: any) => {
+            <ProfileMultiModal role={role} form={formType} data={data} isOpen={isOpen}
+                               setLoading={(data: boolean) => {
+                                   setLoading(data)
+                               }} onClose={onClose} setData={(data: any) => {
                 setData(data)
             }}/>
 
@@ -172,97 +184,99 @@ function Page() {
                         </BlockComponent>
                         {role === Role.FREELANCER
                             && <>
-                            <BlockComponent editForm={"edit-education"} addForm={"add-education"} openModal={openModal}
-                                            title={"Образование"} isEditable={true} isAddable={true}>
-                                <VStack gap={4}>
-                                    {educations.length > 0 && educations.map(
-                                        (education) => (
-                                            <Stack mb={4} key={education.id} direction={"row"}
-                                                   className={"w-full justify-between"}>
-                                                <SimpleGrid
-                                                    columns={4}
-                                                    gap={{xl: 20, sm: 5}}
-                                                    className={"justify-start w-full"}
-                                                >
-                                                    <div>
-                                                        <p className={"font-bold"}>Место</p>
-                                                        <p>{education.institution}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className={"font-bold"}>Степень</p>
-                                                        <p>{education.degree}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className={"font-bold"}>Специальность</p>
-                                                        <p>{education.specialization}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className={"font-bold"}>Год выпуска</p>
-                                                        <p>{education.graduationYear}</p>
-                                                    </div>
-                                                </SimpleGrid>
-                                            </Stack>
-                                        )
-                                    )}
-                                </VStack>
-                            </BlockComponent>
-                            {/* BLOCK TAG */}
-                            <BlockComponent editForm={"edit-experience"} addForm={"add-experience"} openModal={openModal}
-                                            title={"Стаж работы"} isAddable={true} isEditable={true}>
-                                <VStack>
-                                    {experiences && experiences.map(
-                                        (exp) => (
-                                            <Stack mb={4} key={exp.id} direction={"row"}
-                                                   className={"w-full justify-between"}>
-                                                <SimpleGrid
-                                                    columns={3}
-                                                    gap={{xl: 20, sm: 5}}
-                                                    className={"justify-start w-full"}
-                                                >
-                                                    <div>
-                                                        <p className={"font-bold"}>Место</p>
-                                                        <p>{exp.company}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className={"font-bold"}>Занимаемая должность</p>
-                                                        <p>{exp.roles.join(',')}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className={"font-bold"}>Стаж работы</p>
-                                                        <p>{exp.duration + " месяцев"}</p>
-                                                    </div>
-                                                </SimpleGrid>
-                                            </Stack>
-                                        )
-                                    )}
-                                </VStack>
-                            </BlockComponent>
-                            {/* BLOCK TAG */}
-                            <BlockComponent editForm={"edit-skills"} openModal={openModal} isAddable={false}
-                                            isEditable={true} title={"Способности"}>
-                                <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                                <BlockComponent editForm={"edit-education"} addForm={"add-education"}
+                                                openModal={openModal}
+                                                title={"Образование"} isEditable={true} isAddable={true}>
+                                    <VStack gap={4}>
+                                        {educations.length > 0 && educations.map(
+                                            (education) => (
+                                                <Stack mb={4} key={education.id} direction={"row"}
+                                                       className={"w-full justify-between"}>
+                                                    <SimpleGrid
+                                                        columns={4}
+                                                        gap={{xl: 20, sm: 5}}
+                                                        className={"justify-start w-full"}
+                                                    >
+                                                        <div>
+                                                            <p className={"font-bold"}>Место</p>
+                                                            <p>{education.institution}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className={"font-bold"}>Степень</p>
+                                                            <p>{education.degree}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className={"font-bold"}>Специальность</p>
+                                                            <p>{education.specialization}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className={"font-bold"}>Год выпуска</p>
+                                                            <p>{education.graduationYear}</p>
+                                                        </div>
+                                                    </SimpleGrid>
+                                                </Stack>
+                                            )
+                                        )}
+                                    </VStack>
+                                </BlockComponent>
+                                {/* BLOCK TAG */}
+                                <BlockComponent editForm={"edit-experience"} addForm={"add-experience"}
+                                                openModal={openModal}
+                                                title={"Стаж работы"} isAddable={true} isEditable={true}>
+                                    <VStack>
+                                        {experiences && experiences.map(
+                                            (exp) => (
+                                                <Stack mb={4} key={exp.id} direction={"row"}
+                                                       className={"w-full justify-between"}>
+                                                    <SimpleGrid
+                                                        columns={3}
+                                                        gap={{xl: 20, sm: 5}}
+                                                        className={"justify-start w-full"}
+                                                    >
+                                                        <div>
+                                                            <p className={"font-bold"}>Место</p>
+                                                            <p>{exp.company}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className={"font-bold"}>Занимаемая должность</p>
+                                                            <p>{exp.roles.join(',')}</p>
+                                                        </div>
+                                                        {/*<div>*/}
+                                                        {/*    <p className={"font-bold"}>Стаж работы</p>*/}
+                                                        {/*    <p>{exp.duration + " месяцев"}</p>*/}
+                                                        {/*</div>*/}
+                                                    </SimpleGrid>
+                                                </Stack>
+                                            )
+                                        )}
+                                    </VStack>
+                                </BlockComponent>
+                                {/* BLOCK TAG */}
+                                <BlockComponent editForm={"edit-languages"} openModal={openModal} isAddable={false}
+                                                isEditable={true} title={"Языки"}>
+                                    <Grid templateColumns="repeat(5, 1fr)" gap={4}>
 
-                                    {skills.map(
-                                        (skill) => (
-                                            <GridItem key={skill.id}>
-                                                <Tooltip placement={"top"} className={"h-fit"}
-                                                         label={skill.proficiencyLevel.toUpperCase()}>
-                                                    <Tag className={"cursor-default h-fit"}>
-                                                        {skill.name}
-                                                    </Tag>
-                                                </Tooltip>
-                                            </GridItem>
-                                        )
-                                    )}
-                                </Grid>
-                            </BlockComponent>
-                            {/* BLOCK TAG */}
-                            <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false}
-                                            isEditable={true} title={"О себе"}>
-                                <Textarea value={data.about || ''} isDisabled={true} resize={"vertical"}
-                                          placeholder={"Напишите что нибудь о себе"}/>
-                            </BlockComponent>
-                        </>}
+                                        {languages.map(
+                                            (lang:any) => (
+                                                <GridItem key={lang.id}>
+                                                    <Tooltip placement={"top"} className={"h-fit"}
+                                                             label={lang.proficiencyLevel}>
+                                                        <Tag className={"cursor-default h-fit"}>
+                                                            {lang.name}
+                                                        </Tag>
+                                                    </Tooltip>
+                                                </GridItem>
+                                            )
+                                        )}
+                                    </Grid>
+                                </BlockComponent>
+                                {/* BLOCK TAG */}
+                                <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false}
+                                                isEditable={true} title={"О себе"}>
+                                    <Textarea value={data.about || ''} isDisabled={true} resize={"vertical"}
+                                              placeholder={"Напишите что нибудь о себе"}/>
+                                </BlockComponent>
+                            </>}
                         {/*CLIENT PART*/}
                         {role === Role.CLIENT
                             && <>
@@ -306,7 +320,8 @@ function Page() {
                                                             align={"start"} flex="1" gap={'4'}
                                                             className={'cursor-pointer'}
                                                         >
-                                                            <Heading size="md" style={{textTransform: "capitalize"}}>{vacancy.title}</Heading>
+                                                            <Heading size="md"
+                                                                     style={{textTransform: "capitalize"}}>{vacancy.title}</Heading>
                                                             <Text>{vacancy.specialization}</Text>
                                                             <Text>{vacancy.priceFrom} - {vacancy.priceTo} {vacancy.currency}</Text>
                                                         </VStack>
@@ -317,9 +332,11 @@ function Page() {
                                     </SimpleGrid>
                                 </BlockComponent>
 
-                                <BlockComponent editForm={"edit-company-description"} openModal={openModal} isAddable={false}
+                                <BlockComponent editForm={"edit-company-description"} openModal={openModal}
+                                                isAddable={false}
                                                 isEditable={true} title={"Описание компании"}>
-                                    <Textarea value={data.companyDescription || ''} isDisabled={true} resize={"vertical"}
+                                    <Textarea value={data.companyDescription || ''} isDisabled={true}
+                                              resize={"vertical"}
                                               placeholder={"Напишите что нибудь о своей компании"}/>
                                 </BlockComponent>
                             </>
