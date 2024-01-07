@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/app/providers";
 import Head from "next/head"; // Import Head from next/head
+import { cn } from '@/libs/utils';
+import { dmSans, inter, roboto } from '@/libs/fonts';
 
-const inter = Inter({ subsets: ["latin"] });
+
+
 
 export const metadata: Metadata = {
   title: "Bespace",
@@ -24,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={inter.className + " h-full"}>
+      <body className={cn(inter.variable, roboto.variable, dmSans.variable, " h-full")}>
         <Providers>{children}</Providers>
       </body>
     </html>

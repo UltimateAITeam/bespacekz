@@ -45,6 +45,7 @@ function VacancyList() {
             if (res.status !== 200) return;
             const resp_json = await res.json();
             setData(resp_json.data);
+            console.log('resp_json.data', resp_json.data);
             setLoading(false);
         })()
 

@@ -1,3 +1,5 @@
+const { fontFamily } = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -6,9 +8,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ['var(--font-roboto)', ...fontFamily.sans],
+        inter: ['var(--font-inter)', ...fontFamily.sans],
+        'dm-sans': ['var(--font-dm-sans)', ...fontFamily.sans],
+      },
       colors: {
         mainBg: '#F3FFFC',
         firstStepsBg: '#F0F5FF',
+        'mainText': '#1A3353',
+        'neutral-4': '#F0F0F0',
+        'primary-10': '#002766',
+        'character-secondary': '#72849A'
       }
     },
   },

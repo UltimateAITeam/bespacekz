@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react";
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 function limitText(originalText: string, maxCharacters: number) {
     if (originalText.length > maxCharacters) {
@@ -30,17 +31,6 @@ function currencyConverterNumber(currency: string, amount: number) {
     return formatter.format(amount);
 }
 
-function useFirstStepsLoading() {
-    const [lotteries, setLotteries] = useState(false);
-
-    useEffect(() => {
-        fetch('/api/profile/completed')
-            .then(response => setLotteries(response.ok))
-    }, []);
-
-    return lotteries;
-}
-
 function getRelativeTime(pastDate: Date): string {
     const now = new Date();
     const timeDifference = now.getTime() - pastDate.getTime(); // Difference in milliseconds
@@ -63,11 +53,15 @@ function getRelativeTime(pastDate: Date): string {
     }
 }
 
+function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs))
+  }
+
 export {
     formatDate,
     getRelativeTime,
     currencyConverterNumber,
     currencyConverter,
     limitText,
-    useFirstStepsLoading,
+    cn,
 }

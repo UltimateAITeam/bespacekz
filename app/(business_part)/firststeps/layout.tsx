@@ -10,7 +10,8 @@ import LoginSignupHeader from "@/components/brenda_components/LoginSignupHeader"
 import useEducationFormStore from "@/store/educationFormStore";
 import useExperienceStore from "@/store/experienceFormState";
 import usePricingStore from "@/store/pricingFormStore";
-import {useFirstStepsLoading} from "@/libs/utils";
+import usePortfolioStore from "@/store/profileFormStore";
+import {useFirstStepsLoading} from "@/libs/hooks";
 import useTitleStore from "@/store/titleFormStateStore";
 import useLanguagesStore from "@/store/languagesFormStore";
 import useAboutStore from "@/store/aboutFormStore";
