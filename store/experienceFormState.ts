@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 
 interface Experience {
+    jobTitle: string;
     name: string;
     skills: string[];
     tasks: string;
@@ -52,6 +53,7 @@ const useExperienceStore = create<ExperienceStore>((set) => ({
         set((state) => {
             console.log(typeof window === 'undefined')
             const newExperience: Experience = {
+                jobTitle: '',
                 company: '',
                 name: '',
                 skills: [],

@@ -1,25 +1,26 @@
 import {create} from 'zustand';
+import {PricingType} from "@prisma/client";
 
 interface PricingStore {
     hourlyRate: number;
     projectRate: number;
+    employeeRate: number;
+    pricingType: PricingType[];
     updateHourlyRate: (updatedPricing: number) => void;
     updateProjectRate: (updatedPricing: number) => void;
+    updateEmployeeRate: (updatedPricing: number) => void;
+    updatePricingType: (updatedPricing: PricingType[]) => void;
 }
 
-function getRateInitial(key: string): number {
-    if (typeof window === 'undefined') return 0.0
-    const data = localStorage.getItem(key);
-    return data ? Number.parseFloat(data) : 0.0;
-}
 
 const usePricingStore = create<PricingStore>((set) => ({
-    hourlyRate: getRateInitial("hourlyRate"),
-    projectRate: getRateInitial("projectRate"),
+    hourlyRate: 0,
+    projectRate: 0,
+    employeeRate: 0,
+    pricingType: [],
     updateHourlyRate: (updatedPricing) =>
         set((state) => {
 
-            if (typeof window !== 'undefined') localStorage.setItem("hourlyRate", updatedPricing.toString());
             return {
                 hourlyRate: updatedPricing,
                 projectRate: state.projectRate
@@ -28,12 +29,13 @@ const usePricingStore = create<PricingStore>((set) => ({
     updateProjectRate: (updatedPricing) =>
         set((state) => {
 
-            if (typeof window !== 'undefined') localStorage.setItem("projectRate", updatedPricing.toString());
             return {
                 projectRate: updatedPricing,
                 hourlyRate: state.hourlyRate
             }
         }),
+    updateEmployeeRate: (updatedPricing) => set((state) => ({employeeRate: updatedPricing})),
+    updatePricingType: (updatedPricing) => set((state) => ({pricingType: updatedPricing})),
 }));
 
 export default usePricingStore;

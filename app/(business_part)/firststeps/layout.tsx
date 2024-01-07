@@ -13,6 +13,7 @@ import usePricingStore from "@/store/pricingFormStore";
 import {useFirstStepsLoading} from "@/libs/utils";
 import useTitleStore from "@/store/titleFormStateStore";
 import useLanguagesStore from "@/store/languagesFormStore";
+import useAboutStore from "@/store/aboutFormStore";
 
 function Layout({children}: {children: React.ReactNode}) {
     const router = useRouter();
@@ -48,14 +49,14 @@ function Layout({children}: {children: React.ReactNode}) {
             skip: true,
             next: "Следующий шаг",
         },
-        // {
-        //     path: "/firststeps/portfolio", // TODO: replace with new pages
-        //     back: "Назад",
-        //     skip: true,
-        //     next: "Следующий шаг",
-        // },
         {
             path: "/firststeps/price",
+            back: "Назад",
+            skip: true,
+            next: "Следующий шаг",
+        },
+        {
+            path: "/firststeps/about",
             back: "Назад",
             skip: false,
             next: "Следующий шаг",
@@ -68,8 +69,9 @@ function Layout({children}: {children: React.ReactNode}) {
     const { educations } = useEducationFormStore();
     const { experience } = useExperienceStore();
     const { languages } = useLanguagesStore();
-    const { projectRate, hourlyRate } = usePricingStore();
+    const { projectRate, hourlyRate, employeeRate, pricingType } = usePricingStore();
     const { title } = useTitleStore();
+    const { about } = useAboutStore();
 
 
     const isFilledEdu = educations.length >= 1 && educations.every((item) => {
@@ -109,7 +111,9 @@ function Layout({children}: {children: React.ReactNode}) {
             case "/firststeps/languages":
                 return isFilledLanguages;
             case "/firststeps/price":
-                return projectRate >= 500 && hourlyRate >= 500;
+                return pricingType.length > 0 && (pricingType.includes("FREELANCE") ? projectRate > 0 && hourlyRate > 0 : true) && (pricingType.includes("EMPLOYEE") ? employeeRate > 0 : true);
+            case "/firststeps/about":
+                return about.length > 10;
         }
     }
 
@@ -155,7 +159,16 @@ function Layout({children}: {children: React.ReactNode}) {
                     })
                 break;
             case "/firststeps/price":
-                postData("/api/profile/price", {projectRate: projectRate, hourlyRate: hourlyRate})
+                postData("/api/profile/price", {projectRate: projectRate, hourlyRate: hourlyRate, employeeRate: employeeRate, pricingType: pricingType})
+                    .then((value) => {
+                        router.push(pages[pageIndex+1].path);
+                    })
+                    .catch((reason) => {
+                        console.log(reason);
+                    })
+                break;
+            case "/firststeps/about":
+                postData("/api/profile/about", {about: about})
                     .then((value) => {
                         localStorage.removeItem("projectRate");
                         localStorage.removeItem("hourlyRate");
@@ -176,12 +189,11 @@ function Layout({children}: {children: React.ReactNode}) {
     console.log("LOADING", loading)
     if (session.status === "loading") {
         return <Spinner width="w-20" height="w-20" />
-    } else if (session.status === "unauthenticated") {
-        return redirect("/login")
     } else {
         if (loading || session.data?.user.role === "CLIENT") {
             return redirect("/")
         } else {
+
             return <AnimatePresence>
                 <div className="min-h-screen bg-firstStepsBg flex flex-col">
                     {/* ============== Head Tag =============== */}

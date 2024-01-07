@@ -27,6 +27,7 @@ import BlockComponent from "@/components/BlockComponent";
 import ProfileMultiModal from "@/components/modals/ProfileMultiModal";
 import {LuPencilLine} from "react-icons/lu";
 import {useSession} from "next-auth/react";
+import {formatDate} from "@/libs/utils";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
@@ -210,8 +211,8 @@ function Page() {
                                                             <p>{education.specialization}</p>
                                                         </div>
                                                         <div>
-                                                            <p className={"font-bold"}>Год выпуска</p>
-                                                            <p>{education.graduationYear}</p>
+                                                            <p className={"font-bold"}>Период обучения</p>
+                                                            <p>{formatDate(new Date(education.from))} - {formatDate(new Date(education.to))}</p>
                                                         </div>
                                                     </SimpleGrid>
                                                 </Stack>
@@ -239,7 +240,7 @@ function Page() {
                                                         </div>
                                                         <div>
                                                             <p className={"font-bold"}>Занимаемая должность</p>
-                                                            <p>{exp.roles.join(',')}</p>
+                                                            <p>{exp.skills.join(',')}</p>
                                                         </div>
                                                         {/*<div>*/}
                                                         {/*    <p className={"font-bold"}>Стаж работы</p>*/}

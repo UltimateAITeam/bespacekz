@@ -131,7 +131,7 @@ a {
 
 
 @layer components {
-  #react-select-3-input {
+  #react-select-3-input, #react-select-5-input {
     outline: 0 !important;
     box-shadow: none !important;
   }

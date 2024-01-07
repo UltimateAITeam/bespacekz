@@ -81,6 +81,7 @@ model Education {
 model Experience {
   id                  Int               @id @default(autoincrement())
   name                String
+  jobTitle            String            @default("Freelancer")
   skills              String[]
   tasks               String
   company             String
@@ -104,8 +105,10 @@ model Language {
 
 model Pricing {
   id                  Int               @id @default(autoincrement())
-  hourlyRate          Float
-  projectRate         Float
+  pricingType         PricingType[]     @default([FREELANCE])
+  hourlyRate          Float?
+  projectRate         Float?
+  employeeRate        Float?
   freelancerProfileId String
   freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
 }
@@ -134,6 +137,7 @@ model Vacancy {
   id             String        @id @default(cuid())
   clientId       String
   title          String
+  pricingType    PricingType   @default(FREELANCE)
   aboutVacancy   String
   priceFrom      Float
   priceTo        Float
@@ -141,8 +145,10 @@ model Vacancy {
   isClear        Boolean       @default(false)
   experience     String
   specialization String
+  requiredSkills String[]      @default([])
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @default(now()) @updatedAt
+  country        String        @default("Kazakhstan")
   city           String        @default("remote")
   clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
 }
@@ -167,4 +173,9 @@ enum ProficiencyLevel {
   B2
   C1
   C2
+}
+
+enum PricingType {
+  FREELANCE
+  EMPLOYEE
 }

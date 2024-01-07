@@ -8,6 +8,14 @@ function limitText(originalText: string, maxCharacters: number) {
     }
 }
 
+function formatDate(date: Date) {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    return `${month}.${day}.${year}`;
+}
+
 function currencyConverter(currency: string, amount: number) {
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -56,6 +64,7 @@ function getRelativeTime(pastDate: Date): string {
 }
 
 export {
+    formatDate,
     getRelativeTime,
     currencyConverterNumber,
     currencyConverter,

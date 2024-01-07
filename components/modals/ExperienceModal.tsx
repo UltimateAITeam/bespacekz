@@ -20,6 +20,7 @@ import CreatableSelect from "react-select/creatable";
 import {countries} from "@/data/countries";
 import {cities} from "@/data/cities";
 import {skillsList} from "@/data/skills";
+import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 
 function EducationModal({isOpen, onClose, index}: {
     index: number,
@@ -55,6 +56,13 @@ function EducationModal({isOpen, onClose, index}: {
                     <ModalHeader>Experience {item.company && `at ${item.company}`}</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
+                        <label htmlFor={`specialization-${index}`}>Job title:</label>
+                        <JobTitleAutoSuggest
+                            className={"mb-4"}
+                            title={item.jobTitle}
+                            setTitle={(title) => handleChange(index, 'jobTitle', title)}
+                        />
+
                         <label htmlFor={`specialization-${index}`}>Company:</label>
                         <div
                             className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">

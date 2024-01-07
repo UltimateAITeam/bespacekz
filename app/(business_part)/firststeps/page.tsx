@@ -11,7 +11,11 @@ function FirstStepsForms() {
 
     const session = useSession();
 
-    const role = session.data?.user.role?.toString();
+    let role: Role | null | undefined = session.data?.user.role;
+    if (!role && typeof window !== 'undefined') {
+        role = localStorage.getItem("userRole") as Role;
+    }
+
     if (role === Role.FREELANCER) return <motion.div
         initial={{ x: -300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
