@@ -12,6 +12,7 @@ import {
     Button,
     Checkbox,
     CheckboxGroup,
+    HStack,
     Input,
     InputGroup,
     InputRightElement,
@@ -23,6 +24,7 @@ import {IoSearchSharp} from 'react-icons/io5';
 import {categoriesOptions, citiesOptions, employmentOptions} from './filterData';
 import VacancyCard from '@/components/VacancyCard';
 import { Prisma } from '@prisma/client';
+import GridLoader from 'react-spinners/GridLoader';
 
 type Vacancy = Prisma.VacancyGetPayload<{}>;
 const ITEMS_PER_PAGE = 10;
@@ -33,18 +35,25 @@ export default function FreelancePage() {
         defaultValue: [employmentOptions[0]],
     });
     const isAllCheckedEmployments = useMemo(() => valueEmployments.length === employmentOptions.length, [valueEmployments]);
+
     /* ========================== Categories State ========================= */
     const {value: valueCategories, getCheckboxProps: getCategoriesProps, setValue: setValueCategories} = useCheckboxGroup({
         defaultValue: [categoriesOptions[0]],
     });
     const isAllCheckedCategories = useMemo(() => valueCategories.length === categoriesOptions.length, [valueCategories]);
+
     /* ========================== Cities State ========================= */
     const {value: valueCities, getCheckboxProps: getCitiesProps, setValue: setValueCities} = useCheckboxGroup({
         defaultValue: [citiesOptions[0]],
     });
     const isAllCheckedCities = useMemo(() => valueCities.length === citiesOptions.length, [valueCities]);
+    const citiesSearchParams = useMemo(() => valueCities.length ? `cities=${valueCities.join('&cities=')}`: '',[valueCities]);
+    const [citySearchValue, setCitySearchValue] = useState('');
+    const filteredCities = useMemo(() =>  citiesOptions.filter(v => v.toLocaleLowerCase().includes(citySearchValue.trim().toLocaleLowerCase())), [citySearchValue])
+
     /* ========================== Favorites State ========================= */
     const [checkedFavorites, setCheckedFavorites] = useState<boolean>(false);
+
     /* ========================== Price State ========================= */
     const [startPrice, setStartPrice] = useState<number>(0);
     const [endPrice, setEndPrice] = useState<number>(0);
@@ -67,9 +76,7 @@ export default function FreelancePage() {
                 setTotalItems(resp_json_total.count);
             }
 
-            const res = await fetch(`/api/get_vacancies_by_params?
-            ${valueCities.length ? 'cities=' + valueCities.join('&cities=') : ''}
-            &page=${page}&limit=${ITEMS_PER_PAGE}`);
+            const res = await fetch(`/api/get_vacancies_by_params?${citiesSearchParams}&page=${page}&limit=${ITEMS_PER_PAGE}`);
 
             if (res.status !== 200) return;
 
@@ -79,7 +86,7 @@ export default function FreelancePage() {
             setLoading(false);
         })()
 
-    }, [page, totalItems, valueCities])
+    }, [page, totalItems, citiesSearchParams])
 
     const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
 
@@ -151,12 +158,12 @@ export default function FreelancePage() {
                                 </AccordionButton>
                             </h2>
                             <AccordionPanel pb={4}>
-                                <InputGroup className="[&:focus-within_button]:border-blue-600 mb-3">
-                                    <Input placeholder="поиск" className="!rounded-[10px]" />
+                                <InputGroup className="mb-3">
+                                    <Input placeholder="поиск города" className="!rounded-[10px]" value={citySearchValue} onChange={e => setCitySearchValue(e.target.value)} />
                                     <InputRightElement width="46px">
                                         <Button
                                             isLoading={false}
-                                            className="!bg-transparent !rounded-[10px] !rounded-l-none border-l hover:!bg-[#dfe0e2]"
+                                            className="!bg-transparent !rounded-[10px] !rounded-l-none  hover:!bg-[#dfe0e2]"
                                             onClick={() => {}}>
                                             <IoSearchSharp className="fill-[#72849A]" size={30} />
                                         </Button>
@@ -177,7 +184,7 @@ export default function FreelancePage() {
                                     </Checkbox>
                                     <CheckboxGroup colorScheme="primary-6" value={valueCities}>
                                         <div className="flex flex-col gap-2">
-                                            {citiesOptions.map((city) => (
+                                            {filteredCities.map((city) => (
                                                 <Checkbox  key={city} {...getCitiesProps({value: city})}>
                                                     {city}
                                                 </Checkbox>
@@ -281,12 +288,14 @@ export default function FreelancePage() {
 
                {/* ================= Vacancies Card Side ======================== */}
                 <div className="flex-1 space-y-8">
-                    {
-                        data.map((v) => {
-                           return <VacancyCard key={v.id} {...v} />
-                        })
-                    }
-                    
+                {(loading ) ? (
+                        <HStack justifyContent={"left"} className='py-12' >
+                            <GridLoader color="#36d7b7" className='mx-auto' />
+                        </HStack>
+                    ): data.map((vacancy) => {
+                            return <VacancyCard key={vacancy.id} {...vacancy} />
+                    })
+                }
                 </div>
             </section>
         </div>
