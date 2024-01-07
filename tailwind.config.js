@@ -18,7 +18,8 @@ module.exports = {
         firstStepsBg: '#F0F5FF',
         'mainText': '#1A3353',
         'neutral-4': '#F0F0F0',
-        'primary-10': '#002766'
+        'primary-10': '#002766',
+        'character-secondary': '#72849A'
       }
     },
   },

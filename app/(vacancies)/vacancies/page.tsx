@@ -29,7 +29,7 @@ import GridLoader from 'react-spinners/GridLoader';
 type Vacancy = Prisma.VacancyGetPayload<{}>;
 const ITEMS_PER_PAGE = 10;
 
-export default function FreelancePage() {
+export default function VacanciesPage() {
     /* ========================== Employment State ========================= */
     const {value: valueEmployments, getCheckboxProps: getEmploymentsProps, setValue: setValueEmployments} = useCheckboxGroup({
         defaultValue: [employmentOptions[0]],
