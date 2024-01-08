@@ -7,12 +7,13 @@ import {CiClock2, CiCalendar} from 'react-icons/ci';
 import {IoIosSearch} from 'react-icons/io';
 import {LuDot} from 'react-icons/lu';
 import {Prisma} from '@prisma/client';
+import { useRouter } from 'next/navigation';
 
 type Vacancy = Prisma.VacancyGetPayload<{}>;
 interface IPropsVacancy extends Vacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
-    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, title, experience, specialization} = props;
-
+    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, title, experience, specialization, id} = props;
+    const router = useRouter();
     return (
         <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full">
             <div className="shrink-0">
@@ -35,7 +36,7 @@ export default function VacancyCard(props: IPropsVacancy) {
                         <Button leftIcon={<FaRegStar />} colorScheme="yellow" variant="outline">
                             В Избранное
                         </Button>
-                        <Button colorScheme="messenger" variant="outline" className="ml-3">
+                        <Button colorScheme="messenger" variant="outline" className="ml-3" onClick={() => router.push(`/vacancies/${id}`)}>
                             Подробнее
                         </Button>
                     </div>
