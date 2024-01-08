@@ -8,7 +8,6 @@ function Layout({children}: {children: React.ReactNode}) {
 
     const session = useSession();
     // console.log("session", session);
-    // hello
     if (session.status === "loading") {
         return <Spinner width="w-20" height="w-20"/>
     } else if (session.data?.user.role) {
