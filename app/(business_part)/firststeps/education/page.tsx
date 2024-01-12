@@ -45,7 +45,7 @@ function Page() {
           className={"grid grid-cols-4 gap-4 w-full md:w-3/4 -mt-4"}
           onSubmit={onSubmit}
         >
-          {educations.map((item: any, index: number) => (
+          {educations.map((item, index: number) => (
             <Box
               key={index}
               className={
@@ -78,6 +78,12 @@ function Page() {
                 </Text>
                 <Text fontSize={"large"} fontWeight={"light"}>
                   {item.degree}
+                </Text>
+                <Text fontSize={"large"} fontWeight={"light"}>
+                  {item.specialization}
+                </Text>
+                <Text fontSize={"large"} fontWeight={"light"}>
+                  {item.from.getFullYear()} - {item.to.getFullYear()}
                 </Text>
               </Box>
             </Box>

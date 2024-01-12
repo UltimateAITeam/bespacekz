@@ -24,7 +24,7 @@ function Page() {
                     <span className={"font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl"}>✨Теперь добавьте вашу специальность, чтобы рассказать миру, чем вы занимаетесь. </span>
                     <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg"}>Это первое, что видят клиенты, поэтому учтите это. Выделитесь, описав свой опыт своими словами.</span>
 
-                    <JobTitleAutoSuggest title={title} setTitle={updateTitle} />
+                    <JobTitleAutoSuggest className={"w-1/2 mt-4"} title={title} setTitle={updateTitle} />
 
                 </form>
             </div>

@@ -14,13 +14,15 @@ export async function POST(
             console.log("LOG: experience", experience)
             const exp = await prisma.experience.create({
                 data: {
+                    jobTitle: experience.jobTitle,
                     company: experience.company,
                     name: experience.name,
                     tasks: experience.tasks,
-                    roles: [...experience.roles],
+                    skills: experience.skills,
                     link: experience.link,
                     country: experience.country,
                     city: experience.city || '',
+                    stillWorking: experience.stillWorking,
                     from: experience.from,
                     to: experience.to,
                     freelancerProfileId: FreelancerProfile.id,

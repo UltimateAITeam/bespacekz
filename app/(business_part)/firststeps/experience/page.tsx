@@ -33,7 +33,7 @@ function Page() {
                     Теперь добавьте опыт вашей работы.
                 </span>
                 <form className={"grid grid-cols-4 gap-4 w-full md:w-3/4 -mt-4"} onSubmit={onSubmit}>
-                    {experience.map((exp: any, index: number) => (
+                    {experience.map((exp, index) => (
                         <Box key={index} className={"max-w-xs w-full bg-white max-h-48 h-48 p-2 rounded-lg border border-[#E4EBE4]"}>
                             <HStack className={"h-10"} justify={"end"}>
                                 <HStack align={"start"} className={"h-10 text-2xl"}>
@@ -55,9 +55,11 @@ function Page() {
                                 </HStack>
                             </HStack>
                             <Box className="pt-auto px-2">
-                            <Text className={"mt-auto"} fontSize={"large"}>
-                                {exp.company}
+                            <Text className={"mt-auto"} fontSize={"large"}>{exp.company}</Text>
+                            <Text className={"mt-auto"} fontSize={"medium"}>
+                                {`${exp.from.getDate()}.${exp.from.getMonth()+1}.${exp.from.getFullYear()}`} - {!exp.stillWorking ? `${exp.to.getDate()}.${exp.to.getMonth()+1}.${exp.to.getFullYear()}` : "Still working"}
                             </Text>
+                            <Text className={"mt-auto"} fontSize={"medium"}>{exp.tasks}</Text>
                             </Box>
                         </Box>
                     ))}

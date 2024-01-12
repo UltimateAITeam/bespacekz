@@ -8,12 +8,24 @@ export async function POST(
     try {
         const {data, session} = await checkSessionAndGetData(req);
         const FreelancerProfile = await getProfileBySession(session);
-        const db_portfolio = await prisma.portfolio.create({
+        const db_portfolio = await prisma.user.update({
             data: {
-                links: data.links,
-                freelancerProfileId: FreelancerProfile.id,
+                about: data.about,
+            },
+            where: {
+                email: FreelancerProfile.userEmail
             }
         });
+
+        const completedProfile = await prisma.freelancerProfile.update({
+            where: {
+                id: FreelancerProfile.id
+            },
+            data: {
+                completed: true,
+            }
+        })
+        console.log(completedProfile)
 
         return NextResponse.json({}, {status: 200});
     } catch (err) {

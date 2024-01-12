@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+input:-webkit-autofill {
+    -webkit-text-fill-color: black !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+input:focus {
+    outline: none;
+}
+
 @layer base {
     :root {
         --background: 0 0% 100%;
@@ -37,7 +53,7 @@
         --Neutral-2: '#FAFAFA';
         --Neutral-4: '#F0F0F0';
         --Neutral-stroke: '#E6EBF1';
-        --Neutral-gray : 'C1C1C1'
+        --Neutral-gray: 'C1C1C1';
     }
 
     .dark {
@@ -81,6 +97,11 @@
 }
 
 @layer components {
+    #react-select-3-input,
+    #react-select-5-input {
+        outline: 0 !important;
+        box-shadow: none !important;
+    }
     .header-bg {
         background: radial-gradient(
             58.85% 58.85% at 50% 15.63%,
