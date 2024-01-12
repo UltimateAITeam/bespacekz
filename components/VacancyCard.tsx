@@ -24,7 +24,7 @@ export default function VacancyCard(props: IPropsVacancy) {
                     <div>
                         <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2>
                         <div className="flex items-center">
-                            <p className="text-base font-roboto text-mainText font-medium">
+                            <p className="text-base font-roboto text-primary-text font-medium">
                                 <span className="font-normal">Компания:</span> ИП Чипина Александра
                             </p>
                             <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px] !font-roboto !font-medium">

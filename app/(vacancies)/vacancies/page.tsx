@@ -102,7 +102,7 @@ export default function VacanciesPage() {
                     <InputRightElement width="46px">
                         <Button
                             isLoading={false}
-                            className="!bg-[var(--Primary-6)] !rounded-[10px] !rounded-l-none"
+                            className="!bg-primary-6 !rounded-[10px] !rounded-l-none"
                             onClick={() => {}}>
                             <IoSearchSharp className="fill-white" size={30} />
                         </Button>
