@@ -27,13 +27,14 @@ module.exports = {
                 foreground: 'hsl(var(--foreground))',
                 primary: {
                     DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))',
+                    foreground: '#FFF',
                     text: '#1A3353',
+                    5: 'rgba(54, 110, 246, 0.7)',
                     6: '#366EF6',
                     10: '#002766'
                 },
                 secondary: {
-                    DEFAULT: 'hsl(var(--secondary))',
+                    DEFAULT: 'rgba(114, 132, 154, 1)',
                     foreground: 'hsl(var(--secondary-foreground))',
                 },
                 destructive: {
@@ -64,8 +65,6 @@ module.exports = {
             },
             borderRadius: {
                 lg: '15px',
-                md: 'calc(var(--radius) - 2px)',
-                sm: 'calc(var(--radius) - 4px)',
             },
             keyframes: {
                 'accordion-down': {

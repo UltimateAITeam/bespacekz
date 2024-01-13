@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import {clsx, type ClassValue} from 'clsx';
+import {twMerge} from 'tailwind-merge';
 
 function limitText(originalText: string, maxCharacters: number) {
     if (originalText.length > maxCharacters) {
@@ -40,7 +40,7 @@ function getRelativeTime(pastDate: Date): string {
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+    const rtf = new Intl.RelativeTimeFormat('en', {numeric: 'auto'});
 
     if (days > 0) {
         return rtf.format(-days, 'day');
@@ -54,14 +54,16 @@ function getRelativeTime(pastDate: Date): string {
 }
 
 function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
-  }
-
-export {
-    formatDate,
-    getRelativeTime,
-    currencyConverterNumber,
-    currencyConverter,
-    limitText,
-    cn,
+    return twMerge(clsx(inputs));
 }
+
+const thousandSeparator = (amount: number): string => {
+    if (amount !== undefined || amount !== 0 || amount !== '0' || amount !== null) {
+        const removeNonNumeric = amount.toString().replace(/[^0-9]/g, '');
+        return removeNonNumeric.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    } else {
+        return amount;
+    }
+};
+
+export {formatDate, getRelativeTime, currencyConverterNumber, currencyConverter, limitText, cn, thousandSeparator};

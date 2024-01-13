@@ -5,6 +5,11 @@ import {IoLocationOutline} from 'react-icons/io5';
 import {CiClock2} from 'react-icons/ci';
 import {IoIosSearch} from 'react-icons/io';
 import {GrCurrency} from 'react-icons/gr';
+import CurrencyIcon from '@/components/ui/icons/CurrencyIcon';
+import { CurrencyIconType } from '@/data/currency';
+import { thousandSeparator } from '@/libs/utils';
+import { RespondToVacancy } from '@/components/vacancies/RespondToVacancy';
+
 
 type Vacancy = Prisma.VacancyGetPayload<{}>;
 interface AboutVacancyPageProps {
@@ -57,7 +62,7 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
                                     </ul>
                                 </div>
                             </div>
-                            <div className="mt-7 grid grid-cols-2 [&>div]:flex [&>div]:gap-2 [&>div]:items-center">
+                            <div className="mt-7 grid grid-cols-2 [&>div]:flex [&>div]:gap-2 [&>div]:items-center gap-y-3">
                                 <div>
                                     <IoLocationOutline className="text-primary-10" />
                                     <span>Астана</span>
@@ -71,14 +76,17 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
                                     <span>Сотрудник</span>
                                 </div>
                                 <div>
-                                    <span className='w-[1em] h-[1em] text-center align-middle shrink-0'>₸</span>
+                                    <CurrencyIcon currency={vacancy.currency as CurrencyIconType} />
                                     <span>
-                                        {vacancy.priceFrom}-{vacancy.priceTo} {vacancy.currency}
+                                        {thousandSeparator(vacancy.priceFrom) } - {thousandSeparator(vacancy.priceTo)}
                                     </span>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
+                    <div className='mt-4 flex justify-end'>
+                       <RespondToVacancy idVacancy={vacancy.id} />
+                    </div>
                 </div>
                 <div>
                     <Card>
