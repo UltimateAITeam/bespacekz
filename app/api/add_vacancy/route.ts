@@ -19,10 +19,32 @@ export async function POST(
         })
         if (!clientProfile) return NextResponse.json({error: "Client profile not found for user"}, {status: 404});
 
+        console.log("DATA", data)
+        const {title, category_id, ...rest} = data;
+
         const vacancy = await prisma.vacancy.create({
             data: {
-                clientId: clientProfile.id,
-                ...data
+                clientProfile: {
+                    connect: {
+                        id: clientProfile.id
+                    }
+                },
+                jobTitle: {
+                    connectOrCreate: {
+                        where: {
+                            name: title
+                        },
+                        create: {
+                            name: title,
+                            category: {
+                                connect: {
+                                    id: parseInt(category_id)
+                                }
+                            }
+                        }
+                    }
+                },
+                ...rest
             }
         });
 

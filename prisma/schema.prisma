@@ -136,7 +136,6 @@ model ClientProfile {
 model Vacancy {
   id             String        @id @default(cuid())
   clientId       String
-  title          String
   pricingType    PricingType   @default(FREELANCE)
   aboutVacancy   String
   priceFrom      Float
@@ -151,6 +150,22 @@ model Vacancy {
   country        String        @default("Kazakhstan")
   city           String        @default("remote")
   clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  jobTitleId     Int
+  jobTitle       JobTitle      @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
+}
+
+model JobTitle {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  category_id Int
+  category    JobCategory @relation(fields: [category_id], references: [id])
+  Vacancy     Vacancy[]
+}
+
+model JobCategory {
+  id            Int        @id @default(autoincrement())
+  category_name String
+  JobTitles     JobTitle[]
 }
 
 model VerificationToken {

@@ -1,23 +1,54 @@
 'use client';
-import React from 'react';
-import {GroupedOption, Options, titles} from "@/data/job_titles";
+import React, {useEffect} from 'react';
+import {GroupedOption, Options} from "@/data/job_titles";
 import CreatableSelect from "react-select/creatable";
+import {Prisma} from "@prisma/client";
 
-function JobTitleAutoSuggest({title, setTitle, className}: { className?: string, title: string, setTitle: (val: string) => void }) {
+type JobCategories = Prisma.JobCategoryGetPayload<{
+    include: {
+        JobTitles: {
+            select: {
+                id: true,
+                name: true,
+            }
+        }
+    }
+}>
 
+function JobTitleAutoSuggest({title, setTitle, className, onCreateOption}: {className?: string, title: string, setTitle: (val: string) => void, onCreateOption?: (val: string) => void }) {
+
+    const [options, setOptions] = React.useState<GroupedOption[]>();
+
+    useEffect(() => {
+        fetch("/api/job_titles")
+            .then(res => res.json())
+            .then((data: JobCategories[]) => {
+                const options: GroupedOption[] = data.map((category) => {
+                    return {
+                        label: category.category_name,
+                        options: category.JobTitles.map((title) => {
+                            return {
+                                value: title.name + "_" + category.id,
+                                label: title.name,
+                            }
+                        })
+                    };
+                })
+                setOptions(v => options);
+            })
+    }, []);
 
     return (
         <CreatableSelect<Options, false, GroupedOption>
-            options={titles}
+            options={options}
             placeholder={"Начните вводить название специальности"}
             className={className}
             onChange={(val) => {
                 if (!val) return;
                 setTitle(val.value);
-                console.log("VALUE", val.value)
             }}
+            onCreateOption={onCreateOption}
             value={{value: title, label: title}}
-            defaultValue={titles[0].options[0]}
         />
     );
 }
