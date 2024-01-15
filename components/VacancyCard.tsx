@@ -11,7 +11,8 @@ import {Prisma} from '@prisma/client';
 type Vacancy = Prisma.VacancyGetPayload<{}>;
 interface IPropsVacancy extends Vacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
-    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, title, experience, specialization} = props;
+    // removed title from here
+    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, experience, specialization} = props;
 
     return (
         <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full">
@@ -21,7 +22,7 @@ export default function VacancyCard(props: IPropsVacancy) {
             <div className="flex-1">
                 <div className="flex w-full">
                     <div>
-                        <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2>
+                        {/* <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2> */}
                         <div className="flex items-center">
                             <p className="text-base font-roboto text-mainText font-medium">
                                 <span className="font-normal">Компания:</span> ИП Чипина Александра
