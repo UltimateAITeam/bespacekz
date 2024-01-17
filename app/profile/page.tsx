@@ -235,12 +235,16 @@ function Page() {
                                                         className={"justify-start w-full"}
                                                     >
                                                         <div>
-                                                            <p className={"font-bold"}>Место</p>
-                                                            <p>{exp.company}</p>
+                                                            <p className={"font-bold"}>Должность</p>
+                                                            <p>{exp.jobTitle} в {exp.company}</p>
                                                         </div>
                                                         <div>
-                                                            <p className={"font-bold"}>Занимаемая должность</p>
-                                                            <p>{exp.skills.join(',')}</p>
+                                                            <p className={"font-bold"}>Используемые навыки</p>
+                                                            <p>{exp.skills.join(', ')}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className={"font-bold"}>Период работы</p>
+                                                            <p>{formatDate(new Date(exp.from))} - {!exp.stillWorking && exp.to ? formatDate(new Date(exp.to)) : "По сей день"}</p>
                                                         </div>
                                                         {/*<div>*/}
                                                         {/*    <p className={"font-bold"}>Стаж работы</p>*/}
@@ -258,7 +262,7 @@ function Page() {
                                     <Grid templateColumns="repeat(5, 1fr)" gap={4}>
 
                                         {languages.map(
-                                            (lang:any) => (
+                                            (lang: any) => (
                                                 <GridItem key={lang.id}>
                                                     <Tooltip placement={"top"} className={"h-fit"}
                                                              label={lang.proficiencyLevel}>

@@ -9,17 +9,24 @@ import {
     Spacer,
     SimpleGrid,
     Card,
-    CardHeader, Text, Heading, FormHelperText, VStack,
+    CardHeader, Text, Heading, FormHelperText, VStack, HStack, Checkbox,
 } from "@chakra-ui/react";
 import {FaRegTrashAlt} from "react-icons/fa";
+import CustomDatePicker from "@/components/CustomDatePicker";
+import {skillsList} from "@/data/skills";
+import CreatableSelect from "react-select/creatable";
 
 interface FormData {
     "id": number;
     "name": string;
-    "roles": string;
+    jobTitle: string
+    "skills": string[];
     "tasks": string;
     "duration": string,
     "company": string,
+    from: Date;
+    to?: Date;
+    stillWorking: boolean;
 }
 
 interface FormProps {
@@ -35,7 +42,6 @@ function ProfileExperienceEditForm({onSubmit, data}: FormProps) {
         onSubmit({
             info: {
                 ...selectedExperience,
-                roles: selectedExperience.roles,
             },
             action: 'edit',
             table: 'experience',
@@ -99,6 +105,15 @@ function ProfileExperienceEditForm({onSubmit, data}: FormProps) {
                     ))}
                 </SimpleGrid>
                 : <Box key={selectedExperience.id}>
+                    <FormControl mt={2} id="jobTitle" isRequired>
+                        <FormLabel>Должность</FormLabel>
+                        <Input
+                            name="jobTitle"
+                            type="text"
+                            value={selectedExperience.jobTitle}
+                            onChange={handleChange}
+                        />
+                    </FormControl>
                     <FormControl mt={2} id="degree" isRequired>
                         <FormLabel>Место работы</FormLabel>
                         <Input
@@ -109,24 +124,73 @@ function ProfileExperienceEditForm({onSubmit, data}: FormProps) {
                         />
                     </FormControl>
                     <FormControl mt={2} id="roles" isRequired>
-                        <FormLabel>Должности</FormLabel>
-                        <FormHelperText mt={-2} mb={2}>Для указания нескольких, перечисляйте через запятую</FormHelperText>
-                        <Input
-                            name="roles"
-                            type="text"
-                            value={selectedExperience.roles}
-                            onChange={handleChange}
+                        <FormLabel>Используемые навыки</FormLabel>
+                        <CreatableSelect
+                            options={skillsList}
+                            value={selectedExperience.skills.map((v) => ({value: v, label: v}))}
+                            isMulti
+                            isClearable
+                            className={"z-[999]"}
+                            placeholder='JavaScript'
+                            onChange={(newValues) => {
+                                if (!newValues) return;
+                                setSelectedExperience({
+                                    ...selectedExperience,
+                                    skills: newValues.map((v) => v.value)
+                                })
+                            }}
+                            required
                         />
                     </FormControl>
-                    <FormControl mt={2} id="duration" isRequired>
-                        <FormLabel>Рабочий стаж (в мес.)</FormLabel>
-                        <Input
-                            name="duration"
-                            type="text"
-                            value={selectedExperience.duration}
-                            onChange={handleChange}
-                        />
-                    </FormControl>
+                    <Checkbox
+                        isChecked={selectedExperience.stillWorking}
+                        className={"mt-4 mb-2"}
+                        onChange={(e) => setSelectedExperience({
+                            ...selectedExperience,
+                            "stillWorking": e.target.checked
+                        })}
+                    >
+                        Are you still working here?
+                    </Checkbox>
+                    <HStack justify={"space-between"}>
+                        <VStack align={"start"}>
+                            <Text>Начало обучения</Text>
+                            <CustomDatePicker
+                                valueState={
+                                    {
+                                        day: new Date(selectedExperience.from).getDate(),
+                                        month: new Date(selectedExperience.from).getMonth() + 1,
+                                        year: new Date(selectedExperience.from).getFullYear()
+                                    }
+                                }
+                                onChange={(value) => {
+                                    if (!value) return;
+                                    setSelectedExperience({
+                                        ...selectedExperience,
+                                        "from": new Date(value.year, value.month - 1, value.day)
+                                    });
+                                }}
+                            />
+                        </VStack>
+                        <VStack align={'start'}>
+                            <Text>Окончание обучения</Text>
+                            <CustomDatePicker
+                                disabled={selectedExperience.stillWorking}
+                                valueState={{
+                                    day: new Date(selectedExperience.to || "").getDate(),
+                                    month: new Date(selectedExperience.to || "").getMonth() + 1,
+                                    year: new Date(selectedExperience.to || "").getFullYear()
+                                }}
+                                onChange={(value) => {
+                                    if (!value) return;
+                                    setSelectedExperience({
+                                        ...selectedExperience,
+                                        "to": new Date(value.year, value.month - 1, value.day)
+                                    });
+                                }}
+                            />
+                        </VStack>
+                    </HStack>
                 </Box>
             }
             <Flex mt={6} gap={3}>

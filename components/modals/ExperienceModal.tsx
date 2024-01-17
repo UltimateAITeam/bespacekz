@@ -60,7 +60,7 @@ function EducationModal({isOpen, onClose, index}: {
                         <JobTitleAutoSuggest
                             className={"mb-4"}
                             title={item.jobTitle}
-                            setTitle={(title) => handleChange(index, 'jobTitle', title)}
+                            setTitle={(title) => handleChange(index, 'jobTitle', title.split("_")[0])}
                         />
 
                         <label htmlFor={`specialization-${index}`}>Company:</label>
