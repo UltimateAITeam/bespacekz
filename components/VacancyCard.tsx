@@ -11,7 +11,7 @@ import {Prisma} from '@prisma/client';
 type Vacancy = Prisma.VacancyGetPayload<{}>;
 interface IPropsVacancy extends Vacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
-    // removed title from here
+    // removed title from here because it is not in the database
     const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, experience, specialization} = props;
 
     return (
