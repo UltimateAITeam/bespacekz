@@ -22,7 +22,7 @@ export default function VacancyCard(props: IPropsVacancy) {
             <div className="flex-1">
                 <div className="flex w-full">
                     <div>
-                        <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2>
+                        {/* <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2> */}
                         <div className="flex items-center">
                             <p className="text-base font-roboto text-primary-text font-medium">
                                 <span className="font-normal">Компания:</span> ИП Чипина Александра

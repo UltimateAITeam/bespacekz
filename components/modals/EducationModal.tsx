@@ -14,7 +14,6 @@ import {
 import useEducationStore from "@/store/educationFormStore";
 import {DayValue} from "@amir04lm26/react-modern-calendar-date-picker";
 import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
-import input from "@/components/ui/Input";
 import CustomDatePicker from "@/components/CustomDatePicker";
 
 function EducationModal({isOpen, onClose, index, educations}: {

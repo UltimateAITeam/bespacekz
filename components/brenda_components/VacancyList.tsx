@@ -17,7 +17,11 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa6";
 import GridLoader from "react-spinners/GridLoader";
 
-type Vacancy = Prisma.VacancyGetPayload<{}>;
+type Vacancy = Prisma.VacancyGetPayload<{
+    include: {
+        jobTitle: true,
+    }
+}>;
 
 const ITEMS_PER_PAGE = 10;
 
@@ -69,6 +73,7 @@ function VacancyList() {
         return pages;
     };
 
+
     return (
         <Stack spacing={4}>
 
@@ -100,7 +105,7 @@ function VacancyList() {
                         <Stack spacing={2}>
 
                             <HStack>
-                                <Heading size='md'>{vacancy.title}</Heading>
+                                <Heading size='md'>{vacancy.jobTitle.name}</Heading>
                                 <Text>{getRelativeTime(new Date(vacancy.createdAt))}</Text>
                             </HStack>
 

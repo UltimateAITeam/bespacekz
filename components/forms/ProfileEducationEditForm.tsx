@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Box,
     Button,
@@ -10,15 +10,19 @@ import {
     Spacer,
     SimpleGrid,
     Card,
-    CardHeader, Text, Heading, Select,
+    CardHeader, Text, Heading, Select, HStack,
 } from "@chakra-ui/react";
 import { FaRegTrashAlt } from "react-icons/fa";
+import CustomDatePicker from "@/components/CustomDatePicker";
+import {formatDate} from "@/libs/utils";
+import '@amir04lm26/react-modern-calendar-date-picker/lib/DatePicker.css';
 interface FormData {
     id: number;
     degree: string;
     institution: string;
     specialization: string;
-    graduationYear: string;
+    from: Date;
+    to: Date;
 }
 
 interface FormProps {
@@ -34,7 +38,6 @@ function ProfileEducationEditForm({onSubmit, onClose, data}: FormProps) {
         onSubmit({
             info: {
                 ...selectedEducation,
-                graduationYear: parseInt(selectedEducation?.graduationYear)
             },
             action: 'edit',
             table: 'education',
@@ -52,7 +55,14 @@ function ProfileEducationEditForm({onSubmit, onClose, data}: FormProps) {
             ...selectedEducation as FormData,
             [e.target.name]: value,
         });
-    };
+    }
+
+    const updateSelectedEducation = (field: string, value: any) => {
+        setSelectedEducation({
+            ...selectedEducation as FormData,
+            [field]: value,
+        });
+    }
 
     const handleDelete = (id: number) => {
         onSubmit({
@@ -80,7 +90,7 @@ function ProfileEducationEditForm({onSubmit, onClose, data}: FormProps) {
                                         onClick={() => setSelectedEducation(data)}
                                     >
                                         <Heading size="md" style={{textTransform: "capitalize"}}>{data.institution} - {data.degree}</Heading>
-                                        <Text>{data.graduationYear}</Text>
+                                        <Text>{formatDate(new Date(data.from))} - {formatDate(new Date(data.to))}</Text>
                                     </VStack>
                                     <Flex
                                         alignItems={"start"}
@@ -129,15 +139,38 @@ function ProfileEducationEditForm({onSubmit, onClose, data}: FormProps) {
                             onChange={handleChange}
                         />
                     </FormControl>
-                    <FormControl id="graduationYear" isRequired>
-                        <FormLabel>Год выпуска</FormLabel>
-                        <Input
-                            name="graduationYear"
-                            type="text"
-                            value={selectedEducation.graduationYear}
-                            onChange={handleChange}
-                        />
-                    </FormControl>
+                    <HStack justify={"space-between"}>
+                        <VStack align={"start"}>
+                            <Text>Начало обучения</Text>
+                            <CustomDatePicker
+                                valueState={
+                                    {
+                                        day: new Date(selectedEducation.from).getDate(),
+                                        month: new Date(selectedEducation.from).getMonth() + 1,
+                                        year: new Date(selectedEducation.from).getFullYear()
+                                    }
+                                }
+                                onChange={(value) => {
+                                    if (!value) return;
+                                    updateSelectedEducation('from', new Date(value.year, value.month - 1, value.day));
+                                }}
+                            />
+                        </VStack>
+                        <VStack align={'start'}>
+                            <Text>Окончание обучения</Text>
+                            <CustomDatePicker
+                                valueState={{
+                                    day: new Date(selectedEducation.to).getDate(),
+                                    month: new Date(selectedEducation.to).getMonth() + 1,
+                                    year: new Date(selectedEducation.to).getFullYear()
+                                }}
+                                onChange={(value) => {
+                                    if (!value) return;
+                                    updateSelectedEducation('to', new Date(value.year, value.month - 1, value.day));
+                                }}
+                            />
+                        </VStack>
+                    </HStack>
                 </Box>
             }
             <Flex mt={6} gap={3}>

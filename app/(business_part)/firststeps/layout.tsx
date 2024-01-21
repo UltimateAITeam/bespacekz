@@ -75,7 +75,7 @@ function Layout({children}: {children: React.ReactNode}) {
 
 
     const isFilledEdu = educations.length >= 1 && educations.every((item) => {
-        return item.institution.length > 2  && item.specialization.length > 4 && item.from.getFullYear() > 1900;
+        return item.institution.length >= 2  && item.specialization.length > 4 && item.degree !== '';
     })
     const isFilledExp = experience.length >= 1 && experience.every((item) => {
         return item.company !== "" && item.name.length > 5 && item.skills.length !== 0 && item.tasks.length > 5  && item.company.length > 4

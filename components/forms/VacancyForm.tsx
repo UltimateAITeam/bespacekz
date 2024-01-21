@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button,
@@ -35,6 +35,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
     const [formData, setFormData] = useState({
         requiredSkills: [],
         pricingType: PricingType.EMPLOYEE,
+        category_id: "",
         title: "",
         aboutVacancy: "",
         priceFrom: 0,
@@ -46,6 +47,16 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         country: "",
         city: "",
     });
+    const [jobCategoryRequired, setJobCategoryRequired] = useState(false);
+    const [categories, setCategories] = useState<{id: number, category_name: string}[]>([]);
+
+    useEffect(() => {
+        fetch("/api/job_categories")
+            .then(res => res.json())
+            .then((data: any) => {
+                setCategories(data);
+            })
+    }, []);
 
 //   const handleChange = (
 //     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -57,6 +68,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
 //       [target.name]: value,
 //     });
 //   };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const target = e.target as HTMLInputElement;
         const value = target.type === "checkbox" ? target.checked : target.value;
@@ -66,10 +78,15 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         });
     };
     const handleTitleChange = (value: string) => {
-        setFormData({
-            ...formData,
-            "title": value,
-        })
+        setJobCategoryRequired(v => false)
+        setFormData(prevState => ({
+            ...prevState,
+            "category_id": value.split("_")[1] || "",
+        }))
+        setFormData(prevState => ({
+            ...prevState,
+            "title": value.split("_")[0] || "",
+        }))
     }
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -112,12 +129,34 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         onSubmit(formData);
     };
 
+    const handleCreateTitle = (value: string) => {
+        handleTitleChange(value);
+        setJobCategoryRequired(v => true);
+    }
+
     return (
         <Box as="form" onSubmit={handleSubmit}>
             <FormControl id="title" isRequired>
                 <FormLabel>Title</FormLabel>
-                <JobTitleAutoSuggest setTitle={handleTitleChange} title={formData.title}/>
+                <JobTitleAutoSuggest onCreateOption={handleCreateTitle} setTitle={handleTitleChange} title={formData.title}/>
             </FormControl>
+
+            {jobCategoryRequired && (
+                <FormControl mt={4} id={"category_id"} isRequired>
+                    <FormLabel>Category</FormLabel>
+                    <Select
+                        name="category_id"
+                        onChange={handleSelectChange}
+                    >
+                        {categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                                {category.category_name}
+                            </option>
+                        ))}
+                    </Select>
+                </FormControl>
+            )}
+
 
             <FormControl mt={4} isRequired>
                 <FormLabel>Job type</FormLabel>

@@ -9,14 +9,16 @@ import {
     Spacer,
     SimpleGrid,
     Card,
-    CardHeader, Text, Heading, FormHelperText, Textarea, Select,
+    CardHeader, Text, Heading, FormHelperText, Textarea, Select, VStack, HStack,
 } from "@chakra-ui/react";
+import CustomDatePicker from "@/components/CustomDatePicker";
 
 interface FormData {
     degree: string;
     institution: string;
     specialization: string;
-    graduationYear: string;
+    from: Date;
+    to: Date;
 }
 
 interface FormProps {
@@ -31,8 +33,7 @@ function ProfileEducationAddForm({onSubmit, onClose, data}: FormProps) {
         try {
             onSubmit({
                 info: {
-                    ...education,
-                    graduationYear: parseInt(education.graduationYear)
+                    ...education
                 },
                 action: 'add',
                 table: 'education',
@@ -46,7 +47,8 @@ function ProfileEducationAddForm({onSubmit, onClose, data}: FormProps) {
         degree: 'Primary',
         institution: '',
         specialization: '',
-        graduationYear: '',
+        from: new Date(),
+        to: new Date(),
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -95,15 +97,44 @@ function ProfileEducationAddForm({onSubmit, onClose, data}: FormProps) {
                     onChange={handleChange}
                 />
             </FormControl>
-            <FormControl id="graduationYear" isRequired mt={4}>
-                <FormLabel>Год выпуска</FormLabel>
-                <Input
-                    name="graduationYear"
-                    type="text"
-                    value={education.graduationYear}
-                    onChange={handleChange}
-                />
-            </FormControl>
+            <HStack mt={4} justify={"space-between"}>
+                <VStack align={"start"}>
+                    <Text>Начало обучения</Text>
+                    <CustomDatePicker
+                        valueState={
+                            {
+                                day: new Date(education.from).getDate(),
+                                month: new Date(education.from).getMonth() + 1,
+                                year: new Date(education.from).getFullYear()
+                            }
+                        }
+                        onChange={(value) => {
+                            if (!value) return;
+                            setEducation({
+                                ...education,
+                                "from": new Date(value.year, value.month - 1, value.day)
+                            });
+                        }}
+                    />
+                </VStack>
+                <VStack align={'start'}>
+                    <Text>Окончание обучения</Text>
+                    <CustomDatePicker
+                        valueState={{
+                            day: new Date(education.to).getDate(),
+                            month: new Date(education.to).getMonth() + 1,
+                            year: new Date(education.to).getFullYear()
+                        }}
+                        onChange={(value) => {
+                            if (!value) return;
+                            setEducation({
+                                ...education,
+                                "to": new Date(value.year, value.month - 1, value.day)
+                            });
+                        }}
+                    />
+                </VStack>
+            </HStack>
             <Flex mt={6} gap={3}>
                 <Button variant={"ghost"} onClick={onClose}>Назад</Button>
                 <Spacer />

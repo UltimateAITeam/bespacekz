@@ -19,6 +19,9 @@ export async function GET(
             const data = await prisma.vacancy.findMany({
                 skip: parseInt(limit) * (parseInt(page) - 1),
                 take: parseInt(limit),
+                include: {
+                    jobTitle: true,
+                },
                 orderBy: {
                     createdAt: 'desc',
                 },
