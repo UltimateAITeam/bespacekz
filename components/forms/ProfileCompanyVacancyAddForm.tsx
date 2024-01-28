@@ -13,6 +13,7 @@ import {
     Spacer,
     Textarea,
 } from "@chakra-ui/react";
+import RichTextEditor from "@/components/RichText";
 
 interface VacancyFormProps {
     data: any;
@@ -102,12 +103,12 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
 
             <FormControl mt={4} id="aboutVacancy" isRequired>
                 <FormLabel>About Vacancy</FormLabel>
-                <Textarea
-                    name="aboutVacancy"
-                    value={formData.aboutVacancy}
-                    onChange={handleChange}
-                    placeholder="Describe the vacancy details..."
-                    size="sm"
+                <RichTextEditor
+                    data={formData.aboutVacancy}
+                    onChange={(content) => setFormData({
+                        ...formData,
+                        aboutVacancy: content,
+                    })}
                 />
             </FormControl>
 

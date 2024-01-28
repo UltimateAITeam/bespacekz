@@ -28,6 +28,7 @@ import ProfileMultiModal from "@/components/modals/ProfileMultiModal";
 import {LuPencilLine} from "react-icons/lu";
 import {useSession} from "next-auth/react";
 import {formatDate} from "@/libs/utils";
+import RichTextEditor from "@/components/RichText";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
@@ -278,8 +279,12 @@ function Page() {
                                 {/* BLOCK TAG */}
                                 <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false}
                                                 isEditable={true} title={"О себе"}>
-                                    <Textarea value={data.about || ''} isDisabled={true} resize={"vertical"}
-                                              placeholder={"Напишите что нибудь о себе"}/>
+                                    <RichTextEditor
+                                        data={data.about || ''}
+                                        onChange={(e) => {}}
+                                        disable={true}
+                                    >
+                                    </RichTextEditor>
                                 </BlockComponent>
                             </>}
                         {/*CLIENT PART*/}
@@ -340,9 +345,14 @@ function Page() {
                                 <BlockComponent editForm={"edit-company-description"} openModal={openModal}
                                                 isAddable={false}
                                                 isEditable={true} title={"Описание компании"}>
-                                    <Textarea value={data.companyDescription || ''} isDisabled={true}
-                                              resize={"vertical"}
-                                              placeholder={"Напишите что нибудь о своей компании"}/>
+
+                                    <RichTextEditor
+                                        data={data.companyDescription || ''}
+                                        onChange={(e) => {}}
+                                        disable={true}
+                                    >
+
+                                    </RichTextEditor>
                                 </BlockComponent>
                             </>
                         }

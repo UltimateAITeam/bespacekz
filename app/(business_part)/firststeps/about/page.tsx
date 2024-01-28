@@ -5,6 +5,7 @@ import useLinksStore from "@/store/aboutFormStore";
 import {IconButton, Textarea} from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import useAboutStore from "@/store/aboutFormStore";
+import RichText from "@/components/RichText";
 
 function Page() {
     const {about, updateAbout} = useAboutStore();
@@ -23,14 +24,13 @@ function Page() {
                 <form className={"flex flex-col w-full md:w-3/4 -mt-4"} onSubmit={onSubmit}>
                     <span className={"font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl"}>📝Великолепно! Сейчас напишите информация о себе чтобы дать знать клиенту кто вы.</span>
                     <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg"}>Ваши навыки показывают клиентам, что вы можете предложить, и помогают нам выбирать, какие вакансии вам рекомендовать.</span>
-                    <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg mt-4"}>Все зависит от вас, дерзайте!</span>
+                    <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg mt-4 mb-2"}>Все зависит от вас, дерзайте!</span>
 
-                    <Textarea
-                        className={"!bg-white"}
-                        value={about}
-                        onChange={(e) => updateAbout(e.target.value)}
+                    <RichText
+                        data={about}
+                        onChange={(e) => updateAbout(e)}
                     >
-                    </Textarea>
+                    </RichText>
 
                 </form>
 
