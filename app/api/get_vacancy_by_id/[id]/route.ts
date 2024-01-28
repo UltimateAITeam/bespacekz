@@ -8,6 +8,9 @@ export async function GET(req: NextRequest, { params }: {params: {id: string}}) 
         const vacancy = await prisma.vacancy.findFirst({
             where: {
                 id: id
+            },
+            include: {
+                jobTitle: true
             }
         })
         return NextResponse.json(vacancy)

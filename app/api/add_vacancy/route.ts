@@ -17,7 +17,7 @@ export async function POST(
                 userEmail: session.user.email,
             }
         })
-        if (!clientProfile) return NextResponse.json({error: "Client profile not found for user"}, {status: 404});
+        if (!clientProfile) return NextResponse.json({error: "Client profile not found for user"}, {status: 404, statusText: 'Client profile not found for user'});
 
         console.log("DATA", data)
         const {title, category_id, ...rest} = data;

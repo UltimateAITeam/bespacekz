@@ -1,4 +1,3 @@
-import {CURRENCY_MAP, CurrencyIconType} from '@/data/currency';
 import {cn} from '@/libs/utils';
 import {forwardRef, type HTMLAttributes} from 'react';
 
@@ -6,6 +5,14 @@ interface CurrencyIconProps {
     currency: CurrencyIconType;
 }
 
+export type CurrencyIconType = 'KZT' | 'USD' | 'EUR' | 'RUB'
+
+const CURRENCY_MAP: Record<CurrencyIconType, {value: string}> = {
+    KZT: {value: '₸'},
+    EUR: {value: '€'},
+    USD: {value: '$'},
+    RUB: {value: '₽'}
+} 
 // forwardRef<Type for ref, Type for props>()
 const CurrencyIcon = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement> & CurrencyIconProps>(
     ({className, currency, ...props}, ref) => {

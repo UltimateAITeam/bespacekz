@@ -17,7 +17,7 @@ import {
 import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 import CreatableSelect from "react-select/creatable";
 import {countries} from "@/data/countries";
-import {PricingType} from "@prisma/client";
+import {CurrencyType, PricingType} from "@prisma/client";
 import {cities} from "@/data/cities";
 import {skillsList} from "@/data/skills";
 
@@ -40,7 +40,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         aboutVacancy: "",
         priceFrom: 0,
         priceTo: 0,
-        currency: "KZT",
+        currency: CurrencyType.KZT,
         isClear: false,
         experience: "",
         specialization: "",
@@ -100,7 +100,6 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         // Convert the input value to a float
         const floatValue = parseFloat(valueString);
 
-        console.log(floatValue);
 
         // Check if the parsed value is a valid number
         if (!isNaN(floatValue)) {
@@ -257,12 +256,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
                     value={formData.currency}
                     onChange={handleSelectChange}
                 >
-                    <option value="KZT">KZT</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-
-                    <option value="RUB">RUB</option>
-                    {/* Add other currency options here */}
+                    {Object.entries(CurrencyType).map(([k,v]) => <option key={v} value={v}>{v}</option>)}
                 </Select>
             </FormControl>
 
@@ -298,7 +292,6 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
                     }}
                     onChange={(newValues) => {
                         if (!newValues) return;
-                        console.log(newValues.map((v) => v.value))
                         handleSelectionChange('requiredSkills', newValues.map((v) => v.value));
                     }}
                     required

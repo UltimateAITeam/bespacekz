@@ -1,17 +1,19 @@
-import {Prisma} from '@prisma/client';
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
-import Image from 'next/image';
-import {IoLocationOutline} from 'react-icons/io5';
-import {CiClock2} from 'react-icons/ci';
-import {IoIosSearch} from 'react-icons/io';
-import {GrCurrency} from 'react-icons/gr';
-import CurrencyIcon from '@/components/ui/icons/CurrencyIcon';
-import { CurrencyIconType } from '@/data/currency';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import CurrencyIcon, { CurrencyIconType } from '@/components/icons/CurrencyIcon';
+import { RespondToVacancy } from '@/components/vacancies/VacanciesActions/RespondToVacancy';
 import { thousandSeparator } from '@/libs/utils';
-import { RespondToVacancy } from '@/components/vacancies/RespondToVacancy';
+import { Prisma } from '@prisma/client';
+import Image from 'next/image';
+import { CiClock2 } from 'react-icons/ci';
+import { IoIosSearch } from 'react-icons/io';
+import { IoLocationOutline } from 'react-icons/io5';
 
 
-type Vacancy = Prisma.VacancyGetPayload<{}>;
+type Vacancy = Prisma.VacancyGetPayload<{
+    include: {
+        jobTitle: true
+    }
+}>;
 interface AboutVacancyPageProps {
     params: {
         id: string;
@@ -19,7 +21,7 @@ interface AboutVacancyPageProps {
 }
 
 async function getVacancyById<T>(id: string) {
-    const response = await fetch(`http://localhost:3000/api/get_vacancy_by_id/${id}`);
+    const response = await fetch(`/api/get_vacancy_by_id/${id}`);
 
     if (!response.ok) {
         // This will activate the closest `error.js` Error Boundary
@@ -33,7 +35,7 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
     const vacancy = await getVacancyById<Vacancy>(params.id);
     return (
         <div className="font-roboto">
-            <h1 className="text-[38px] leading-tight font-medium">{vacancy.title}</h1>
+            <h1 className="text-[38px] leading-tight font-medium">{vacancy.jobTitle.name}</h1>
             <div className="mt-10 flex gap-9">
                 <div className="w-1/4 shrink-0">
                     <Card className="p-5 font-roboto">

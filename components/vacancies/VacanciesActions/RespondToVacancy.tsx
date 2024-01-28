@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 export function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
     const clickHandle = () => {
         console.log('@RespondToVacancy ', idVacancy);
-        // do something with idVacancy
+        // TODO: do something with idVacancy
     }
     return <Button onClick={clickHandle} variant='default' >Откликнуться</Button>
 }

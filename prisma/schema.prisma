@@ -140,7 +140,7 @@ model Vacancy {
   aboutVacancy   String
   priceFrom      Float
   priceTo        Float
-  currency       String        @default("KZT")
+  currency       CurrencyType      @default(KZT)
   isClear        Boolean       @default(false)
   experience     String
   specialization String
@@ -193,4 +193,11 @@ enum ProficiencyLevel {
 enum PricingType {
   FREELANCE
   EMPLOYEE
+}
+
+enum CurrencyType {
+  KZT 
+  USD 
+  EUR 
+  RUB
 }

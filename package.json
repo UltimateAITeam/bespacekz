@@ -23,6 +23,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@vercel/postgres": "^0.5.1",
     "ai": "^2.2.31",
+    "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "chakra-dayzed-datepicker": "^0.2.10",
     "class-variance-authority": "^0.7.0",
@@ -50,6 +51,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^4.4.7"

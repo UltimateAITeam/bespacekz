@@ -1,13 +1,12 @@
-import {Badge, Button, ButtonGroup, Card, CardBody} from '@chakra-ui/react';
+import { Badge, Button, ButtonGroup, Card } from '@chakra-ui/react';
+import { Prisma } from '@prisma/client';
 import Image from 'next/image';
-import React from 'react';
-import {FaRegStar, FaPlus} from 'react-icons/fa';
-import {IoLocationOutline} from 'react-icons/io5';
-import {CiClock2, CiCalendar} from 'react-icons/ci';
-import {IoIosSearch} from 'react-icons/io';
-import {LuDot} from 'react-icons/lu';
-import {Prisma} from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { CiCalendar, CiClock2 } from 'react-icons/ci';
+import { FaPlus, FaRegStar } from 'react-icons/fa';
+import { IoIosSearch } from 'react-icons/io';
+import { IoLocationOutline } from 'react-icons/io5';
+import { LuDot } from 'react-icons/lu';
 
 type Vacancy = Prisma.VacancyGetPayload<{}>;
 interface IPropsVacancy extends Vacancy {}
@@ -15,14 +14,14 @@ export default function VacancyCard(props: IPropsVacancy) {
     const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, title, experience, specialization, id} = props;
     const router = useRouter();
     return (
-        <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full">
+        <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full border border-[rgba(20,20,20,0.1)">
             <div className="shrink-0">
                 <Image src="/images/Avatar.png" alt="Avatar" width={80} height={80} />
             </div>
             <div className="flex-1">
                 <div className="flex w-full">
                     <div>
-                        {/* <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2> */}
+                        <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2>
                         <div className="flex items-center">
                             <p className="text-base font-roboto text-primary-text font-medium">
                                 <span className="font-normal">Компания:</span> ИП Чипина Александра
@@ -41,7 +40,7 @@ export default function VacancyCard(props: IPropsVacancy) {
                         </Button>
                     </div>
                 </div>
-                <div className="flex items-center gap-1 justify-between mt-2 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">
+                <div className="flex items-center mt-2 gap-5 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">
                     <div>
                         <IoLocationOutline />
                         <span>{city}</span>
@@ -88,7 +87,7 @@ export default function VacancyCard(props: IPropsVacancy) {
                         Требуемый опыт работы: <span>{experience} лет</span>
                     </p>
                 </div>
-                <div className="mt-3 text-primary-10 font-roboto">
+                <div className="mt-3 text-primary-10 font-roboto line-clamp-2">
                     <p>{aboutVacancy}</p>
                 </div>
             </div>
