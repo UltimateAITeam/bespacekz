@@ -46,8 +46,8 @@ model User {
   name              String?
   about             String?
   role              Role?
-  accounts          Account[]
   birthdate         DateTime?          @default(now())
+  accounts          Account[]
   clientProfile     ClientProfile?
   freelancerProfile FreelancerProfile?
   sessions          Session[]
@@ -58,13 +58,13 @@ model FreelancerProfile {
   completed  Boolean      @default(false)
   userEmail  String       @unique
   jobTitle   String?
+  Skills     String[]
   Education  Education[]
   Experience Experience[]
   user       User         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  Portfolio  Portfolio[]
-  Skills     String[]
-  Pricing    Pricing[]
   Languages  Language[]
+  Portfolio  Portfolio[]
+  Pricing    Pricing[]
 }
 
 model Education {
@@ -140,7 +140,6 @@ model Vacancy {
   aboutVacancy   String
   priceFrom      Float
   priceTo        Float
-  currency       String        @default("KZT")
   isClear        Boolean       @default(false)
   experience     String
   specialization String
@@ -149,8 +148,9 @@ model Vacancy {
   updatedAt      DateTime      @default(now()) @updatedAt
   country        String        @default("Kazakhstan")
   city           String        @default("remote")
-  clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
   jobTitleId     Int
+  currency       CurrencyType  @default(KZT)
+  clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
   jobTitle       JobTitle      @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
 }
 
@@ -193,4 +193,11 @@ enum ProficiencyLevel {
 enum PricingType {
   FREELANCE
   EMPLOYEE
+}
+
+enum CurrencyType {
+  KZT
+  USD
+  EUR
+  RUB
 }

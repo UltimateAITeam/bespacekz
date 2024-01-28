@@ -137,9 +137,7 @@ function VacancyList() {
                                     </Text>
                                 </HStack>
                             </HStack>
-                            <Text size={"md"}>
-                                {vacancy.aboutVacancy}
-                            </Text>
+                            <Text size={"md"} dangerouslySetInnerHTML={{__html: vacancy.aboutVacancy}}></Text>
                         </Stack>
                     </CardBody>
                 </Card>

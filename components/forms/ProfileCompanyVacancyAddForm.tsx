@@ -14,6 +14,7 @@ import {
     Textarea,
 } from "@chakra-ui/react";
 import RichTextEditor from "@/components/RichText";
+import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 
 interface VacancyFormProps {
     data: any;
@@ -98,7 +99,14 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         <Box as="form" onSubmit={handleSubmit}>
             <FormControl id="title" isRequired>
                 <FormLabel>Title</FormLabel>
-                <Input name="title" value={formData.title} onChange={handleChange} placeholder="Ex: Senior Developer" />
+                <JobTitleAutoSuggest
+                    title={formData.title}
+                    setTitle={(title: string) => setFormData({
+                        ...formData,
+                        title: title,
+                    })}
+                />
+                {/*<Input name="title" value={formData.title} onChange={handleChange} placeholder="Ex: Senior Developer" />*/}
             </FormControl>
 
             <FormControl mt={4} id="aboutVacancy" isRequired>
