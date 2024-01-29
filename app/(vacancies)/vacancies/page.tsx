@@ -1,13 +1,10 @@
 import {VacanciesAside} from '@/components/vacancies/VacanciesAside';
 import {VacanciesList} from '@/components/vacancies/VacanciesList';
 import {IVacanciesSearchParams} from '@/types/vacancies.types';
-import {Suspense} from 'react';
 import './style.css';
 import {VacanciesSearchBar} from '@/components/vacancies/VacanciesSearchBar';
 
-
-
-
+export const dynamic = 'force-dynamic'
 
 export default function VacanciesPage({searchParams}: {searchParams?: IVacanciesSearchParams}) {
   return (
@@ -23,14 +20,14 @@ export default function VacanciesPage({searchParams}: {searchParams?: IVacancies
 
         <div className="w-[300px]">
   
-            <VacanciesAside />
+            <VacanciesAside  />
  
         </div>
 
         {/* ================= Vacancies Card Side ======================== */}
 
         <div className="flex-1">
-          <VacanciesList />
+          <VacanciesList  />
         </div>
       </section>
     </div>

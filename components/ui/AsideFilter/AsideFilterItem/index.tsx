@@ -9,25 +9,22 @@ interface IAsideFilterItemProps {
   titleFilter: string;
   optionsFilters: readonly  {value: string | number, label: string}[];
   defaultOptionsValue?: (string | number)[];
-  onChangeValue?: (value:  (string | number)[]) => void;
+  onChangeValue: (value:  (string | number)[]) => void;
   isWithSearch?: boolean;
   placeholderInput?: string;
   className?: string | undefined
 }
 
 export const AsideFilterItem = ({titleFilter, optionsFilters, defaultOptionsValue, className, onChangeValue, isWithSearch, placeholderInput, }: IAsideFilterItemProps) => {
-  const { value, getCheckboxProps, setValue} = useCheckboxGroup();
+  const { value, getCheckboxProps, setValue} = useCheckboxGroup({onChange: onChangeValue});
 
   const isAllChecked = useMemo(() => value.length === optionsFilters.length, [value, optionsFilters]);
 
+  /** Установка значений по умолчанию */
   useEffect(() => {
    if(defaultOptionsValue?.length) setValue(defaultOptionsValue)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   } , [defaultOptionsValue])
-
-  useEffect(() => {
-   if(value && onChangeValue) onChangeValue(value)
-  } , [value, onChangeValue])
 
   /** if isWithSearch */
   const [inputText, setInputText] = useState('')

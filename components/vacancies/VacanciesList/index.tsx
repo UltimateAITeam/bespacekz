@@ -4,12 +4,13 @@ import {useSearchParams} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import VacancyCard from '../VacancyCard';
 import GridLoader from 'react-spinners/GridLoader';
-import {IVacancy} from '@/types/vacancies.types';
+import {IVacanciesSearchParams, IVacancy} from '@/types/vacancies.types';
 
 const ITEMS_PER_PAGE = 10;
 
 export const VacanciesList = () => {
   const searchParams = useSearchParams();
+
   const [data, setData] = useState<IVacancy[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -27,7 +28,9 @@ export const VacanciesList = () => {
         setTotalItems(resp_json_total.count);
       } */
 
-      const res = await fetch(`/api/vacancies?page=${page}&limit=${ITEMS_PER_PAGE}`);
+      const res = await fetch(`/api/vacancies?${searchParams}&page=${page}&limit=${ITEMS_PER_PAGE}`, {
+        method : 'GET'
+      });
 
       if (res.status !== 200) return;
 
@@ -37,7 +40,7 @@ export const VacanciesList = () => {
       console.log('resp_json.data', resp_json.data);
       setIsLoading(false);
     })();
-  }, [page]);
+  }, [page, searchParams]);
 
   return (
     <div className="space-y-8">
