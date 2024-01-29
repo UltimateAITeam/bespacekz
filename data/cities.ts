@@ -1,6 +1,6 @@
 export const cities = {
     "Kazakhstan": [
-        { value: 'Astana', label: 'Astana' },
+        { value: 'Astana', label: 'Астана' },
         { value: 'Almaty', label: 'Almaty' },
         { value: 'Aktau', label: 'Aktau' },
         { value: 'Aktobe', label: 'Aktobe' },

@@ -2,12 +2,12 @@
 
 import { cn } from '@/libs/utils';
 import {
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  NumberInput,
-  NumberInputField,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    NumberInput,
+    NumberInputField,
 } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 
@@ -20,12 +20,10 @@ export const VacanciesPriceFilter: FC<IVacanciesPriceFilterProps> = ({className}
   const [endPrice, setEndPrice] = useState<number>(0);
   return (
     <AccordionItem className={cn("!border-none", className)}>
-      <h2 className="title_filter">
         <AccordionButton>
-          <span>Цена</span>
+          <span className='text-left flex-1 font-roboto font-medium text-base text-[#001E00]'>Цена</span>
           <AccordionIcon />
         </AccordionButton>
-      </h2>
       <AccordionPanel pb={4}>
         <div className="flex flex-col gap-2">
           <span>Начальная цена, ₸</span>

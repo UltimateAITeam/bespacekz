@@ -7,7 +7,7 @@ import { IoSearchSharp } from 'react-icons/io5';
 
 interface IAsideFilterItemProps {
   titleFilter: string;
-  optionsFilters: (string | number)[];
+  optionsFilters: readonly  {value: string | number, label: string}[];
   defaultOptionsValue?: (string | number)[];
   onChangeValue?: (value:  (string | number)[]) => void;
   isWithSearch?: boolean;
@@ -21,8 +21,9 @@ export const AsideFilterItem = ({titleFilter, optionsFilters, defaultOptionsValu
   const isAllChecked = useMemo(() => value.length === optionsFilters.length, [value, optionsFilters]);
 
   useEffect(() => {
-   if(defaultOptionsValue) setValue(defaultOptionsValue)
-  } , [defaultOptionsValue, setValue])
+   if(defaultOptionsValue?.length) setValue(defaultOptionsValue)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  } , [defaultOptionsValue])
 
   useEffect(() => {
    if(value && onChangeValue) onChangeValue(value)
@@ -32,20 +33,19 @@ export const AsideFilterItem = ({titleFilter, optionsFilters, defaultOptionsValu
   const [inputText, setInputText] = useState('')
   const filteredOptions = useMemo(() => {
     const text = inputText.trim()
-    return optionsFilters.filter((v) => {
-        if(typeof v === 'string') return v.toLocaleLowerCase().includes(text.toLocaleLowerCase());
-        return v === Number(text)
+    return optionsFilters.filter(({label}) => {
+         return label.toLocaleLowerCase().includes(text.toLocaleLowerCase());
     })
   }, [inputText, optionsFilters])
 
   return (
     <AccordionItem className={cn('!border-none', className)}>
-      <h2 className="title_filter">
+      <div>
         <AccordionButton>
-          <span>{titleFilter}</span>
+          <span className='text-left flex-1 font-roboto font-medium text-base text-[#001E00]'>{titleFilter}</span>
           <AccordionIcon />
         </AccordionButton>
-      </h2>
+      </div>
       <AccordionPanel pb={4}>
         {isWithSearch && 
             (<InputGroup className="mb-3">
@@ -70,17 +70,17 @@ export const AsideFilterItem = ({titleFilter, optionsFilters, defaultOptionsValu
             <Checkbox
               value="all-categories"
               colorScheme="primary-6"
-              className="mb-2"
+              className="mb-2 !rounded-lg"
               isChecked={isAllChecked}
-              onChange={(e) => (e.target.checked ? setValue(optionsFilters) : setValue([]))}>
+              onChange={(e) => (e.target.checked ? setValue(optionsFilters.map(({value}) => value)) : setValue([]))}>
               Все {titleFilter.toLowerCase()}
             </Checkbox>
           )}
           <CheckboxGroup colorScheme="primary-6" value={value}>
             <div className="flex flex-col gap-2">
-              {(isWithSearch ? filteredOptions : optionsFilters).map((itemOption) => (
-                <Checkbox key={itemOption} {...getCheckboxProps({value: itemOption})}>
-                  {itemOption}
+              {(isWithSearch ? filteredOptions : optionsFilters).map(({value, label}) => (
+                <Checkbox key={value} {...getCheckboxProps({value})}>
+                  {label}
                 </Checkbox>
               ))}
             </div>

@@ -1,5 +1,7 @@
+'use client'
+
+import { IVacancy } from '@/types/vacancies.types';
 import { Badge, Button, ButtonGroup, Card } from '@chakra-ui/react';
-import { Prisma } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CiCalendar, CiClock2 } from 'react-icons/ci';
@@ -8,10 +10,10 @@ import { IoIosSearch } from 'react-icons/io';
 import { IoLocationOutline } from 'react-icons/io5';
 import { LuDot } from 'react-icons/lu';
 
-type Vacancy = Prisma.VacancyGetPayload<{}>;
-interface IPropsVacancy extends Vacancy {}
+
+interface IPropsVacancy extends IVacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
-    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, title, experience, specialization, id} = props;
+    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, jobTitle, experience, specialization, id} = props;
     const router = useRouter();
     return (
         <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full border border-[rgba(20,20,20,0.1)">
@@ -21,7 +23,7 @@ export default function VacancyCard(props: IPropsVacancy) {
             <div className="flex-1">
                 <div className="flex w-full">
                     <div>
-                        <h2 className="text-[30px] font-medium font-roboto text-mainText">{title}</h2>
+                        <h2 className="text-[30px] font-medium font-roboto text-mainText">{jobTitle.name}</h2>
                         <div className="flex items-center">
                             <p className="text-base font-roboto text-primary-text font-medium">
                                 <span className="font-normal">Компания:</span> ИП Чипина Александра

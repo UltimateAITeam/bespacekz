@@ -2,10 +2,6 @@
     @apply text-primary-text  font-roboto  whitespace-nowrap truncate;
 }
 
-.title_filter span {
-    @apply text-left flex-1 font-roboto font-medium text-base text-[#001E00];
-}
-
 div::-webkit-scrollbar {
     width: 8px;
 }
