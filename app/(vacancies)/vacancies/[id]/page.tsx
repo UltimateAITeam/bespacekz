@@ -21,7 +21,7 @@ interface AboutVacancyPageProps {
 }
 
 async function getVacancyById<T>(id: string) {
-    const response = await fetch(`/api/get_vacancy_by_id/${id}`);
+    const response = await fetch(`${process.env.API_URL}/api/get_vacancy_by_id/${id}`);
 
     if (!response.ok) {
         // This will activate the closest `error.js` Error Boundary

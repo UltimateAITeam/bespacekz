@@ -1,9 +1,11 @@
 'use client'
 
+import { JOB_TYPES_MAP, job_types } from '@/data/job_types';
 import { IVacancy } from '@/types/vacancies.types';
 import { Badge, Button, ButtonGroup, Card } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 import { CiCalendar, CiClock2 } from 'react-icons/ci';
 import { FaPlus, FaRegStar } from 'react-icons/fa';
 import { IoIosSearch } from 'react-icons/io';
@@ -13,8 +15,10 @@ import { LuDot } from 'react-icons/lu';
 
 interface IPropsVacancy extends IVacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
-    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, jobTitle, experience, specialization, id} = props;
+    const {aboutVacancy, city, createdAt, currency, priceFrom, priceTo, jobTitle, experience, specialization, id, pricingType, requiredSkills, clientProfile} = props;
     const router = useRouter();
+    const jobTypeComputed = useMemo(() =>  JOB_TYPES_MAP[pricingType] , [pricingType])
+    console.log('@clientProfile', clientProfile);
     return (
         <Card className="flex md:!flex-row !p-6 !gap-6 max-w-full border border-[rgba(20,20,20,0.1)">
             <div className="shrink-0">
@@ -26,7 +30,7 @@ export default function VacancyCard(props: IPropsVacancy) {
                         <h2 className="text-[30px] font-medium font-roboto text-mainText">{jobTitle.name}</h2>
                         <div className="flex items-center">
                             <p className="text-base font-roboto text-primary-text font-medium">
-                                <span className="font-normal">Компания:</span> ИП Чипина Александра
+                                <span className="font-normal">Компания:</span> {clientProfile?.companyInfo}
                             </p>
                             <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px] !font-roboto !font-medium">
                                 Новый пост
@@ -55,7 +59,7 @@ export default function VacancyCard(props: IPropsVacancy) {
                     <LuDot />
                     <div>
                         <IoIosSearch />
-                        <span>Сотрудник</span>
+                        <span>{jobTypeComputed}</span>
                     </div>
                     <LuDot />
                     <div>
@@ -72,16 +76,16 @@ export default function VacancyCard(props: IPropsVacancy) {
                 <div className="flex mt-3 text-primary-10">
                     <span className="font-roboto mr-1">Кто нужен:</span>
                     <ButtonGroup variant="solid" colorScheme="linkedin" size="xs" spacing="2">
-                        {specialization.split(', ').map((s) => {
+                        {requiredSkills.map((s) => {
                             return (
                                 <Button key={s}>
                                     <span className="!leading-none text-sm">{s}</span>
                                 </Button>
                             );
                         })}
-                        <Button leftIcon={<FaPlus />}>
+                        {/* <Button leftIcon={<FaPlus />}>
                             <span className="!leading-none text-sm">3</span>
-                        </Button>
+                        </Button> */}
                     </ButtonGroup>
                 </div>
                 <div className="mt-3 text-primary-10 font-roboto">

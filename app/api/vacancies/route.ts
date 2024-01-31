@@ -1,15 +1,17 @@
-import {NextRequest, NextResponse} from 'next/server';
-import {prisma} from '@/libs/prisma';
-import {Prisma} from '@prisma/client';
+import { prisma } from '@/libs/prisma';
+import { VacanciesQueryEnum } from '@/types/vacancies.types';
+import { PricingType, Prisma } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 // /api/vacancies?limit=10&page=1
 export async function GET(req: NextRequest) {
   // extract limit and offset from query params
   // getAll - дает параметры виде массива /api/vacancies?cities=Astana&cities=Almaty - ['Astana','Almaty']
   const limit = req.nextUrl.searchParams.get('limit');
-  const page = req.nextUrl.searchParams.get('page');
-  const cities = req.nextUrl.searchParams.getAll('cities');
-  const categories = req.nextUrl.searchParams.getAll('category');
+  const page = req.nextUrl.searchParams.get(VacanciesQueryEnum.page);
+  const cities = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.cities);
+  const categories = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.category);
+  const job_types = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.job_types);
 
   try {
     if (!limit || !page) return NextResponse.json({error: 'no limit or page provided'}, {status: 400});
@@ -17,6 +19,7 @@ export async function GET(req: NextRequest) {
     const query: Prisma.VacancyFindManyArgs = {
       include: {
         jobTitle: true,
+        clientProfile: true
       },
       where: {
         city: {
@@ -29,6 +32,9 @@ export async function GET(req: NextRequest) {
             },
           },
         },
+        pricingType: {
+          in: job_types.length ? job_types as PricingType[] : undefined
+        }
       },
       orderBy: {
         createdAt: 'desc',

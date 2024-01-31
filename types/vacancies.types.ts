@@ -1,11 +1,17 @@
 import { Prisma } from '@prisma/client';
 
-export enum VacanciesQuery {category = 'category', cities = 'cities', page = 'page' }
+export enum VacanciesQueryEnum {
+  category = 'category',
+  cities = 'cities',
+  job_types = 'job_types',
+  page = 'page',
+}
 
-export interface IVacanciesSearchParams extends  Record<VacanciesQuery, string | number[]> {}
+export interface IVacanciesSearchParams extends Record<VacanciesQueryEnum, string | number[]> {}
 
 export type IVacancy = Prisma.VacancyGetPayload<{
-    include: {
-        jobTitle: true
-    }
+  include: {
+    jobTitle: true;
+    clientProfile: true
+  };
 }>;

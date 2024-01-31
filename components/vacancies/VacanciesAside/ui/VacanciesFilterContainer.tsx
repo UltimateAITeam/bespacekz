@@ -8,48 +8,37 @@ import { job_types } from '@/data/job_types';
 import { VacanciesPriceFilter } from './VacanciesPriceFilter';
 import { JobCategory } from '@prisma/client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { VacanciesQuery } from '@/types/vacancies.types';
+import { VacanciesQueryEnum } from '@/types/vacancies.types';
 
 export const VacanciesFilterContainer = ({categories}: {categories: JobCategory[]}) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  
 
-  const {defaultCategories, defaultCities} = useMemo(() => {
+  const {defaultCategories, defaultCities, defaultJobTypes} = useMemo(() => {
     return  {
-      defaultCategories: searchParams.getAll(VacanciesQuery.category),
-      defaultCities: searchParams.getAll(VacanciesQuery.cities)
+      defaultCategories: searchParams.getAll(VacanciesQueryEnum.category),
+      defaultCities: searchParams.getAll(VacanciesQueryEnum.cities),
+      defaultJobTypes: searchParams.getAll(VacanciesQueryEnum.job_types)
     }
   }, [searchParams]) 
 
-
-  const [valueCategories, setValueCategories] = useState<(string | number)[]>([])
-
-  const handleChangeFilter = (optionName: VacanciesQuery, value: (string | number)[]) => {
+  const handleChangeFilter = (optionName: VacanciesQueryEnum, value: (string | number)[]) => {
     const params = new URLSearchParams(searchParams);
 
-    params.delete(optionName)
-    value.forEach(v => params.append(optionName, v.toString()))
-
-    console.log('@params', params);
+    params.delete(optionName) // Удаляем старые 
+    params.delete('page')
+    value.forEach(v => params.append(optionName, v.toString())) // задаем новые
 
     replace(`${pathname}?${params.toString()}`)
   }
 
-
-  useEffect(() => {
-    console.log('@valueCategories', valueCategories);
-  }, [valueCategories])
-
-  
-
   return (
     <AsideFilter allOpenIndex>
-       <AsideFilterItem titleFilter='Категории' optionsFilters={categories.map(c => ({value: c.category_name, label: c.category_name}))} defaultOptionsValue={defaultCategories} onChangeValue={v => handleChangeFilter(VacanciesQuery.category ,v)}  />
-       <AsideFilterItem titleFilter='Город' optionsFilters={cities.Kazakhstan}  defaultOptionsValue={defaultCities}  isWithSearch onChangeValue={v => handleChangeFilter(VacanciesQuery.cities ,v)} />
-       {/* <AsideFilterItem titleFilter='Избранные' optionsFilters={[{label:'Отобразить избранное', value: 'favorite'}]}  defaultOptionsValue={[]}   />
-       <AsideFilterItem titleFilter='Вид занятости' optionsFilters={job_types}  defaultOptionsValue={[]}   /> */}
+       <AsideFilterItem titleFilter='Категории' optionsFilters={categories.map(c => ({value: c.category_name, label: c.category_name}))} defaultOptionsValue={defaultCategories} onChangeValue={v => handleChangeFilter(VacanciesQueryEnum.category, v)}  />
+       <AsideFilterItem titleFilter='Город' optionsFilters={cities.Kazakhstan}  defaultOptionsValue={defaultCities}  isWithSearch onChangeValue={v => handleChangeFilter(VacanciesQueryEnum.cities ,v)} />
+       {/* <AsideFilterItem titleFilter='Избранные' optionsFilters={[{label:'Отобразить избранное', value: 'favorite'}]}  defaultOptionsValue={[]}   /> */}
+       <AsideFilterItem titleFilter='Вид занятости' optionsFilters={job_types}  defaultOptionsValue={defaultJobTypes} onChangeValue={v => handleChangeFilter(VacanciesQueryEnum.job_types ,v)}  />
        <VacanciesPriceFilter />
     </AsideFilter>
   )

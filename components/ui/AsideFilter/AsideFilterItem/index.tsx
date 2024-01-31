@@ -7,7 +7,8 @@ import { IoSearchSharp } from 'react-icons/io5';
 
 interface IAsideFilterItemProps {
   titleFilter: string;
-  optionsFilters: readonly  {value: string | number, label: string}[];
+  /** value to search, label to view in HTML */
+  optionsFilters: readonly {value: string | number, label: string}[];
   defaultOptionsValue?: (string | number)[];
   onChangeValue: (value:  (string | number)[]) => void;
   isWithSearch?: boolean;
