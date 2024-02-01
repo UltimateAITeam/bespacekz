@@ -30,7 +30,6 @@ async function getVacancyById<T>(id: string) {
   }
   return response.json() as T;
 }
-
 interface AboutVacancyPageProps {
     params: {
       id: string;
