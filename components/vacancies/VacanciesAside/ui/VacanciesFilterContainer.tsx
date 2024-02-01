@@ -27,8 +27,8 @@ export const VacanciesFilterContainer = ({categories}: {categories: JobCategory[
     const params = new URLSearchParams(searchParams);
 
     params.delete(optionName) // Удаляем старые 
-    params.delete('page')
-    value.forEach(v => params.append(optionName, v.toString())) // задаем новые
+    params.delete('page') // сбрасываем пагинацию 
+    value.forEach(v => params.append(optionName, v.toString())) // задаем новые фильтры
 
     replace(`${pathname}?${params.toString()}`)
   }

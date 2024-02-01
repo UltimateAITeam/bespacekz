@@ -1,13 +1,12 @@
 import {cn} from '@/libs/utils';
+import { CurrencyType } from '@prisma/client';
 import {forwardRef, type HTMLAttributes} from 'react';
 
-interface CurrencyIconProps {
-    currency: CurrencyIconType;
+interface CurrencyIconProps  {
+    currency: CurrencyType;
 }
 
-export type CurrencyIconType = 'KZT' | 'USD' | 'EUR' | 'RUB'
-
-const CURRENCY_MAP: Record<CurrencyIconType, {value: string}> = {
+const CURRENCY_MAP: Record<CurrencyType, {value: string}> = {
     KZT: {value: '₸'},
     EUR: {value: '€'},
     USD: {value: '$'},

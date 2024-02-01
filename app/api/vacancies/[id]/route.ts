@@ -10,7 +10,12 @@ export async function GET(req: NextRequest, { params }: {params: {id: string}}) 
                 id: id
             },
             include: {
-                jobTitle: true
+                jobTitle: true,
+                clientProfile: {
+                    include: {
+                        user: true
+                    }
+                }
             }
         })
         return NextResponse.json(vacancy)
