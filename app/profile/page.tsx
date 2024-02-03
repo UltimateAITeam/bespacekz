@@ -28,7 +28,7 @@ import ProfileMultiModal from "@/components/modals/ProfileMultiModal";
 import {LuPencilLine} from "react-icons/lu";
 import {useSession} from "next-auth/react";
 import {formatDate} from "@/libs/utils";
-import RichTextEditor from "@/components/RichText";
+// import RichTextEditor from "@/components/RichText";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
@@ -277,7 +277,7 @@ function Page() {
                                     </Grid>
                                 </BlockComponent>
                                 {/* BLOCK TAG */}
-                                <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false}
+                                {/* <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false}
                                                 isEditable={true} title={"О себе"}>
                                     <RichTextEditor
                                         data={data.about || ''}
@@ -285,7 +285,7 @@ function Page() {
                                         disable={true}
                                     >
                                     </RichTextEditor>
-                                </BlockComponent>
+                                </BlockComponent> */}
                             </>}
                         {/*CLIENT PART*/}
                         {role === Role.CLIENT
@@ -342,7 +342,7 @@ function Page() {
                                     </SimpleGrid>
                                 </BlockComponent>
 
-                                <BlockComponent editForm={"edit-company-description"} openModal={openModal}
+                                {/* <BlockComponent editForm={"edit-company-description"} openModal={openModal}
                                                 isAddable={false}
                                                 isEditable={true} title={"Описание компании"}>
 
@@ -353,7 +353,7 @@ function Page() {
                                     >
 
                                     </RichTextEditor>
-                                </BlockComponent>
+                                </BlockComponent> */}
                             </>
                         }
                     </Stack>
