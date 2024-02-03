@@ -97,7 +97,7 @@ const SubLinks2 = [
         id: 1,
         name: "Today's Jobs",
         des: "Find your dream jobs work and rank your careare",
-        link: "/freelance"
+        link: "/vacancies"
     },
 
     {
