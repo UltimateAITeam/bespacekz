@@ -13,7 +13,9 @@ import {
     Spacer,
     Textarea,
 } from "@chakra-ui/react";
-import RichTextEditor from "@/components/RichText";
+// import RichTextEditor from "@/components/RichText";
+import dynamic from 'next/dynamic'
+
 import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 
 interface VacancyFormProps {
@@ -26,6 +28,10 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
                                                      onSubmit,
                                                      onCloseModal,
                                                  }) => {
+
+    const RichTextEditor = dynamic(() => import('@/components/RichText'), {
+        ssr: false
+    });
     const [formData, setFormData] = useState({
         title: "",
         aboutVacancy: "",
@@ -37,6 +43,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         specialization: "",
         city: "",
     });
+
 
 //   const handleChange = (
 //     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

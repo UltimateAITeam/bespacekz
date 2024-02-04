@@ -20,7 +20,9 @@ import {countries} from "@/data/countries";
 import {CurrencyType, PricingType} from "@prisma/client";
 import {cities} from "@/data/cities";
 import {skillsList} from "@/data/skills";
-import RichTextEditor from "@/components/RichText";
+// import RichTextEditor from "@/components/RichText";
+import dynamic from 'next/dynamic'
+
 
 interface VacancyFormProps {
     onSubmit: (data: any) => void;
@@ -33,6 +35,9 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
                                                      onCloseModal,
                                                      isLoadingButton,
                                                  }) => {
+    const RichTextEditor = dynamic(() => import('@/components/RichText'), {
+        ssr: false
+    });
     const [formData, setFormData] = useState({
         requiredSkills: [],
         pricingType: PricingType.EMPLOYEE,
