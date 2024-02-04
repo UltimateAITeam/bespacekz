@@ -5,9 +5,14 @@ import useLinksStore from "@/store/aboutFormStore";
 import {IconButton, Textarea} from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import useAboutStore from "@/store/aboutFormStore";
+import dynamic from 'next/dynamic'
+
 // import RichText from "@/components/RichText";
 
 function Page() {
+    const RichText = dynamic(() => import('@/components/RichText'), {
+        ssr: false
+    });
     const {about, updateAbout} = useAboutStore();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,11 +31,11 @@ function Page() {
                     <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg"}>Ваши навыки показывают клиентам, что вы можете предложить, и помогают нам выбирать, какие вакансии вам рекомендовать.</span>
                     <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg mt-4 mb-2"}>Все зависит от вас, дерзайте!</span>
 
-                    {/* <RichText
+                    <RichText
                         data={about}
                         onChange={(e) => updateAbout(e)}
                     >
-                    </RichText> */}
+                    </RichText>
 
                 </form>
 

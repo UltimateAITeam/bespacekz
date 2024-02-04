@@ -15,7 +15,7 @@ import { ImCheckmark, ImGoogle } from "react-icons/im";
 import Footer from "@/components/brenda_components/Footer";
 import { SiAdobe, SiUdacity } from "react-icons/si";
 import ThreeTierPricing from "@/components/home_page/Pricing";
-import VacancyList from "@/components/brenda_components/VacancyList";
+// import VacancyList from "@/components/brenda_components/VacancyList";
 
 export default function HomePage() {
   const session = useSession();
@@ -552,7 +552,7 @@ export default function HomePage() {
           <h2 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold mb-7">
             Вакансии дня на платформе
           </h2>
-          <VacancyList />
+          {/* <VacancyList /> */}
         </section>
       </main>
 
