@@ -5,11 +5,10 @@ import { IVacancy } from '@/types/vacancies.types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
-import VacancyCard from '@/components/vacancies/VacancyCard';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 666;
 
-export const VacanciesList = () => {
+export const CandidatesList = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const {replace} = useRouter();
@@ -45,16 +44,18 @@ export const VacanciesList = () => {
         const pageParam = filtersParams.get('page') 
         filtersParams.delete('page')
 
-        const res = await fetch(`/api/get_vacancies?${filtersParams}&page=${pageParam || 1}&limit=${ITEMS_PER_PAGE}`, {
+        const res = await fetch(`/api/get_candidates?${filtersParams}&page=${pageParam || 1}&limit=${ITEMS_PER_PAGE}`, {
           method: 'GET',
         });
 
         if (res.status == 200) {
-          const data = await res.json();
+          const freelancers = await res.json();
 
-          setData(data.data);
-          setTotalItems(data.count);
-          setTotalPages(Math.ceil(data.count / ITEMS_PER_PAGE));
+          setData(freelancers.data);
+
+          console.log('@freelancers.data', freelancers.data);
+          setTotalItems(freelancers.count);
+          setTotalPages(Math.ceil(freelancers.count / ITEMS_PER_PAGE));
         }
       } catch (error) {
         console.log('@error fetch vacancies', error);
@@ -66,7 +67,7 @@ export const VacanciesList = () => {
 
   return (
     <div className="space-y-8">
-      {isLoading ? (
+      {/* {isLoading ? (
         <div className="flex justify-center items-center">
           <GridLoader color="#36d7b7" className="mx-auto" />
         </div>
@@ -74,7 +75,7 @@ export const VacanciesList = () => {
         data.map((vacancy) => {
           return <VacancyCard key={vacancy.id} {...vacancy} />;
         })
-      )}
+      )} */}
       {!isLoading && (
         <Pagination
           itemsPerPage={ITEMS_PER_PAGE}

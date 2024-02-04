@@ -1,33 +1,28 @@
 import {VacanciesAside} from '@/components/vacancies/VacanciesAside';
 import {VacanciesList} from '@/components/vacancies/VacanciesList';
-import {IVacanciesSearchParams} from '@/types/vacancies.types';
 import './style.css';
+import { ICandidatesSearchParams } from '@/types/candidates.types';
 import { SearchBar } from '@/components/ui/SearchBar';
+import { CandidatesAside } from '@/components/candidates/CandidatesAside';
+import { CandidatesList } from '@/components/candidates/CandidatesList';
 
 export const dynamic = 'force-dynamic'
 
-export default function VacanciesPage({searchParams}: {searchParams?: IVacanciesSearchParams}) {
+export default function CandidatesPage({searchParams}: {searchParams?: ICandidatesSearchParams}) {
   return (
     <div className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3 font-roboto">
       <h1 className="font-medium text-[38px] !leading-tight text-[var(--Primary-10)] font-roboto">
         Информационные технологии
       </h1>
-      <p className="font-medium text-2xl text-[var(--Primary-text)]">Объявления о работе</p>
+      <p className="font-medium text-2xl text-[var(--Primary-text)]">Объявления кандидатов</p>
       <SearchBar />
 
       <section className="flex gap-8 !mt-16">
-        {/* ================= Filter Side ======================== */}
-
         <div className="w-[300px]">
-  
-            <VacanciesAside  />
- 
+            <CandidatesAside  />
         </div>
-
-        {/* ================= Vacancies Card Side ======================== */}
-
         <div className="flex-1">
-          <VacanciesList  />
+          <CandidatesList  />
         </div>
       </section>
     </div>

@@ -23,7 +23,7 @@ type Vacancy = Prisma.VacancyGetPayload<{
 }>;
 
 async function getVacancyById<T>(id: string) {
-  const response = await fetch(`${process.env.API_URL}/api/vacancies/${id}/`);
+  const response = await fetch(`${process.env.API_URL}/api/get_vacancies/${id}/`);
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data vacancies_by_id');

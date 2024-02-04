@@ -7,7 +7,7 @@ const SubLinks1 = [
         subhead: {
             name: "Talent Marketplace",
             des: "Learn about working with talent or explore your spacific hiring needs.",
-            subheadlink: { name: "Hire on Talent Marketplace", link: "/talent-marketplace" }
+            subheadlink: { name: "Hire on Talent Marketplace", link: "/candidates" }
         },
                 
         sublink: [

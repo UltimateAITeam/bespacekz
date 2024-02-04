@@ -3,7 +3,7 @@
 import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { IoSearchSharp } from 'react-icons/io5'
 
-export const VacanciesSearchBar = () => {
+export const SearchBar = () => {
   return (
     <div className="w-[660px] relative rounded-[10px]">
         <InputGroup>

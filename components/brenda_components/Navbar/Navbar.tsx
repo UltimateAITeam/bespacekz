@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { SubLinks1, SubLinks2, SubLinks3 } from "./LinkData";
