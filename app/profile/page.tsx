@@ -27,8 +27,8 @@ import BlockComponent from "@/components/BlockComponent";
 import ProfileMultiModal from "@/components/modals/ProfileMultiModal";
 import {LuPencilLine} from "react-icons/lu";
 import {useSession} from "next-auth/react";
-import {formatDate} from "@/libs/utils";
-import RichTextEditor from "@/components/RichText";
+// import {formatDate} from "@/libs/utils";
+// import RichTextEditor from "@/components/RichText";
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     include: {
@@ -131,12 +131,12 @@ function Page() {
                     />
                 </Box>
             }
-            <ProfileMultiModal role={role} form={formType} data={data} isOpen={isOpen}
+            {/* <ProfileMultiModal role={role} form={formType} data={data} isOpen={isOpen}
                                setLoading={(data: boolean) => {
                                    setLoading(data)
                                }} onClose={onClose} setData={(data: any) => {
                 setData(data)
-            }}/>
+            }}/> */}
 
             <main>
                 <section
@@ -213,7 +213,7 @@ function Page() {
                                                         </div>
                                                         <div>
                                                             <p className={"font-bold"}>Период обучения</p>
-                                                            <p>{formatDate(new Date(education.from))} - {formatDate(new Date(education.to))}</p>
+                                                            {/* <p>{formatDate(new Date(education.from))} - {formatDate(new Date(education.to))}</p> */}
                                                         </div>
                                                     </SimpleGrid>
                                                 </Stack>
@@ -245,7 +245,7 @@ function Page() {
                                                         </div>
                                                         <div>
                                                             <p className={"font-bold"}>Период работы</p>
-                                                            <p>{formatDate(new Date(exp.from))} - {!exp.stillWorking && exp.to ? formatDate(new Date(exp.to)) : "По сей день"}</p>
+                                                            {/* <p>{formatDate(new Date(exp.from))} - {!exp.stillWorking && exp.to ? formatDate(new Date(exp.to)) : "По сей день"}</p> */}
                                                         </div>
                                                         {/*<div>*/}
                                                         {/*    <p className={"font-bold"}>Стаж работы</p>*/}
@@ -277,7 +277,7 @@ function Page() {
                                     </Grid>
                                 </BlockComponent>
                                 {/* BLOCK TAG */}
-                                <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false}
+                                {/* <BlockComponent editForm={"edit-about"} openModal={openModal} isAddable={false}
                                                 isEditable={true} title={"О себе"}>
                                     <RichTextEditor
                                         data={data.about || ''}
@@ -285,7 +285,7 @@ function Page() {
                                         disable={true}
                                     >
                                     </RichTextEditor>
-                                </BlockComponent>
+                                </BlockComponent> */}
                             </>}
                         {/*CLIENT PART*/}
                         {role === Role.CLIENT
@@ -342,7 +342,7 @@ function Page() {
                                     </SimpleGrid>
                                 </BlockComponent>
 
-                                <BlockComponent editForm={"edit-company-description"} openModal={openModal}
+                                {/* <BlockComponent editForm={"edit-company-description"} openModal={openModal}
                                                 isAddable={false}
                                                 isEditable={true} title={"Описание компании"}>
 
@@ -353,7 +353,7 @@ function Page() {
                                     >
 
                                     </RichTextEditor>
-                                </BlockComponent>
+                                </BlockComponent> */}
                             </>
                         }
                     </Stack>
