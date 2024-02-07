@@ -11,6 +11,7 @@ import {
     Card,
     CardHeader, Text, Heading, FormHelperText, Textarea,
 } from "@chakra-ui/react";
+import RichText from "@/components/RichText";
 
 interface FormProps {
     onSubmit: (data: any) => void;
@@ -39,12 +40,11 @@ function ProfileAboutEditForm({onSubmit, onClose, data}: FormProps) {
 
     return (
         <Box as="form" onSubmit={handleSubmit} gap={4}>
-            <Textarea
-                value={about}
-                onChange={handleChange}
-                placeholder={"Напишите что-нибудь о себе..."}
+            <RichText
+                data={about}
+                onChange={(e) => setAbout(e)}
             >
-            </Textarea>
+            </RichText>
             <Flex mt={6} gap={3}>
                 <Button variant={"ghost"} onClick={onClose}>Назад</Button>
                 <Spacer />

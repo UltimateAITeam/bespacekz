@@ -13,6 +13,10 @@ import {
     Spacer,
     Textarea,
 } from "@chakra-ui/react";
+// import RichTextEditor from "@/components/RichText";
+import dynamic from 'next/dynamic'
+
+import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 
 interface VacancyFormProps {
     data: any;
@@ -24,6 +28,10 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
                                                      onSubmit,
                                                      onCloseModal,
                                                  }) => {
+
+    const RichTextEditor = dynamic(() => import('@/components/RichText'), {
+        ssr: false
+    });
     const [formData, setFormData] = useState({
         title: "",
         aboutVacancy: "",
@@ -35,6 +43,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         specialization: "",
         city: "",
     });
+
 
 //   const handleChange = (
 //     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -97,17 +106,24 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
         <Box as="form" onSubmit={handleSubmit}>
             <FormControl id="title" isRequired>
                 <FormLabel>Title</FormLabel>
-                <Input name="title" value={formData.title} onChange={handleChange} placeholder="Ex: Senior Developer" />
+                <JobTitleAutoSuggest
+                    title={formData.title}
+                    setTitle={(title: string) => setFormData({
+                        ...formData,
+                        title: title,
+                    })}
+                />
+                {/*<Input name="title" value={formData.title} onChange={handleChange} placeholder="Ex: Senior Developer" />*/}
             </FormControl>
 
             <FormControl mt={4} id="aboutVacancy" isRequired>
                 <FormLabel>About Vacancy</FormLabel>
-                <Textarea
-                    name="aboutVacancy"
-                    value={formData.aboutVacancy}
-                    onChange={handleChange}
-                    placeholder="Describe the vacancy details..."
-                    size="sm"
+                <RichTextEditor
+                    data={formData.aboutVacancy}
+                    onChange={(content) => setFormData({
+                        ...formData,
+                        aboutVacancy: content,
+                    })}
                 />
             </FormControl>
 

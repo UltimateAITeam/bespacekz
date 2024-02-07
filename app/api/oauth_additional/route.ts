@@ -17,6 +17,7 @@ export async function POST(
                     location: data.location,
                     role: data.role.toUpperCase(),
                     birthdate: data.birthdate,
+                    phone: data.phone,
                 }
             });
 

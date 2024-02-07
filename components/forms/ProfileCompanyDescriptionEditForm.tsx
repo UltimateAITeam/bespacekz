@@ -11,6 +11,9 @@ import {
     Card,
     CardHeader, Text, Heading, FormHelperText, Textarea,
 } from "@chakra-ui/react";
+import dynamic from 'next/dynamic'
+
+// import RichTextEditor from "@/components/RichText";
 
 interface FormProps {
     onSubmit: (data: any) => void;
@@ -19,6 +22,10 @@ interface FormProps {
 }
 
 function ProfileAboutEditForm({onSubmit, onClose, data}: FormProps) {
+    const RichTextEditor = dynamic(() => import('@/components/RichText'), {
+        ssr: false
+    });
+    
     const [about, setAbout] = useState<string>(data.companyDescription as string || '');
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,12 +46,11 @@ function ProfileAboutEditForm({onSubmit, onClose, data}: FormProps) {
 
     return (
         <Box as="form" onSubmit={handleSubmit} gap={4}>
-            <Textarea
-                value={about}
-                onChange={handleChange}
-                placeholder={"Напишите что-нибудь ващей компании..."}
+            <RichTextEditor
+                data={about}
+                onChange={setAbout}
             >
-            </Textarea>
+            </RichTextEditor>
             <Flex mt={6} gap={3}>
                 <Button variant={"ghost"} onClick={onClose}>Назад</Button>
                 <Spacer />
