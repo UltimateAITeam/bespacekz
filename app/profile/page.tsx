@@ -154,7 +154,7 @@ function Page() {
                     <Stack spacing={4} className={'lg:w-3/5 sm:w-4/5 w-full'}>
                         {data.jobTitle
                             && <HStack>
-                                <h1 className={"text-3xl mb-5 font-bold"}>{data.jobTitle}</h1>
+                                <h1 className={"text-3xl mb-5 font-bold"}>{data.jobTitle.name}</h1>
                                 <LuPencilLine onClick={() => openModal("edit-jobTitle")}
                                               className={"-mt-4 cursor-pointer w-7 h-7"}/>
                             </HStack>
