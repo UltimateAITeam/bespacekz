@@ -5,7 +5,6 @@ export async function GET(req: NextRequest, {params}: {params: {category_id: str
   const {category_id} = params;
   const limit = req.nextUrl.searchParams.get('limit');
   const excludeVacancyId = req.nextUrl.searchParams.get('exclude_id');
-
   try {
     const vacancy = await prisma.vacancy.findMany({
       take: limit ? parseInt(limit) : 3,
@@ -27,7 +26,7 @@ export async function GET(req: NextRequest, {params}: {params: {category_id: str
     });
     return NextResponse.json(vacancy);
   } catch (e) {
-    console.log('Пойман на ошибке', e);
+    console.log('@Пойман на ошибке', e);
     return NextResponse.json({error: e?.toString}, {status: 500});
   }
 }

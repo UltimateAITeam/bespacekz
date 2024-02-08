@@ -3,7 +3,7 @@ import { VacanciesQueryEnum } from '@/types/vacancies.types';
 import { PricingType, Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-// /api/vacancies?limit=10&page=1
+// /api/get_vacancies?limit=10&page=1
 export async function GET(req: NextRequest) {
   const limit = req.nextUrl.searchParams.get('limit');
   const page = req.nextUrl.searchParams.get(VacanciesQueryEnum.page);

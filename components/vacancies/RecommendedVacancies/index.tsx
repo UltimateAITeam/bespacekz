@@ -8,11 +8,19 @@ type Vacancy = Prisma.VacancyGetPayload<{
   };
 }>;
 
-export async function RecommendedVacancies({category_id, exclude_vac_id}: {category_id: number, exclude_vac_id: string}) {
-  const data: Vacancy[] = await fetch(`${process.env.API_URL}/api/vacancies/by_category/${category_id}?exclude_id=${exclude_vac_id}&limit=3`).then((res) =>
-    res.json()
+export async function RecommendedVacancies({
+  category_id,
+  exclude_vac_id,
+}: {
+  category_id: number;
+  exclude_vac_id: string;
+}) {
+  const res = await fetch(
+    `${process.env.API_URL}/api/get_vacancies/by_category/${category_id}?exclude_id=${exclude_vac_id}&limit=3`, {
+      method: 'GET'
+    }
   );
-
+  const data: Vacancy[] = await res.json();
   return (
     <div className="space-y-8">
       {data.map((vacancy) => {
