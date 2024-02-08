@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client';
+
 export enum CandidatesQueryEnum {
     category = 'category',
     cities = 'cities',
@@ -5,3 +7,15 @@ export enum CandidatesQueryEnum {
   }
   
   export interface ICandidatesSearchParams extends Record<CandidatesQueryEnum, string | number[]> {}
+
+  export type ICandidate = Prisma.FreelancerProfileGetPayload<{
+    include: {
+      user: true,
+      Education: true,
+      Experience: true,
+      Languages: true,
+      Portfolio: true,
+      Pricing: true,
+    };
+  }>;
+  

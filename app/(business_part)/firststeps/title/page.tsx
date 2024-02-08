@@ -47,7 +47,6 @@ function Page() {
 
                     <JobTitleAutoSuggest className={"w-1/2 mt-4"} onCreateOption={handleCreateTitle} title={title} setTitle={handleTitleChange} />
 
-
                 </form>
             </div>
         </motion.div>

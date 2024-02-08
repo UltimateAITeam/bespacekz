@@ -57,7 +57,8 @@ model FreelancerProfile {
   id         String       @id @default(cuid())
   completed  Boolean      @default(false)
   userEmail  String       @unique
-  jobTitle   String?
+  jobTitleId Int          
+  jobTitle   JobTitle     @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
   Education  Education[]
   Experience Experience[]
   user       User         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
@@ -140,7 +141,7 @@ model Vacancy {
   aboutVacancy   String
   priceFrom      Float
   priceTo        Float
-  currency       CurrencyType      @default(KZT)
+  currency       CurrencyType  @default(KZT)
   isClear        Boolean       @default(false)
   experience     String
   specialization String
@@ -155,11 +156,12 @@ model Vacancy {
 }
 
 model JobTitle {
-  id          Int         @id @default(autoincrement())
-  name        String      @unique
+  id          Int                 @id @default(autoincrement())
+  name        String              @unique
   category_id Int
-  category    JobCategory @relation(fields: [category_id], references: [id])
+  category    JobCategory         @relation(fields: [category_id], references: [id])
   Vacancy     Vacancy[]
+  Freelancer  FreelancerProfile[]
 }
 
 model JobCategory {
@@ -196,8 +198,8 @@ enum PricingType {
 }
 
 enum CurrencyType {
-  KZT 
-  USD 
-  EUR 
+  KZT
+  USD
+  EUR
   RUB
 }

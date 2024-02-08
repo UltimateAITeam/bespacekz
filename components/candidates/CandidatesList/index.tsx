@@ -1,10 +1,12 @@
 'use client';
 
 import { Pagination } from '@/components/ui/Pagination';
-import { IVacancy } from '@/types/vacancies.types';
+import { CandidatesService } from '@/services/candidates.service';
+import { ICandidate } from '@/types/candidates.types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
+import { CandidateCard } from '../CandidateCard';
 
 const ITEMS_PER_PAGE = 666;
 
@@ -13,7 +15,7 @@ export const CandidatesList = () => {
   const pathname = usePathname();
   const {replace} = useRouter();
 
-  const [data, setData] = useState<IVacancy[]>([]);
+  const [data, setData] = useState<ICandidate[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [page, setPage] = useState<number>(1);
@@ -44,9 +46,7 @@ export const CandidatesList = () => {
         const pageParam = filtersParams.get('page') 
         filtersParams.delete('page')
 
-        const res = await fetch(`/api/get_candidates?${filtersParams}&page=${pageParam || 1}&limit=${ITEMS_PER_PAGE}`, {
-          method: 'GET',
-        });
+        const res = await CandidatesService.getCandidates({filtersParams, pageParam: pageParam || 1, ITEMS_PER_PAGE})
 
         if (res.status == 200) {
           const freelancers = await res.json();
@@ -67,15 +67,15 @@ export const CandidatesList = () => {
 
   return (
     <div className="space-y-8">
-      {/* {isLoading ? (
+      {isLoading ? (
         <div className="flex justify-center items-center">
           <GridLoader color="#36d7b7" className="mx-auto" />
         </div>
       ) : (
-        data.map((vacancy) => {
-          return <VacancyCard key={vacancy.id} {...vacancy} />;
+        data.map((candidate) => {
+          return <CandidateCard key={candidate.id} {...candidate} />;
         })
-      )} */}
+      )}
       {!isLoading && (
         <Pagination
           itemsPerPage={ITEMS_PER_PAGE}

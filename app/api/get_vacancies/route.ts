@@ -5,8 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // /api/vacancies?limit=10&page=1
 export async function GET(req: NextRequest) {
-  // extract limit and offset from query params
-  // getAll - дает параметры виде массива /api/vacancies?cities=Astana&cities=Almaty - ['Astana','Almaty']
   const limit = req.nextUrl.searchParams.get('limit');
   const page = req.nextUrl.searchParams.get(VacanciesQueryEnum.page);
   const cities = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.cities);
@@ -23,17 +21,17 @@ export async function GET(req: NextRequest) {
       },
       where: {
         city: {
-          in: cities.length ? cities : undefined, // Поиск вакансий, где город входит в массив выбранных городов
+          in: cities.length > 0 ? cities : undefined, // Поиск вакансий, где город входит в массив выбранных городов
         },
         jobTitle: {
           category: {
             category_name: {
-              in: categories.length ? categories : undefined,
+              in: categories.length > 0 ? categories : undefined,
             },
           },
         },
         pricingType: {
-          in: job_types.length ? job_types as PricingType[] : undefined
+          in: job_types.length > 0 ? job_types as PricingType[] : undefined
         }
       },
       orderBy: {
@@ -45,17 +43,6 @@ export async function GET(req: NextRequest) {
       prisma.vacancy.count({where: query.where}),
     ]);
 
-
-   /*  const res = await prisma.clientProfile.create({
-      data: {
-        address: 'Пушкина',
-        companyDescription:' Строить заборы',
-        companyInfo: 'Нет информации',
-        isCompany: true,
-        mailIndex: '777',
-        userEmail: 'aisahanova_aliya@mail.ru'
-      }
-    }) */
 
     return NextResponse.json({data: data, count}, {status: 200});
   } catch (e) {
