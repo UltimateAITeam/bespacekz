@@ -91,7 +91,7 @@ export const Pagination = ({
   }
 
   return (
-    <div className='flex flex-row gap-[8px] py-[16px] w-full'>
+    <div className='flex flex-row gap-[8px] py-[16px] w-full items-center justify-center'>
       <PaginationButton
         onClick={onPrev}
         disabled={currentPage === 1}

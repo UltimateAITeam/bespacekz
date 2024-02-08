@@ -65,7 +65,7 @@ export const VacanciesList = () => {
   }, [searchParams]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 lg:mb-7 mb-3">
       {isLoading ? (
         <div className="flex justify-center items-center">
           <GridLoader color="#36d7b7" className="mx-auto" />
