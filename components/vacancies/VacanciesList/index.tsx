@@ -67,8 +67,8 @@ export const VacanciesList = () => {
   return (
     <div className="space-y-8 lg:mb-7 mb-3">
       {isLoading ? (
-        <div className="flex justify-center items-center">
-          <GridLoader color="#36d7b7" className="mx-auto" />
+        <div className="flex justify-center items-center py-6">
+          <GridLoader color="#366EF6" className="mx-auto" />
         </div>
       ) : (
         data.map((vacancy) => {

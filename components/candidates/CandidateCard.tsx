@@ -31,7 +31,8 @@ export function CandidateCard(props: ICandidateCardProps) {
           <div>
             <p className="text-lg !leading-normal text-primary-text">{`${user.last_name} ${user.name}`}</p>
             <div className="flex items-center">
-              <h3 className="text-2xl font-medium !leading-normal text-primary-text">{jobTitle.name}</h3>
+
+              {jobTitle && <h3 className="text-2xl font-medium !leading-normal text-primary-text">{jobTitle.name}</h3>}
               <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px] !font-roboto !font-medium">
                 Новый пост
               </Badge>
