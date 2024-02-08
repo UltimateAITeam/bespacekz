@@ -16,6 +16,7 @@ export enum CandidatesQueryEnum {
       Languages: true,
       Portfolio: true,
       Pricing: true,
+      jobTitle: true,
     };
   }>;
   
