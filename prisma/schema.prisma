@@ -57,7 +57,7 @@ model FreelancerProfile {
   id         String       @id @default(cuid())
   completed  Boolean      @default(false)
   userEmail  String       @unique
-  jobTitleId Int          
+  jobTitleId Int          @default(1)
   jobTitle   JobTitle     @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
   Education  Education[]
   Experience Experience[]
