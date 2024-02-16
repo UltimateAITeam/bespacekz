@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
         Portfolio: true,
         _count: true,
         Pricing: true,
+        jobTitle: true
       },
       where: {
         user: {
