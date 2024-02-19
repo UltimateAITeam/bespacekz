@@ -236,7 +236,7 @@ const Navbar = () => {
                 }`}
                 onClick={FirstLinkHandle}
               >
-                Find Talent
+                Поиск специалистов
                 <FaCaretDown
                   className={`mt-1 xl:ml-1 ml-[1px] transition ${
                     subLinksI === true ? "rotate-180" : "rotate-0"
@@ -347,7 +347,7 @@ const Navbar = () => {
                                 className="bg-transparent xl:my-4 my-2 border border-gray-200 rounded-md cursor-pointer transition transition-duration hover:bg-[#e1f7fa]"
                               >
                                 <Link href={curVal.link}>
-                                  <div className="flex xl:flex-col flex-row xl:items-stretch items-center xl:w-40 w-50 h-full">
+                                  <div className="flex xl:flex-col flex-row xl:items-stretch items-center xl:w-50 w-50 h-full justify-center">
                                     {/* <Image
                                       src={curVal.img}
                                       height={90}
@@ -403,6 +403,7 @@ const Navbar = () => {
                         </div>
                       </div>
                     )}
+                    
                   </div>
                 </div>
               )}
@@ -415,7 +416,7 @@ const Navbar = () => {
                 }`}
                 onClick={SecondLinkHandle}
               >
-                Find Jobs
+                Поиск работы
                 <FaCaretDown
                   className={`mt-1 xl:ml-1 ml-[1px] transition ${
                     subLinksII === true ? "rotate-180" : "rotate-0"
@@ -449,7 +450,7 @@ const Navbar = () => {
               )}
             </li>
 
-            <li>
+            {/* <li>
               <a
                 className={`cursor-pointer flex items-center text-[1.03rem] font-semibold hover:text-cyan-700 ${
                   subLinksIII === true ? "text-cyan-700" : "text-zinc-700"
@@ -464,7 +465,6 @@ const Navbar = () => {
                 />
               </a>
 
-              {/* ============================ Drop Down List ============================== */}
               {subLinksIII && (
                 <div className="absolute bg- w-full left-0 right-0 top-20 bg-[#F3FFFC] shadow-md z-20">
                   <div className="container mx-auto py-5 px-3">
@@ -490,11 +490,16 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
+            </li> */}
+
+            <li className="text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700">
+              <Link href="/about">О нас</Link>
             </li>
 
             <li className="text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700">
-              <Link href="/enterprise">Enterprise</Link>
+              <Link href="/help">Помощь</Link>
             </li>
+
           </ul>
         </div>
 
@@ -703,14 +708,14 @@ const Navbar = () => {
               className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
               href={"/login"}
             >
-              Log in
+              Войти
             </Link>
 
             <Link
               className="font-semibold bg-gradient-to-tr from-sky-200 to-cyan-200 py-2 px-3 rounded-xl text-gray-800 hover:from-cyan-300 hover:to-sky-200"
               href={"/signup"}
             >
-              Sign up
+              Регистрация
             </Link>
           </div>
         ) : (
@@ -851,14 +856,14 @@ const Navbar = () => {
               className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
               href={"/login"}
             >
-              Log in
+              Войти
             </Link>
 
             <Link
               className="font-semibold bg-gradient-to-tr from-sky-200 to-cyan-200 py-2 px-3 rounded-xl text-gray-800 hover:from-cyan-300 hover:to-sky-200"
               href={"/signup"}
             >
-              Sign up
+              Регистрация
             </Link>
           </div>
         ) : (
