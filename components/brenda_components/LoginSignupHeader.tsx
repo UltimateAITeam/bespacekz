@@ -9,11 +9,11 @@ const LoginSignupHeader = () => {
     return (
         <header className="border-b">
             <nav className="container mx-auto py-3 px-3 flex lg:justify-start justify-center">
-                <div>
+                <div className="flex flex-row">
                     <Link href={"/"}>
                         <Image
-                            src="/bespace/bespace-v3.png"
-                            width={170}
+                            src="/bespace/bespace-logo-new.svg"
+                            width={150}
                             height={50}
                             alt="logo"
                             className="cursor-pointer"

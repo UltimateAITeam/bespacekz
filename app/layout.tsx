@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/app/providers";
-import Head from "next/head"; // Import Head from next/head
 import { cn } from '@/libs/utils';
 import { dmSans, inter, roboto } from '@/libs/fonts';
 
@@ -9,13 +8,13 @@ import { dmSans, inter, roboto } from '@/libs/fonts';
 
 
 export const metadata: Metadata = {
-  title: "Bespace",
+  title: "Bespace - Платформа для профессиалов и клиентов",
   description:
     "Bespace is a platform for connecting professionals with clients.",
   icons: {
-    icon: "bespace/bespace-favicon.png",
-    shortcut: "bespace/bespace-favicon.png",
-    apple: "bespace/bespace-favicon.png",
+    icon: "bespace/favicon.png",
+    shortcut: "bespace/favicon.png",
+    apple: "bespace/favicon.png",
   },
 };
 

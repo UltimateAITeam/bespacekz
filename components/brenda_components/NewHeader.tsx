@@ -28,8 +28,8 @@ function NewHeader() {
                 <div className={"ml-20"}>
                     <Link href={"/"}>
                         <Image
-                            src="/bespace/bespace-v3.png"
-                            width={170}
+                            src="/bespace/bespace-logo-new.svg"
+                            width={150}
                             height={50}
                             alt="logo"
                             className="cursor-pointer"

@@ -62,6 +62,11 @@ module.exports = {
                     foreground: '#C1C1C1',
                     4: '#F0F0F0',
                 },
+                footerBg: '#030852',
+                cardBg: '#F0F5FF'
+                // mainBg: '#F3FFFC',
+                // firstStepsBg: '#F0F5FF',
+                // 'character-secondary': '#72849A'
             },
             borderRadius: {
                 lg: '15px',

@@ -12,6 +12,7 @@ import {IoIosSearch} from 'react-icons/io';
 import {IoLocationOutline} from 'react-icons/io5';
 import {LuDot} from 'react-icons/lu';
 import {Skeleton} from '../ui/skeleton';
+import Link from 'next/link';
 
 interface IPropsVacancy extends IVacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
@@ -55,13 +56,16 @@ export default function VacancyCard(props: IPropsVacancy) {
             <Button leftIcon={<FaRegStar />} colorScheme="yellow" variant="outline">
               В Избранное
             </Button>
+            <Link href={`/vacancies/${id}`}>
             <Button
               colorScheme="messenger"
               variant="outline"
               className="ml-3"
-              onClick={() => router.push(`/vacancies/${id}`)}>
+              // onClick={() => router.push(`/vacancies/${id}`)}
+              >
               Подробнее
             </Button>
+            </Link>
           </div>
         </div>
         <div className="flex items-center mt-2 gap-5 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">

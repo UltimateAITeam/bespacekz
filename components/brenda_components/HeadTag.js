@@ -7,7 +7,7 @@ const HeadTag = ({title}) => {
             <meta name="description" content=""/>
             <meta name="keywords" content=""/>
             <meta name="author" content=""/>
-            <link rel="Shortcut icon" href="/bespace/bespace-favicon.png" type='image/icon' />
+            <link rel="Shortcut icon" href="favicon.png" type='image/icon' />
             <title>{title}</title>
         </Head>
     )

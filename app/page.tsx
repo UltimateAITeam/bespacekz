@@ -17,6 +17,7 @@ import { SiAdobe, SiUdacity } from "react-icons/si";
 import ThreeTierPricing from "@/components/home_page/Pricing";
 import VacancyList from "@/components/brenda_components/VacancyList";
 import { VacanciesList } from "@/components/vacancies/VacanciesList";
+import StatsWithIcons from "@/components/home_page/Stats";
 
 export default function HomePage() {
   const session = useSession();
@@ -26,7 +27,8 @@ export default function HomePage() {
       <HeadTag title="Bespace - The World's Work Marketplace" />
 
       {/* ================= Header ================= */}
-      <header className="header-bg">
+      {/* className="header-bg" */}
+      <header>
         {/* ============== Navbar ============ */}
         <Navbar />
 
@@ -42,7 +44,7 @@ export default function HomePage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.9 }}
               >
-                Работа Нового <br /> Поколения
+                Начни свой <br /> успех вместе <br /> с нами
                 {/* Соединяя Таланты <br /> с AI! */}
               </motion.h1>
               <motion.h6
@@ -51,20 +53,21 @@ export default function HomePage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5 }}
               >
-                Забудьте старые правила.{" "}
-                <br className="lg:block md:hidden block" />
-                Здесь и сейчас – место для ведущих экспертов.
+                Мы тебе поможем быстро найти твоего клиента.{" "}
+                {/* <br className="lg:block md:hidden block" />
+                Здесь и сейчас – место для ведущих экспертов. */}
               </motion.h6>
+
               <motion.button
                 className={
-                  "w-40 p-2 rounded-3xl bg-[#0c4a6e] text-white lg:text-sm xl:text-lg font-semibold"
+                  "w-52 p-2 rounded-xl bg-[#0c4a6e] text-white lg:text-sm xl:text-lg font-semibold"
                 }
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5 }}
               >
                 <Link href={"/signup"} className={"!text-white"}>
-                  GET STARTED
+                  Приступить к работе
                 </Link>
               </motion.button>
             </div>
@@ -74,7 +77,8 @@ export default function HomePage() {
               <Link href="/jobs/todays-jobs">
                 <div className="absolute lg:flex hidden flex-col items-center z-[9] bg-[#F3FFFC] shadow-2xl py-2 px-3 rounded-xl cursor-pointer left-[-3rem] top-0 transition hover:scale-105">
                   <span className="text-[11px] font-semibold text-zinc-700 mb-1">
-                    Today&apos;s Job
+                    {/* Today&apos;s Job */}
+                    Вакансии дня
                   </span>
                   <Image
                     src="/images/bag.png"
@@ -87,9 +91,9 @@ export default function HomePage() {
 
               <div className="mr-10 mt-5 md:block hidden">
                 <Image
-                  src="/images/headerimg.png"
-                  height={350}
-                  width={450}
+                  src="/home/hero.png"
+                  height={410}
+                  width={635}
                   alt="header-img"
                 />
               </div>
@@ -106,7 +110,7 @@ export default function HomePage() {
         {/* ================= Trusted Company Section ================ */}
         <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
           <h3 className="text-zinc-500 font-semibold lg:text-2xl text-xl">
-            Trusted by
+            Нам доверяют
           </h3>
           <motion.div
             className="flex md:flex-row flex-col md:space-x-7 md:space-y-0 space-y-2 md:items-center"
@@ -177,23 +181,28 @@ export default function HomePage() {
           </motion.div>
         </section>
 
+        {/* ======================== Stats section ========================= */}
+        <section className="container mx-auto mt-3 md:mt-7 py-3 md:px-5 sm:px-7 px-3">
+          <StatsWithIcons />
+        </section>
+
         {/* ======================== Talent Category ========================= */}
         <section className="container mx-auto mt-3 md:mt-7 py-3 md:px-5 sm:px-7 px-3">
           <h2 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold mb-3">
-            Browse talent by category
+            Просмотр талантов по категориям
           </h2>
 
           <span className="text-zinc-600 font-semibold lg:text-lg text-md">
-            Looking for work?
-            <Link href="/jobs/all-jobs">
+            Ищете работу?
+            <Link href="/vacancies">
               <span className="ml-2 text-cyan-700 cursor-pointer hover:underline">
-                Browse Job
+                Просмотреть вакансии
               </span>
             </Link>
           </span>
 
           <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 2xl:gap-x-18 gap-x-10 xl:gap-y-7 sm:gap-y-4 gap-y-3 lg:mt-10 mt-7 md:px-0 sm:px-7">
-            {/* ========== category component ========= */}
+            {/* ========== Компонент категории ========= */}
             <Category />
           </div>
         </section>
@@ -207,7 +216,7 @@ export default function HomePage() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              For Clients
+              Для клиентов
             </motion.h2>
 
             <motion.h3
@@ -216,8 +225,8 @@ export default function HomePage() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              Find Talent <br />
-              Your Way
+              Подбор талантов <br />
+              Под ваш запрос
             </motion.h3>
 
             <motion.p
@@ -226,9 +235,9 @@ export default function HomePage() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              Work with the largest network of independent <br />
-              professionals and get things done—from quick <br />
-              turnarounds to big transformations. <br />
+              Работайте с крупнейшей сетью независимых <br />
+              специалистов и реализуйте свои проекты — от быстрых <br />
+              задач до крупных трансформаций. <br />
             </motion.p>
 
             <motion.div
@@ -237,7 +246,7 @@ export default function HomePage() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              {/* ========= for clint ========== */}
+              {/* ========= для клиента ========== */}
               <ClintCat />
             </motion.div>
           </div>
@@ -554,7 +563,7 @@ export default function HomePage() {
             Вакансии дня на платформе
           </h2>
           {/* <VacancyList /> */}
-          <VacanciesList  />
+          <VacanciesList />
         </section>
       </main>
 
