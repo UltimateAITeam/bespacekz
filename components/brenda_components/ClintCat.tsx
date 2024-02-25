@@ -9,33 +9,29 @@ const ClintCat = () => {
     const Data = [
         {
             id: 1,
-            name: `Наймите профессионала`,
-            leftIcon: <FaKeyboard/>,
-            linkText: "Таланты на площадке",
-            rightIcon: <FiArrowRight/>,
-            link: "#",
+            name: 'Закажите услуги эксперта',
+            leftIcon: <FaKeyboard />,
+            linkText: 'Выбор топ-специалистов',
+            rightIcon: <FiArrowRight />,
+            link: '#',
         },
-        
         {
             id: 2,
-            name: `Купите проект`,
-            leftIcon: <BsFillBagFill/>,
-            linkText: "Каталог проектов",
-            rightIcon: <FiArrowRight/>,
-            link: "#",
+            name: 'Откройте для себя проекты под ключ',
+            leftIcon: <BsFillBagFill />,
+            linkText: 'Обзор готовых решений',
+            rightIcon: <FiArrowRight />,
+            link: '#',
         },
-    
         {
             id: 3,
-            name: `Найдем талант для вас`,
-            leftIcon: <AiFillTrophy/>,
-            linkText: "Поиск талантов",
-            rightIcon: <FiArrowRight/>,
-            link: "#",
+            name: 'Получите идеального кандидата',
+            leftIcon: <AiFillTrophy />,
+            linkText: 'Услуги поиска талантов',
+            rightIcon: <FiArrowRight />,
+            link: '#',
         },
-    ]
-    
-    
+    ]    
 
     return (
         <>
@@ -43,7 +39,7 @@ const ClintCat = () => {
                 <Link href={curVal.link} key={curVal.id}>
                     {/* bg-gradient-to-tr from-[#CCFBF1] to-[#CFFAFE] */}
                     <div 
-                        className="flex flex-col justify-between xl:space-y-7 space-y-5 bg-gradient-to-tr from-[#CCFBF1] to-[#CFFAFE] xl:px-7 px-5 py-5 rounded-md cursor-pointer transition duration-300 hover:from-cyan-200 hover:to-[#e1f7fa] hover:scale-105 hover:shadow-lg hover:shadow-cyan-200/50" 
+                        className="flex flex-col justify-between h-full xl:space-y-7 space-y-5 bg-gradient-to-tr from-[#CCFBF1] to-[#CFFAFE] xl:px-7 px-5 py-5 rounded-md cursor-pointer transition duration-300 hover:from-cyan-200 hover:to-[#e1f7fa] hover:scale-105 hover:shadow-lg hover:shadow-cyan-200/50" 
                     >
                         <h5 className="text-zinc-700 font-semibold 2xl:text-4xl xl:text-3xl lg:text-2xl text-xl">
                             {curVal.name}

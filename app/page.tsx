@@ -195,7 +195,8 @@ export default function HomePage() {
           <span className="text-zinc-600 font-semibold lg:text-lg text-md">
             Ищете работу?
             <Link href="/vacancies">
-              <span className="ml-2 text-cyan-700 cursor-pointer hover:underline">
+              {/* cyan-700 */}
+              <span className="ml-2 text-primary-6 cursor-pointer hover:underline">
                 Просмотреть вакансии
               </span>
             </Link>
@@ -262,8 +263,9 @@ export default function HomePage() {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                Why business <br />
-                turn to Bespace
+             
+                Почему компании <br /> 
+                выбирают Bespace
               </motion.h2>
 
               <motion.div
@@ -277,12 +279,11 @@ export default function HomePage() {
                 </span>
                 <div className="flex flex-col space-y-2">
                   <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                    Proof of quality
+                  Гарантия качества
                   </h3>
                   <span className="text-zinc-500 font-semibold xl:text-md">
-                    Check any pro’s work samples, client reviews,{" "}
-                    <br className="md:block hidden" />
-                    and identity verification.
+                  Ознакомьтесь с образцами работ профессионалов, отзывами клиентов <br className="md:block hidden" />
+                  и подтверждением личности.
                   </span>
                 </div>
               </motion.div>
@@ -298,7 +299,7 @@ export default function HomePage() {
                 </span>
                 <div className="flex flex-col space-y-2">
                   <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                    No cost until you hire
+                    Оплата только после найма
                   </h3>
                   <span className="text-zinc-500 font-semibold text-md">
                     Interview potential fits for your job, negotiate{" "}
@@ -319,7 +320,7 @@ export default function HomePage() {
                 </span>
                 <div className="flex flex-col space-y-2">
                   <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                    Safe and secure
+                    Надежность и безопасность
                   </h3>
                   <span className="text-zinc-500 font-semibold text-md">
                     Focus on your work knowing we help protect{" "}
@@ -348,8 +349,8 @@ export default function HomePage() {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                we’re <br />
-                the world’s work marketplace
+                мы являемся <br />
+                глобальной площадкой для трудоустройства
               </motion.h2>
 
               <motion.div

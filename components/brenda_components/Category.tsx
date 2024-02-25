@@ -75,7 +75,8 @@ const Category = () => {
             {Data.map((curVal: any) => (
                 <Link href={curVal.link} key={curVal.id}>
                     <motion.div
-                        className="bg-gradient-to-tr from-[#CCFBF1] to-[#CFFAFE] xl:px-7 px-5 xl:py-7 py-3 xl:space-y-7 space-y-4 rounded-xl cursor-pointer transition hover:from-cyan-200 hover:to-[#CCFBF1] hover:scale-105" 
+                        // bg-gradient-to-tr from-[#CCFBF1] to-[#CFFAFE]
+                        className="bg-cardBg xl:px-7 px-5 xl:py-7 py-3 xl:space-y-7 space-y-4 rounded-xl cursor-pointer transition hover:from-cyan-200 hover:to-[#CCFBF1] hover:scale-105" 
                         initial={{opacity:0}}
                         whileInView={{opacity:1}}
                         transition={{duration:0.9}}
