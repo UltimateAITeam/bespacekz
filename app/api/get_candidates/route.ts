@@ -27,6 +27,13 @@ export async function GET(req: NextRequest) {
       where: {
         user: {
           role: 'FREELANCER'
+        },
+        jobTitle: {
+          category: {
+            category_name: {
+              in: categories.length ? categories : undefined,
+            },
+          },
         }
        /*  city: {
           in: cities.length ? cities : undefined, // Поиск вакансий, где город входит в массив выбранных городов

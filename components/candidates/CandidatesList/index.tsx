@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
 import { CandidateCard } from '../CandidateCard';
 
-const ITEMS_PER_PAGE = 666;
+const ITEMS_PER_PAGE = 7;
 
 export const CandidatesList = () => {
   const searchParams = useSearchParams();

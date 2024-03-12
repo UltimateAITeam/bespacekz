@@ -22,12 +22,17 @@ export const CandidatesFilterContainer = ({categories}: {categories: JobCategory
     }
   }, [searchParams]) 
 
-  const handleChangeFilter = (optionName: CandidatesQueryEnum, value: (string | number)[]) => {
+  const handleChangeFilter = (optionName: CandidatesQueryEnum, value?: (string | number)[]) => {
     const params = new URLSearchParams(searchParams);
+    console.log('@handleChangeFilter', optionName, value);
 
-    params.delete(optionName) // Удаляем старые 
-    params.delete('page') // сбрасываем пагинацию 
-    value.forEach(v => params.append(optionName, v.toString())) // задаем новые фильтры
+    if(value) {
+      params.delete('page') // сбрасываем пагинацию 
+      params.delete(optionName) // Удаляем старые 
+      value.forEach(v => params.append(optionName, v.toString())) // задаем новые фильтры
+    } else {
+      params.delete(optionName)
+    }
 
     replace(`${pathname}?${params.toString()}`)
   }

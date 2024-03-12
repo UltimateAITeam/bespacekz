@@ -25,7 +25,7 @@ export const AsideFilterItem = ({titleFilter, optionsFilters, defaultOptionsValu
   useEffect(() => {
    if(defaultOptionsValue?.length) setValue(defaultOptionsValue)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  } , [defaultOptionsValue])
+  } , [])
 
   /** if isWithSearch */
   const [inputText, setInputText] = useState('')

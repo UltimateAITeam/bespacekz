@@ -33,7 +33,7 @@ export default function VacancyCard(props: IPropsVacancy) {
   } = props;
   const router = useRouter();
   const jobTypeComputed = useMemo(() => JOB_TYPES_MAP[pricingType], [pricingType]);
-  console.log('@clientProfile', clientProfile);
+  
   return (
     <div className="flex md:!flex-row !p-6 !gap-6 max-w-full border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)]">
       <div className="shrink-0">
