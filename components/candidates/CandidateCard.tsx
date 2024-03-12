@@ -24,7 +24,8 @@ export function CandidateCard(props: ICandidateCardProps) {
   return (
     <div className="flex md:flex-row p-6 gap-6 border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)] max-w-[960px]">
       <div className="shrink-0">
-        <Image src="/images/Avatar.png" alt="Avatar" width={80} height={80} />
+        {/* "/images/Avatar.png" */}
+        <Image src={user.image ? user.image as string : "/images/Avatar.png"} alt="Avatar" width={80} height={80} />
       </div>
       <div className="flex-1">
         <div className="flex w-full">

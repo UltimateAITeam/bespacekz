@@ -69,10 +69,10 @@ const Card = ({ data }: { data: StatData }) => {
       <Stack
         direction="column"
         rounded="md"
-        boxShadow={useColorModeValue(
-          '0 4px 6px rgba(160, 174, 192, 0.6)',
-          '2px 4px 6px rgba(9, 17, 28, 0.9)'
-        )}
+        // boxShadow={useColorModeValue(
+        //   '0 4px 6px rgba(160, 174, 192, 0.6)',
+        //   '2px 4px 6px rgba(9, 17, 28, 0.9)'
+        // )}
         w="100%"
         textAlign="left"
         align="start"
@@ -80,7 +80,8 @@ const Card = ({ data }: { data: StatData }) => {
         role="group"
         overflow="hidden"
       >
-        <HStack py={6} px={5} spacing={4} bg={useColorModeValue('gray.100', 'gray.800')} w="100%">
+        {/* bg={useColorModeValue('gray.100', 'gray.800')} */}
+        <HStack py={6} px={5} spacing={4} w="100%" className='bg-cardBg'>
           <Flex
             justifyContent="center"
             alignItems="center"
@@ -97,7 +98,7 @@ const Card = ({ data }: { data: StatData }) => {
             <Icon as={data.icon} w={6} h={6} color="white" />
           </Flex>
           <VStack spacing={0} align="start" maxW="lg" h="100%">
-            <Text as="h3" fontSize="lg" noOfLines={2} color="gray.400">
+            <Text as="h3" fontSize="lg" noOfLines={2} color="gray.600">
               {data.label}
             </Text>
             <HStack spacing={2}>
