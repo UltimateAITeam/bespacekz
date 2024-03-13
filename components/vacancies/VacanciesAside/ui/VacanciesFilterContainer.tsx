@@ -9,8 +9,10 @@ import { VacanciesPriceFilter } from './VacanciesPriceFilter';
 import { JobCategory } from '@prisma/client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { VacanciesQueryEnum } from '@/types/vacancies.types';
+import { useSession } from 'next-auth/react';
 
 export const VacanciesFilterContainer = ({categories}: {categories: JobCategory[]}) => {
+  const {status} = useSession()
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -37,7 +39,9 @@ export const VacanciesFilterContainer = ({categories}: {categories: JobCategory[
     <AsideFilter allOpenIndex>
        <AsideFilterItem titleFilter='Категории' optionsFilters={categories.map(c => ({value: c.category_name, label: c.category_name}))} defaultOptionsValue={defaultCategories} onChangeValue={v => handleChangeFilter(VacanciesQueryEnum.category, v)}  />
        <AsideFilterItem titleFilter='Город' optionsFilters={cities.Kazakhstan}  defaultOptionsValue={defaultCities}  isWithSearch onChangeValue={v => handleChangeFilter(VacanciesQueryEnum.cities ,v)} />
-       {/* <AsideFilterItem titleFilter='Избранные' optionsFilters={[{label:'Отобразить избранное', value: 'favorite'}]}  defaultOptionsValue={[]}   /> */}
+       {status === 'authenticated' && 
+       <AsideFilterItem titleFilter='Избранные' optionsFilters={[{label:'Отобразить избранное', value: 'true'}]} onChangeValue={(v)=>handleChangeFilter(VacanciesQueryEnum.favorite ,v)}  defaultOptionsValue={[]}   />
+       }
        <AsideFilterItem titleFilter='Вид занятости' optionsFilters={job_types}  defaultOptionsValue={defaultJobTypes} onChangeValue={v => handleChangeFilter(VacanciesQueryEnum.job_types ,v)}  />
        <VacanciesPriceFilter />
     </AsideFilter>

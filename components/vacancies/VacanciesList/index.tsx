@@ -6,6 +6,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
 import VacancyCard from '@/components/vacancies/VacancyCard';
+import useSWR from 'swr'
+
 
 const ITEMS_PER_PAGE = 6;
 
@@ -14,8 +16,13 @@ export const VacanciesList = () => {
   const pathname = usePathname();
   const {replace} = useRouter();
 
-  const [data, setData] = useState<IVacancy[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const filtersParams = new URLSearchParams(searchParams);
+        const pageParam = filtersParams.get('page') 
+        filtersParams.delete('page')
+
+  
+  const {isLoading,data} = useSWR<{data:IVacancy[],count:number}>(`/api/get_vacancies?${filtersParams}&page=${pageParam || 1}&limit=${ITEMS_PER_PAGE}`,(key:string)=>fetch(key).then(res=>res.json() as any))
+
 
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -37,32 +44,11 @@ export const VacanciesList = () => {
   }, [searchParams, totalPages]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
-
-        const filtersParams = new URLSearchParams(searchParams);
-        const pageParam = filtersParams.get('page') 
-        filtersParams.delete('page')
-
-        const res = await fetch(`/api/get_vacancies?${filtersParams}&page=${pageParam || 1}&limit=${ITEMS_PER_PAGE}`, {
-          method: 'GET',
-        });
-
-        if (res.status == 200) {
-          const data = await res.json();
-
-          setData(data.data);
-          setTotalItems(data.count);
-          setTotalPages(Math.ceil(data.count / ITEMS_PER_PAGE));
-        }
-      } catch (error) {
-        console.log('@error fetch vacancies', error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [searchParams]);
+    if(data){
+      setTotalItems(data.count);
+      setTotalPages(Math.ceil(data.count / ITEMS_PER_PAGE));
+    }
+  }, [data]);
 
   return (
     <div className="space-y-8 lg:mb-7 mb-3">
@@ -71,7 +57,7 @@ export const VacanciesList = () => {
           <GridLoader color="#366EF6" className="mx-auto" />
         </div>
       ) : (
-        data.map((vacancy) => {
+        data?.data.map((vacancy) => {
           return <VacancyCard key={vacancy.id} {...vacancy} />;
         })
       )}
