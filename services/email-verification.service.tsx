@@ -2,6 +2,8 @@ import 'server-only'
 import postmark from "@/libs/postmark";
 import { prisma } from "@/libs/prisma";
 import { add } from 'date-fns'
+import { render } from '@react-email/components';
+import VerifyEmail from '@/emails/verify-email';
 
 export function randomString(size: number) {
     const i2hex = (i: number) => ("0" + i.toString(16)).slice(-2)
@@ -21,11 +23,13 @@ export async function sendVerificationEmail({ email }: { email: string }) {
         }
     })
 
+    const html = render(<VerifyEmail token={token} />)
+
     await postmark.sendEmail({
         From: "info@bespace.kz",
         To: email,
         Subject: 'Подтвердите ваш email',
-        HtmlBody: `<a href="http://localhost:3000/api/verify_email?token=${token}">Перейдите по ссылке чтобы подтвердить ваш email</a>`,
+        HtmlBody: html,
         "MessageStream": "outbound"
     })
 }

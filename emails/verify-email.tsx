@@ -10,7 +10,7 @@ import {
     Text,
   } from "@react-email/components";
   
-  interface NotionMagicLinkEmailProps {
+  interface VerifyEmailProps {
     token?: string;
   }
   
@@ -18,9 +18,9 @@ import {
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
   
-  export const NotionMagicLinkEmail = ({
+  export const VerifyEmail = ({
     token,
-  }: NotionMagicLinkEmailProps) => (
+  }: VerifyEmailProps) => (
     <Html>
       <Head />
       <Preview>Подтвердите ваш email</Preview>
@@ -53,11 +53,11 @@ import {
     </Html>
   );
   
-  NotionMagicLinkEmail.PreviewProps = {
+  VerifyEmail.PreviewProps = {
     token: "sparo-ndigo-amurt-secan",
-  } as NotionMagicLinkEmailProps;
+  } as VerifyEmailProps;
   
-  export default NotionMagicLinkEmail;
+  export default VerifyEmail;
   
   const main = {
     backgroundColor: "#ffffff",
