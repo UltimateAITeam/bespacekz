@@ -1,11 +1,52 @@
-'use client';
+import { Button } from "@/components/ui/button";
+import { prisma } from "@/libs/prisma";
+import { Vacancy } from "@prisma/client";
+import { getServerSession } from "next-auth";
 
-import { Button } from '@/components/ui/button';
+export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
+  const vacancy = await prisma.vacancy.findUniqueOrThrow({
+    where: {
+      id: idVacancy,
+    },
+    select: {
+      id: true,
+      applicants: {
+        select: {
+          id: true,
+          userEmail: true,
+        },
+      },
+    },
+  });
 
-export function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
-    const clickHandle = () => {
-        console.log('@RespondToVacancy ', idVacancy);
-        // TODO: do something with idVacancy
-    }
-    return <Button onClick={clickHandle} variant='default' >Откликнуться</Button>
+  const session = await getServerSession();
+
+  const isAlreadyApplied = vacancy.applicants
+    .map(({ userEmail }) => userEmail)
+    .includes(session!.user.email);
+
+  return (
+    <form
+      action={async () => {
+        "use server";
+
+        await prisma.freelancerProfile.update({
+          where: {
+            userEmail: session!.user.email,
+          },
+          data: {
+            applications: {
+              connect: {
+                id: vacancy.id,
+              },
+            },
+          },
+        });
+      }}
+    >
+      <Button variant="default" disabled={!session || isAlreadyApplied}>
+        Откликнуться
+      </Button>
+    </form>
+  );
 }
