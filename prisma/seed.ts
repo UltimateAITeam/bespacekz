@@ -1,10 +1,59 @@
 import { PrismaClient, Role, ProficiencyLevel } from '@prisma/client';
 import { faker } from '@faker-js/faker';
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient();
 
 async function main() {
+  const user = await prisma.user.create({
+    data:{
+      email: faker.internet.email(),
+      password: await (bcrypt.hash(faker.internet.password(),10)),
+      clientProfile:{
+        create:{
+            companyInfo: faker.company.name(),
+            isCompany: true
+        }
+      }
+    },
+    select:{
+      clientProfile:{
+        select:{
+          id:true
+        }
+      }
+    }
+  })
+  
+  const jobCategory = await prisma.jobCategory.create({
+    data:{
+      category_name: faker.person.jobArea()
+    }
+  })
+
+  await prisma.jobTitle.createMany({
+    data:Array.from({length:30},()=>
+    ({
+      name: faker.person.jobTitle(),
+      category_id: jobCategory.id
+    })
+    )
+  })
+  
   const jobTitles = await prisma.jobTitle.findMany();
+
+  const jobs = await prisma.vacancy.createMany({
+    data:jobTitles.map((jt)=>({
+      clientId: user.clientProfile!.id,
+      experience: "5 years",
+      jobTitleId: jt.id,
+      priceFrom: 100_000,
+      priceTo: 100_000,
+      specialization: faker.person.jobArea(),
+      aboutVacancy: faker.person.jobDescriptor()
+    }))
+  })
+
   if (jobTitles.length !== 22) {
     console.error(`Expected 23 JobTitles, found ${jobTitles.length}. Please adjust the script accordingly.`);
     return;
