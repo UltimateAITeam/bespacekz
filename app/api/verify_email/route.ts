@@ -11,7 +11,11 @@ export async function GET(req: Request) {
         return redirect('/')
     }
 
-    const verificationToken = await prisma.verificationToken.findUniqueOrThrow({ where: { token } })
+    const [verificationToken] = await prisma.$transaction([prisma.verificationToken.findUniqueOrThrow({ where: { token } }), prisma.verificationToken.delete({
+        where: {
+            token,
+        },
+    })])
 
     if (isAfter(new Date(), verificationToken.expires)) {
         return redirect('/')
