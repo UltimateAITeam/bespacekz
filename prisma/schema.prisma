@@ -66,6 +66,7 @@ model FreelancerProfile {
   Skills     String[]
   Pricing    Pricing[]
   Languages  Language[]
+  applications Vacancy[]
 }
 
 model Education {
@@ -153,6 +154,7 @@ model Vacancy {
   clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
   jobTitleId     Int
   jobTitle       JobTitle      @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
+  applicants FreelancerProfile[]
 }
 
 model JobTitle {
