@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req:NextRequest){
     const {job_id, user_id} = await req.json()
-
+    // hello
     const user = await prisma.user.findUniqueOrThrow({
         where:{
             id:user_id
