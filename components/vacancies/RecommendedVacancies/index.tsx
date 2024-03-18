@@ -5,6 +5,15 @@ type Vacancy = Prisma.VacancyGetPayload<{
   include: {
     jobTitle: true;
     clientProfile: true;
+    favoritedBy:{
+      select: {
+        user:{
+          select:{
+            id: true
+          }
+        }
+      }
+    }
   };
 }>;
 

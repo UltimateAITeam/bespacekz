@@ -4,7 +4,7 @@ import {JOB_TYPES_MAP} from '@/data/job_types';
 import {IVacancy} from '@/types/vacancies.types';
 import {Badge, Button, ButtonGroup, Card} from '@chakra-ui/react';
 import Image from 'next/image';
-import {useRouter,use, usePathname, useSearchParams} from 'next/navigation';
+import {useRouter, usePathname, useSearchParams} from 'next/navigation';
 import {useMemo} from 'react';
 import {CiCalendar, CiClock2} from 'react-icons/ci';
 import {FaRegStar} from 'react-icons/fa';
