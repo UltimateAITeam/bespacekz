@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import {PrismaAdapter} from "@next-auth/prisma-adapter";
 import {JWT} from "next-auth/jwt";
 import jsonwebtoken from "jsonwebtoken";
+import { sendVerificationEmail } from "@/services/email-verification.service";
 
 export const authOptions: AuthOptions  = {
     providers: [
@@ -66,6 +67,8 @@ export const authOptions: AuthOptions  = {
 
                 if (!user) {
                     const hashedPassword = await bcrypt.hash(credentials.password, 10);
+
+                    await sendVerificationEmail({email: credentials.email})
 
                     return prisma.user.create({
                         data: {

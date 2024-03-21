@@ -4,7 +4,7 @@ import {JOB_TYPES_MAP} from '@/data/job_types';
 import {IVacancy} from '@/types/vacancies.types';
 import {Badge, Button, ButtonGroup, Card} from '@chakra-ui/react';
 import Image from 'next/image';
-import {useRouter} from 'next/navigation';
+import {useRouter, usePathname, useSearchParams} from 'next/navigation';
 import {useMemo} from 'react';
 import {CiCalendar, CiClock2} from 'react-icons/ci';
 import {FaRegStar} from 'react-icons/fa';
@@ -13,9 +13,12 @@ import {IoLocationOutline} from 'react-icons/io5';
 import {LuDot} from 'react-icons/lu';
 import {Skeleton} from '../ui/skeleton';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useSWRConfig } from 'swr';
 
 interface IPropsVacancy extends IVacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
+  const {status,data} = useSession()
   const {
     aboutVacancy,
     city,
@@ -30,9 +33,20 @@ export default function VacancyCard(props: IPropsVacancy) {
     pricingType,
     requiredSkills,
     clientProfile,
+    favoritedBy
   } = props;
   const router = useRouter();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const jobTypeComputed = useMemo(() => JOB_TYPES_MAP[pricingType], [pricingType]);
+  const { mutate } = useSWRConfig()
+  console.log('@clientProfile', clientProfile);
+
+  const filtersParams = new URLSearchParams(searchParams);
+  const pageParam = filtersParams.get('page') 
+  filtersParams.delete('page')
+
+  const isFavorite = status === 'authenticated' && favoritedBy.map(v=>v.user.id).includes(data.user.id)
   
   return (
     <div className="flex md:!flex-row !p-6 !gap-6 max-w-full border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)]">
@@ -53,9 +67,21 @@ export default function VacancyCard(props: IPropsVacancy) {
             </div>
           </div>
           <div className="ml-auto">
-            <Button leftIcon={<FaRegStar />} colorScheme="yellow" variant="outline">
-              В Избранное
+          {status === 'authenticated' && 
+            <Button leftIcon={<FaRegStar />} colorScheme="yellow" variant={isFavorite?"solid":"outline"} onClick={async()=>{
+              await fetch('/api/favorite',{
+              method:isFavorite ? "DELETE" :'POST',
+              body:JSON.stringify({
+                  job_id: id,
+                  user_id: data.user.id
+                })
+              })
+
+              mutate(`/api/get_vacancies?${filtersParams}&page=${pageParam || 1}&limit=${6}`)
+            }}>
+              {isFavorite ? "Удалить из избранного":"В Избранное"}
             </Button>
+          }
             <Link href={`/vacancies/${id}`}>
             <Button
               colorScheme="messenger"
