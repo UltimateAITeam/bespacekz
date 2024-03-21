@@ -14,18 +14,35 @@ export async function GET(req: NextRequest) {
     if (!limit || !page) return NextResponse.json({error: 'no limit or page provided'}, {status: 400});
 
     const query: Prisma.FreelancerProfileFindManyArgs = {
-      include: {
-        user: true,
+      select: {
+        user: {
+          select: {
+            image: true,
+            about: true,
+            name: true,
+            last_name: true,
+            location: true,
+          },
+        },
         Education: true,
         Experience: true,
         Languages: true,
-        Portfolio: true,
-        _count: true,
         Pricing: true,
+        Portfolio: true,
+        jobTitle: true,
+        Skills: true,
+        id: true,
       },
       where: {
         user: {
           role: 'FREELANCER'
+        },
+        jobTitle: {
+          category: {
+            category_name: {
+              in: categories.length ? categories : undefined,
+            },
+          },
         }
        /*  city: {
           in: cities.length ? cities : undefined, // Поиск вакансий, где город входит в массив выбранных городов

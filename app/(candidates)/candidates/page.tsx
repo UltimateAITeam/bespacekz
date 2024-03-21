@@ -1,10 +1,8 @@
-import {VacanciesAside} from '@/components/vacancies/VacanciesAside';
-import {VacanciesList} from '@/components/vacancies/VacanciesList';
-import './style.css';
-import { ICandidatesSearchParams } from '@/types/candidates.types';
-import { SearchBar } from '@/components/ui/SearchBar';
 import { CandidatesAside } from '@/components/candidates/CandidatesAside';
 import { CandidatesList } from '@/components/candidates/CandidatesList';
+import { SearchBar } from '@/components/ui/SearchBar';
+import { ICandidatesSearchParams } from '@/types/candidates.types';
+import './style.css';
 
 export const dynamic = 'force-dynamic'
 
