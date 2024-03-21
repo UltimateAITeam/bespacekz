@@ -9,14 +9,24 @@ export enum CandidatesQueryEnum {
   export interface ICandidatesSearchParams extends Record<CandidatesQueryEnum, string | number[]> {}
 
   export type ICandidate = Prisma.FreelancerProfileGetPayload<{
-    include: {
-      user: true,
+    select: {
+      user: {
+        select: {
+          image: true,
+          about: true,
+          name: true,
+          last_name: true,
+          location: true
+        },
+      },
       Education: true,
       Experience: true,
       Languages: true,
-      Portfolio: true,
       Pricing: true,
+      Portfolio: true,
       jobTitle: true,
-    };
+      Skills: true,
+      id: true,
+    },
   }>;
   
