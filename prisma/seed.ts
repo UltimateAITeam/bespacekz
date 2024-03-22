@@ -7,8 +7,8 @@ const prisma = new PrismaClient();
 async function main() {
   const user = await prisma.user.create({
     data:{
-      email: faker.internet.email(),
-      password: await (bcrypt.hash(faker.internet.password(),10)),
+      email: "azamat@bespace.kz",
+      password: await (bcrypt.hash("azamat@bespace.kz",10)),
       clientProfile:{
         create:{
             companyInfo: faker.company.name(),
