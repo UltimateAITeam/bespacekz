@@ -1,29 +1,35 @@
-'use client';
+"use client";
 import { SessionProvider } from "next-auth/react";
-import { ChakraProvider  } from '@chakra-ui/react'
-import posthog from "posthog-js"
-import { PostHogProvider } from 'posthog-js/react'
-import {theme} from '../libs/chakraTheme'
-import { Next13ProgressBar } from 'next13-progressbar';
+import { ChakraProvider } from "@chakra-ui/react";
+import posthog from "posthog-js";
+import { PostHogProvider } from "posthog-js/react";
+import { theme } from "../libs/chakraTheme";
+import { Next13ProgressBar } from "next13-progressbar";
 
-if (typeof window !== 'undefined') { // checks that we are client-side
+if (typeof window !== "undefined") {
+  // checks that we are client-side
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY as string, {
-    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com',
+    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://app.posthog.com",
     loaded: (posthog) => {
-      if (process.env.NODE_ENV === 'development') posthog.debug() // debug mode in development
+      if (process.env.NODE_ENV === "development") posthog.debug(); // debug mode in development
     },
-  })
+  });
 }
 
-export function Providers({children}: {children: React.ReactNode}) {
-    return (
-        <SessionProvider>
-            <ChakraProvider theme={theme}>
-            <PostHogProvider client={posthog}>
-            {children}
-            <Next13ProgressBar height="4px" color="#0A2FFF" options={{ showSpinner: true }} showOnShallow />
-            </PostHogProvider>
-            </ChakraProvider>
-        </SessionProvider>
-    )
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <SessionProvider>
+      <ChakraProvider theme={theme}>
+        <PostHogProvider client={posthog}>
+          {children}
+          <Next13ProgressBar
+            height="4px"
+            color="#0A2FFF"
+            options={{ showSpinner: true }}
+            showOnShallow
+          />
+        </PostHogProvider>
+      </ChakraProvider>
+    </SessionProvider>
+  );
 }
