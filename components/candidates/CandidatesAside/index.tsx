@@ -1,8 +1,9 @@
 import { JobCategory } from '@prisma/client';
+import { CandidatesFilterContainer } from './ui/CandidatesFilterContainer';
 
 
 async function getExistCategories<T>(): Promise<T> {
-  const result = await fetch(`${process.env.API_URL}/api/job_categories`, {
+  const result = await fetch(`${process.env.API_URL}/api/get_candidates/categories`, {
     method: 'GET',
   });
   return result.json() as T;
@@ -10,8 +11,10 @@ async function getExistCategories<T>(): Promise<T> {
 
 export const CandidatesAside = async () => {
   const categories = await getExistCategories<JobCategory[]>();
+  console.log('@categories', categories);
   return (
     <div>
+      <CandidatesFilterContainer categories={categories} />
     </div>
   );
 };

@@ -17,15 +17,10 @@ interface IAsideFilterItemProps {
 }
 
 export const AsideFilterItem = ({titleFilter, optionsFilters, defaultOptionsValue, className, onChangeValue, isWithSearch, placeholderInput, }: IAsideFilterItemProps) => {
-  const { value, getCheckboxProps, setValue} = useCheckboxGroup({onChange: onChangeValue});
+  const { value, getCheckboxProps, setValue} = useCheckboxGroup({onChange: onChangeValue, defaultValue: defaultOptionsValue});
 
   const isAllChecked = useMemo(() => value.length === optionsFilters.length, [value, optionsFilters]);
 
-  /** Установка значений по умолчанию */
-  useEffect(() => {
-   if(defaultOptionsValue?.length) setValue(defaultOptionsValue)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  } , [defaultOptionsValue])
 
   /** if isWithSearch */
   const [inputText, setInputText] = useState('')
