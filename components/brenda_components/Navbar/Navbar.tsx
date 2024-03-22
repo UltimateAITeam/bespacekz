@@ -37,7 +37,7 @@ import {
   IconButton,
   useDisclosure
 } from "@chakra-ui/react";
-import { FiChevronDown, FiSettings, FiInbox, FiLogOut, FiBell, FiUser } from "react-icons/fi";
+import { FiChevronDown, FiSettings, FiInbox, FiLogOut, FiBell, FiUser, FiArchive } from "react-icons/fi";
 import VacancyCreateModal from "@/components/modals/VacancyCreateModal";
 
 const Navbar = () => {
@@ -626,6 +626,8 @@ const Navbar = () => {
               <MenuItem as={Link} href={"/profile"} icon={<CgProfile />}>
                 Профиль
               </MenuItem>
+              <MenuDivider />
+              <MenuItem as={Link} href={"/vacancies/my"} icon={<FiArchive />}>Мои вакансии</MenuItem>
               <MenuDivider />
               <MenuItem icon={<FiInbox />}>
                 {session.data.user.role === "CLIENT"
