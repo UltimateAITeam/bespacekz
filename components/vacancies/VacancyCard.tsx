@@ -46,7 +46,7 @@ export default function VacancyCard(props: IPropsVacancy) {
   const pageParam = filtersParams.get('page') 
   filtersParams.delete('page')
 
-  const isFavorite = status === 'authenticated' && favoritedBy.map(v=>v.user.id).includes(data.user.id)
+  const isFavorite = status === 'authenticated' && favoritedBy?.map(v=>v.user.id).includes(data.user.id)
   
   return (
     <div className="flex md:!flex-row !p-6 !gap-6 max-w-full border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)]">
