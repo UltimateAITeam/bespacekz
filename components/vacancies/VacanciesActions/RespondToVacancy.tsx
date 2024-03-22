@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
+import VacancyApplication from "@/emails/vacancy-application";
+import postmark from "@/libs/postmark";
 import { prisma } from "@/libs/prisma";
 import { Vacancy } from "@prisma/client";
+import { render } from "@react-email/components";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
@@ -12,12 +15,26 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
     },
     select: {
       id: true,
+      jobTitle:{
+        select:{
+          name: true
+        }
+      },
       applicants: {
         select: {
           id: true,
           userEmail: true,
         },
       },
+      clientProfile:{
+        select:{
+          user: {
+            select:{
+              email: true,
+            }
+          }
+        }
+      }
     },
   });
 
@@ -32,7 +49,7 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
       action={async () => {
         "use server";
 
-        await prisma.freelancerProfile.update({
+        const freelancer = await prisma.freelancerProfile.update({
           where: {
             userEmail: session!.user.email,
           },
@@ -43,7 +60,30 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
               },
             },
           },
+          select:{
+            user:{
+              select:{
+                id: true,name:true,
+                last_name: true,
+              }
+            }
+          }
         });
+
+        const html = render(<VacancyApplication vacancy={{
+          id: vacancy.id,
+          name: vacancy.jobTitle.name,
+        }} applicant={{
+          id: freelancer.user.id,
+        }} />)
+
+        await postmark.sendEmail({
+          From: "info@bespace.kz",
+          To: vacancy.clientProfile.user.email,
+          Subject: 'Новый отклик на вакансию',
+          HtmlBody: html,
+          "MessageStream": "outbound"
+        })
 
         revalidatePath(`/vacancies/${idVacancy}`);
       }}
