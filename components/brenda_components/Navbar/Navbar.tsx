@@ -626,10 +626,13 @@ const Navbar = () => {
               <MenuItem as={Link} href={"/profile"} icon={<CgProfile />}>
                 Профиль
               </MenuItem>
-              <MenuDivider />
-              {session.data.user.role === 'CLIENT' && 
-              <MenuItem as={Link} href={"/vacancies/my"} icon={<FiArchive />}>Мои вакансии</MenuItem>
-              }
+              {session.data.user.role === 'CLIENT'  && 
+
+<>
+ <MenuDivider />
+ <MenuItem as={Link} href={"/vacancies/my"} icon={<FiArchive />}>Мои вакансии</MenuItem>
+</>
+}
               <MenuDivider />
               <MenuItem icon={<FiInbox />}>
                 {session.data.user.role === "CLIENT"
@@ -840,6 +843,13 @@ const Navbar = () => {
                   {session.data.user.email}
                 </MenuItem>
               )}
+                 {session.data.user.role === 'CLIENT'  && 
+
+                  <>
+                   <MenuDivider />
+                   <MenuItem as={Link} href={"/vacancies/my"} icon={<FiArchive />}>Мои вакансии</MenuItem>
+                  </>
+              }
               <MenuDivider />
               <MenuItem icon={<FiInbox />}>
                 {session.data.user.role === "CLIENT"
