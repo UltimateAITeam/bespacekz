@@ -54,20 +54,20 @@ model User {
 }
 
 model FreelancerProfile {
-  id         String       @id @default(cuid())
-  completed  Boolean      @default(false)
-  userEmail  String       @unique
-  jobTitleId Int          @default(1)
-  jobTitle   JobTitle     @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
-  Education  Education[]
-  Experience Experience[]
-  user       User         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  Portfolio  Portfolio[]
-  Skills     String[]
-  Pricing    Pricing[]
-  Languages  Language[]
-  applications Vacancy[] @relation(name: "applications")
-  favorites  Vacancy[]
+  id           String       @id @default(cuid())
+  completed    Boolean      @default(false)
+  userEmail    String       @unique
+  jobTitleId   Int          @default(1)
+  jobTitle     JobTitle     @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
+  Education    Education[]
+  Experience   Experience[]
+  user         User         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  Portfolio    Portfolio[]
+  Skills       String[]
+  Pricing      Pricing[]
+  Languages    Language[]
+  applications Vacancy[]    @relation(name: "applications")
+  favorites    Vacancy[]
 }
 
 model Education {
@@ -137,26 +137,26 @@ model ClientProfile {
 }
 
 model Vacancy {
-  id             String        @id @default(cuid())
+  id             String              @id @default(cuid())
   clientId       String
-  pricingType    PricingType   @default(FREELANCE)
+  pricingType    PricingType         @default(FREELANCE)
   aboutVacancy   String
   priceFrom      Float
   priceTo        Float
-  currency       CurrencyType  @default(KZT)
-  isClear        Boolean       @default(false)
+  currency       CurrencyType        @default(KZT)
+  isClear        Boolean             @default(false)
   experience     String
   specialization String
-  requiredSkills String[]      @default([])
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @default(now()) @updatedAt
-  country        String        @default("Kazakhstan")
-  city           String        @default("remote")
-  clientProfile  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  requiredSkills String[]            @default([])
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @default(now()) @updatedAt
+  country        String              @default("Kazakhstan")
+  city           String              @default("remote")
+  clientProfile  ClientProfile       @relation(fields: [clientId], references: [id], onDelete: Cascade)
   jobTitleId     Int
-  jobTitle       JobTitle      @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
-  applicants FreelancerProfile[] @relation(name: "applications")
-  favoritedBy   FreelancerProfile[] 
+  jobTitle       JobTitle            @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
+  applicants     FreelancerProfile[] @relation(name: "applications")
+  favoritedBy    FreelancerProfile[]
 }
 
 model JobTitle {
