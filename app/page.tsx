@@ -22,7 +22,7 @@ import StatsWithIcons from "@/components/home_page/Stats";
 export default function HomePage() {
   const session = useSession();
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       {/* ============== Head Tag =============== */}
       <HeadTag title="Bespace - The World's Work Marketplace" />
 
@@ -33,13 +33,13 @@ export default function HomePage() {
         <Navbar />
 
         {/* ============= Head Container =============== */}
-        <div className="container mx-auto py-3 md:px-5 sm:px-7 px-3">
+        <div className="container mx-auto px-3 py-3 sm:px-7 md:px-5">
           {/* ============ First part [banner section] ============  */}
           <section className="mt-7 flex items-center justify-between">
             {/* ========= Right ======== */}
             <div className="flex flex-col space-y-5">
               <motion.h1
-                className="xl:text-7xl lg:text-6xl text-4xl font-bold text-[#0C4A6E]"
+                className="text-4xl font-bold text-[#0C4A6E] lg:text-6xl xl:text-7xl"
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.9 }}
@@ -48,7 +48,7 @@ export default function HomePage() {
                 {/* Соединяя Таланты <br /> с AI! */}
               </motion.h1>
               <motion.h6
-                className="text-zinc-500 xl:text-3xl lg:text-xl text-lg font-semibold"
+                className="text-lg font-semibold text-zinc-500 lg:text-xl xl:text-3xl"
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5 }}
@@ -60,7 +60,7 @@ export default function HomePage() {
 
               <motion.button
                 className={
-                  "w-52 p-2 rounded-xl bg-[#0c4a6e] text-white lg:text-sm xl:text-lg font-semibold"
+                  "w-52 rounded-xl bg-[#0c4a6e] p-2 font-semibold text-white lg:text-sm xl:text-lg"
                 }
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -75,8 +75,8 @@ export default function HomePage() {
             {/* ========= Left ======== */}
             <div className="relative">
               <Link href="/jobs/todays-jobs">
-                <div className="absolute lg:flex hidden flex-col items-center z-[9] bg-[#F3FFFC] shadow-2xl py-2 px-3 rounded-xl cursor-pointer left-[-3rem] top-0 transition hover:scale-105">
-                  <span className="text-[11px] font-semibold text-zinc-700 mb-1">
+                <div className="absolute left-[-3rem] top-0 z-[9] hidden cursor-pointer flex-col items-center rounded-xl bg-[#F3FFFC] px-3 py-2 shadow-2xl transition hover:scale-105 lg:flex">
+                  <span className="mb-1 text-[11px] font-semibold text-zinc-700">
                     {/* Today&apos;s Job */}
                     Вакансии дня
                   </span>
@@ -89,7 +89,7 @@ export default function HomePage() {
                 </div>
               </Link>
 
-              <div className="mr-10 mt-5 md:block hidden">
+              <div className="mr-10 mt-5 hidden md:block">
                 <Image
                   src="/home/hero.png"
                   height={410}
@@ -108,17 +108,17 @@ export default function HomePage() {
       {/* ================= Main ==================== */}
       <main className="bg-mainBg">
         {/* ================= Trusted Company Section ================ */}
-        <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
-          <h3 className="text-zinc-500 font-semibold lg:text-2xl text-xl">
+        <section className="container mx-auto mt-3 space-y-3 px-3 py-3 sm:px-7 md:px-5">
+          <h3 className="text-xl font-semibold text-zinc-500 lg:text-2xl">
             Нам доверяют
           </h3>
           <motion.div
-            className="flex md:flex-row flex-col md:space-x-7 md:space-y-0 space-y-2 md:items-center"
+            className="flex flex-col space-y-2 md:flex-row md:items-center md:space-x-7 md:space-y-0"
             initial={{ x: 20, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <div className="flex 2xl:space-x-10 xl:space-x-7 sm:space-x-6 space-x-3">
+            <div className="flex space-x-3 sm:space-x-6 xl:space-x-7 2xl:space-x-10">
               <span>
                 <Image
                   src="/images/paypal.png"
@@ -152,7 +152,7 @@ export default function HomePage() {
                 />
               </span>
             </div>
-            <div className="flex 2xl:space-x-10 xl:space-x-7 sm:space-x-6 space-x-4">
+            <div className="flex space-x-4 sm:space-x-6 xl:space-x-7 2xl:space-x-10">
               <span>
                 <Image
                   src="/images/microsoft.png"
@@ -182,37 +182,37 @@ export default function HomePage() {
         </section>
 
         {/* ======================== Stats section ========================= */}
-        <section className="container mx-auto mt-3 md:mt-7 py-3 md:px-5 sm:px-7 px-3">
+        <section className="container mx-auto mt-3 px-3 py-3 sm:px-7 md:mt-7 md:px-5">
           <StatsWithIcons />
         </section>
 
         {/* ======================== Talent Category ========================= */}
-        <section className="container mx-auto mt-3 md:mt-7 py-3 md:px-5 sm:px-7 px-3">
-          <h2 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold mb-3">
+        <section className="container mx-auto mt-3 px-3 py-3 sm:px-7 md:mt-7 md:px-5">
+          <h2 className="mb-3 text-3xl font-bold text-[#0C4A6E] lg:text-4xl">
             Просмотр талантов по категориям
           </h2>
 
-          <span className="text-zinc-600 font-semibold lg:text-lg text-md">
+          <span className="text-md font-semibold text-zinc-600 lg:text-lg">
             Ищете работу?
             <Link href="/vacancies">
               {/* cyan-700 */}
-              <span className="ml-2 text-primary-6 cursor-pointer hover:underline">
+              <span className="ml-2 cursor-pointer text-primary-6 hover:underline">
                 Просмотреть вакансии
               </span>
             </Link>
           </span>
 
-          <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 2xl:gap-x-18 gap-x-10 xl:gap-y-7 sm:gap-y-4 gap-y-3 lg:mt-10 mt-7 md:px-0 sm:px-7">
+          <div className="2xl:gap-x-18 mt-7 grid grid-cols-1 gap-x-10 gap-y-3 sm:gap-y-4 sm:px-7 md:grid-cols-2 md:px-0 lg:mt-10 xl:grid-cols-4 xl:gap-y-7">
             {/* ========== Компонент категории ========= */}
             <Category />
           </div>
         </section>
 
         {/* ====================== Find Talent Section =================== */}
-        <section className="container mx-auto lg:mt-5 mt-3 py-3 md:px-5 sm:px-7 px-0 space-y-3">
-          <div className="bg-[url('/images/grilswork.png')] bg-top w-full sm:rounded-xl rounded-none xl:px-14 px-5 py-8">
+        <section className="container mx-auto mt-3 space-y-3 px-0 py-3 sm:px-7 md:px-5 lg:mt-5">
+          <div className="w-full rounded-none bg-[url('/images/grilswork.png')] bg-top px-5 py-8 sm:rounded-xl xl:px-14">
             <motion.h2
-              className="text-white font-semibold lg:text-3xl text-xl"
+              className="text-xl font-semibold text-white lg:text-3xl"
               initial={{ y: "100%", opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -221,7 +221,7 @@ export default function HomePage() {
             </motion.h2>
 
             <motion.h3
-              className="text-white 2xl:font-bold font-semibold lg:text-6xl text-4xl lg:mt-28 mt-20 leading-tight my-3"
+              className="my-3 mt-20 text-4xl font-semibold leading-tight text-white lg:mt-28 lg:text-6xl 2xl:font-bold"
               initial={{ y: "100%", opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -231,7 +231,7 @@ export default function HomePage() {
             </motion.h3>
 
             <motion.p
-              className="text-white font-semibold lg:text-xl text-md"
+              className="text-md font-semibold text-white lg:text-xl"
               initial={{ y: "100%", opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -242,7 +242,7 @@ export default function HomePage() {
             </motion.p>
 
             <motion.div
-              className="grid md:grid-cols-3 grid-cols-1 2xl:gap-x-10 md:gap-y-0 gap-y-3 xl:gap-x-7 gap-x-5 mt-10"
+              className="mt-10 grid grid-cols-1 gap-x-5 gap-y-3 md:grid-cols-3 md:gap-y-0 xl:gap-x-7 2xl:gap-x-10"
               initial={{ y: "100", opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -254,85 +254,85 @@ export default function HomePage() {
         </section>
 
         {/* ========================== Busines section ============================= */}
-        <section className="container mx-auto lg:mt-5 mt-1 py-3 md:px-5 sm:px-7">
-          <div className="grid lg:grid-cols-3 grid-cols-1">
-            <div className="md:bg-[#E4FDF7] bg-none col-span-2 lg:rounded-l-xl lg:rounded-tr-none rounded-t-xl sm:px-7 px-5 pt-10 pb-14 relative">
+        <section className="container mx-auto mt-1 py-3 sm:px-7 md:px-5 lg:mt-5">
+          <div className="grid grid-cols-1 lg:grid-cols-3">
+            <div className="relative col-span-2 rounded-t-xl bg-none px-5 pb-14 pt-10 sm:px-7 md:bg-[#E4FDF7] lg:rounded-l-xl lg:rounded-tr-none">
               <motion.h2
-                className="text-zinc-700 font-semibold 2xl:text-6xl lg:text-5xl text-4xl"
+                className="text-4xl font-semibold text-zinc-700 lg:text-5xl 2xl:text-6xl"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-             
-                Почему компании <br /> 
+                Почему компании <br />
                 выбирают Bespace
               </motion.h2>
 
               <motion.div
-                className="flex md:ml-3 ml-0 space-x-5 items-start mt-7"
+                className="ml-0 mt-7 flex items-start space-x-5 md:ml-3"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <span className="flex rounded-full py-1 px-1 bg-zinc-700 text-white xl:text-xl text-md mt-1">
+                <span className="text-md mt-1 flex rounded-full bg-zinc-700 px-1 py-1 text-white xl:text-xl">
                   <FaStar />
                 </span>
                 <div className="flex flex-col space-y-2">
-                  <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                  Гарантия качества
+                  <h3 className="text-2xl font-semibold text-zinc-700 xl:text-3xl">
+                    Гарантия качества
                   </h3>
-                  <span className="text-zinc-500 font-semibold xl:text-md">
-                  Ознакомьтесь с образцами работ профессионалов, отзывами клиентов <br className="md:block hidden" />
-                  и подтверждением личности.
+                  <span className="xl:text-md font-semibold text-zinc-500">
+                    Ознакомьтесь с образцами работ профессионалов, отзывами
+                    клиентов <br className="hidden md:block" />и подтверждением
+                    личности.
                   </span>
                 </div>
               </motion.div>
 
               <motion.div
-                className="flex md:ml-3 ml-0 space-x-5 items-start mt-7"
+                className="ml-0 mt-7 flex items-start space-x-5 md:ml-3"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <span className="flex rounded-full py-1 px-1 bg-zinc-700 text-white xl:text-xl text-md mt-1">
+                <span className="text-md mt-1 flex rounded-full bg-zinc-700 px-1 py-1 text-white xl:text-xl">
                   <IoLogoUsd />
                 </span>
                 <div className="flex flex-col space-y-2">
-                  <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
+                  <h3 className="text-2xl font-semibold text-zinc-700 xl:text-3xl">
                     Оплата только после найма
                   </h3>
-                  <span className="text-zinc-500 font-semibold text-md">
+                  <span className="text-md font-semibold text-zinc-500">
                     Interview potential fits for your job, negotiate{" "}
-                    <br className="md:block hidden" />
+                    <br className="hidden md:block" />
                     rates, and only pay for work you approve.
                   </span>
                 </div>
               </motion.div>
 
               <motion.div
-                className="flex md:ml-3 ml-0 space-x-5 items-start mt-7"
+                className="ml-0 mt-7 flex items-start space-x-5 md:ml-3"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <span className="flex rounded-full py-1 px-1 bg-zinc-700 text-white xl:text-xl text-md mt-1">
+                <span className="text-md mt-1 flex rounded-full bg-zinc-700 px-1 py-1 text-white xl:text-xl">
                   <ImCheckmark />
                 </span>
                 <div className="flex flex-col space-y-2">
-                  <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
+                  <h3 className="text-2xl font-semibold text-zinc-700 xl:text-3xl">
                     Надежность и безопасность
                   </h3>
-                  <span className="text-zinc-500 font-semibold text-md">
+                  <span className="text-md font-semibold text-zinc-500">
                     Focus on your work knowing we help protect{" "}
-                    <br className="md:block hidden" />
+                    <br className="hidden md:block" />
                     your data and privacy. We’re here with 24/7{" "}
-                    <br className="md:block hidden" />
+                    <br className="hidden md:block" />
                     support if you need it.
                   </span>
                 </div>
               </motion.div>
 
-              <div className="absolute lg:right-[-1rem] right-0 bottom-3 md:block hidden">
+              <div className="absolute bottom-3 right-0 hidden md:block lg:right-[-1rem]">
                 <Image
                   src="/images/man-preg.png"
                   width={250}
@@ -342,9 +342,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-b from-[#99F6E4] to-[#A5F3FC] lg:rounded-r-xl lg:rounded-bl-none md:rounded-b-xl md:rounded-none sm:rounded-xl rounded-none px-7 pt-10 pb-15 py-10">
+            <div className="pb-15 rounded-none bg-gradient-to-b from-[#99F6E4] to-[#A5F3FC] px-7 py-10 pt-10 sm:rounded-xl md:rounded-none md:rounded-b-xl lg:rounded-r-xl lg:rounded-bl-none">
               <motion.h2
-                className="text-zinc-700 font-semibold 2xl:text-5xl xl:text-4xl text-3xl"
+                className="text-3xl font-semibold text-zinc-700 xl:text-4xl 2xl:text-5xl"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
@@ -354,40 +354,40 @@ export default function HomePage() {
               </motion.h2>
 
               <motion.div
-                className="flex items-start space-x-7 mt-10"
+                className="mt-10 flex items-start space-x-7"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <span className="2xl:text-4xl xl:text-3xl text-2xl text-zinc-700 mt-1">
+                <span className="mt-1 text-2xl text-zinc-700 xl:text-3xl 2xl:text-4xl">
                   <FaStar />
                 </span>
 
-                <div className="flex flex-col md:space-y-3 space-y-2">
-                  <h3 className="font-semibold 2xl:text-4xl xl:text-3xl text-2xl text-zinc-700">
+                <div className="flex flex-col space-y-2 md:space-y-3">
+                  <h3 className="text-2xl font-semibold text-zinc-700 xl:text-3xl 2xl:text-4xl">
                     4.9/5
                   </h3>
-                  <span className="2xl:text-xl lg:text-md text-zinc-500">
+                  <span className="lg:text-md text-zinc-500 2xl:text-xl">
                     Clients rate professionals on Bespace
                   </span>
                 </div>
               </motion.div>
 
               <motion.div
-                className="flex items-start space-x-7 xl:mt-10 md:mt-7 mt-5"
+                className="mt-5 flex items-start space-x-7 md:mt-7 xl:mt-10"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <span className="2xl:text-4xl xl:text-3xl text-2xl text-zinc-700 mt-1">
+                <span className="mt-1 text-2xl text-zinc-700 xl:text-3xl 2xl:text-4xl">
                   <BsFillTrophyFill />
                 </span>
 
-                <div className="flex flex-col md:space-y-3 space-y-2">
-                  <h3 className="font-semibold 2xl:text-4xl xl:text-3xl text-2xl text-zinc-700">
+                <div className="flex flex-col space-y-2 md:space-y-3">
+                  <h3 className="text-2xl font-semibold text-zinc-700 xl:text-3xl 2xl:text-4xl">
                     Award winner
                   </h3>
-                  <span className="2xl:text-xl lg:text-md text-zinc-500">
+                  <span className="lg:text-md text-zinc-500 2xl:text-xl">
                     G2’s 2021 Best Software Awards
                   </span>
                 </div>
@@ -397,24 +397,24 @@ export default function HomePage() {
         </section>
 
         {/* =================== Pricing Section ===================== */}
-        <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
+        <section className="container mx-auto mt-3 space-y-3 px-3 py-3 sm:px-7 md:px-5">
           <ThreeTierPricing />
         </section>
 
         {/* ====================== oppertunity section ==============================  */}
-        <section className="container mx-auto md:mt-5 mt-3 py-3 md:px-5 sm:px-7 px-0 space-y-3">
-          <div className="grid 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1">
+        <section className="container mx-auto mt-3 space-y-3 px-0 py-3 sm:px-7 md:mt-5 md:px-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3">
             <Image
               src="/images/manworking.png"
               width={1200}
               height={1200}
               alt="manworking-image"
-              className="md:rounded-l-xl md:rounded-tr-none sm:rounded-t-xl rounded-none flex flex-grow"
+              className="flex flex-grow rounded-none sm:rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
             />
 
-            <div className="bg-gradient-to-b from-[#A5F3FC] to-[#7DD3FC] 2xl:col-span-2 col-span-1 md:rounded-r-xl md:rounded-bl-none sm:rounded-b-xl rounded-none xl:px-10 px-5 lg:py-7 py-5">
+            <div className="col-span-1 rounded-none bg-gradient-to-b from-[#A5F3FC] to-[#7DD3FC] px-5 py-5 sm:rounded-b-xl md:rounded-r-xl md:rounded-bl-none lg:py-7 xl:px-10 2xl:col-span-2">
               <motion.h5
-                className="font-semibold lg:text-2xl text-xl text-zinc-700"
+                className="text-xl font-semibold text-zinc-700 lg:text-2xl"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
@@ -422,7 +422,7 @@ export default function HomePage() {
                 For Talent
               </motion.h5>
               <motion.h3
-                className="font-semibold lg:text-5xl text-4xl text-zinc-700 lg:mt-7 mt-5 lg:mb-3 mb-1"
+                className="mb-1 mt-5 text-4xl font-semibold text-zinc-700 lg:mb-3 lg:mt-7 lg:text-5xl"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
@@ -430,35 +430,35 @@ export default function HomePage() {
                 Find great work
               </motion.h3>
               <motion.p
-                className="text-zinc-500 font-semibold"
+                className="font-semibold text-zinc-500"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
                 Meet clients you’re excited to work with and take{" "}
-                <br className="lg:block hidden" />
+                <br className="hidden lg:block" />
                 your career or business to new heights.
               </motion.p>
 
               <motion.div
-                className="grid lg:grid-cols-3 grid-cols-2 2xl:gap-x-14 xl:gap-x-10 gap-x-5 gap-y-5 lg:gap-y-0 lg:mt-14 mt-4 border-t border-zinc-500 lg:py-5 py-3"
+                className="mt-4 grid grid-cols-2 gap-x-5 gap-y-5 border-t border-zinc-500 py-3 lg:mt-14 lg:grid-cols-3 lg:gap-y-0 lg:py-5 xl:gap-x-10 2xl:gap-x-14"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <span className="2xl:text-xl xl:text-lg text-md text-zinc-700 font-semibold">
+                <span className="text-md font-semibold text-zinc-700 xl:text-lg 2xl:text-xl">
                   Find opportunities for every stage of your freelance career
                 </span>
-                <span className="2xl:text-xl xl:text-lg text-md text-zinc-700 font-semibold">
+                <span className="text-md font-semibold text-zinc-700 xl:text-lg 2xl:text-xl">
                   Control when, where, and how you work
                 </span>
-                <span className="2xl:text-xl xl:text-lg text-md text-zinc-700 font-semibold">
+                <span className="text-md font-semibold text-zinc-700 xl:text-lg 2xl:text-xl">
                   Explore different ways to earn
                 </span>
               </motion.div>
 
               <motion.button
-                className="bg-zinc-700 py-2 px-5 text-white transition hover:bg-zinc-600 font-semibold rounded-full xl:mt-16 lg:mt-7 mt-3"
+                className="mt-3 rounded-full bg-zinc-700 px-5 py-2 font-semibold text-white transition hover:bg-zinc-600 lg:mt-7 xl:mt-16"
                 initial={{ x: 30, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
@@ -470,54 +470,54 @@ export default function HomePage() {
         </section>
 
         {/* =========================== Trusted Section ========================== */}
-        <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
-          <div className="md:mt-10 mt-5">
-            <h2 className="xl:text-5xl lg:text-4xl text-3xl font-bold text-[#374151] leading-tight">
-              Trusted by leading <br className="md:block hidden" />
+        <section className="container mx-auto mt-3 space-y-3 px-3 py-3 sm:px-7 md:px-5">
+          <div className="mt-5 md:mt-10">
+            <h2 className="text-3xl font-bold leading-tight text-[#374151] lg:text-4xl xl:text-5xl">
+              Trusted by leading <br className="hidden md:block" />
               brands and startups
             </h2>
 
-            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-y-0 gap-y-5 xl:gap-x-14 gap-x-7 mt-7">
+            <div className="mt-7 grid grid-cols-1 gap-x-7 gap-y-5 md:grid-cols-2 md:gap-y-0 xl:gap-x-14">
               <motion.div
-                className="flex flex-col bg-[#115E59] py-5 px-7 rounded-xl"
+                className="flex flex-col rounded-xl bg-[#115E59] px-7 py-5"
                 initial={{ y: -30, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
                 <div className="flex items-center space-x-3">
-                  <span className="text-white font-semibold sm:text-5xl text-4xl">
+                  <span className="text-4xl font-semibold text-white sm:text-5xl">
                     <FaUber />
                   </span>
-                  <h3 className="sm:text-4xl text-3xl font-semibold text-white">
+                  <h3 className="text-3xl font-semibold text-white sm:text-4xl">
                     Ubber
                   </h3>
                 </div>
 
-                <span className="text-white font-semibold xl:text-2xl text-xl mt-5">
+                <span className="mt-5 text-xl font-semibold text-white xl:text-2xl">
                   “Brenda enables us to differentiate ourselves from our
                   competitors and produce content at a higher caliber.”
                 </span>
-                <span className="text-gray-300 mt-2">
+                <span className="mt-2 text-gray-300">
                   Josh Machiz, Chief Digital Officer
                 </span>
 
-                <div className="xl:mt-14 mt-7">
-                  <span className="text-white font-semibold">Results</span>
+                <div className="mt-7 xl:mt-14">
+                  <span className="font-semibold text-white">Results</span>
 
-                  <div className="flex sm:flex-row flex-col border-t border-white xl:space-x-20 sm:space-x-10 mt-2">
+                  <div className="mt-2 flex flex-col border-t border-white sm:flex-row sm:space-x-10 xl:space-x-20">
                     <div className="mt-3">
-                      <h5 className="text-white font-semibold text-xl">
+                      <h5 className="text-xl font-semibold text-white">
                         Emmy winning
                       </h5>
-                      <span className="text-white text-sm">
+                      <span className="text-sm text-white">
                         Facebook watch program
                       </span>
                     </div>
                     <div className="mt-3">
-                      <h5 className="text-white font-semibold text-xl">
+                      <h5 className="text-xl font-semibold text-white">
                         Millions
                       </h5>
-                      <span className="text-white text-sm">
+                      <span className="text-sm text-white">
                         of impressions generated per client per IPO
                       </span>
                     </div>
@@ -531,26 +531,26 @@ export default function HomePage() {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                <div className="bg-[url('/images/cling.png')] bg-cover bg-right rounded-l-xl"></div>
+                <div className="rounded-l-xl bg-[url('/images/cling.png')] bg-cover bg-right"></div>
 
-                <div className="flex flex-col items-center space-y-5 py-3 px-5 bg-gray-800 rounded-r-xl">
-                  <h2 className="text-white font-semibold text-2xl xl:mt-5 mt-3">
+                <div className="flex flex-col items-center space-y-5 rounded-r-xl bg-gray-800 px-5 py-3">
+                  <h2 className="mt-3 text-2xl font-semibold text-white xl:mt-5">
                     And many more..
                   </h2>
 
-                  <span className="text-white xl:text-4xl text-3xl">
+                  <span className="text-3xl text-white xl:text-4xl">
                     <SiAdobe />
                   </span>
-                  <span className="text-white xl:text-4xl text-3xl">
+                  <span className="text-3xl text-white xl:text-4xl">
                     <SiUdacity />
                   </span>
-                  <span className="text-white xl:text-4xl text-3xl">
+                  <span className="text-3xl text-white xl:text-4xl">
                     <FaAtlassian />
                   </span>
-                  <span className="text-white xl:text-4xl text-3xl">
+                  <span className="text-3xl text-white xl:text-4xl">
                     <ImGoogle />
                   </span>
-                  <span className="text-white xl:text-4xl text-3xl">
+                  <span className="text-3xl text-white xl:text-4xl">
                     <BsWordpress />
                   </span>
                 </div>
@@ -559,8 +559,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="container mx-auto lg:my-7 my-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
-          <h2 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold mb-7">
+        <section className="container mx-auto my-3 space-y-3 px-3 py-3 sm:px-7 md:px-5 lg:my-7">
+          <h2 className="mb-7 text-3xl font-bold text-[#0C4A6E] lg:text-4xl">
             Вакансии дня на платформе
           </h2>
           {/* <VacancyList /> */}
