@@ -17,7 +17,7 @@ import { useSession } from 'next-auth/react';
 import { useSWRConfig } from 'swr';
 
 interface IPropsVacancy extends IVacancy {}
-export default function VacancyCard(props: IPropsVacancy) {
+export default function ClientVacancyCard(props: IPropsVacancy) {
   const {status,data} = useSession()
   const {
     aboutVacancy,
@@ -67,22 +67,7 @@ export default function VacancyCard(props: IPropsVacancy) {
             </div>
           </div>
           <div className="ml-auto">
-          {status === 'authenticated' && 
-            <Button leftIcon={<FaRegStar />} colorScheme="yellow" variant={isFavorite?"solid":"outline"} onClick={async()=>{
-              await fetch('/api/favorite',{
-              method:isFavorite ? "DELETE" :'POST',
-              body:JSON.stringify({
-                  job_id: id,
-                  user_id: data.user.id
-                })
-              })
-
-              mutate(`/api/get_vacancies?${filtersParams}&page=${pageParam || 1}&limit=${6}`)
-            }}>
-              {isFavorite ? "Удалить из избранного":"В Избранное"}
-            </Button>
-          }
-            <Link href={`/vacancies/${id}`}>
+            <Link href={`/vacancies/my/${id}`}>
             <Button
               colorScheme="messenger"
               variant="outline"
@@ -148,14 +133,3 @@ export default function VacancyCard(props: IPropsVacancy) {
     </div>
   );
 }
-
-export const VacancyCardSkeleton = ({count = 1}: {count: number}) => {
-  const array = useMemo(() => Array.from({length: count}, (v, i) => i) , [count]);
-  return (
-    <div className="space-y-8 w-full">
-      {array.map((_, idx) => (
-        <div key={idx}  className='w-full h-[270px]'><Skeleton className='w-full h-[270px]' /></div>
-      ))}
-    </div>
-  );
-};

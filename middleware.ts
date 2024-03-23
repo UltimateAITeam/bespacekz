@@ -6,7 +6,7 @@ export const config = {
         "/firststeps",
         "/moreinfo",
         "/profile",
-
+        '/vacancies/my'
     ],
 
 }
