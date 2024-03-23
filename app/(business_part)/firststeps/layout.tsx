@@ -15,6 +15,7 @@ import useTitleStore from "@/store/titleFormStateStore";
 import useLanguagesStore from "@/store/languagesFormStore";
 import useAboutStore from "@/store/aboutFormStore";
 
+// CHECK THIS PAGE
 function Layout({children}: {children: React.ReactNode}) {
     const router = useRouter();
     const session = useSession();
@@ -73,12 +74,12 @@ function Layout({children}: {children: React.ReactNode}) {
     const { title } = useTitleStore();
     const { about } = useAboutStore();
 
-
+    // Check if all fields are filled
     const isFilledEdu = educations.length >= 1 && educations.every((item) => {
-        return item.institution.length >= 2  && item.specialization.length > 4 && item.degree !== '';
+        return item.institution.length >= 2  && item.specialization.length > 2 && item.degree !== '';
     })
     const isFilledExp = experience.length >= 1 && experience.every((item) => {
-        return item.company !== "" && item.name.length > 5 && item.skills.length !== 0 && item.tasks.length > 5  && item.company.length > 4
+        return item.company !== "" && item.name.length > 1 && item.skills.length !== 0 && item.tasks.length > 5  && item.company.length > 4
     })
     const isFilledLanguages = languages.length >= 1 && languages.every((item) => {
         return item.name.length > 3
@@ -186,7 +187,7 @@ function Layout({children}: {children: React.ReactNode}) {
     }
 
     const loading = useFirstStepsLoading();
-    console.log("LOADING", loading)
+    // console.log("LOADING", loading)
     if (session.status === "loading") {
         return <Spinner width="w-20" height="w-20" />
     } else {

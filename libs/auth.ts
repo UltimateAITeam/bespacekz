@@ -68,7 +68,8 @@ export const authOptions: AuthOptions  = {
                 if (!user) {
                     const hashedPassword = await bcrypt.hash(credentials.password, 10);
 
-                    await sendVerificationEmail({email: credentials.email})
+                    // turn off email verification for now
+                    // await sendVerificationEmail({email: credentials.email})
 
                     return prisma.user.create({
                         data: {

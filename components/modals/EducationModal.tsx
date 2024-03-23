@@ -42,7 +42,7 @@ function EducationModal({isOpen, onClose, index, educations}: {
         <>
             <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay/>
-                <ModalContent>
+                <ModalContent className='pb-4'>
                     <ModalHeader>{item.institution ? item.institution : "Education "}</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
@@ -86,7 +86,7 @@ function EducationModal({isOpen, onClose, index, educations}: {
                             />
                         </div>
                         <HStack justify={"space-between"}>
-                            <VStack align={"start"}>
+                            <VStack align={"stretch"} className='w-full'>
                                 <Text>Education start date</Text>
                                 {/*<DatePicker*/}
                                 {/*    calendarClassName={"w-full"}*/}
@@ -107,7 +107,7 @@ function EducationModal({isOpen, onClose, index, educations}: {
                                     }}
                                 />
                             </VStack>
-                            <VStack align={'start'}>
+                            <VStack align={'stretch'} className='w-full'>
                                 <Text>Education end date</Text>
 
                                 <CustomDatePicker

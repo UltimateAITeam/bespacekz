@@ -198,7 +198,7 @@ function EducationModal({isOpen, onClose, index}: {
                             Are you still working here?
                         </Checkbox>
                         <HStack justify={"space-between"}>
-                            <VStack className={"w-full"} align={"start"}>
+                            <VStack className={"w-full"} align={"stretch"}>
                                 <Text>Work start date</Text>
                                 <CustomDatePicker
                                     valueState={fromState}
@@ -209,7 +209,7 @@ function EducationModal({isOpen, onClose, index}: {
                                     }}
                                 />
                             </VStack>
-                            <VStack className={"w-full"} align={"start"}>
+                            <VStack className={"w-full"} align={"stretch"}>
                                 <Text>Work end date</Text>
                                 <CustomDatePicker
                                     disabled={item.stillWorking}
