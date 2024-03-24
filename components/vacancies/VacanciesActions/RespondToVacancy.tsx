@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@chakra-ui/react";
 import VacancyApplication from "@/emails/vacancy-application";
 import postmark from "@/libs/postmark";
 import { prisma } from "@/libs/prisma";
@@ -7,7 +7,10 @@ import { render } from "@react-email/components";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+// import { CheckIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
+// TODO: add loading banner and success or error taost
+// why it is server side rendered?
 export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
   const vacancy = await prisma.vacancy.findUniqueOrThrow({
     where: {
@@ -15,10 +18,10 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
     },
     select: {
       id: true,
-      jobTitle:{
-        select:{
-          name: true
-        }
+      jobTitle: {
+        select: {
+          name: true,
+        },
       },
       applicants: {
         select: {
@@ -26,15 +29,15 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
           userEmail: true,
         },
       },
-      clientProfile:{
-        select:{
+      clientProfile: {
+        select: {
           user: {
-            select:{
+            select: {
               email: true,
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     },
   });
 
@@ -60,36 +63,48 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
               },
             },
           },
-          select:{
-            user:{
-              select:{
-                id: true,name:true,
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
                 last_name: true,
-              }
-            }
-          }
+              },
+            },
+          },
         });
 
-        const html = render(<VacancyApplication vacancy={{
-          id: vacancy.id,
-          name: vacancy.jobTitle.name,
-        }} applicant={{
-          id: freelancer.user.id,
-        }} />)
+        const html = render(
+          <VacancyApplication
+            vacancy={{
+              id: vacancy.id,
+              name: vacancy.jobTitle.name,
+            }}
+            applicant={{
+              id: freelancer.user.id,
+            }}
+          />
+        );
 
-        await postmark.sendEmail({
-          From: "info@bespace.kz",
-          To: vacancy.clientProfile.user.email,
-          Subject: 'Новый отклик на вакансию',
-          HtmlBody: html,
-          "MessageStream": "outbound"
-        })
+        // test this after fixing the registration with @bespace.kz email
+        // await postmark.sendEmail({
+        //   From: "info@bespace.kz",
+        //   To: vacancy.clientProfile.user.email,
+        //   Subject: 'Новый отклик на вакансию',
+        //   HtmlBody: html,
+        //   "MessageStream": "outbound"
+        // })
 
         revalidatePath(`/vacancies/${idVacancy}`);
       }}
     >
-      <Button variant="default" disabled={!session || isAlreadyApplied}>
-        Откликнуться
+      <Button
+        // leftIcon={isAlreadyApplied ? <CheckIcon /> : <ExternalLinkIcon />}
+        variant={"outline"}
+        colorScheme={isAlreadyApplied ? "gray" : "blue"}
+        isDisabled={!session || isAlreadyApplied}
+      >
+        {isAlreadyApplied ? "Ваш отклик на рассмотрении" : "Откликнуться"}
       </Button>
     </form>
   );
