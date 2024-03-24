@@ -1,14 +1,61 @@
-import { PrismaClient, Role, ProficiencyLevel } from "@prisma/client";
-import { faker } from "@faker-js/faker";
+import { PrismaClient, Role, ProficiencyLevel } from '@prisma/client';
+import { faker } from '@faker-js/faker';
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient();
 
 async function main() {
+  const user = await prisma.user.create({
+    data:{
+      email: "azamat@bespace.kz",
+      password: await (bcrypt.hash("azamat@bespace.kz",10)),
+      clientProfile:{
+        create:{
+            companyInfo: faker.company.name(),
+            isCompany: true
+        }
+      }
+    },
+    select:{
+      clientProfile:{
+        select:{
+          id:true
+        }
+      }
+    }
+  })
+  
+  const jobCategory = await prisma.jobCategory.create({
+    data:{
+      category_name: faker.person.jobArea()
+    }
+  })
+
+  await prisma.jobTitle.createMany({
+    data:Array.from({length:30},()=>
+    ({
+      name: faker.person.jobTitle(),
+      category_id: jobCategory.id
+    })
+    )
+  })
+  
   const jobTitles = await prisma.jobTitle.findMany();
+
+  const jobs = await prisma.vacancy.createMany({
+    data:jobTitles.map((jt)=>({
+      clientId: user.clientProfile!.id,
+      experience: "5 years",
+      jobTitleId: jt.id,
+      priceFrom: 100_000,
+      priceTo: 100_000,
+      specialization: faker.person.jobArea(),
+      aboutVacancy: faker.person.jobDescriptor()
+    }))
+  })
+
   if (jobTitles.length !== 22) {
-    console.error(
-      `Expected 23 JobTitles, found ${jobTitles.length}. Please adjust the script accordingly.`,
-    );
+    console.error(`Expected 23 JobTitles, found ${jobTitles.length}. Please adjust the script accordingly.`);
     return;
   }
 
@@ -35,19 +82,8 @@ async function main() {
             Languages: {
               create: [
                 {
-                  name: faker.helpers.arrayElement([
-                    "Kazakh",
-                    "Russian",
-                    "English",
-                  ]),
-                  proficiencyLevel: faker.helpers.arrayElement([
-                    "A1",
-                    "A2",
-                    "B1",
-                    "B2",
-                    "C1",
-                    "C2",
-                  ]),
+                  name: faker.helpers.arrayElement(["Kazakh", "Russian", "English"]),
+                  proficiencyLevel: faker.helpers.arrayElement(['A1', 'A2', 'B1', 'B2', 'C1', 'C2']),
                 },
               ],
             },
@@ -88,11 +124,7 @@ async function main() {
             Pricing: {
               create: [
                 {
-                  pricingType: {
-                    set: [
-                      faker.helpers.arrayElement(["FREELANCE", "EMPLOYEE"]),
-                    ],
-                  },
+                  pricingType: { set: [faker.helpers.arrayElement(["FREELANCE", "EMPLOYEE"])]},
                   hourlyRate: faker.number.float({ min: 20, max: 100 }),
                   projectRate: faker.number.float({ min: 500, max: 5000 }),
                 },
@@ -109,10 +141,10 @@ async function main() {
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   })
   .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
