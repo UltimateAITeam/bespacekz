@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { JOB_TYPES_MAP } from "@/data/job_types";
-import { IVacancy } from "@/types/vacancies.types";
-import { Badge, Button, ButtonGroup, Card } from "@chakra-ui/react";
-import Image from "next/image";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useMemo } from "react";
-import { CiCalendar, CiClock2 } from "react-icons/ci";
-import { FaRegStar } from "react-icons/fa";
-import { IoIosSearch } from "react-icons/io";
-import { IoLocationOutline } from "react-icons/io5";
-import { LuDot } from "react-icons/lu";
-import { Skeleton } from "../ui/skeleton";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { useSWRConfig } from "swr";
+import {JOB_TYPES_MAP} from '@/data/job_types';
+import {IVacancy} from '@/types/vacancies.types';
+import {Badge, Button, ButtonGroup, Card} from '@chakra-ui/react';
+import Image from 'next/image';
+import {useRouter, usePathname, useSearchParams} from 'next/navigation';
+import {useMemo} from 'react';
+import {CiCalendar, CiClock2} from 'react-icons/ci';
+import {FaRegStar} from 'react-icons/fa';
+import {IoIosSearch} from 'react-icons/io';
+import {IoLocationOutline} from 'react-icons/io5';
+import {LuDot} from 'react-icons/lu';
+import {Skeleton} from '../ui/skeleton';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useSWRConfig } from 'swr';
 
 interface IPropsVacancy extends IVacancy {}
 export default function ClientVacancyCard(props: IPropsVacancy) {
-  const { status, data } = useSession();
+  const {status,data} = useSession()
   const {
     aboutVacancy,
     city,
@@ -33,61 +33,53 @@ export default function ClientVacancyCard(props: IPropsVacancy) {
     pricingType,
     requiredSkills,
     clientProfile,
-    favoritedBy,
+    favoritedBy
   } = props;
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const jobTypeComputed = useMemo(
-    () => JOB_TYPES_MAP[pricingType],
-    [pricingType],
-  );
-  const { mutate } = useSWRConfig();
-  console.log("@clientProfile", clientProfile);
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const jobTypeComputed = useMemo(() => JOB_TYPES_MAP[pricingType], [pricingType]);
+  const { mutate } = useSWRConfig()
+  console.log('@clientProfile', clientProfile);
 
   const filtersParams = new URLSearchParams(searchParams);
-  const pageParam = filtersParams.get("page");
-  filtersParams.delete("page");
+  const pageParam = filtersParams.get('page') 
+  filtersParams.delete('page')
 
-  const isFavorite =
-    status === "authenticated" &&
-    favoritedBy?.map((v) => v.user.id).includes(data.user.id);
-
+  const isFavorite = status === 'authenticated' && favoritedBy?.map(v=>v.user.id).includes(data.user.id)
+  
   return (
-    <div className="flex max-w-full !gap-6 rounded-[8px] border !border-[rgba(20,20,20,0.1)] !p-6 shadow-sm transition-shadow hover:shadow-md md:!flex-row">
+    <div className="flex md:!flex-row !p-6 !gap-6 max-w-full border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)]">
       <div className="shrink-0">
         <Image src="/images/Avatar.png" alt="Avatar" width={80} height={80} />
       </div>
       <div className="flex-1">
         <div className="flex w-full">
           <div>
-            <h2 className="text-mainText font-roboto text-[30px] font-medium">
-              {jobTitle.name}
-            </h2>
+            <h2 className="text-[30px] font-medium font-roboto text-mainText">{jobTitle.name}</h2>
             <div className="flex items-center">
-              <p className="font-roboto text-base font-medium text-primary-text">
-                <span className="font-normal">Компания:</span>{" "}
-                {clientProfile?.companyInfo}
+              <p className="text-base font-roboto text-primary-text font-medium">
+                <span className="font-normal">Компания:</span> {clientProfile?.companyInfo}
               </p>
-              <Badge className="ml-3 !bg-[#7D5AE2]/10 !px-[6px] !font-roboto	!font-medium !normal-case !text-[#7D5AE2]">
+              <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px] !font-roboto !font-medium">
                 Новый пост
               </Badge>
             </div>
           </div>
           <div className="ml-auto">
             <Link href={`/vacancies/my/${id}`}>
-              <Button
-                colorScheme="messenger"
-                variant="outline"
-                className="ml-3"
-                // onClick={() => router.push(`/vacancies/${id}`)}
+            <Button
+              colorScheme="messenger"
+              variant="outline"
+              className="ml-3"
+              // onClick={() => router.push(`/vacancies/${id}`)}
               >
-                Подробнее
-              </Button>
+              Подробнее
+            </Button>
             </Link>
           </div>
         </div>
-        <div className="mt-2 flex items-center gap-5 [&>div]:flex [&>div]:items-center [&>div]:gap-2 [&_span]:font-roboto [&_span]:text-primary-10">
+        <div className="flex items-center mt-2 gap-5 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">
           <div>
             <IoLocationOutline />
             <span>{city}</span>
@@ -114,18 +106,13 @@ export default function ClientVacancyCard(props: IPropsVacancy) {
             <span>2 дня назад</span>
           </div>
         </div>
-        <div className="mt-3 flex text-primary-10">
-          <span className="mr-1 font-roboto">Кто нужен:</span>
-          <ButtonGroup
-            variant="solid"
-            colorScheme="linkedin"
-            size="xs"
-            spacing="2"
-          >
+        <div className="flex mt-3 text-primary-10">
+          <span className="font-roboto mr-1">Кто нужен:</span>
+          <ButtonGroup variant="solid" colorScheme="linkedin" size="xs" spacing="2">
             {requiredSkills.map((s) => {
               return (
                 <Button key={s}>
-                  <span className="text-sm !leading-none">{s}</span>
+                  <span className="!leading-none text-sm">{s}</span>
                 </Button>
               );
             })}
@@ -134,12 +121,12 @@ export default function ClientVacancyCard(props: IPropsVacancy) {
                         </Button> */}
           </ButtonGroup>
         </div>
-        <div className="mt-3 font-roboto text-primary-10">
+        <div className="mt-3 text-primary-10 font-roboto">
           <p>
             Требуемый опыт работы: <span>{experience} лет</span>
           </p>
         </div>
-        <div className="mt-3 line-clamp-2 font-roboto text-primary-10">
+        <div className="mt-3 text-primary-10 font-roboto line-clamp-2">
           <p>{aboutVacancy}</p>
         </div>
       </div>

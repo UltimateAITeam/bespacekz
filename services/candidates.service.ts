@@ -8,17 +8,18 @@ export class CandidatesService {
     pageParam: string | number;
     ITEMS_PER_PAGE: number;
   }) {
-    return fetch(
-      `/api/get_candidates?${filtersParams}&page=${pageParam || 1}&limit=${ITEMS_PER_PAGE}`,
-      {
-        method: "GET",
-      },
-    );
+    return fetch(`/api/get_candidates?${filtersParams}&page=${pageParam || 1}&limit=${ITEMS_PER_PAGE}`, {
+      method: 'GET',
+    });
   }
 
-  static async getCandidateById({ id }: { id: string }) {
+  static async getCandidateById({
+    id
+  }: {
+    id: string
+  }) {
     return fetch(`${process.env.API_URL}/api/get_candidates/${id}/`, {
-      method: "GET",
+      method: 'GET',
     });
   }
 }

@@ -1,23 +1,17 @@
-import { prisma } from "@/libs/prisma";
-import { VacanciesQueryEnum } from "@/types/vacancies.types";
-import { PricingType, Prisma } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { prisma } from '@/libs/prisma';
+import { VacanciesQueryEnum } from '@/types/vacancies.types';
+import { PricingType, Prisma } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 // /api/freelancers?limit=10&page=1
 export async function GET(req: NextRequest) {
-  const limit = req.nextUrl.searchParams.get("limit");
+  const limit = req.nextUrl.searchParams.get('limit');
   const page = req.nextUrl.searchParams.get(VacanciesQueryEnum.page);
   const cities = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.cities);
-  const categories = req.nextUrl.searchParams.getAll(
-    VacanciesQueryEnum.category,
-  );
+  const categories = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.category);
 
   try {
-    if (!limit || !page)
-      return NextResponse.json(
-        { error: "no limit or page provided" },
-        { status: 400 },
-      );
+    if (!limit || !page) return NextResponse.json({error: 'no limit or page provided'}, {status: 400});
 
     const query: Prisma.FreelancerProfileFindManyArgs = {
       select: {
@@ -41,7 +35,7 @@ export async function GET(req: NextRequest) {
       },
       where: {
         user: {
-          role: "FREELANCER",
+          role: 'FREELANCER'
         },
         jobTitle: {
           category: {
@@ -49,8 +43,8 @@ export async function GET(req: NextRequest) {
               in: categories.length ? categories : undefined,
             },
           },
-        },
-        /*  city: {
+        }
+       /*  city: {
           in: cities.length ? cities : undefined, // Поиск вакансий, где город входит в массив выбранных городов
         },
         jobTitle: {
@@ -60,20 +54,16 @@ export async function GET(req: NextRequest) {
             },
           },
         } */
-      },
+      }
     };
     const [data, count] = await prisma.$transaction([
-      prisma.freelancerProfile.findMany({
-        skip: parseInt(limit) * (parseInt(page) - 1),
-        take: parseInt(limit),
-        ...query,
-      }),
-      prisma.freelancerProfile.count({ where: query.where }),
+      prisma.freelancerProfile.findMany({skip: parseInt(limit) * (parseInt(page) - 1), take: parseInt(limit), ...query}),
+      prisma.freelancerProfile.count({where: query.where}),
     ]);
 
-    return NextResponse.json({ data: data, count }, { status: 200 });
+    return NextResponse.json({data: data, count}, {status: 200});
   } catch (e) {
-    console.log("Пойман на ошибке", e);
-    return NextResponse.json({ error: e?.toString }, { status: 500 });
+    console.log('Пойман на ошибке', e);
+    return NextResponse.json({error: e?.toString}, {status: 500});
   }
 }

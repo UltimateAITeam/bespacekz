@@ -12,12 +12,12 @@ import {
 
 interface VacancyApplicationProps {
   vacancy: {
-    id: string;
-    name: string;
-  };
+    id: string,
+    name: string
+  },
   applicant: {
-    id: string;
-  };
+    id: string,
+  }
 }
 
 const baseUrl = process.env.VERCEL_URL
@@ -51,7 +51,8 @@ export const VacancyApplication = ({
             }}
           >
             {vacancy.name}
-          </Link>{" "}
+          </Link>
+          {" "}
           откликнулись.
         </Text>
         <Link
@@ -77,7 +78,7 @@ VacancyApplication.PreviewProps = {
   },
   applicant: {
     id: "clu36pj4q0002zuzc7p6rw3ve",
-  },
+  }
 } as VacancyApplicationProps;
 
 export default VacancyApplication;

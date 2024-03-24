@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/libs/prisma";
+import {NextRequest, NextResponse} from 'next/server';
+import {prisma} from '@/libs/prisma';
 
 export async function GET(req: NextRequest) {
   // Только те категории у которых есть вакансии
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
           },
         },
       },
-    },
+    }
   });
-  return NextResponse.json(records, { status: 200 });
+  return NextResponse.json(records, {status: 200});
 }

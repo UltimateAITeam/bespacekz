@@ -18,7 +18,7 @@ function Page() {
   useEffect(() => {
     console.log("EDUCATION", educations);
   }, [educations]);
-
+  
   return (
     <motion.div
       initial={{ x: 300, opacity: 0 }}
@@ -33,24 +33,24 @@ function Page() {
           index={stateIndex}
         />
       )}
-      <div className={"m-auto flex flex-col items-center justify-center"}>
+      <div className={"m-auto flex flex-col justify-center items-center"}>
         <span
           className={
-            "font-zinc-950 mb-14 w-full text-3xl font-semibold md:w-3/4 lg:text-4xl 2xl:font-bold"
+            "w-full md:w-3/4 font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl mb-14"
           }
         >
           Клиентам нравится знать то, что знаете вы — добавьте сюда свое
           образование.
         </span>
         <form
-          className={"-mt-4 grid w-full grid-cols-4 gap-4 md:w-3/4"}
+          className={"grid grid-cols-4 gap-4 w-full md:w-3/4 -mt-4"}
           onSubmit={onSubmit}
         >
           {educations.map((item, index: number) => (
             <Box
               key={index}
               className={
-                "h-48 max-h-48 w-full max-w-xs rounded-lg border border-[#E4EBE4] bg-white p-2"
+                "max-w-xs w-full bg-white max-h-48 h-48 p-2 rounded-lg border border-[#E4EBE4]"
               }
             >
               <HStack className={"h-10"} justify={"end"}>
@@ -64,7 +64,7 @@ function Page() {
                   />
                   <RxCross2
                     className={
-                      "cursor-pointer rounded-xl bg-red-500 p-0.5 text-white"
+                      "cursor-pointer rounded-xl p-0.5 bg-red-500 text-white"
                     }
                     onClick={() => {
                       setStateIndex(null);
@@ -92,7 +92,7 @@ function Page() {
 
           <Box
             className={
-              "h-48 max-h-48 w-full max-w-xs rounded-lg border border-[#E4EBE4] bg-white p-2"
+              "max-w-xs w-full bg-white max-h-48 h-48 p-2 rounded-lg border border-[#E4EBE4]"
             }
           >
             <HStack className={"h-10"} justify={"end"}>
@@ -104,7 +104,7 @@ function Page() {
                     onOpen();
                   }}
                   className={
-                    "rotate-45 cursor-pointer rounded-xl bg-[#1a3353] p-0.5 text-white"
+                    "rotate-45 cursor-pointer rounded-xl p-0.5 bg-[#1a3353] text-white"
                   }
                 />
               </HStack>

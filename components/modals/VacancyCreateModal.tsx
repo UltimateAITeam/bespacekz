@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -25,16 +25,16 @@ import {
   Box,
   Text,
   Spacer,
-} from "@chakra-ui/react";
-import VacancyForm from "../forms/VacancyForm";
-import { useToast } from "@chakra-ui/react";
+} from '@chakra-ui/react'
+import VacancyForm from '../forms/VacancyForm';
+import { useToast } from '@chakra-ui/react'
 import { BsStars } from "react-icons/bs";
 import { BiSend } from "react-icons/bi";
-import { useChat } from "ai/react";
-import { MemoizedReactMarkdown } from "../../components/ui/markdown";
-import { Message } from "ai";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
+import { useChat } from 'ai/react';
+import { MemoizedReactMarkdown } from '../../components/ui/markdown'
+import { Message } from 'ai'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 
 type ModalProps = {
   isOpen: boolean;
@@ -43,13 +43,12 @@ type ModalProps = {
 
 const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [isLoadingForm, setIsLoadingForm] = React.useState(false);
-  const initialRef = React.useRef(null);
-  const toast = useToast();
+  const initialRef = React.useRef(null)
+  const toast = useToast()
 
-  const [aiPrompt, setAIPrompt] = React.useState("");
-  const [aiResponse, setAIResponse] = React.useState("");
-  const [isLoadingAIDescription, setIsLoadingAIDescription] =
-    React.useState(false);
+  const [aiPrompt, setAIPrompt] = React.useState('');
+  const [aiResponse, setAIResponse] = React.useState('');
+  const [isLoadingAIDescription, setIsLoadingAIDescription] = React.useState(false);
 
   const handleSubmit = async (data: any) => {
     setIsLoadingForm(true);
@@ -57,149 +56,123 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     // Handle the form submission here (e.g., send to an API)
     // submit the data to  /api/add_vacancy endpoint
     // then close the modal
-    const resVacancyAPI = await fetch("/api/add_vacancy", {
+    const resVacancyAPI = await fetch('/api/add_vacancy', {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     if (resVacancyAPI.ok) {
       const resVacancy = await resVacancyAPI.json();
       // console.log(resVacancy);
       toast({
-        title: "Вакансия создана.",
-        description:
-          "Ваша вакансия успешно создана и теперь доступна кандидатам.",
-        status: "success",
+        title: 'Вакансия создана.',
+        description: "Ваша вакансия успешно создана и теперь доступна кандидатам.",
+        status: 'success',
         duration: 5000,
         isClosable: true,
-      });
+      })
+
     } else {
       console.log(resVacancyAPI.status);
       toast({
-        title: "Ошибка при создании вакансии.",
+        title: 'Ошибка при создании вакансии.',
         description: "Пожалуйста, попробуйте еще раз.",
-        status: "error",
+        status: 'error',
         duration: 5000,
         isClosable: true,
-      });
+      })
     }
     onClose();
     setIsLoadingForm(false);
   };
 
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit: handleSubmitChat,
-  } = useChat();
+  const { messages, input, handleInputChange, handleSubmit: handleSubmitChat } = useChat();
 
   return (
     <Modal
-      size={"2xl"}
-      blockScrollOnMount={false}
-      onClose={onClose}
-      isOpen={isOpen}
+      size={'2xl'} 
+      blockScrollOnMount={false} 
+      onClose={onClose} 
+      isOpen={isOpen} 
       isCentered
-    >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          <Flex className="w-full items-center gap-20">
-            Создать вакансию
-            <Popover>
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Flex className='items-center gap-20 w-full'>
+              Создать вакансию
+              <Popover>
               <PopoverTrigger>
-                <Button leftIcon={<BsStars />} colorScheme="pink" size="sm">
-                  Ask AI
-                </Button>
+                <Button leftIcon={<BsStars />} colorScheme='pink' size='sm'>Ask AI</Button>
               </PopoverTrigger>
-              <PopoverContent className="md:min-w-[800px]">
+              <PopoverContent className='md:min-w-[800px]'>
                 <PopoverArrow />
                 {/* <PopoverCloseButton /> */}
                 {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
-                <PopoverBody className="text-md">
+                <PopoverBody className='text-md'>
+                  
                   <form onSubmit={handleSubmitChat}>
-                    <Flex className="items-center gap-2">
-                      <BsStars />
-                      <Input
-                        value={input}
-                        onChange={handleInputChange}
-                        variant="unstyled"
-                        placeholder="Ask AI to generate vacancy description..."
-                        size="sm"
-                        borderColor="transparent"
-                        border={0}
-                        fontWeight={400}
-                        _placeholder={{
-                          color: "gray.400",
-                          fontSize: "sm",
-                          fontWeight: "normal",
-                        }}
-                        _focus={{
-                          border: "none",
-                          boxShadow: "none",
-                          outline: "none",
-                        }} // Remove border, boxShadow, and outline on focus
-                        _hover={{ border: "none" }} // Remove border on hover
-                        _active={{ border: "none" }} // Remove border on active
+                  <Flex className='items-center gap-2'>
+                    <BsStars />
+                    <Input
+                      value={input}
+                      onChange={handleInputChange} 
+                      variant='unstyled' 
+                      placeholder='Ask AI to generate vacancy description...'
+                      size='sm'
+                      borderColor="transparent"
+                      border={0}
+                      fontWeight={400}
+                      _placeholder={{ color: 'gray.400', fontSize: 'sm', fontWeight: 'normal' }}
+                      _focus={{ border: 'none', boxShadow: 'none', outline: 'none' }} // Remove border, boxShadow, and outline on focus
+                      _hover={{ border: 'none' }} // Remove border on hover
+                      _active={{ border: 'none' }} // Remove border on active
                       />
-                      <IconButton
-                        aria-label="Send to AI"
-                        icon={<BiSend />}
-                        type="submit"
-                      />
+                    <IconButton aria-label='Send to AI' icon={<BiSend />} type='submit'/>
                     </Flex>
-                  </form>
+                    </form>
+                  
+                  {messages.slice(-2).map(message => (
 
-                  {messages.slice(-2).map((message) => (
-                    <div key={message.id} className="pb-4 pt-4">
-                      <Box
-                        key={message.id + "box"}
-                        className={`bg-gradient-to-tr p-5 ${message.role == "assistant" ? "from-[#E0F7FA] to-[#E0F2F1]" : "from-[#FDE2E4] to-[#FAE1DD]"} rounded-lg shadow-md`}
-                      >
-                        <Text className="pt-2 text-sm font-semibold">
-                          {message.role == "assistant"
-                            ? "AI HR:"
-                            : "Пользователь:"}
-                        </Text>
-                        {/* <Text className='text-[1rem] font-normal'>
+                   
+                    <div key={message.id} className='pt-4 pb-4'>
+                    <Box key={message.id + 'box'} className={`p-5 bg-gradient-to-tr ${message.role == 'assistant' ? 'from-[#E0F7FA] to-[#E0F2F1]' : 'from-[#FDE2E4] to-[#FAE1DD]'} rounded-lg shadow-md`}>
+                      <Text className='text-sm font-semibold pt-2'>
+                        { message.role == 'assistant' ? 'AI HR:' : 'Пользователь:'}
+                      </Text>
+                      {/* <Text className='text-[1rem] font-normal'>
                         {message.content}
                       </Text> */}
-                        <MemoizedReactMarkdown
-                          className="prose dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 break-words text-sm font-normal"
-                          remarkPlugins={[remarkGfm, remarkMath]}
-                          components={{
-                            p({ children }) {
-                              return (
-                                <p className="mb-2 last:mb-0">{children}</p>
-                              );
-                            },
-                          }}
-                        >
-                          {message.content}
-                        </MemoizedReactMarkdown>
-                      </Box>
+                      <MemoizedReactMarkdown
+                        className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
+                        remarkPlugins={[remarkGfm, remarkMath]}
+                        components={{
+                          p({ children }) {
+                            return <p className="mb-2 last:mb-0">{children}</p>
+                          },
+                        }}
+                      >
+                        {message.content}
+                      </MemoizedReactMarkdown>
+                    </Box>
                     </div>
                   ))}
                 </PopoverBody>
               </PopoverContent>
             </Popover>
-          </Flex>
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody pb={6}>
-          <VacancyForm
-            onSubmit={handleSubmit}
-            onCloseModal={onClose}
-            isLoadingButton={isLoadingForm}
-          />
-        </ModalBody>
-        {/* <ModalFooter>
+            </Flex>
+            
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <VacancyForm onSubmit={handleSubmit} onCloseModal={onClose} isLoadingButton={isLoadingForm}/>
+          </ModalBody>
+          {/* <ModalFooter>
             <Button onClick={onClose} mr={3}>Отмена</Button>
             <Button colorScheme="blue">
               Сохранить
             </Button>
           </ModalFooter> */}
-      </ModalContent>
+        </ModalContent>
     </Modal>
   );
 };

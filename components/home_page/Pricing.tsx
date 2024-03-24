@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   Box,
@@ -12,29 +12,28 @@ import {
   ListItem,
   ListIcon,
   Button,
-} from "@chakra-ui/react";
-import { FaCheckCircle } from "react-icons/fa";
+} from '@chakra-ui/react'
+import { FaCheckCircle } from 'react-icons/fa'
 import { motion } from "framer-motion";
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 function PriceWrapper(props: Props) {
-  const { children } = props;
+  const { children } = props
 
   return (
     <Box
       mb={4}
       shadow="base"
       borderWidth="1px"
-      alignSelf={{ base: "center", lg: "flex-start" }}
-      borderColor={useColorModeValue("gray.200", "gray.500")}
-      borderRadius={"xl"}
-    >
+      alignSelf={{ base: 'center', lg: 'flex-start' }}
+      borderColor={useColorModeValue('gray.200', 'gray.500')}
+      borderRadius={'xl'}>
       {children}
     </Box>
-  );
+  )
 }
 
 export default function ThreeTierPricing() {
@@ -46,29 +45,28 @@ export default function ThreeTierPricing() {
             Купить доступ к базе резюме
         </Heading> */}
         <motion.h2
-          className="text-4xl font-semibold text-zinc-700 lg:text-5xl 2xl:text-5xl"
-          initial={{ y: "100", opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          Для работодателя <br />
-          Купить доступ к базе резюме
-        </motion.h2>
-        <Text fontSize="lg" color={"gray.500"}>
-          Стоимость доступа к базе резюме зависит от количества резюме в базе.
+                className="text-zinc-700 font-semibold 2xl:text-5xl lg:text-5xl text-4xl"
+                initial={{ y: "100", opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                Для работодателя <br />
+                Купить доступ к базе резюме
+              </motion.h2>
+        <Text fontSize="lg" color={'gray.500'}>
+            Стоимость доступа к базе резюме зависит от количества резюме в базе.
         </Text>
       </VStack>
       <Stack
-        direction={{ base: "column", md: "row" }}
+        direction={{ base: 'column', md: 'row' }}
         textAlign="center"
         justify="center"
         spacing={{ base: 4, lg: 10 }}
-        py={10}
-      >
+        py={10}>
         <PriceWrapper>
           <Box py={4} px={12}>
             <Text fontWeight="500" fontSize="2xl">
-              Starter
+                Starter
             </Text>
             <HStack justifyContent="center">
               <Text fontSize="3xl" fontWeight="600">
@@ -83,10 +81,9 @@ export default function ThreeTierPricing() {
             </HStack>
           </Box>
           <VStack
-            bg={useColorModeValue("gray.50", "gray.700")}
+            bg={useColorModeValue('gray.50', 'gray.700')}
             py={4}
-            borderBottomRadius={"xl"}
-          >
+            borderBottomRadius={'xl'}>
             <List spacing={3} textAlign="start" px={12}>
               <ListItem>
                 <ListIcon as={FaCheckCircle} color="green.500" />
@@ -115,18 +112,16 @@ export default function ThreeTierPricing() {
               position="absolute"
               top="-16px"
               left="50%"
-              style={{ transform: "translate(-50%)" }}
-            >
+              style={{ transform: 'translate(-50%)' }}>
               <Text
                 textTransform="uppercase"
-                bg={useColorModeValue("red.300", "red.700")}
+                bg={useColorModeValue('red.300', 'red.700')}
                 px={3}
                 py={1}
-                color={useColorModeValue("gray.900", "gray.300")}
+                color={useColorModeValue('gray.900', 'gray.300')}
                 fontSize="sm"
                 fontWeight="600"
-                rounded="xl"
-              >
+                rounded="xl">
                 Most Popular
               </Text>
             </Box>
@@ -147,10 +142,9 @@ export default function ThreeTierPricing() {
               </HStack>
             </Box>
             <VStack
-              bg={useColorModeValue("gray.50", "gray.700")}
+              bg={useColorModeValue('gray.50', 'gray.700')}
               py={4}
-              borderBottomRadius={"xl"}
-            >
+              borderBottomRadius={'xl'}>
               <List spacing={3} textAlign="start" px={12}>
                 <ListItem>
                   <ListIcon as={FaCheckCircle} color="green.500" />
@@ -175,7 +169,7 @@ export default function ThreeTierPricing() {
               </List>
               <Box w="80%" pt={7}>
                 <Button w="full" colorScheme="red">
-                  Получить доступ
+                Получить доступ
                 </Button>
               </Box>
             </VStack>
@@ -199,10 +193,9 @@ export default function ThreeTierPricing() {
             </HStack>
           </Box>
           <VStack
-            bg={useColorModeValue("gray.50", "gray.700")}
+            bg={useColorModeValue('gray.50', 'gray.700')}
             py={4}
-            borderBottomRadius={"xl"}
-          >
+            borderBottomRadius={'xl'}>
             <List spacing={3} textAlign="start" px={12}>
               <ListItem>
                 <ListIcon as={FaCheckCircle} color="green.500" />
@@ -219,12 +212,12 @@ export default function ThreeTierPricing() {
             </List>
             <Box w="80%" pt={7}>
               <Button w="full" colorScheme="red" variant="outline">
-                Получить доступ
+              Получить доступ
               </Button>
             </Box>
           </VStack>
         </PriceWrapper>
       </Stack>
     </Box>
-  );
+  )
 }

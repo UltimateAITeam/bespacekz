@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 function useFirstStepsLoading() {
-  const [lotteries, setLotteries] = useState(false);
+    const [lotteries, setLotteries] = useState(false);
 
-  useEffect(() => {
-    fetch("/api/profile/completed").then((response) =>
-      setLotteries(response.ok),
-    );
-  }, []);
+    useEffect(() => {
+        fetch('/api/profile/completed')
+            .then(response => setLotteries(response.ok))
+    }, []);
 
-  return lotteries;
+    return lotteries;
 }
 
-export { useFirstStepsLoading };
+export {
+    useFirstStepsLoading
+}
