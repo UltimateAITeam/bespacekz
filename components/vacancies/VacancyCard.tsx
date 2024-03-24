@@ -51,6 +51,7 @@ export default function VacancyCard(props: IPropsVacancy) {
 
   const isFavorite =
     status === "authenticated" &&
+    favoritedBy &&
     favoritedBy.map((v) => v.user.id).includes(data.user.id);
 
   return (
