@@ -1,7 +1,8 @@
 "use client";
 
 import { CheckIcon, ExternalLinkIcon } from "@chakra-ui/icons";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 
 interface RespondToVacancyButtonProps {
@@ -13,6 +14,17 @@ export default function RespondToVacancyButton(
   props: RespondToVacancyButtonProps,
 ) {
   const { pending } = useFormStatus();
+  const firstState = useRef(pending);
+  const toast = useToast();
+
+  useEffect(() => {
+    if (firstState.current !== pending) {
+      toast({
+        title: "Ваш отклик отправлен работодателю",
+        status: "success",
+      });
+    }
+  }, [props.isAlreadyApplied, pending]);
 
   return (
     <Button
