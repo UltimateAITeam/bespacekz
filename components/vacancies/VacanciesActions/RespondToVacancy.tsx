@@ -51,7 +51,6 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
     <form
       action={async () => {
         "use server";
-
         const freelancer = await prisma.freelancerProfile.update({
           where: {
             userEmail: session!.user.email,
@@ -99,6 +98,7 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
       }}
     >
       <Button
+        type="submit"
         // leftIcon={isAlreadyApplied ? <CheckIcon /> : <ExternalLinkIcon />}
         variant={"outline"}
         colorScheme={isAlreadyApplied ? "gray" : "blue"}
