@@ -45,7 +45,7 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                 location: data.location_city,
                 role: data.role,
                 redirect: true,
-                callbackUrl: "/firststeps",
+                callbackUrl: "/moreinfo?role="+ data.role,
             }).then((res) => {
                 if (res?.status === 401) {
                     setError("password", {type: "custom", message: "Incorrect password"})
@@ -261,7 +261,7 @@ function SignupForm({type}: {type: "client" | "freelancer"}) {
                     </form>
 
                     <div className={"mt-7 text-zinc-600"}>
-                        Wanna join as {localType}?{" "}
+                        Wanna join as {localType === "client" ? "freelancer" : "client"}?{" "}
                         <span
                             className={"text-cyan-700 font-semibold cursor-pointer"}
                             onClick={() => {

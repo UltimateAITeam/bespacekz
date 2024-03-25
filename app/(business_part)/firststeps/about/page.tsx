@@ -8,11 +8,12 @@ import useAboutStore from "@/store/aboutFormStore";
 import dynamic from 'next/dynamic'
 
 // import RichText from "@/components/RichText";
-
-function Page() {
-    const RichText = dynamic(() => import('@/components/RichText'), {
+const RichText = dynamic(() => import('@/components/RichText'), {
         ssr: false
     });
+    
+function Page() {
+    
     const {about, updateAbout} = useAboutStore();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
