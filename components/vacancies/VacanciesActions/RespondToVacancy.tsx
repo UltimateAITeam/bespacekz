@@ -7,6 +7,7 @@ import { render } from "@react-email/components";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+import RespondToVacancyButton from "./RespondToVacancyButton";
 // import { CheckIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
 // TODO: add loading banner and success or error taost
@@ -97,15 +98,10 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
         revalidatePath(`/vacancies/${idVacancy}`);
       }}
     >
-      <Button
-        type="submit"
-        // leftIcon={isAlreadyApplied ? <CheckIcon /> : <ExternalLinkIcon />}
-        variant={"outline"}
-        colorScheme={isAlreadyApplied ? "gray" : "blue"}
+      <RespondToVacancyButton
+        isAlreadyApplied={isAlreadyApplied}
         isDisabled={!session || isAlreadyApplied}
-      >
-        {isAlreadyApplied ? "Ваш отклик на рассмотрении" : "Откликнуться"}
-      </Button>
+      />
     </form>
   );
 }
