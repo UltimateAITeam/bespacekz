@@ -1,19 +1,19 @@
-import {Prisma} from '@prisma/client';
-import VacancyCard from '../VacancyCard';
+import { Prisma } from "@prisma/client";
+import VacancyCard from "../VacancyCard";
 
 type Vacancy = Prisma.VacancyGetPayload<{
   include: {
     jobTitle: true;
     clientProfile: true;
-    favoritedBy:{
+    favoritedBy: {
       select: {
-        user:{
-          select:{
-            id: true
-          }
-        }
-      }
-    }
+        user: {
+          select: {
+            id: true;
+          };
+        };
+      };
+    };
   };
 }>;
 
@@ -25,9 +25,10 @@ export async function RecommendedVacancies({
   exclude_vac_id: string;
 }) {
   const res = await fetch(
-    `${process.env.API_URL}/api/get_vacancies/by_category/${category_id}?exclude_id=${exclude_vac_id}&limit=3`, {
-      method: 'GET'
-    }
+    `${process.env.API_URL}/api/get_vacancies/by_category/${category_id}?exclude_id=${exclude_vac_id}&limit=3`,
+    {
+      method: "GET",
+    },
   );
   const data: Vacancy[] = await res.json();
   return (

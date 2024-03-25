@@ -1,39 +1,47 @@
-import { authOptions } from '@/libs/auth';
-import { prisma } from '@/libs/prisma';
-import { VacanciesQueryEnum } from '@/types/vacancies.types';
-import { PricingType, Prisma } from '@prisma/client';
-import { getServerSession } from 'next-auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from "@/libs/auth";
+import { prisma } from "@/libs/prisma";
+import { VacanciesQueryEnum } from "@/types/vacancies.types";
+import { PricingType, Prisma } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
 // /api/get_vacancies?limit=10&page=1
 export async function GET(req: NextRequest) {
-  const limit = req.nextUrl.searchParams.get('limit');
+  const limit = req.nextUrl.searchParams.get("limit");
   const page = req.nextUrl.searchParams.get(VacanciesQueryEnum.page);
   const cities = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.cities);
-  const categories = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.category);
-  const job_types = req.nextUrl.searchParams.getAll(VacanciesQueryEnum.job_types);
-  const favorite = !!req.nextUrl.searchParams.get('favorite')
+  const categories = req.nextUrl.searchParams.getAll(
+    VacanciesQueryEnum.category,
+  );
+  const job_types = req.nextUrl.searchParams.getAll(
+    VacanciesQueryEnum.job_types,
+  );
+  const favorite = !!req.nextUrl.searchParams.get("favorite");
 
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-  console.log(session?.user,favorite)
+  console.log(session?.user, favorite);
 
   try {
-    if (!limit || !page) return NextResponse.json({error: 'no limit or page provided'}, {status: 400});
+    if (!limit || !page)
+      return NextResponse.json(
+        { error: "no limit or page provided" },
+        { status: 400 },
+      );
 
     const query: Prisma.VacancyFindManyArgs = {
       include: {
         jobTitle: true,
         clientProfile: true,
-        favoritedBy:{
+        favoritedBy: {
           select: {
-            user:{
-              select:{
-                id: true
-              }
-            }
-          }
-        }
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
       },
       where: {
         city: {
@@ -47,29 +55,34 @@ export async function GET(req: NextRequest) {
           },
         },
         pricingType: {
-          in: job_types.length > 0 ? job_types as PricingType[] : undefined
+          in: job_types.length > 0 ? (job_types as PricingType[]) : undefined,
         },
-        ...(favorite && session ? {
-          favoritedBy:{
-            some:{
-              userEmail: session.user.email
+        ...(favorite && session
+          ? {
+              favoritedBy: {
+                some: {
+                  userEmail: session.user.email,
+                },
+              },
             }
-          }
-        }:{})
+          : {}),
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
     };
     const [data, count] = await prisma.$transaction([
-      prisma.vacancy.findMany({skip: parseInt(limit) * (parseInt(page) - 1), take: parseInt(limit), ...query}),
-      prisma.vacancy.count({where: query.where}),
+      prisma.vacancy.findMany({
+        skip: parseInt(limit) * (parseInt(page) - 1),
+        take: parseInt(limit),
+        ...query,
+      }),
+      prisma.vacancy.count({ where: query.where }),
     ]);
 
-
-    return NextResponse.json({data: data, count}, {status: 200});
+    return NextResponse.json({ data: data, count }, { status: 200 });
   } catch (e) {
-    console.log('Пойман на ошибке', e);
-    return NextResponse.json({error: e?.toString}, {status: 500});
+    console.log("Пойман на ошибке", e);
+    return NextResponse.json({ error: e?.toString }, { status: 500 });
   }
 }

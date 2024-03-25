@@ -1,6 +1,6 @@
-import { SearchBar } from '@/components/ui/SearchBar';
+import { SearchBar } from "@/components/ui/SearchBar";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default function AboutUsPage() {
   return (

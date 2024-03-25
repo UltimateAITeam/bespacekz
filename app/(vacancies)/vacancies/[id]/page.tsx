@@ -1,46 +1,52 @@
-import CurrencyIcon from '@/components/icons/CurrencyIcon';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { RecommendedVacancies } from '@/components/vacancies/RecommendedVacancies';
-import { RespondToVacancy } from '@/components/vacancies/VacanciesActions/RespondToVacancy';
-import { VacancyCardSkeleton } from '@/components/vacancies/VacancyCard';
-import { JOB_TYPES_MAP } from '@/data/job_types';
-import { thousandSeparator } from '@/libs/utils';
-import { Prisma } from '@prisma/client';
-import Image from 'next/image';
-import { Suspense } from 'react';
-import { CiClock2 } from 'react-icons/ci';
-import { IoIosSearch } from 'react-icons/io';
-import { IoLocationOutline } from 'react-icons/io5';
+import CurrencyIcon from "@/components/icons/CurrencyIcon";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RecommendedVacancies } from "@/components/vacancies/RecommendedVacancies";
+import { RespondToVacancy } from "@/components/vacancies/VacanciesActions/RespondToVacancy";
+import { VacancyCardSkeleton } from "@/components/vacancies/VacancyCard";
+import { JOB_TYPES_MAP } from "@/data/job_types";
+import { thousandSeparator } from "@/libs/utils";
+import { Prisma } from "@prisma/client";
+import Image from "next/image";
+import { Suspense } from "react";
+import { CiClock2 } from "react-icons/ci";
+import { IoIosSearch } from "react-icons/io";
+import { IoLocationOutline } from "react-icons/io5";
 type Vacancy = Prisma.VacancyGetPayload<{
   include: {
     jobTitle: true;
     clientProfile: {
-        include: {
-            user: true
-        }
-    }
+      include: {
+        user: true;
+      };
+    };
   };
 }>;
 
 async function getVacancyById<T>(id: string) {
-  const response = await fetch(`${process.env.API_URL}/api/get_vacancies/${id}/`);
+  const response = await fetch(
+    `${process.env.API_URL}/api/get_vacancies/${id}/`,
+  );
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data vacancies_by_id');
+    throw new Error("Failed to fetch data vacancies_by_id");
   }
   return response.json() as T;
 }
 interface AboutVacancyPageProps {
-    params: {
-      id: string;
-    };
-  }
+  params: {
+    id: string;
+  };
+}
 
-export default async function AboutVacancyPage({params}: AboutVacancyPageProps) {
+export default async function AboutVacancyPage({
+  params,
+}: AboutVacancyPageProps) {
   const vacancy = await getVacancyById<Vacancy>(params.id);
   return (
     <div className="font-roboto pb-28">
-      <h1 className="text-[38px] leading-tight font-medium">{vacancy.jobTitle.name}</h1>
+      <h1 className="text-[38px] leading-tight font-medium">
+        {vacancy.jobTitle.name}
+      </h1>
       <div className="mt-10 flex gap-9">
         <div className="w-1/4 shrink-0">
           <Card className="p-5 font-roboto">
@@ -60,10 +66,13 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
                   <ul>
                     <li className="whitespace-normal flex flex-col">
                       <div className="mr-1">Компания:</div>
-                      <p className="font-medium shrink-0">{vacancy.clientProfile.companyInfo}</p>
+                      <p className="font-medium shrink-0">
+                        {vacancy.clientProfile.companyInfo}
+                      </p>
                     </li>
                     <li className="whitespace-normal flex flex-col">
-                      <div className="mr-1">ФИО:</div> <p className="font-medium shrink-0">{`${vacancy.clientProfile.user.name} ${vacancy.clientProfile.user.last_name}`}</p>
+                      <div className="mr-1">ФИО:</div>{" "}
+                      <p className="font-medium shrink-0">{`${vacancy.clientProfile.user.name} ${vacancy.clientProfile.user.last_name}`}</p>
                     </li>
                   </ul>
                 </div>
@@ -84,7 +93,8 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
                 <div>
                   <CurrencyIcon currency={vacancy.currency} />
                   <span>
-                    {thousandSeparator(vacancy.priceFrom)} - {thousandSeparator(vacancy.priceTo)}
+                    {thousandSeparator(vacancy.priceFrom)} -{" "}
+                    {thousandSeparator(vacancy.priceTo)}
                   </span>
                 </div>
               </div>
@@ -100,9 +110,14 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
           </Card>
         </div>
       </div>
-      <h2 className='mt-16 mb-11 font-medium text-3xl '>Вам подойдут эти вакансии</h2>
+      <h2 className="mt-16 mb-11 font-medium text-3xl ">
+        Вам подойдут эти вакансии
+      </h2>
       <Suspense fallback={<VacancyCardSkeleton count={3} />}>
-        <RecommendedVacancies exclude_vac_id={vacancy.id} category_id={vacancy.jobTitle.category_id} />
+        <RecommendedVacancies
+          exclude_vac_id={vacancy.id}
+          category_id={vacancy.jobTitle.category_id}
+        />
       </Suspense>
     </div>
   );

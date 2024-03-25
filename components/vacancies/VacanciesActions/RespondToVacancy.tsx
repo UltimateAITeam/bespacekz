@@ -83,7 +83,7 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
             applicant={{
               id: freelancer.user.id,
             }}
-          />
+          />,
         );
 
         // test this after fixing the registration with @bespace.kz email

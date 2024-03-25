@@ -1,17 +1,17 @@
 .chakra-checkbox__label {
-    @apply text-primary-text  font-roboto  whitespace-nowrap truncate;
+  @apply text-primary-text  font-roboto  whitespace-nowrap truncate;
 }
 
 div::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 div::-webkit-scrollbar-track {
-    border-radius: 100px;
-    @apply bg-neutral-background;
+  border-radius: 100px;
+  @apply bg-neutral-background;
 }
 
 div::-webkit-scrollbar-thumb {
-    border-radius: 100px;
-    @apply bg-neutral-foreground;
+  border-radius: 100px;
+  @apply bg-neutral-foreground;
 }

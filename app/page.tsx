@@ -263,8 +263,7 @@ export default function HomePage() {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-             
-                Почему компании <br /> 
+                Почему компании <br />
                 выбирают Bespace
               </motion.h2>
 
@@ -279,11 +278,12 @@ export default function HomePage() {
                 </span>
                 <div className="flex flex-col space-y-2">
                   <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                  Гарантия качества
+                    Гарантия качества
                   </h3>
                   <span className="text-zinc-500 font-semibold xl:text-md">
-                  Ознакомьтесь с образцами работ профессионалов, отзывами клиентов <br className="md:block hidden" />
-                  и подтверждением личности.
+                    Ознакомьтесь с образцами работ профессионалов, отзывами
+                    клиентов <br className="md:block hidden" />и подтверждением
+                    личности.
                   </span>
                 </div>
               </motion.div>

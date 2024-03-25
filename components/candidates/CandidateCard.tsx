@@ -1,48 +1,61 @@
-'use client';
+"use client";
 
-import {ICandidate} from '@/types/candidates.types';
-import {Badge, Button, ButtonGroup} from '@chakra-ui/react';
-import Image from 'next/image';
-import {useRouter} from 'next/navigation';
-import {useMemo} from 'react';
-import {CiCalendar, CiClock2} from 'react-icons/ci';
-import {IoIosCheckmarkCircleOutline} from 'react-icons/io';
-import {AiOutlineBank} from 'react-icons/ai';
-import {FaRegStar} from 'react-icons/fa';
-import {IoIosSearch} from 'react-icons/io';
-import {IoLocationOutline} from 'react-icons/io5';
-import {LuDot} from 'react-icons/lu';
-import {Skeleton} from '../ui/skeleton';
-import { format } from 'date-fns';
-import Link from 'next/link';
+import { ICandidate } from "@/types/candidates.types";
+import { Badge, Button, ButtonGroup } from "@chakra-ui/react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import { CiCalendar, CiClock2 } from "react-icons/ci";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { AiOutlineBank } from "react-icons/ai";
+import { FaRegStar } from "react-icons/fa";
+import { IoIosSearch } from "react-icons/io";
+import { IoLocationOutline } from "react-icons/io5";
+import { LuDot } from "react-icons/lu";
+import { Skeleton } from "../ui/skeleton";
+import { format } from "date-fns";
+import Link from "next/link";
 
 interface ICandidateCardProps extends ICandidate {}
 
 export function CandidateCard(props: ICandidateCardProps) {
-  const {user, jobTitle, Skills, Experience, Portfolio, id} = props;
+  const { user, jobTitle, Skills, Experience, Portfolio, id } = props;
   const router = useRouter();
 
   return (
-    <Link href={`/candidates/${id}`} className='max-w-[960px] block' >
+    <Link href={`/candidates/${id}`} className="max-w-[960px] block">
       <div className="flex md:flex-row p-6 gap-6 border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)] max-w-[960px] cursor-pointer">
         <div className="shrink-0">
           {/* "/images/Avatar.png" */}
-          <Image src={user.image || "/images/Avatar.png"} alt="Avatar" width={80} height={80} />
+          <Image
+            src={user.image || "/images/Avatar.png"}
+            alt="Avatar"
+            width={80}
+            height={80}
+          />
         </div>
         <div className="flex-1 overflow-hidden">
           <div className="flex w-full">
             <div>
               <p className="text-lg !leading-normal text-primary-text">{`${user.last_name} ${user.name}`}</p>
               <div className="flex items-center">
-  
-                {jobTitle && <h3 className="text-2xl font-medium !leading-normal text-primary-text">{jobTitle.name}</h3>}
+                {jobTitle && (
+                  <h3 className="text-2xl font-medium !leading-normal text-primary-text">
+                    {jobTitle.name}
+                  </h3>
+                )}
                 <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px] !font-roboto !font-medium">
                   Новый пост
                 </Badge>
               </div>
             </div>
             <div className="ml-auto">
-              <Button colorScheme="messenger" variant="outline" className="ml-3" onClick={() => null}>
+              <Button
+                colorScheme="messenger"
+                variant="outline"
+                className="ml-3"
+                onClick={() => null}
+              >
                 Написать
               </Button>
             </div>
@@ -68,7 +81,12 @@ export function CandidateCard(props: ICandidateCardProps) {
             </div>
           </div>
           <div className="flex mt-3 text-primary-10">
-            <ButtonGroup variant="solid" colorScheme="linkedin" size="xs" spacing="2">
+            <ButtonGroup
+              variant="solid"
+              colorScheme="linkedin"
+              size="xs"
+              spacing="2"
+            >
               {Skills.map((s) => {
                 return (
                   <Button key={s}>
@@ -84,33 +102,65 @@ export function CandidateCard(props: ICandidateCardProps) {
           <div className="flex gap-4 mt-2 overflow-hidden p-[2px] relative after:absolute after:right-0 after:h-full after:top-0 after:w-[20%] after:bg-gradient-to-l after:from-white [&>div]:shrink-0">
             {Experience.map((job, idx) => {
               return (
-                <div key={job.id} className='py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center'>
-                  <p className='text-sm font-medium text-primary-text'>{job.company}</p>
-                  <p className='text-xs text-black/80 ml-2'>{format(job.from, "MM.yyyy")} - {job.to ? format(job.to, "MM.yyyy") : 'текущее время'}</p>
+                <div
+                  key={job.id}
+                  className="py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center"
+                >
+                  <p className="text-sm font-medium text-primary-text">
+                    {job.company}
+                  </p>
+                  <p className="text-xs text-black/80 ml-2">
+                    {format(job.from, "MM.yyyy")} -{" "}
+                    {job.to ? format(job.to, "MM.yyyy") : "текущее время"}
+                  </p>
                 </div>
               );
             })}
             {Experience.map((job, idx) => {
               return (
-                <div key={job.id} className='py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center'>
-                  <p className='text-sm font-medium text-primary-text'>{job.company}</p>
-                  <p className='text-xs text-black/80 ml-2'>{format(job.from, "MM.yyyy")} - {job.to ? format(job.to, "MM.yyyy") : 'текущее время'}</p>
+                <div
+                  key={job.id}
+                  className="py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center"
+                >
+                  <p className="text-sm font-medium text-primary-text">
+                    {job.company}
+                  </p>
+                  <p className="text-xs text-black/80 ml-2">
+                    {format(job.from, "MM.yyyy")} -{" "}
+                    {job.to ? format(job.to, "MM.yyyy") : "текущее время"}
+                  </p>
                 </div>
               );
             })}
             {Experience.map((job, idx) => {
               return (
-                <div key={job.id} className='py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center'>
-                  <p className='text-sm font-medium text-primary-text'>{job.company}</p>
-                  <p className='text-xs text-black/80 ml-2'>{format(job.from, "MM.yyyy")} - {job.to ? format(job.to, "MM.yyyy") : 'текущее время'}</p>
+                <div
+                  key={job.id}
+                  className="py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center"
+                >
+                  <p className="text-sm font-medium text-primary-text">
+                    {job.company}
+                  </p>
+                  <p className="text-xs text-black/80 ml-2">
+                    {format(job.from, "MM.yyyy")} -{" "}
+                    {job.to ? format(job.to, "MM.yyyy") : "текущее время"}
+                  </p>
                 </div>
               );
             })}
             {Experience.map((job, idx) => {
               return (
-                <div key={job.id} className='py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center'>
-                  <p className='text-sm font-medium text-primary-text'>{job.company}</p>
-                  <p className='text-xs text-black/80 ml-2'>{format(job.from, "MM.yyyy")} - {job.to ? format(job.to, "MM.yyyy") : 'текущее время'}</p>
+                <div
+                  key={job.id}
+                  className="py-1 px-3 rounded-md ring-1 ring-black/15 bg-[#7D5AE2]/10 flex items-center"
+                >
+                  <p className="text-sm font-medium text-primary-text">
+                    {job.company}
+                  </p>
+                  <p className="text-xs text-black/80 ml-2">
+                    {format(job.from, "MM.yyyy")} -{" "}
+                    {job.to ? format(job.to, "MM.yyyy") : "текущее время"}
+                  </p>
                 </div>
               );
             })}
@@ -121,8 +171,11 @@ export function CandidateCard(props: ICandidateCardProps) {
   );
 }
 
-export const CandidateCardSkeleton = ({count = 1}: {count: number}) => {
-  const array = useMemo(() => Array.from({length: count}, (v, i) => i), [count]);
+export const CandidateCardSkeleton = ({ count = 1 }: { count: number }) => {
+  const array = useMemo(
+    () => Array.from({ length: count }, (v, i) => i),
+    [count],
+  );
   return (
     <div className="space-y-8 w-full">
       {array.map((_, idx) => (

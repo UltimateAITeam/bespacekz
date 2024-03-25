@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   HStack,
   VStack,
@@ -9,14 +9,14 @@ import {
   Icon,
   SimpleGrid,
   Container,
-  Stack
-} from '@chakra-ui/react';
+  Stack,
+} from "@chakra-ui/react";
 // Here we have used framer-motion package for animations
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 // Here we have used react-icons package for the icons
-import { HiOutlineMail } from 'react-icons/hi';
-import { BsArrowUpShort, BsArrowDownShort } from 'react-icons/bs';
-import { AiOutlineLike, AiOutlineEye } from 'react-icons/ai';
+import { HiOutlineMail } from "react-icons/hi";
+import { BsArrowUpShort, BsArrowDownShort } from "react-icons/bs";
+import { AiOutlineLike, AiOutlineEye } from "react-icons/ai";
 import { IoIosBriefcase, IoMdBusiness, IoMdPersonAdd } from "react-icons/io";
 
 interface StatData {
@@ -30,35 +30,35 @@ interface StatData {
 const statData: StatData[] = [
   {
     id: 1,
-    label: 'Зарегистрированных людей',
+    label: "Зарегистрированных людей",
     score: 20421,
     icon: IoMdPersonAdd,
-    percentage: '10%'
+    percentage: "10%",
   },
   {
     id: 2,
-    label: 'Выполненных работ',
+    label: "Выполненных работ",
     score: 54023,
     icon: IoIosBriefcase,
-    percentage: '30%'
+    percentage: "30%",
   },
   {
     id: 3,
-    label: 'Компании в поисках сотрудников',
+    label: "Компании в поисках сотрудников",
     score: 532,
     icon: IoMdBusiness,
-    percentage: '50%'
-  }
+    percentage: "50%",
+  },
 ];
 
 const StatsWithIcons = () => {
   return (
     // <Container maxW="7xl" p={{ base: 5, md: 10 }}>
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={5} mt={6} mb={4}>
-        {statData.map((data, index) => (
-          <Card key={index} data={data} />
-        ))}
-      </SimpleGrid>
+    <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={5} mt={6} mb={4}>
+      {statData.map((data, index) => (
+        <Card key={index} data={data} />
+      ))}
+    </SimpleGrid>
     // </Container>
   );
 };
@@ -81,7 +81,7 @@ const Card = ({ data }: { data: StatData }) => {
         overflow="hidden"
       >
         {/* bg={useColorModeValue('gray.100', 'gray.800')} */}
-        <HStack py={6} px={5} spacing={4} w="100%" className='bg-cardBg'>
+        <HStack py={6} px={5} spacing={4} w="100%" className="bg-cardBg">
           <Flex
             justifyContent="center"
             alignItems="center"

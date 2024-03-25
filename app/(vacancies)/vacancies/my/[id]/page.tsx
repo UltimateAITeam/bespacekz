@@ -1,80 +1,84 @@
-import { CandidateCard } from '@/components/candidates/CandidateCard';
-import CurrencyIcon from '@/components/icons/CurrencyIcon';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { RecommendedVacancies } from '@/components/vacancies/RecommendedVacancies';
-import { RespondToVacancy } from '@/components/vacancies/VacanciesActions/RespondToVacancy';
-import { VacancyCardSkeleton } from '@/components/vacancies/VacancyCard';
-import { JOB_TYPES_MAP } from '@/data/job_types';
-import { prisma } from '@/libs/prisma';
-import { thousandSeparator } from '@/libs/utils';
-import { Prisma } from '@prisma/client';
-import Image from 'next/image';
-import { Suspense } from 'react';
-import { CiClock2 } from 'react-icons/ci';
-import { IoIosSearch } from 'react-icons/io';
-import { IoLocationOutline } from 'react-icons/io5';
+import { CandidateCard } from "@/components/candidates/CandidateCard";
+import CurrencyIcon from "@/components/icons/CurrencyIcon";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RecommendedVacancies } from "@/components/vacancies/RecommendedVacancies";
+import { RespondToVacancy } from "@/components/vacancies/VacanciesActions/RespondToVacancy";
+import { VacancyCardSkeleton } from "@/components/vacancies/VacancyCard";
+import { JOB_TYPES_MAP } from "@/data/job_types";
+import { prisma } from "@/libs/prisma";
+import { thousandSeparator } from "@/libs/utils";
+import { Prisma } from "@prisma/client";
+import Image from "next/image";
+import { Suspense } from "react";
+import { CiClock2 } from "react-icons/ci";
+import { IoIosSearch } from "react-icons/io";
+import { IoLocationOutline } from "react-icons/io5";
 
 interface AboutVacancyPageProps {
-    params: {
-      id: string;
-    };
-  }
+  params: {
+    id: string;
+  };
+}
 
-export default async function AboutVacancyPage({params}: AboutVacancyPageProps) {
+export default async function AboutVacancyPage({
+  params,
+}: AboutVacancyPageProps) {
   const vacancy = await prisma.vacancy.findUniqueOrThrow({
-    where:{
-        id: params.id
+    where: {
+      id: params.id,
     },
-    select:{
-        city: true,
-        jobTitle: {
-            select:{
-                name: true
-            }
+    select: {
+      city: true,
+      jobTitle: {
+        select: {
+          name: true,
         },
-        aboutVacancy: true,
-        priceFrom: true,
-        priceTo: true,
-        clientProfile:{
-            select:{
-                companyInfo: true,
-                user:{
-                    select:{
-                        name: true,
-                        last_name: true,
-                    }
-                }
-            }
+      },
+      aboutVacancy: true,
+      priceFrom: true,
+      priceTo: true,
+      clientProfile: {
+        select: {
+          companyInfo: true,
+          user: {
+            select: {
+              name: true,
+              last_name: true,
+            },
+          },
         },
-        pricingType: true,
-        currency:true,
-        applicants:{
-            select:{
-                user: {
-                    select: {
-                      image: true,
-                      about: true,
-                      name: true,
-                      last_name: true,
-                      location: true,
-                    },
-                  },
-                  Education: true,
-                  Experience: true,
-                  Languages: true,
-                  Pricing: true,
-                  Portfolio: true,
-                  jobTitle: true,
-                  Skills: true,
-                  id: true,
-            }
-        }
-    }
-  })
+      },
+      pricingType: true,
+      currency: true,
+      applicants: {
+        select: {
+          user: {
+            select: {
+              image: true,
+              about: true,
+              name: true,
+              last_name: true,
+              location: true,
+            },
+          },
+          Education: true,
+          Experience: true,
+          Languages: true,
+          Pricing: true,
+          Portfolio: true,
+          jobTitle: true,
+          Skills: true,
+          id: true,
+        },
+      },
+    },
+  });
 
   return (
     <div className="font-roboto pb-28">
-      <h1 className="text-[38px] leading-tight font-medium">{vacancy.jobTitle.name}</h1>
+      <h1 className="text-[38px] leading-tight font-medium">
+        {vacancy.jobTitle.name}
+      </h1>
       <div className="mt-10 flex gap-9">
         <div className="w-1/4 shrink-0">
           <Card className="p-5 font-roboto">
@@ -94,10 +98,13 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
                   <ul>
                     <li className="whitespace-normal flex flex-col">
                       <div className="mr-1">Компания:</div>
-                      <p className="font-medium shrink-0">{vacancy.clientProfile.companyInfo}</p>
+                      <p className="font-medium shrink-0">
+                        {vacancy.clientProfile.companyInfo}
+                      </p>
                     </li>
                     <li className="whitespace-normal flex flex-col">
-                      <div className="mr-1">ФИО:</div> <p className="font-medium shrink-0">{`${vacancy.clientProfile.user.name} ${vacancy.clientProfile.user.last_name}`}</p>
+                      <div className="mr-1">ФИО:</div>{" "}
+                      <p className="font-medium shrink-0">{`${vacancy.clientProfile.user.name} ${vacancy.clientProfile.user.last_name}`}</p>
                     </li>
                   </ul>
                 </div>
@@ -118,7 +125,8 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
                 <div>
                   <CurrencyIcon currency={vacancy.currency} />
                   <span>
-                    {thousandSeparator(vacancy.priceFrom)} - {thousandSeparator(vacancy.priceTo)}
+                    {thousandSeparator(vacancy.priceFrom)} -{" "}
+                    {thousandSeparator(vacancy.priceTo)}
                   </span>
                 </div>
               </div>
@@ -131,12 +139,14 @@ export default async function AboutVacancyPage({params}: AboutVacancyPageProps) 
           </Card>
         </div>
       </div>
-      <h2 className='mt-16 mb-11 font-medium text-3xl'>Откликнувшиеся кандидаты</h2>
-        <div className="space-y-8">
-            {vacancy.applicants.map((applicant)=>
-            <CandidateCard key={applicant.id} {...applicant} />
-            )}
-        </div>
+      <h2 className="mt-16 mb-11 font-medium text-3xl">
+        Откликнувшиеся кандидаты
+      </h2>
+      <div className="space-y-8">
+        {vacancy.applicants.map((applicant) => (
+          <CandidateCard key={applicant.id} {...applicant} />
+        ))}
+      </div>
     </div>
   );
 }

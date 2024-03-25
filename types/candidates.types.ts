@@ -1,32 +1,32 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from "@prisma/client";
 
 export enum CandidatesQueryEnum {
-    category = 'category',
-    cities = 'cities',
-    page = 'page',
-  }
-  
-  export interface ICandidatesSearchParams extends Record<CandidatesQueryEnum, string | number[]> {}
+  category = "category",
+  cities = "cities",
+  page = "page",
+}
 
-  export type ICandidate = Prisma.FreelancerProfileGetPayload<{
-    select: {
-      user: {
-        select: {
-          image: true,
-          about: true,
-          name: true,
-          last_name: true,
-          location: true
-        },
-      },
-      Education: true,
-      Experience: true,
-      Languages: true,
-      Pricing: true,
-      Portfolio: true,
-      jobTitle: true,
-      Skills: true,
-      id: true,
-    },
-  }>;
-  
+export interface ICandidatesSearchParams
+  extends Record<CandidatesQueryEnum, string | number[]> {}
+
+export type ICandidate = Prisma.FreelancerProfileGetPayload<{
+  select: {
+    user: {
+      select: {
+        image: true;
+        about: true;
+        name: true;
+        last_name: true;
+        location: true;
+      };
+    };
+    Education: true;
+    Experience: true;
+    Languages: true;
+    Pricing: true;
+    Portfolio: true;
+    jobTitle: true;
+    Skills: true;
+    id: true;
+  };
+}>;
