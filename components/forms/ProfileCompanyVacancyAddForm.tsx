@@ -18,6 +18,10 @@ import dynamic from "next/dynamic";
 
 import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 
+const RichTextEditor = dynamic(() => import("@/components/RichText"), {
+    ssr: false,
+  });
+
 interface VacancyFormProps {
   data: any;
   onSubmit: (data: any) => void;
@@ -28,9 +32,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
   onSubmit,
   onCloseModal,
 }) => {
-  const RichTextEditor = dynamic(() => import("@/components/RichText"), {
-    ssr: false,
-  });
+  
   const [formData, setFormData] = useState({
     title: "",
     aboutVacancy: "",

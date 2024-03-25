@@ -26,6 +26,10 @@ import { skillsList } from "@/data/skills";
 // import RichTextEditor from "@/components/RichText";
 import dynamic from "next/dynamic";
 
+const RichTextEditor = dynamic(() => import("@/components/RichText"), {
+    ssr: false,
+  });
+  
 interface VacancyFormProps {
   onSubmit: (data: any) => void;
   onCloseModal?: () => void;
@@ -37,9 +41,7 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
   onCloseModal,
   isLoadingButton,
 }) => {
-  const RichTextEditor = dynamic(() => import("@/components/RichText"), {
-    ssr: false,
-  });
+  
   const [formData, setFormData] = useState({
     requiredSkills: [],
     pricingType: PricingType.EMPLOYEE,

@@ -19,6 +19,10 @@ import dynamic from "next/dynamic";
 
 // import RichTextEditor from "@/components/RichText";
 
+const RichTextEditor = dynamic(() => import("@/components/RichText"), {
+    ssr: false,
+  });
+
 interface FormProps {
   onSubmit: (data: any) => void;
   onClose: () => void;
@@ -26,9 +30,7 @@ interface FormProps {
 }
 
 function ProfileAboutEditForm({ onSubmit, onClose, data }: FormProps) {
-  const RichTextEditor = dynamic(() => import("@/components/RichText"), {
-    ssr: false,
-  });
+  
 
   const [about, setAbout] = useState<string>(
     (data.companyDescription as string) || "",

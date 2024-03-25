@@ -22,6 +22,13 @@ import DatePicker, {
 import CustomDatePicker from "@/components/CustomDatePicker";
 import { Role } from "@prisma/client";
 
+const MoreInfoAvatarModal = dynamic(
+  () => import("@/components/modals/MoreInfoAvatarModal"),
+  {
+    ssr: false,
+  },
+);
+
 interface FormValues {
   first_name: string;
   last_name: string;
@@ -44,13 +51,6 @@ function Oauth_additional() {
   let role = searchParams.get("role") || "freelancer";
 
   const router = useRouter();
-
-  const MoreInfoAvatarModal = dynamic(
-    () => import("@/components/modals/MoreInfoAvatarModal"),
-    {
-      ssr: false,
-    },
-  );
 
   const {
     handleSubmit,

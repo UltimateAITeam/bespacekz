@@ -31,6 +31,17 @@ import { formatDate } from "@/libs/utils";
 import dynamic from "next/dynamic";
 // import RichTextEditor from "@/components/RichText";
 
+const RichTextEditor = dynamic(() => import("@/components/RichText"), {
+  ssr: false,
+});
+
+const ProfileMultiModal = dynamic(
+  () => import("@/components/modals/ProfileMultiModal"),
+  {
+    ssr: false,
+  },
+);
+
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
   include: {
     Languages: true;
@@ -61,16 +72,6 @@ type UserInfoType = Prisma.UserGetPayload<{
 }>;
 
 function Page() {
-  const RichTextEditor = dynamic(() => import("@/components/RichText"), {
-    ssr: false,
-  });
-
-  const ProfileMultiModal = dynamic(
-    () => import("@/components/modals/ProfileMultiModal"),
-    {
-      ssr: false,
-    },
-  );
 
   const [formType, setFormType] = React.useState<string>("");
   const { isOpen, onClose, onOpen } = useDisclosure();
