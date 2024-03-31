@@ -31,7 +31,7 @@ const SubLinks1 = [
         subhead: {
             name: "Каталог проектов",
             des: "Просмотрите и приобретите проекты с четким описанием и ценой.",
-            subheadlink: { name: "Просмотр каталога проектов", link: "/services"}
+            subheadlink: { name: "Просмотр каталога проектов", link: "/works"}
         },
 
         sublink: [
