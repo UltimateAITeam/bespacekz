@@ -15,6 +15,7 @@ import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useSWRConfig } from "swr";
+import parse from 'html-react-parser';
 
 interface IPropsVacancy extends IVacancy {}
 export default function VacancyCard(props: IPropsVacancy) {
@@ -162,7 +163,7 @@ export default function VacancyCard(props: IPropsVacancy) {
           </p>
         </div>
         <div className="mt-3 text-primary-10 font-roboto line-clamp-2">
-          <p>{aboutVacancy}</p>
+          {parse(aboutVacancy)}
         </div>
       </div>
     </div>
