@@ -21,7 +21,7 @@ export default function VacanciesPage({
       </p>
       <SearchBar />
 
-      <section className="flex gap-8 !mt-16">
+      <section className="flex gap-8 !mt-16 min-h-screen">
         {/* ================= Filter Side ======================== */}
 
         <div className="w-[300px]">

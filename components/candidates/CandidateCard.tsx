@@ -15,6 +15,7 @@ import { LuDot } from "react-icons/lu";
 import { Skeleton } from "../ui/skeleton";
 import { format } from "date-fns";
 import Link from "next/link";
+import parse from 'html-react-parser';
 
 interface ICandidateCardProps extends ICandidate {}
 
@@ -23,8 +24,8 @@ export function CandidateCard(props: ICandidateCardProps) {
   const router = useRouter();
 
   return (
-    <Link href={`/candidates/${id}`} className="max-w-[960px] block">
-      <div className="flex md:flex-row p-6 gap-6 border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)] max-w-[960px] cursor-pointer">
+    <div className="max-w-[1280px] block">
+      <div className="flex md:flex-row p-6 gap-6 border rounded-[8px] shadow-sm hover:shadow-md transition-shadow !border-[rgba(20,20,20,0.1)] max-w-[1280px]">
         <div className="shrink-0">
           {/* "/images/Avatar.png" */}
           <Image
@@ -49,14 +50,24 @@ export function CandidateCard(props: ICandidateCardProps) {
                 </Badge>
               </div>
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto flex flex-row space-x-4">
+              <Link href={`/candidates/${id}`} className="max-w-[1280px] block">
+                <Button
+                  colorScheme="gray"
+                  variant="outline"
+                  className="ml-3"
+                  onClick={() => null}
+                >
+                  Посмотреть профиль
+                </Button>
+              </Link>
               <Button
                 colorScheme="messenger"
                 variant="outline"
                 className="ml-3"
                 onClick={() => null}
               >
-                Написать
+                Ответить
               </Button>
             </div>
           </div>
@@ -99,6 +110,7 @@ export function CandidateCard(props: ICandidateCardProps) {
               </Button> */}
             </ButtonGroup>
           </div>
+          
           <div className="flex gap-4 mt-2 overflow-hidden p-[2px] relative after:absolute after:right-0 after:h-full after:top-0 after:w-[20%] after:bg-gradient-to-l after:from-white [&>div]:shrink-0">
             {Experience.map((job, idx) => {
               return (
@@ -165,9 +177,16 @@ export function CandidateCard(props: ICandidateCardProps) {
               );
             })}
           </div>
+
+          {user.about && 
+            <div className="mt-3 text-primary-10 font-roboto line-clamp-2">
+              {parse(user.about || "")}
+            </div>
+          }
+
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

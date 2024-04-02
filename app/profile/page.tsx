@@ -20,6 +20,8 @@ import {
   Tooltip,
   useDisclosure,
   VStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import NewHeader from "@/components/brenda_components/NewHeader";
 import { Prisma, Role } from "@prisma/client";
@@ -30,6 +32,10 @@ import { useSession } from "next-auth/react";
 import { formatDate } from "@/libs/utils";
 import dynamic from "next/dynamic";
 // import RichTextEditor from "@/components/RichText";
+import parse from "html-react-parser";
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
+import { thousandSeparator } from "@/libs/utils";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
   ssr: false,
@@ -39,7 +45,7 @@ const ProfileMultiModal = dynamic(
   () => import("@/components/modals/ProfileMultiModal"),
   {
     ssr: false,
-  },
+  }
 );
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
@@ -72,7 +78,6 @@ type UserInfoType = Prisma.UserGetPayload<{
 }>;
 
 function Page() {
-
   const [formType, setFormType] = React.useState<string>("");
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [loading, setLoading] = useState(false);
@@ -111,6 +116,7 @@ function Page() {
   const languages = data?.Languages || [];
   const experiences = data?.Experience || [];
   const vacancies = data?.Vacancy || [];
+  const skills = data?.Skills || [];
 
   if (!data || loading || !role)
     return (
@@ -157,10 +163,18 @@ function Page() {
             "container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 md:px-5 px-3 sm:flex sm:justify-center"
           }
         >
-          <Stack spacing={4} className={"lg:w-3/5 sm:w-4/5 w-full"}>
+          <div
+            className={
+              "grid grid-cols-[1fr_335px] items-start gap-6 lg:w-5/6 sm:w-4/5 w-full"
+            }
+          >
+            <h2 className="text-[#01001E] text-[30px] leading-tight font-medium pb-4">
+              Просмотр аккаунта
+            </h2>
+
             {data.jobTitle && (
               <HStack>
-                <h1 className={"text-3xl mb-5 font-bold"}>
+                <h1 className={"text-3xl mb-5 font-medium"}>
                   {data.jobTitle.name}
                 </h1>
                 <LuPencilLine
@@ -171,285 +185,357 @@ function Page() {
             )}
 
             {/* BLOCK TAG */}
-            <BlockComponent
-              title={"Личные данные"}
-              isEditable={true}
-              editForm={"edit-info"}
-              openModal={openModal}
-              isAddable={false}
-            >
-              <div className={"flex w-full md:flex-row flex-col"}>
-                <Stack direction={"column"}>
-                  <Avatar
-                    size={"2xl"}
-                    className={"m-auto md:m-none"}
-                    src={data.image!}
-                  />
-                  <button className={"text-blue-500"}>Изменить</button>
-                </Stack>
-                <Grid
-                  templateColumns={"repeat(2, 1fr)"}
-                  templateRows={"repeat(2, 1fr)"}
-                  className={"xl:ml-40 md:ml-20"}
-                  gap={4}
-                  columnGap={20}
-                >
-                  <GridItem>
-                    <p className={"font-bold"}>Имя Фамилия</p>
-                    <p>{data.name + " " + data.last_name}</p>
-                  </GridItem>
-                  <GridItem>
-                    <p className={"font-bold"}>Электронная почта</p>
-                    <p>{data.email || "Не указана"}</p>
-                  </GridItem>
-                  <GridItem>
-                    <p className={"font-bold"}>Страна, Город</p>
-                    <p>{data.location || "Не указано"}</p>
-                  </GridItem>
-                  <GridItem>
-                    <p className={"font-bold"}>Номер телефона</p>
-                    <p>{data.phone || "Не указано"}</p>
-                  </GridItem>
-                </Grid>
-              </div>
-            </BlockComponent>
+            <div className="col-start-1">
+              <BlockComponent
+                title={"Основные сведения"}
+                isEditable={true}
+                editForm={"edit-info"}
+                openModal={openModal}
+                isAddable={false}
+              >
+                <div className={"flex w-full md:flex-row flex-col"}>
+                  <Stack direction={"column"}>
+                    <Avatar
+                      size={"2xl"}
+                      className={"m-auto md:m-none"}
+                      src={data.image!}
+                    />
+                    <button className={"text-blue-500"}>Изменить</button>
+                  </Stack>
+                  <Grid
+                    templateColumns={"repeat(2, 1fr)"}
+                    templateRows={"repeat(2, 1fr)"}
+                    className={"xl:ml-40 md:ml-20"}
+                    gap={4}
+                    columnGap={20}
+                  >
+                    <GridItem>
+                      <p className={"font-bold"}>Имя Фамилия</p>
+                      <p>{data.name + " " + data.last_name}</p>
+                    </GridItem>
+                    <GridItem>
+                      <p className={"font-bold"}>Электронная почта</p>
+                      <p>{data.email || "Не указана"}</p>
+                    </GridItem>
+                    <GridItem>
+                      <p className={"font-bold"}>Страна, Город</p>
+                      <p>{data.location || "Не указано"}</p>
+                    </GridItem>
+                    <GridItem>
+                      <p className={"font-bold"}>Номер телефона</p>
+                      <p>{data.phone || "Не указано"}</p>
+                    </GridItem>
+                  </Grid>
+                </div>
+              </BlockComponent>
+            </div>
+
             {role === Role.FREELANCER && (
               <>
-                <BlockComponent
-                  editForm={"edit-education"}
-                  addForm={"add-education"}
-                  openModal={openModal}
-                  title={"Образование"}
-                  isEditable={true}
-                  isAddable={true}
-                >
-                  <VStack gap={4}>
-                    {educations.length > 0 &&
-                      educations.map((education) => (
-                        <Stack
-                          mb={4}
-                          key={education.id}
-                          direction={"row"}
-                          className={"w-full justify-between"}
-                        >
-                          <SimpleGrid
-                            columns={4}
-                            gap={{ xl: 20, sm: 5 }}
-                            className={"justify-start w-full"}
+                <div className="col-start-2">
+                  <BlockComponent
+                    editForm={"edit-languages"}
+                    openModal={openModal}
+                    isAddable={false}
+                    isEditable={true}
+                    title={"Языки"}
+                  >
+                    <ul className="mt-0 space-y-4">
+                      {languages.map((lang) => {
+                        return (
+                          <li
+                            key={lang.id}
+                            className="flex justify-between items-center w-1/2"
                           >
-                            <div>
-                              <p className={"font-bold"}>Место</p>
-                              <p>{education.institution}</p>
-                            </div>
-                            <div>
-                              <p className={"font-bold"}>Степень</p>
-                              <p>{education.degree}</p>
-                            </div>
-                            <div>
-                              <p className={"font-bold"}>Специальность</p>
-                              <p>{education.specialization}</p>
-                            </div>
-                            <div>
-                              <p className={"font-bold"}>Период обучения</p>
-                              <p>
-                                {formatDate(new Date(education.from))} -{" "}
-                                {formatDate(new Date(education.to))}
-                              </p>
-                            </div>
-                          </SimpleGrid>
-                        </Stack>
-                      ))}
-                  </VStack>
-                </BlockComponent>
-                {/* BLOCK TAG */}
-                <BlockComponent
-                  editForm={"edit-experience"}
-                  addForm={"add-experience"}
-                  openModal={openModal}
-                  title={"Стаж работы"}
-                  isAddable={true}
-                  isEditable={true}
-                >
-                  <VStack>
-                    {experiences &&
-                      experiences.map((exp) => (
-                        <Stack
-                          mb={4}
-                          key={exp.id}
-                          direction={"row"}
-                          className={"w-full justify-between"}
-                        >
-                          <SimpleGrid
-                            columns={3}
-                            gap={{ xl: 20, sm: 5 }}
-                            className={"justify-start w-full"}
+                            <span className="text-xl font-medium ">
+                              {lang.name}
+                            </span>{" "}
+                            <span>{lang.proficiencyLevel}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </BlockComponent>
+                </div>
+
+                <div className="col-start-1">
+                  <BlockComponent
+                    editForm={"edit-education"}
+                    addForm={"add-education"}
+                    openModal={openModal}
+                    title={"Образование"}
+                    isEditable={true}
+                    isAddable={true}
+                  >
+                    <VStack gap={4}>
+                      {educations.length > 0 &&
+                        educations.map((education) => (
+                          <Stack
+                            mb={4}
+                            key={education.id}
+                            direction={"row"}
+                            className={"w-full justify-between"}
                           >
-                            <div>
-                              <p className={"font-bold"}>Должность</p>
-                              <p>
-                                {exp.jobTitle} в {exp.company}
-                              </p>
-                            </div>
-                            <div>
-                              <p className={"font-bold"}>Используемые навыки</p>
-                              <p>{exp.skills.join(", ")}</p>
-                            </div>
-                            <div>
-                              <p className={"font-bold"}>Период работы</p>
-                              <p>
-                                {formatDate(new Date(exp.from))} -{" "}
-                                {!exp.stillWorking && exp.to
-                                  ? formatDate(new Date(exp.to))
-                                  : "По сей день"}
-                              </p>
-                            </div>
-                            {/*<div>*/}
-                            {/*    <p className={"font-bold"}>Стаж работы</p>*/}
-                            {/*    <p>{exp.duration + " месяцев"}</p>*/}
-                            {/*</div>*/}
-                          </SimpleGrid>
-                        </Stack>
-                      ))}
-                  </VStack>
-                </BlockComponent>
+                            <SimpleGrid
+                              columns={4}
+                              gap={{ xl: 20, sm: 5 }}
+                              className={"justify-start w-full"}
+                            >
+                              <div>
+                                <p className={"font-bold"}>Место</p>
+                                <p>{education.institution}</p>
+                              </div>
+                              <div>
+                                <p className={"font-bold"}>Степень</p>
+                                <p>{education.degree}</p>
+                              </div>
+                              <div>
+                                <p className={"font-bold"}>Специальность</p>
+                                <p>{education.specialization}</p>
+                              </div>
+                              <div>
+                                <p className={"font-bold"}>Период обучения</p>
+                                <p>
+                                  {formatDate(new Date(education.from))} -{" "}
+                                  {formatDate(new Date(education.to))}
+                                </p>
+                              </div>
+                            </SimpleGrid>
+                          </Stack>
+                        ))}
+                    </VStack>
+                  </BlockComponent>
+                </div>
                 {/* BLOCK TAG */}
-                <BlockComponent
-                  editForm={"edit-languages"}
-                  openModal={openModal}
-                  isAddable={false}
-                  isEditable={true}
-                  title={"Языки"}
-                >
-                  <Grid templateColumns="repeat(5, 1fr)" gap={4}>
-                    {languages.map((lang: any) => (
-                      <GridItem key={lang.id}>
-                        <Tooltip
-                          placement={"top"}
-                          className={"h-fit"}
-                          label={lang.proficiencyLevel}
-                        >
-                          <Tag className={"cursor-default h-fit"}>
-                            {lang.name}
-                          </Tag>
-                        </Tooltip>
-                      </GridItem>
+                <div className="col-start-1">
+                  <BlockComponent
+                    editForm={"edit-experience"}
+                    addForm={"add-experience"}
+                    openModal={openModal}
+                    title={"Опыт работы"}
+                    isAddable={true}
+                    isEditable={true}
+                  >
+                    <VStack>
+                      {experiences &&
+                        experiences.map((exp) => (
+                          <Stack
+                            mb={4}
+                            key={exp.id}
+                            direction={"row"}
+                            className={"w-full justify-between"}
+                          >
+                            <SimpleGrid
+                              columns={4}
+                              gap={{ xl: 20, sm: 5 }}
+                              className={"justify-start w-full"}
+                            >
+                              <div>
+                                <p className={"font-bold"}>Место</p>
+                                <p>{exp.company}</p>
+                              </div>
+
+                              <div>
+                                <p className={"font-bold"}>Должность</p>
+                                <p>{exp.jobTitle}</p>
+                              </div>
+                              <div>
+                                <p className={"font-bold"}>
+                                  Используемые навыки
+                                </p>
+                                <p>{exp.skills.join(", ")}</p>
+                              </div>
+                              <div>
+                                <p className={"font-bold"}>Период работы</p>
+                                <p>
+                                  {formatDate(new Date(exp.from))} -{" "}
+                                  {!exp.stillWorking && exp.to
+                                    ? formatDate(new Date(exp.to))
+                                    : "По сей день"}
+                                </p>
+                              </div>
+                              {/*<div>*/}
+                              {/*    <p className={"font-bold"}>Стаж работы</p>*/}
+                              {/*    <p>{exp.duration + " месяцев"}</p>*/}
+                              {/*</div>*/}
+                            </SimpleGrid>
+                          </Stack>
+                        ))}
+                    </VStack>
+                  </BlockComponent>
+                </div>
+                {/* BLOCK TAG */}
+                <div className="col-start-1">
+                  <BlockComponent
+                    editForm={""}
+                    openModal={openModal}
+                    isAddable={false}
+                    // fix editing skills and add adding new skills
+                    isEditable={false}
+                    title={"Способности "}
+                  >
+                    <Wrap>
+                      {skills.length > 0 &&
+                        skills.map((skill: any) => (
+                          <WrapItem key={skill}>
+                            <Tag className={"cursor-default h-fit"}>
+                              {skill}
+                            </Tag>
+                          </WrapItem>
+                        ))}
+                    </Wrap>
+                  </BlockComponent>
+                </div>
+
+                <div className="col-start-1">
+                  <BlockComponent
+                    editForm={""}
+                    openModal={openModal}
+                    isAddable={false}
+                    // fix editing skills and add adding new skills
+                    isEditable={false}
+                    title={"Вид поиска работы "}
+                  >
+                    {data.Pricing.map((pricing) => (
+                      <div
+                        key={pricing.id}
+                        className="text-xl py-1 px-2 font-medium text-primary-text"
+                      >
+                        {pricing.pricingType[0] === "EMPLOYEE"
+                          ? "Ищу работу на постоянной основе"
+                          : "Фрилансер"}
+                      </div>
                     ))}
-                  </Grid>
-                </BlockComponent>
+                  </BlockComponent>
+                </div>
+
                 {/* BLOCK TAG */}
-                <BlockComponent
-                  editForm={"edit-about"}
-                  openModal={openModal}
-                  isAddable={false}
-                  isEditable={true}
-                  title={"О себе"}
-                >
-                  <RichTextEditor
+                <div className="col-start-1">
+                  <BlockComponent
+                    editForm={"edit-about"}
+                    openModal={openModal}
+                    isAddable={false}
+                    isEditable={true}
+                    title={"О себе"}
+                  >
+                    {/* <RichTextEditor
                     data={data.about || ""}
                     onChange={(e) => {}}
                     disable={true}
-                  ></RichTextEditor>
-                </BlockComponent>
+                  ></RichTextEditor> */}
+                    <div>{parse(data.about || "")}</div>
+                  </BlockComponent>
+                </div>
               </>
             )}
             {/*CLIENT PART*/}
             {role === Role.CLIENT && (
               <>
-                <BlockComponent
-                  editForm={"edit-company-info"}
-                  openModal={openModal}
-                  isAddable={false}
-                  isEditable={true}
-                  title={"Данные Компании"}
-                >
-                  <Stack
-                    mb={4}
-                    direction={"row"}
-                    className={"w-full justify-between"}
+
+                <div className="col-start-1">
+                  <BlockComponent
+                    editForm={"edit-company-info"}
+                    openModal={openModal}
+                    isAddable={false}
+                    isEditable={true}
+                    title={"Данные Компании"}
+                  >
+                    <Stack
+                      mb={4}
+                      direction={"row"}
+                      className={"w-full justify-between"}
+                    >
+                      <SimpleGrid
+                        columns={3}
+                        gap={{ xl: 20, sm: 5 }}
+                        className={"justify-start w-full"}
+                      >
+                        <div>
+                          <p className={"font-bold"}>Почтовый индекс</p>
+                          <p>{data.mailIndex || "Индекс не установлен"}</p>
+                        </div>
+                        <div>
+                          <p className={"font-bold"}>Адрес</p>
+                          <p>{data.address || "Адресс не установлен"}</p>
+                        </div>
+                        <div>
+                          <p className={"font-bold"}>Сфера деятельности</p>
+                          <p>{data.sphereOfWork || "Не установлено"}</p>
+                        </div>
+                      </SimpleGrid>
+                    </Stack>
+                  </BlockComponent>
+                </div>
+
+                <div className="col-start-1">
+                  <BlockComponent
+                    isAddable={true}
+                    editForm={"edit-vacancy"}
+                    isEditable={true}
+                    openModal={openModal}
+                    addForm={"add-vacancy"}
+                    title={"Ваши вакансии"}
                   >
                     <SimpleGrid
-                      columns={3}
-                      gap={{ xl: 20, sm: 5 }}
-                      className={"justify-start w-full"}
+                      spacing={4}
+                      templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
                     >
-                      <div>
-                        <p className={"font-bold"}>Почтовый индекс</p>
-                        <p>{data.mailIndex || "Индекс не установлен"}</p>
-                      </div>
-                      <div>
-                        <p className={"font-bold"}>Адрес</p>
-                        <p>{data.address || "Адресс не установлен"}</p>
-                      </div>
-                      <div>
-                        <p className={"font-bold"}>Сфера деятельности</p>
-                        <p>{data.sphereOfWork || "Не установлено"}</p>
-                      </div>
-                    </SimpleGrid>
-                  </Stack>
-                </BlockComponent>
-
-                <BlockComponent
-                  isAddable={true}
-                  editForm={"edit-vacancy"}
-                  isEditable={true}
-                  openModal={openModal}
-                  addForm={"add-vacancy"}
-                  title={"Ваши вакансии"}
-                >
-                  <SimpleGrid
-                    spacing={4}
-                    templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-                  >
-                    {vacancies &&
-                      vacancies.length > 0 &&
-                      vacancies.map((vacancy: any) => (
-                        <Card
-                          key={vacancy.id}
-                          className={"hover:shadow-md transition-shadow"}
-                        >
-                          <CardHeader>
-                            <Flex>
-                              <VStack
-                                align={"start"}
-                                flex="1"
-                                gap={"4"}
-                                className={"cursor-pointer"}
-                              >
-                                <Heading
-                                  size="md"
-                                  style={{ textTransform: "capitalize" }}
+                      {vacancies &&
+                        vacancies.length > 0 &&
+                        vacancies.map((vacancy: any) => (
+                          <Card
+                            key={vacancy.id}
+                            className={"hover:shadow-md transition-shadow"}
+                          >
+                            <CardHeader>
+                              <Flex>
+                                <VStack
+                                  align={"start"}
+                                  flex="1"
+                                  gap={"4"}
+                                  className={"cursor-pointer"}
                                 >
-                                  {vacancy.title}
-                                </Heading>
-                                <Text>{vacancy.specialization}</Text>
-                                <Text>
-                                  {vacancy.priceFrom} - {vacancy.priceTo}{" "}
-                                  {vacancy.currency}
-                                </Text>
-                              </VStack>
-                            </Flex>
-                          </CardHeader>
-                        </Card>
-                      ))}
-                  </SimpleGrid>
-                </BlockComponent>
+                                  <Heading
+                                    size="md"
+                                    style={{ textTransform: "capitalize" }}
+                                  >
+                                    {vacancy.jobTitle.name}
+                                  </Heading>
+                                  <Text className="text-xs">
+                                    <span className="font-semibold">Дата публикации: </span> 
+                                    {format(new Date(vacancy.createdAt), 'PPP', { locale: ru })}
+                                  </Text>
+                                  <Text className="text-sm">
+                                    {thousandSeparator(vacancy.priceFrom)} - {thousandSeparator(vacancy.priceTo)}{" "}
+                                    {vacancy.currency}
+                                  </Text>
+                                </VStack>
+                              </Flex>
+                            </CardHeader>
+                          </Card>
+                        ))}
+                    </SimpleGrid>
+                  </BlockComponent>
+                </div>
 
-                <BlockComponent
-                  editForm={"edit-company-description"}
-                  openModal={openModal}
-                  isAddable={false}
-                  isEditable={true}
-                  title={"Описание компании"}
-                >
-                  <RichTextEditor
-                    data={data.companyDescription || ""}
-                    onChange={(e) => {}}
-                    disable={true}
-                  ></RichTextEditor>
-                </BlockComponent>
+                <div className="col-start-1">
+                  <BlockComponent
+                    editForm={"edit-company-description"}
+                    openModal={openModal}
+                    isAddable={false}
+                    isEditable={true}
+                    title={"Описание компании"}
+                  >
+                    <RichTextEditor
+                      data={data.companyDescription || ""}
+                      onChange={(e) => {}}
+                      disable={true}
+                    ></RichTextEditor>
+                  </BlockComponent>
+                </div>
               </>
             )}
-          </Stack>
+          </div>
         </section>
       </main>
     </div>

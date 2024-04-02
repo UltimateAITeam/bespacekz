@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
       Languages: true,
       Pricing: true,
       Portfolio: true,
+      jobTitle: true,
     },
   });
   const userInfo = await prisma.user.findUnique({

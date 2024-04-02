@@ -59,7 +59,7 @@ const Footer = () => {
   return (
     // m-5 rounded-xl
     // bg-gradient-to-tr from-[#BAE6FD] to-[#CFFAFE]
-    <footer className="bg-footerBg mt-auto rounded-lg m-5">
+    <footer className="bg-footerBg mt-auto rounded-t-lg m-0">
       <div className="container mx-auto py-3 md:px-5 sm:px-7 px-3">
         <div className="flex md:flex-row flex-col justify-between md:space-x-5 md:px-0 sm:px-10 px-3">
           {/* ======================== column 1 ====================== */}
@@ -204,7 +204,7 @@ const Footer = () => {
                     </div> */}
         </div>
 
-        <div className="flex md:flex-row flex-col justify-between md:space-y-0 space-y-3 lg:px-3 md:px-0 sm:px-10 px-3 mt-3 mb-10">
+        <div className="flex md:flex-row flex-col justify-between md:space-y-0 space-y-3 lg:px-3 md:px-0 sm:px-10 px-3 mt-3 mb-6">
           {/* md:border-r border-zinc-800 */}
           <div className=" pr-3">
             <p className="text-[15px] text-gray-300 font-semibold">

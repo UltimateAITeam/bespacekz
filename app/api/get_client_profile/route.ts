@@ -11,7 +11,11 @@ export async function GET(req: NextRequest) {
       userEmail: session.user?.email,
     },
     include: {
-      Vacancy: true,
+      Vacancy: {
+        include: {
+          jobTitle: true, // Include jobTitle relation here
+        },
+      },
     },
   });
   const userInfo = await prisma.user.findUnique({

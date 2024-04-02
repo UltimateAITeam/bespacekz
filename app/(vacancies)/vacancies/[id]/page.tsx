@@ -11,6 +11,8 @@ import { Suspense } from "react";
 import { CiClock2 } from "react-icons/ci";
 import { IoIosSearch } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
+import parse from 'html-react-parser';
+
 type Vacancy = Prisma.VacancyGetPayload<{
   include: {
     jobTitle: true;
@@ -106,7 +108,7 @@ export default async function AboutVacancyPage({
         </div>
         <div>
           <Card>
-            <CardContent className="p-7">{vacancy.aboutVacancy}</CardContent>
+            <CardContent className="p-7"><div>{parse(vacancy.aboutVacancy)}</div></CardContent>
           </Card>
         </div>
       </div>

@@ -60,7 +60,7 @@ export default function HomePage() {
 
               <motion.button
                 className={
-                  "w-52 p-2 rounded-xl bg-[#0c4a6e] text-white lg:text-sm xl:text-lg font-semibold"
+                  "w-52 p-2 rounded-xl bg-primary-6 text-white lg:text-sm xl:text-lg font-semibold"
                 }
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -127,14 +127,7 @@ export default function HomePage() {
                   alt="paypal-img"
                 />
               </span>
-              {/* <span>
-                <Image
-                  src="/images/adobe.png"
-                  height={30}
-                  width={90}
-                  alt="adobe-img"
-                />
-              </span> */}
+              
               <span>
                 <Image
                   src="/images/oracle.png"
@@ -167,14 +160,6 @@ export default function HomePage() {
                   height={30}
                   width={90}
                   alt="airbnb-img"
-                />
-              </span>
-              <span>
-                <Image
-                  src="/images/netflix.png"
-                  height={30}
-                  width={90}
-                  alt="netflix-img"
                 />
               </span>
             </div>

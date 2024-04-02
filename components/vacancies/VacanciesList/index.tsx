@@ -60,7 +60,7 @@ export const VacanciesList = () => {
           <GridLoader color="#366EF6" className="mx-auto" />
         </div>
       ) : (
-        data?.data.map((vacancy) => {
+        data?.data?.map((vacancy) => {
           return <VacancyCard key={vacancy.id} {...vacancy} />;
         })
       )}

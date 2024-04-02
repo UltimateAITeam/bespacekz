@@ -21,7 +21,7 @@ export default function CandidatesPage({
       </p>
       <SearchBar />
 
-      <section className="flex gap-8 !mt-16">
+      <section className="flex gap-8 !mt-16 min-h-screen">
         <div className="w-[300px]">
           <CandidatesAside />
         </div>

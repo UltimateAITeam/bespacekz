@@ -520,9 +520,9 @@ const Navbar = () => {
                 <Button
                   onClick={onOpenVacancyCreateModal}
                   fontSize={"sm"}
-                  fontWeight={400}
+                  fontWeight={500}
                   variant={"solid"}
-                  colorScheme={"teal"}
+                  colorScheme={"messenger"}
                 >
                   Создать вакансию
                 </Button>
@@ -531,9 +531,9 @@ const Navbar = () => {
                 <Button
                   onClick={onOpenVacancyCreateModal}
                   fontSize={"sm"}
-                  fontWeight={400}
+                  fontWeight={500}
                   variant={"solid"}
-                  colorScheme={"teal"}
+                  colorScheme={"messenger"}
                 >
                   Создать вакансию
                 </Button>

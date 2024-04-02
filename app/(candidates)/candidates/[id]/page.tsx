@@ -23,11 +23,11 @@ async function getCandidateById<T>(id: string) {
 export default async function CandidatePage({ params }: CandidatePageProps) {
   const candidate = await getCandidateById<ICandidate>(params.id);
   return (
-    <div className="font-roboto pb-28 text-black">
+    <div className="font-roboto pb-28 text-black ">
       <h2 className="text-[#01001E] text-[30px] leading-tight font-medium">
         Просмотр кандидата
       </h2>
-      <div className="mt-8 grid grid-cols-[1fr_335px] items-start  gap-6">
+      <div className="mt-8 grid grid-cols-[1fr_335px] items-start gap-6">
         <section className="ring-1 ring-neutral-4 p-6 rounded-lg">
           <h3 className="text-black text-2xl font-medium">Личные данные</h3>
           <div className="mt-[42px] flex ">
@@ -142,7 +142,7 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
                   key={pricing.id}
                   className="text-xl py-1 px-2 font-medium text-primary-text"
                 >
-                  {pricing.pricingType[0]}
+                  {pricing.pricingType[0] === 'EMPLOYEE' ? 'Ищу работу на постоянной основе' : 'Фрилансер'}
                 </div>
               ))}
             </div>
