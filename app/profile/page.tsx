@@ -33,8 +33,8 @@ import { formatDate } from "@/libs/utils";
 import dynamic from "next/dynamic";
 // import RichTextEditor from "@/components/RichText";
 import parse from "html-react-parser";
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 import { thousandSeparator } from "@/libs/utils";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
@@ -45,7 +45,7 @@ const ProfileMultiModal = dynamic(
   () => import("@/components/modals/ProfileMultiModal"),
   {
     ssr: false,
-  }
+  },
 );
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
@@ -431,7 +431,6 @@ function Page() {
             {/*CLIENT PART*/}
             {role === Role.CLIENT && (
               <>
-
                 <div className="col-start-1">
                   <BlockComponent
                     editForm={"edit-company-info"}
@@ -502,11 +501,18 @@ function Page() {
                                     {vacancy.jobTitle.name}
                                   </Heading>
                                   <Text className="text-xs">
-                                    <span className="font-semibold">Дата публикации: </span> 
-                                    {format(new Date(vacancy.createdAt), 'PPP', { locale: ru })}
+                                    <span className="font-semibold">
+                                      Дата публикации:{" "}
+                                    </span>
+                                    {format(
+                                      new Date(vacancy.createdAt),
+                                      "PPP",
+                                      { locale: ru },
+                                    )}
                                   </Text>
                                   <Text className="text-sm">
-                                    {thousandSeparator(vacancy.priceFrom)} - {thousandSeparator(vacancy.priceTo)}{" "}
+                                    {thousandSeparator(vacancy.priceFrom)} -{" "}
+                                    {thousandSeparator(vacancy.priceTo)}{" "}
                                     {vacancy.currency}
                                   </Text>
                                 </VStack>

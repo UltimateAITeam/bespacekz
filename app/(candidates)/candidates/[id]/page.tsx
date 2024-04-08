@@ -3,7 +3,7 @@ import { CandidatesService } from "@/services/candidates.service";
 import { ICandidate } from "@/types/candidates.types";
 import { differenceInYears } from "date-fns";
 import Image from "next/image";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 interface CandidatePageProps {
   params: {
@@ -142,7 +142,9 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
                   key={pricing.id}
                   className="text-xl py-1 px-2 font-medium text-primary-text"
                 >
-                  {pricing.pricingType[0] === 'EMPLOYEE' ? 'Ищу работу на постоянной основе' : 'Фрилансер'}
+                  {pricing.pricingType[0] === "EMPLOYEE"
+                    ? "Ищу работу на постоянной основе"
+                    : "Фрилансер"}
                 </div>
               ))}
             </div>
@@ -153,9 +155,7 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
         <section className="ring-1 ring-neutral-4 p-6 rounded-lg col-start-1">
           <h3 className="text-black text-2xl font-medium">О себе</h3>
           {/* <p className="mt-[42px]">{candidate.user.about}</p> */}
-          <div className="mt-4">
-            {parse(candidate.user.about || "")}
-          </div>
+          <div className="mt-4">{parse(candidate.user.about || "")}</div>
         </section>
       </div>
     </div>

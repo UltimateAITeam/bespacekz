@@ -15,7 +15,7 @@ import { LuDot } from "react-icons/lu";
 import { Skeleton } from "../ui/skeleton";
 import { format } from "date-fns";
 import Link from "next/link";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 interface ICandidateCardProps extends ICandidate {}
 
@@ -110,7 +110,7 @@ export function CandidateCard(props: ICandidateCardProps) {
               </Button> */}
             </ButtonGroup>
           </div>
-          
+
           <div className="flex gap-4 mt-2 overflow-hidden p-[2px] relative after:absolute after:right-0 after:h-full after:top-0 after:w-[20%] after:bg-gradient-to-l after:from-white [&>div]:shrink-0">
             {Experience.map((job, idx) => {
               return (
@@ -178,12 +178,11 @@ export function CandidateCard(props: ICandidateCardProps) {
             })}
           </div>
 
-          {user.about && 
+          {user.about && (
             <div className="mt-3 text-primary-10 font-roboto line-clamp-2">
               {parse(user.about || "")}
             </div>
-          }
-
+          )}
         </div>
       </div>
     </div>
