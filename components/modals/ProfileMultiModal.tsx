@@ -73,15 +73,16 @@ function ProfileMultiModal({
         body: JSON.stringify({ info: data.info, type: data.table }),
       },
     );
-    if (resp.status !== 200)
+    if (resp.status !== 200) {
       const res = await fetch(
         role === Role.FREELANCER
           ? "/api/get_freelancer_profile"
           : "/api/get_client_profile",
       );
-    const dta = await res.json();
-    setData(dta);
-    setLoading(false);
+      const dta = await res.json();
+      setData(dta);
+      setLoading(false);
+    }
   }
 
   const forms: { [index: string]: ReactElement } = {
