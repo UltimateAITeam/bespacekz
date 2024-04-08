@@ -12,7 +12,6 @@ export async function POST(req: Request) {
     const FreelancerProfile = await getProfileBySession(session);
 
     for (const education of data) {
-      console.log("LOG: education", education);
       const edu = await prisma.education.create({
         data: {
           degree: education.degree,
@@ -27,7 +26,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
-    console.log(err);
     return NextResponse.json({ error: err?.toString() }, { status: 500 });
   }
 }

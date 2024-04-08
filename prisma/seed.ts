@@ -149,8 +149,6 @@ async function main() {
         },
       },
     });
-
-    console.log(`Created profile for freelancer: ${user.name} (${userEmail})`);
   }
 }
 

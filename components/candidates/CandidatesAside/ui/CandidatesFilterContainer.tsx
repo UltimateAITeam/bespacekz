@@ -30,7 +30,6 @@ export const CandidatesFilterContainer = ({
     value?: (string | number)[],
   ) => {
     const params = new URLSearchParams(searchParams);
-    console.log("@handleChangeFilter", optionName, value);
 
     if (value) {
       params.delete("page"); // сбрасываем пагинацию

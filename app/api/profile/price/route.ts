@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         freelancerProfileId: FreelancerProfile.id,
       },
     });
-    console.log("DATA:", data);
+
     if (!id) {
       await prisma.pricing.create({
         data: {
@@ -41,7 +41,6 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
-    console.log(err);
     return NextResponse.json({ error: err?.toString() }, { status: 500 });
   }
 }

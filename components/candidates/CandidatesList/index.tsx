@@ -60,12 +60,10 @@ export const CandidatesList = () => {
 
           setData(freelancers.data);
 
-          console.log("@freelancers.data", freelancers.data);
           setTotalItems(freelancers.count);
           setTotalPages(Math.ceil(freelancers.count / ITEMS_PER_PAGE));
         }
       } catch (error) {
-        console.log("@error fetch vacancies", error);
       } finally {
         setIsLoading(false);
       }

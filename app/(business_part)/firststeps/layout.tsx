@@ -148,9 +148,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
-          .catch((reason) => {
-            console.log(reason);
-          });
+          .catch((reason) => {});
         break;
       case "/firststeps":
         router.push(pages[pageIndex + 1].path);
@@ -160,27 +158,21 @@ function Layout({ children }: { children: React.ReactNode }) {
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
-          .catch((reason) => {
-            console.log(reason);
-          });
+          .catch((reason) => {});
         break;
       case "/firststeps/experience":
         postData("/api/profile/experience", experience)
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
-          .catch((reason) => {
-            console.log(reason);
-          });
+          .catch((reason) => {});
         break;
       case "/firststeps/languages":
         postData("/api/profile/languages", languages)
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
-          .catch((reason) => {
-            console.log(reason);
-          });
+          .catch((reason) => {});
         break;
       case "/firststeps/price":
         postData("/api/profile/price", {
@@ -192,9 +184,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
-          .catch((reason) => {
-            console.log(reason);
-          });
+          .catch((reason) => {});
         break;
       case "/firststeps/about":
         postData("/api/profile/about", { about: about })
@@ -206,9 +196,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             localStorage.removeItem("languages");
             router.push("/");
           })
-          .catch((reason) => {
-            console.log(reason);
-          });
+          .catch((reason) => {});
         break;
     }
   };

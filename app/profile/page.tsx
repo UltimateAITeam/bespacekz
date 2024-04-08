@@ -99,7 +99,6 @@ function Page() {
     setLoading(true);
 
     (async () => {
-      console.log("FETCH", role);
       let resp: Response;
       if (role === Role.FREELANCER)
         resp = await fetch("/api/get_freelancer_profile");
@@ -107,7 +106,6 @@ function Page() {
       const dta = await resp.json();
       setData(dta);
 
-      console.log("DATA:", dta);
       setLoading(false);
     })();
   }, [session.status, role, session.data?.user.role]);

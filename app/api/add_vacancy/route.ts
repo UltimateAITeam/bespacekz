@@ -21,7 +21,6 @@ export async function POST(req: Request) {
         { status: 404, statusText: "Client profile not found for user" },
       );
 
-    console.log("DATA", data);
     const { title, category_id, ...rest } = data;
 
     const vacancy = await prisma.vacancy.create({
@@ -50,11 +49,8 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log(vacancy);
-
     return NextResponse.json({ message: "Vacancy created" }, { status: 200 });
   } catch (err) {
-    console.log(err?.toString());
     return NextResponse.json({ error: err?.toString() }, { status: 500 });
   }
 }

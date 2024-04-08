@@ -26,11 +26,9 @@ export async function POST(req: Request) {
         completed: true,
       },
     });
-    console.log(completedProfile);
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
-    console.log(err);
     return NextResponse.json({ error: err?.toString() }, { status: 500 });
   }
 }

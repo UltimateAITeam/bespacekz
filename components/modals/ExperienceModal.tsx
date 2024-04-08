@@ -113,7 +113,7 @@ function EducationModal({
                 }}
                 onChange={(newValues) => {
                   if (!newValues) return;
-                  console.log(newValues.map((v) => v.value));
+
                   handleChange(
                     index,
                     "skills",

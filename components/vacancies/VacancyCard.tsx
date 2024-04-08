@@ -45,7 +45,6 @@ export default function VacancyCard(props: IPropsVacancy) {
     [pricingType],
   );
   const { mutate } = useSWRConfig();
-  console.log("@clientProfile", clientProfile);
 
   const filtersParams = new URLSearchParams(searchParams);
   const pageParam = filtersParams.get("page");

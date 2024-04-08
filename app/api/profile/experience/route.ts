@@ -12,7 +12,6 @@ export async function POST(req: Request) {
     const FreelancerProfile = await getProfileBySession(session);
 
     for (const experience of data) {
-      console.log("LOG: experience", experience);
       const exp = await prisma.experience.create({
         data: {
           jobTitle: experience.jobTitle,
@@ -33,7 +32,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
-    console.log(err);
     return NextResponse.json({ error: err?.toString() }, { status: 500 });
   }
 }

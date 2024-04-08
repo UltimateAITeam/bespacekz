@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
     const session = await getServerSession();
-    console.log(data, session);
+
     if (!session || !data.type || !data.info) throw Error("Not auth");
     const { type, info } = data;
 
@@ -52,7 +52,7 @@ export async function PUT(req: NextRequest) {
   try {
     const data = await req.json();
     const session = await getServerSession();
-    console.log(session, data);
+
     if (!session || !data.type || !data.info) throw Error("Not auth");
     const { type, info } = data;
     const profile = await prisma.freelancerProfile.findUnique({
@@ -97,7 +97,6 @@ export async function PUT(req: NextRequest) {
         },
       });
     } else if (type === "jobTitle") {
-      console.log("INFO", info);
       await prisma.freelancerProfile.update({
         where: {
           userEmail: session.user.email,
@@ -137,7 +136,6 @@ export async function DELETE(req: NextRequest) {
     });
     if (!profile) throw Error("No profile");
     if (type === "education") {
-      console.log(info);
       await prisma.education.delete({
         where: {
           id: info,

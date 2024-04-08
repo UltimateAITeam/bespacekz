@@ -76,8 +76,6 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
     // Convert the input value to a float
     const floatValue = parseFloat(valueString);
 
-    console.log(floatValue);
-
     // Check if the parsed value is a valid number
     if (!isNaN(floatValue)) {
       setFormData({

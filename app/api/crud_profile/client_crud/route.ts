@@ -37,7 +37,7 @@ export async function PUT(req: NextRequest) {
   try {
     const data = await req.json();
     const session = await getServerSession();
-    console.log(session, data);
+
     if (!session || !data.type || !data.info) throw Error("Not auth");
     const { type, info } = data;
     const profile = await prisma.clientProfile.findUnique({
@@ -70,7 +70,7 @@ export async function PUT(req: NextRequest) {
       });
     } else if (type === "client_vacancy") {
       const { id, clientId, ...res } = info;
-      console.log("VACANCY", id, res);
+
       await prisma.vacancy.update({
         data: res,
         where: {

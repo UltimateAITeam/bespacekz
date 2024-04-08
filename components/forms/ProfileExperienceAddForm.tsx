@@ -51,9 +51,7 @@ function ProfileExperienceAddForm({ onSubmit, onClose, data }: FormProps) {
         action: "add",
         table: "experience",
       });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [experience, setExperience] = useState<FormData>({

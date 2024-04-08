@@ -23,7 +23,6 @@ export async function GET(
     });
     return NextResponse.json(vacancy);
   } catch (e) {
-    console.log("Пойман на ошибке", e);
     return NextResponse.json({ error: e?.toString }, { status: 500 });
   }
 }

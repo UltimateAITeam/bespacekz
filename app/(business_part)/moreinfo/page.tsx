@@ -120,7 +120,6 @@ function Oauth_additional() {
       }
       setIsLoadingSubmit(false);
     } else {
-      console.log("error with form on outh_additional");
       setIsLoadingSubmit(false);
     }
   };
