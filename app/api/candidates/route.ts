@@ -1,5 +1,7 @@
-import { json2csv } from "json-2-csv";
 import { prisma } from "@/libs/prisma";
+import { findClientSubscriptionById } from "@/services/client-subscription";
+import { json2csv } from "json-2-csv";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -7,6 +9,49 @@ export async function GET(req: NextRequest) {
 
   switch (accept) {
     case "text/csv": {
+      const session = await getServerSession();
+
+      if (!session) {
+        return NextResponse.json(
+          {
+            error: "Unauthorized",
+          },
+          {
+            status: 401,
+          },
+        );
+      }
+
+      const client = await prisma.clientProfile.findUnique({
+        where: {
+          userEmail: session.user.email,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      let isClientSubscribed = false;
+
+      if (client) {
+        const clientSubscription = await findClientSubscriptionById(client.id);
+
+        if (clientSubscription) {
+          isClientSubscribed = true;
+        }
+      }
+
+      if (!isClientSubscribed) {
+        return NextResponse.json(
+          {
+            error: "Forbidden",
+          },
+          {
+            status: 403,
+          },
+        );
+      }
+
       const candidates = await prisma.user.findMany({
         select: {
           email: true,
