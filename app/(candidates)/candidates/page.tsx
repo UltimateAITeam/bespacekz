@@ -3,8 +3,9 @@ import { CandidatesList } from "@/components/candidates/CandidatesList";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ICandidatesSearchParams } from "@/types/candidates.types";
 import "./style.css";
-
-export const dynamic = "force-dynamic";
+import { Button } from "@chakra-ui/react";
+import Link from "next/link";
+import ExportButton from "./export-button";
 
 export default function CandidatesPage({
   searchParams,
@@ -19,8 +20,10 @@ export default function CandidatesPage({
       <p className="font-medium text-2xl text-[var(--Primary-text)]">
         Объявления кандидатов
       </p>
-      <SearchBar />
-
+      <div className="flex justify-between">
+        <SearchBar />
+        <ExportButton />
+      </div>
       <section className="flex gap-8 !mt-16 min-h-screen">
         <div className="w-[300px]">
           <CandidatesAside />
