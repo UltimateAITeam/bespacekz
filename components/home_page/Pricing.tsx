@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { FaCheckCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface Props {
   children: React.ReactNode;
@@ -102,7 +103,14 @@ export default function ThreeTierPricing() {
               </ListItem>
             </List>
             <Box w="80%" pt={7}>
-              <Button w="full" colorScheme="red" variant="outline">
+              <Button
+                as={Link}
+                href="/api/subscription/new?plan=starter"
+                target="_blank"
+                w="full"
+                colorScheme="red"
+                variant="outline"
+              >
                 Получить доступ
               </Button>
             </Box>
@@ -174,7 +182,13 @@ export default function ThreeTierPricing() {
                 </ListItem>
               </List>
               <Box w="80%" pt={7}>
-                <Button w="full" colorScheme="red">
+                <Button
+                  as={Link}
+                  href="/api/subscription/new?plan=growth"
+                  target="_blank"
+                  w="full"
+                  colorScheme="red"
+                >
                   Получить доступ
                 </Button>
               </Box>
@@ -218,7 +232,14 @@ export default function ThreeTierPricing() {
               </ListItem>
             </List>
             <Box w="80%" pt={7}>
-              <Button w="full" colorScheme="red" variant="outline">
+              <Button
+                as={Link}
+                target="_blank"
+                href="/api/subscription/new?plan=scale"
+                w="full"
+                colorScheme="red"
+                variant="outline"
+              >
                 Получить доступ
               </Button>
             </Box>
