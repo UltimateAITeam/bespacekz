@@ -339,7 +339,7 @@ function Page() {
                               </div>
                               <div>
                                 <p className={"font-bold"}>
-                                  Используемые навыки
+                                  Навыки
                                 </p>
                                 <p>{exp.skills.join(", ")}</p>
                               </div>

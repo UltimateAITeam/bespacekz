@@ -97,7 +97,7 @@ function ProfileExperienceAddForm({ onSubmit, onClose, data }: FormProps) {
         />
       </FormControl>
       <FormControl mt={2} id="roles" isRequired>
-        <FormLabel>Используемые навыки</FormLabel>
+        <FormLabel>Навыки</FormLabel>
         <CreatableSelect
           options={skillsList}
           value={experience.skills.map((v) => ({ value: v, label: v }))}
