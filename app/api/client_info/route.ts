@@ -20,7 +20,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "User created" }, { status: 200 });
   } catch (err) {
-    console.log(err?.toString());
     return NextResponse.json({ error: err?.toString() }, { status: 500 });
   }
 }

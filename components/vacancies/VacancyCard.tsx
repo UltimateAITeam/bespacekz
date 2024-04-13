@@ -15,7 +15,7 @@ import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useSWRConfig } from "swr";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import { thousandSeparator } from "@/libs/utils";
 
 interface IPropsVacancy extends IVacancy {}
@@ -45,7 +45,6 @@ export default function VacancyCard(props: IPropsVacancy) {
     [pricingType],
   );
   const { mutate } = useSWRConfig();
-  console.log("@clientProfile", clientProfile);
 
   const filtersParams = new URLSearchParams(searchParams);
   const pageParam = filtersParams.get("page");
@@ -129,7 +128,8 @@ export default function VacancyCard(props: IPropsVacancy) {
           <LuDot />
           <div>
             <span>
-              ₸ {thousandSeparator(priceFrom)} - {thousandSeparator(priceTo)} {currency}
+              ₸ {thousandSeparator(priceFrom)} - {thousandSeparator(priceTo)}{" "}
+              {currency}
             </span>
           </div>
           <LuDot />

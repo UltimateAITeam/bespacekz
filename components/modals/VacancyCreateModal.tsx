@@ -53,7 +53,7 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (data: any) => {
     setIsLoadingForm(true);
-    console.log(data);
+
     // Handle the form submission here (e.g., send to an API)
     // submit the data to  /api/add_vacancy endpoint
     // then close the modal
@@ -63,7 +63,7 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     });
     if (resVacancyAPI.ok) {
       const resVacancy = await resVacancyAPI.json();
-      // console.log(resVacancy);
+      //
       toast({
         title: "Вакансия создана.",
         description:
@@ -73,7 +73,6 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         isClosable: true,
       });
     } else {
-      console.log(resVacancyAPI.status);
       toast({
         title: "Ошибка при создании вакансии.",
         description: "Пожалуйста, попробуйте еще раз.",

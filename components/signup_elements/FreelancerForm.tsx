@@ -29,9 +29,7 @@ function FreelancerForm() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<FormValues> = (data) => {};
   const [skills, setSkills] = useState<Array<Skill>>(
     Array.from({ length: 1 }, () => ({ name: "", level: "" })),
   );

@@ -3,25 +3,78 @@ import { CandidatesService } from "@/services/candidates.service";
 import { ICandidate } from "@/types/candidates.types";
 import { differenceInYears } from "date-fns";
 import Image from "next/image";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
+import { prisma } from "@/libs/prisma";
+import { NextResponse } from "next/server";
+import { findClientSubscriptionById } from "@/services/client-subscription";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 interface CandidatePageProps {
   params: {
     id: string;
   };
 }
-
-async function getCandidateById<T>(id: string) {
-  const response = await CandidatesService.getCandidateById({ id });
-  if (!response.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error(`Failed to fetch data candidate ${id}`);
-  }
-  return response.json() as T;
-}
-
 export default async function CandidatePage({ params }: CandidatePageProps) {
-  const candidate = await getCandidateById<ICandidate>(params.id);
+  const candidate = await prisma.freelancerProfile.findUnique({
+    where: {
+      id: params.id,
+      user: {
+        role: "FREELANCER",
+      },
+    },
+    select: {
+      user: {
+        select: {
+          image: true,
+          about: true,
+          name: true,
+          last_name: true,
+          location: true,
+          email: true,
+          phone: true,
+        },
+      },
+      Education: true,
+      Experience: true,
+      Languages: true,
+      Pricing: true,
+      Portfolio: true,
+      jobTitle: true,
+      Skills: true,
+      id: true,
+    },
+  });
+
+  if (!candidate) {
+    return NextResponse.error();
+  }
+
+  const session = await getServerSession();
+
+  if (!session) {
+    return redirect("/login");
+  }
+
+  const client = await prisma.clientProfile.findUnique({
+    where: {
+      userEmail: session.user.email,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  let isClientSubscribed = false;
+
+  if (client) {
+    const clientSubscription = await findClientSubscriptionById(client.id);
+
+    if (clientSubscription) {
+      isClientSubscribed = true;
+    }
+  }
+
   return (
     <div className="font-roboto pb-28 text-black ">
       <h2 className="text-[#01001E] text-[30px] leading-tight font-medium">
@@ -52,6 +105,22 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
                 />
               )}
             </div>
+            {isClientSubscribed && (
+              <div className="ml-16 flex flex-col max-h-[200px] flex-wrap justify-between gap-y-6 gap-x-16">
+                <KeyValueColumn
+                  title="Email"
+                  value={candidate.user.email}
+                  className="!gap-1"
+                />
+                {candidate.user.phone && (
+                  <KeyValueColumn
+                    title="Телефон"
+                    value={candidate.user.phone}
+                    className="!gap-1"
+                  />
+                )}
+              </div>
+            )}
           </div>
         </section>
         {candidate.Languages.length > 0 ? (
@@ -142,7 +211,9 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
                   key={pricing.id}
                   className="text-xl py-1 px-2 font-medium text-primary-text"
                 >
-                  {pricing.pricingType[0] === 'EMPLOYEE' ? 'Ищу работу на постоянной основе' : 'Фрилансер'}
+                  {pricing.pricingType[0] === "EMPLOYEE"
+                    ? "Ищу работу на постоянной основе"
+                    : "Фрилансер"}
                 </div>
               ))}
             </div>
@@ -153,9 +224,7 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
         <section className="ring-1 ring-neutral-4 p-6 rounded-lg col-start-1">
           <h3 className="text-black text-2xl font-medium">О себе</h3>
           {/* <p className="mt-[42px]">{candidate.user.about}</p> */}
-          <div className="mt-4">
-            {parse(candidate.user.about || "")}
-          </div>
+          <div className="mt-4">{parse(candidate.user.about || "")}</div>
         </section>
       </div>
     </div>

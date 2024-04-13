@@ -13,7 +13,7 @@ async function getExistCategories<T>(): Promise<T> {
 
 export const CandidatesAside = async () => {
   const categories = await getExistCategories<JobCategory[]>();
-  console.log("@categories", categories);
+
   return (
     <div>
       <CandidatesFilterContainer categories={categories} />

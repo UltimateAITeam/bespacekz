@@ -73,7 +73,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ data: data, count }, { status: 200 });
   } catch (e) {
-    console.log("Пойман на ошибке", e);
     return NextResponse.json({ error: e?.toString }, { status: 500 });
   }
 }

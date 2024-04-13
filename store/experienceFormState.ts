@@ -52,7 +52,6 @@ const useExperienceStore = create<ExperienceStore>((set) => ({
     }),
   addExperience: () =>
     set((state) => {
-      console.log(typeof window === "undefined");
       const newExperience: Experience = {
         jobTitle: "",
         company: "",

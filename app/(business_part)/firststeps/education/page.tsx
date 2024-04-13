@@ -15,9 +15,7 @@ function Page() {
     e.preventDefault();
   };
 
-  useEffect(() => {
-    console.log("EDUCATION", educations);
-  }, [educations]);
+  useEffect(() => {}, [educations]);
 
   return (
     <motion.div

@@ -19,8 +19,8 @@ import dynamic from "next/dynamic";
 import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
-    ssr: false,
-  });
+  ssr: false,
+});
 
 interface VacancyFormProps {
   data: any;
@@ -32,7 +32,6 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
   onSubmit,
   onCloseModal,
 }) => {
-  
   const [formData, setFormData] = useState({
     title: "",
     aboutVacancy: "",
@@ -76,8 +75,6 @@ const VacancyForm: React.FC<VacancyFormProps> = ({
   const handleFloatInputChange = (name: string, valueString: string) => {
     // Convert the input value to a float
     const floatValue = parseFloat(valueString);
-
-    console.log(floatValue);
 
     // Check if the parsed value is a valid number
     if (!isNaN(floatValue)) {

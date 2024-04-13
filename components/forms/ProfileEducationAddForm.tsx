@@ -45,9 +45,7 @@ function ProfileEducationAddForm({ onSubmit, onClose, data }: FormProps) {
         action: "add",
         table: "education",
       });
-    } catch (e) {
-      console.log(e?.toString());
-    }
+    } catch (e) {}
   };
 
   const [education, setEducation] = useState<FormData>({

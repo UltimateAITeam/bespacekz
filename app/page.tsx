@@ -127,7 +127,7 @@ export default function HomePage() {
                   alt="paypal-img"
                 />
               </span>
-              
+
               <span>
                 <Image
                   src="/images/oracle.png"

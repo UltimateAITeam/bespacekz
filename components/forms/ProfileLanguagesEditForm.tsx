@@ -55,7 +55,7 @@ function ProfileLanguagesEditForm({ onSubmit, onClose, data }: FormProps) {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const target = e.target as HTMLInputElement;
-    console.log(target.value, target.name);
+
     const value = target.type === "checkbox" ? target.checked : target.value;
     setSelectedSkill({
       ...(selectedSkill as FormData),

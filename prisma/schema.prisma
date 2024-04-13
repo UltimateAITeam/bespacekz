@@ -134,6 +134,7 @@ model ClientProfile {
   userEmail          String    @unique
   user               User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   Vacancy            Vacancy[]
+  subscriptionEndsAt DateTime? @map("subscription_ends_at")
 }
 
 model Vacancy {
@@ -206,4 +207,13 @@ enum CurrencyType {
   USD
   EUR
   RUB
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  metadata  Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("invoices")
 }
