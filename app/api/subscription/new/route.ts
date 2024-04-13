@@ -68,7 +68,7 @@ async function createInvoice(args: {
 }): Promise<Invoice> {
   const token = await createToken();
 
-  const payload = JSON.stringify({
+  const payload = {
     shop_id: process.env.EPAY_SHOP_ID,
     account_id: args.account_id,
     invoice_id: randomId(),
@@ -77,9 +77,17 @@ async function createInvoice(args: {
     description: "",
     expire_period: "1d",
     recipient_contact: args.recipient_contact,
-    post_link:
-      "https://1aef-104-28-241-137.ngrok-free.app/api/subscription/callback",
+    post_link: `${process.env.API_URL}/api/subscription/callback`,
+    back_link: `${process.env.API_URL}`,
     currency: "KZT",
+  };
+
+  await prisma.invoice.create({
+    data: {
+      metadata: {
+        epay: payload,
+      },
+    },
   });
 
   const response = await fetch("https://testepay.homebank.kz/api/invoice", {
@@ -88,7 +96,7 @@ async function createInvoice(args: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token.access_token}`,
     },
-    body: payload,
+    body: JSON.stringify(payload),
   });
 
   return response.json();

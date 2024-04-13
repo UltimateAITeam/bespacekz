@@ -16,7 +16,7 @@ interface CandidatePageProps {
   };
 }
 export default async function CandidatePage({ params }: CandidatePageProps) {
-  const candidate = await  prisma.freelancerProfile.findUnique({
+  const candidate = await prisma.freelancerProfile.findUnique({
     where: {
       id: params.id,
       user: {
@@ -32,7 +32,7 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
           last_name: true,
           location: true,
           email: true,
-          phone: true
+          phone: true,
         },
       },
       Education: true,
@@ -46,8 +46,8 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
     },
   });
 
-  if(!candidate){
-    return NextResponse.error()
+  if (!candidate) {
+    return NextResponse.error();
   }
 
   const session = await getServerSession();
@@ -105,22 +105,22 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
                 />
               )}
             </div>
-            {isClientSubscribed && 
-            <div className="ml-16 flex flex-col max-h-[200px] flex-wrap justify-between gap-y-6 gap-x-16">
-              <KeyValueColumn
-                title="Email"
-                value={candidate.user.email}
-                className="!gap-1"
-                />
-              {candidate.user.phone && (
+            {isClientSubscribed && (
+              <div className="ml-16 flex flex-col max-h-[200px] flex-wrap justify-between gap-y-6 gap-x-16">
                 <KeyValueColumn
-                title="Телефон"
-                value={candidate.user.phone}
-                className="!gap-1"
+                  title="Email"
+                  value={candidate.user.email}
+                  className="!gap-1"
                 />
-              )}
-            </div>
-            }
+                {candidate.user.phone && (
+                  <KeyValueColumn
+                    title="Телефон"
+                    value={candidate.user.phone}
+                    className="!gap-1"
+                  />
+                )}
+              </div>
+            )}
           </div>
         </section>
         {candidate.Languages.length > 0 ? (

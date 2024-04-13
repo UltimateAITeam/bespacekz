@@ -202,7 +202,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   };
 
   const loading = useFirstStepsLoading();
-  
+
   if (session.status === "loading") {
     return <Spinner width="w-20" height="w-20" />;
   } else {

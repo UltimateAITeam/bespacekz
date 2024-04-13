@@ -208,3 +208,12 @@ enum CurrencyType {
   EUR
   RUB
 }
+
+model Invoice {
+  id        String   @id @default(cuid())
+  metadata  Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("invoices")
+}
