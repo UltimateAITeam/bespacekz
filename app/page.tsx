@@ -15,7 +15,7 @@ import { ImCheckmark, ImGoogle } from "react-icons/im";
 import Footer from "@/components/brenda_components/Footer";
 import { SiAdobe, SiUdacity } from "react-icons/si";
 import ThreeTierPricing from "@/components/home_page/Pricing";
-import VacancyList from "@/components/brenda_components/VacancyList";
+// import VacancyList from "@/components/brenda_components/VacancyList";
 import { VacanciesList } from "@/components/vacancies/VacanciesList";
 import StatsWithIcons from "@/components/home_page/Stats";
 
