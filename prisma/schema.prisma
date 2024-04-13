@@ -137,13 +137,6 @@ model ClientProfile {
   subscriptionEndsAt DateTime? @map("subscription_ends_at")
 }
 
-enum VacancyRole {
-  ACTIVE
-  ARCHIVED
-  IN_PROGRESS
-  COMPLETE
-}
-
 model Vacancy {
   id             String              @id @default(cuid())
   clientId       String
@@ -165,7 +158,6 @@ model Vacancy {
   jobTitle       JobTitle            @relation(fields: [jobTitleId], references: [id], onDelete: Cascade)
   applicants     FreelancerProfile[] @relation(name: "applications")
   favoritedBy    FreelancerProfile[]
-  status         VacancyRole         @default(ACTIVE)
 }
 
 model JobTitle {
