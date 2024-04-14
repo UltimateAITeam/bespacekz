@@ -50,10 +50,9 @@ function Page() {
               "font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl"
             }
           >
-            ✨Теперь добавьте вашу специальность, чтобы рассказать миру, чем вы
-            занимаетесь.{" "}
+            По какой специальности вы тут будете работать?{" "}
           </span>
-          <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg"}>
+          <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg py-2"}>
             Это первое, что видят клиенты, поэтому учтите это. Выделитесь,
             описав свой опыт своими словами.
           </span>

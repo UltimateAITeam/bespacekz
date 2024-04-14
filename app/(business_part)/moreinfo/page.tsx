@@ -153,7 +153,7 @@ function Oauth_additional() {
             <div className="sm:px-24 sm:pt-7 pb-7 flex flex-col justify-center items-center">
               {/* ================= Form title ==================== */}
               <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl">
-                Additional info
+                Персональная информация
               </h2>
 
               {/* ================= Login Email Form ==================== */}
@@ -180,7 +180,7 @@ function Oauth_additional() {
                         htmlFor="first_name"
                         className="font-medium px-1 pb-1"
                       >
-                        First name:
+                        Фамилия:
                       </label>
 
                       <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
@@ -201,7 +201,7 @@ function Oauth_additional() {
                         htmlFor="last_name"
                         className="font-medium px-1 pb-1"
                       >
-                        Last name:
+                        Имя:
                       </label>
                       <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
                         <input
@@ -220,7 +220,7 @@ function Oauth_additional() {
                       htmlFor="location_city"
                       className="font-medium px-1 pb-1"
                     >
-                      Location:
+                      Город:
                     </label>
                     <select
                       id="Country"
@@ -253,7 +253,7 @@ function Oauth_additional() {
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="phone" className="font-medium px-1 pb-1">
-                      Phone:
+                      Номер телефона:
                     </label>
                     <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
                       <input
@@ -274,7 +274,7 @@ function Oauth_additional() {
                           htmlFor="birthdate"
                           className="font-medium px-1 pb-1"
                         >
-                          Birth date:
+                          Дата рождения:
                         </label>
                         <CustomDatePicker
                           valueState={date}

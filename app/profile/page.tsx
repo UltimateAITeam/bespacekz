@@ -4,6 +4,7 @@ import HeadTag from "@/components/brenda_components/HeadTag";
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardHeader,
   Flex,
@@ -36,6 +37,7 @@ import parse from "html-react-parser";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { thousandSeparator } from "@/libs/utils";
+import { BsStars } from "react-icons/bs";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
   ssr: false,
@@ -166,9 +168,21 @@ function Page() {
               "grid grid-cols-[1fr_335px] items-start gap-6 lg:w-5/6 sm:w-4/5 w-full"
             }
           >
-            <h2 className="text-[#01001E] text-[30px] leading-tight font-medium pb-4">
-              Просмотр аккаунта
-            </h2>
+            <Flex className="col-start-1 items-center gap-4">
+              <h2 className="text-[#01001E] text-[30px] leading-tight font-medium">
+                Просмотр аккаунта
+              </h2>
+              <Button
+                isLoading={false}
+                isDisabled={false}
+                // onClick={() => {}} 
+                leftIcon={<BsStars />} 
+                colorScheme="pink" 
+                size="md"
+              >
+                AI анализ профиля
+              </Button>
+            </Flex>
 
             {data.jobTitle && (
               <HStack>
@@ -276,7 +290,7 @@ function Page() {
                           >
                             <SimpleGrid
                               columns={4}
-                              gap={{ xl: 20, sm: 5 }}
+                              gap={{ xl: 10, sm: 5 }}
                               className={"justify-start w-full"}
                             >
                               <div>
@@ -325,7 +339,7 @@ function Page() {
                           >
                             <SimpleGrid
                               columns={4}
-                              gap={{ xl: 20, sm: 5 }}
+                              gap={{ xl: 10, sm: 5 }}
                               className={"justify-start w-full"}
                             >
                               <div>

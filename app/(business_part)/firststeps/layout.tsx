@@ -217,15 +217,16 @@ function Layout({ children }: { children: React.ReactNode }) {
 
             {/* ================== Header =================== */}
             <LoginSignupHeader />
-            <main>
-              <section className="container bg-firstStepsBg mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3">
+            <main className="flex flex-col my-auto">
+              {/* xl:my-14 lg:my-10 md:my-7 my-5 */}
+              <section className="container bg-firstStepsBg mx-auto py-3 md:px-5 sm:px-7 px-3">
                 <div className={"text-zinc-950 font-semibold"}>{children}</div>
               </section>
             </main>
             <footer className="mt-auto border-t border-gray-400">
               <div className="container flex justify-between font-semibold text-sm md:text-lg mx-auto py-5 md:px-5 sm:px-7 px-3">
                 <Link
-                  className={`${pageIndex == 0 ? "" : "border-2 rounded-xl md:rounded-3xl text-zinc-950 px-2 md:px-6 py-2"}`}
+                  className={`${pageIndex == 0 ? "" : "border-2 rounded-xl md:rounded-xl text-zinc-950 px-2 md:px-6 py-2"}`}
                   onClick={() => router.push(pages[pageIndex - 1].path)}
                   href={pageIndex >= 1 ? pages[pageIndex - 1].path : ""}
                 >
@@ -252,7 +253,7 @@ function Layout({ children }: { children: React.ReactNode }) {
                     </Link>
                   )}
                   <span
-                    className={`${couldNext() ? "cursor-pointer px-6 py-2 bg-[#4ea8bc] border-2 border-amber-white rounded-xl md:rounded-3xl" : "pointer-events-none border-2 border-amber-white rounded-3xl px-6 py-2 bg-gray-300 text-white"}`}
+                    className={`${couldNext() ? "cursor-pointer text-white px-6 py-2 bg-[#4ea8bc] border-2 border-amber-white rounded-xl md:rounded-xl" : "pointer-events-none border-2 border-amber-white rounded-3xl px-6 py-2 bg-gray-300 text-white"}`}
                     onClick={handleNext}
                   >
                     {pages[pageIndex].next}

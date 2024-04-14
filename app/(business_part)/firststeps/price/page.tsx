@@ -37,24 +37,28 @@ function Page() {
               "font-semibold font-zinc-950 2xl:font-bold lg:text-4xl text-3xl"
             }
           >
-            ✨Выберите тип занятости и сумму, которую хотите получать.
+            Выберите тип занятости и сумму, которую хотите получать.
           </span>
-          <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg"}>
+          <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg py-2"}>
             Это поможет нам лучше понимать, на какую сумму вы расчитываете.
           </span>
 
-          <Text className={"mt-4"}>Выберите вид поиска работы:</Text>
-          <VStack align={"start"}>
+          <Text className={"mt-2"}>Выберите вид поиска работы:</Text>
+          <VStack align={"start"} pt={2}>
             <Checkbox
               isChecked={pricingType.includes(PricingType.FREELANCE)}
               onChange={() =>
-                updatePricingType(
-                  pricingType.includes(PricingType.FREELANCE)
-                    ? pricingType.filter(
-                        (type) => type !== PricingType.FREELANCE,
-                      )
-                    : [...pricingType, PricingType.FREELANCE],
-                )
+                // updatePricingType(
+                //   pricingType.includes(PricingType.FREELANCE)
+                //     ? pricingType.filter(
+                //         (type) => type !== PricingType.FREELANCE,
+                //       )
+                //     : [...pricingType, PricingType.FREELANCE],
+                // )
+                {
+                  const newType = pricingType.includes(PricingType.FREELANCE) ? [] : [PricingType.FREELANCE];
+                  updatePricingType(newType);
+                }
               }
             >
               Фрилансер
@@ -97,13 +101,17 @@ function Page() {
             <Checkbox
               isChecked={pricingType.includes(PricingType.EMPLOYEE)}
               onChange={() =>
-                updatePricingType(
-                  pricingType.includes(PricingType.EMPLOYEE)
-                    ? pricingType.filter(
-                        (type) => type !== PricingType.EMPLOYEE,
-                      )
-                    : [...pricingType, PricingType.EMPLOYEE],
-                )
+                // updatePricingType(
+                //   pricingType.includes(PricingType.EMPLOYEE)
+                //     ? pricingType.filter(
+                //         (type) => type !== PricingType.EMPLOYEE,
+                //       )
+                //     : [...pricingType, PricingType.EMPLOYEE],
+                // )
+                {
+                  const newType = pricingType.includes(PricingType.EMPLOYEE) ? [] : [PricingType.EMPLOYEE];
+                  updatePricingType(newType);
+                }
               }
             >
               Ищу работу на постоянной основе

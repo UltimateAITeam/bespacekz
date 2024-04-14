@@ -83,6 +83,8 @@ function ProfileMultiModal({
       setData(dta);
       setLoading(false);
     }
+    setLoading(false);
+    // refresh page
   }
 
   const forms: { [index: string]: ReactElement } = {

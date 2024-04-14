@@ -14,6 +14,8 @@ import { CiClock2 } from "react-icons/ci";
 import { IoIosSearch } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import parse from "html-react-parser";
+import { Button, Flex } from "@chakra-ui/react";
+import { BsStars } from "react-icons/bs";
 
 interface AboutVacancyPageProps {
   params: {
@@ -142,14 +144,30 @@ export default async function AboutVacancyPage({
           </Card>
         </div>
       </div>
-      <h2 className="mt-16 mb-11 font-medium text-3xl">
-        Откликнувшиеся кандидаты
-      </h2>
-      <div className="space-y-8">
-        {vacancy.applicants.map((applicant) => (
-          <CandidateCard key={applicant.id} {...applicant} />
-        ))}
-      </div>
+      {(vacancy.applicants && vacancy.applicants.length > 0) ? (
+        <>
+          <Flex className="mt-16 mb-11 items-center gap-4">
+            <h2 className="font-medium text-3xl">Откликнувшиеся кандидаты</h2>
+            <Button
+              isLoading={false}
+              isDisabled={false}
+              // onClick={() => {}}
+              leftIcon={<BsStars />}
+              colorScheme="pink"
+              size="md"
+            >
+              AI подбор кандидатов
+            </Button>
+          </Flex>
+          <div className="space-y-8">
+            {vacancy.applicants.map((applicant) => (
+              <CandidateCard key={applicant.id} {...applicant} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <h2 className="mt-16 font-medium text-3xl">К сожалению никто еще не откликунлся</h2>
+      )}
     </div>
   );
 }

@@ -27,8 +27,9 @@ function JobTitleAutoSuggest({
   onCreateOption?: (val: string) => void;
 }) {
   const [options, setOptions] = React.useState<GroupedOption[]>();
-
+  const [isLoading, setIsLoading] = React.useState(false);
   useEffect(() => {
+    setIsLoading(true);
     fetch("/api/job_titles")
       .then((res) => res.json())
       .then((data: JobCategories[]) => {
@@ -44,11 +45,18 @@ function JobTitleAutoSuggest({
           };
         });
         setOptions((v) => options);
-      });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      }
+    )
+      ;
   }, []);
 
   return (
     <CreatableSelect<Options, false, GroupedOption>
+      isDisabled={isLoading}
+      isLoading={isLoading}
       options={options}
       placeholder={"Начните вводить название специальности"}
       className={className}
