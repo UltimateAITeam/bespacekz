@@ -18,6 +18,7 @@ interface PaginationProps {
   totalCount: number
   siblingCount?: number
   setPage: (page: number) => void
+  className?: string
 }
 
 export const Pagination = ({
@@ -26,7 +27,8 @@ export const Pagination = ({
   totalCount,
   siblingCount = 1,
   setPage,
-  itemsPerPage
+  itemsPerPage,
+  className
 }: PaginationProps) => {
   const paginationRange = useMemo<(string | number)[]>(() => {
     /** общее количество страниц */
@@ -91,7 +93,7 @@ export const Pagination = ({
   }
 
   return (
-    <div className='flex flex-row gap-[8px] py-[16px] w-full items-center justify-center'>
+    <div className={cn('flex flex-row gap-[8px] py-[16px] items-center', className)}>
       <PaginationButton
         onClick={onPrev}
         disabled={currentPage === 1}

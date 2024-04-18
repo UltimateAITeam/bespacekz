@@ -61,6 +61,10 @@ module.exports = {
                     background: '#F0F0F0',
                     foreground: '#C1C1C1',
                     4: '#F0F0F0',
+                    2: '#FAFAFA'
+                },
+                main: {
+                    border: '#E6EBF1'
                 },
                 footerBg: '#030852',
                 cardBg: '#F0F5FF'
