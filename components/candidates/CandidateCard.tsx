@@ -16,11 +16,19 @@ import { Skeleton } from "../ui/skeleton";
 import { format } from "date-fns";
 import Link from "next/link";
 import parse from "html-react-parser";
+import { prisma } from "@/libs/prisma";
+import { revalidatePath } from "next/cache";
+import { selectCandidate } from "./actions";
 
-interface ICandidateCardProps extends ICandidate {}
+interface ICandidateCardProps extends ICandidate {
+  isApplicable?: boolean
+  vacancyId?: string
+  isChosen?: boolean
+  chosenCandidateId?: string
+}
 
 export function CandidateCard(props: ICandidateCardProps) {
-  const { user, jobTitle, Skills, Experience, Portfolio, id } = props;
+  const { user, jobTitle, Skills, Experience, Portfolio, id, isApplicable = false, vacancyId, isChosen = false,chosenCandidateId } = props;
   const router = useRouter();
 
   return (
@@ -69,6 +77,31 @@ export function CandidateCard(props: ICandidateCardProps) {
               >
                 Ответить
               </Button>
+              {
+                isApplicable &&
+                (chosenCandidateId ?  
+                (
+                  chosenCandidateId === id ? 
+                  <Button
+                  colorScheme="messenger"
+                  variant="solid"
+                  className="ml-3"
+                  isDisabled
+                  >
+                Выбран
+              </Button>:null
+              )
+                  :
+              <Button
+              colorScheme="messenger"
+              variant="solid"
+              className="ml-3"
+              onClick={()=>selectCandidate(vacancyId!,id)}
+              
+              >
+                Выбрать
+              </Button>
+              )}
             </div>
           </div>
           <div className="flex items-center mt-2 gap-5 [&>div]:flex [&>div]:gap-2 [&>div]:items-center [&_span]:text-primary-10 [&_span]:font-roboto">

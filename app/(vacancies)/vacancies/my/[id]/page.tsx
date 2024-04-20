@@ -31,6 +31,12 @@ export default async function AboutVacancyPage({
       id: params.id,
     },
     select: {
+      chosenCandidate: {
+        select:{
+          id:true
+        }
+      },
+      id: true,
       city: true,
       jobTitle: {
         select: {
@@ -166,7 +172,7 @@ export default async function AboutVacancyPage({
           </Flex>
           <div className="space-y-8">
             {vacancy.applicants.map((applicant) => (
-              <CandidateCard key={applicant.id} {...applicant} />
+              <CandidateCard key={applicant.id} {...applicant} isApplicable={true} vacancyId={vacancy.id}  isChosen={applicant.id === vacancy.chosenCandidate?.id} chosenCandidateId={vacancy.chosenCandidate.id} />
             ))}
           </div>
         </>
