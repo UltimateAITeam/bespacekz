@@ -175,9 +175,9 @@ function Page() {
               <Button
                 isLoading={false}
                 isDisabled={false}
-                // onClick={() => {}} 
-                leftIcon={<BsStars />} 
-                colorScheme="pink" 
+                // onClick={() => {}}
+                leftIcon={<BsStars />}
+                colorScheme="pink"
                 size="md"
               >
                 AI анализ профиля
@@ -352,9 +352,7 @@ function Page() {
                                 <p>{exp.jobTitle}</p>
                               </div>
                               <div>
-                                <p className={"font-bold"}>
-                                  Навыки
-                                </p>
+                                <p className={"font-bold"}>Навыки</p>
                                 <p>{exp.skills.join(", ")}</p>
                               </div>
                               <div>

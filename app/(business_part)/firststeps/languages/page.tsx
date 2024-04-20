@@ -68,7 +68,9 @@ function Page() {
                   required
                 />
               </div>
-              <label htmlFor={`specialization-${index}`}>Уровень владения:</label>
+              <label htmlFor={`specialization-${index}`}>
+                Уровень владения:
+              </label>
               <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
                 <select
                   value={language.proficiencyLevel}

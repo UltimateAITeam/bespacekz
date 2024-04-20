@@ -144,7 +144,7 @@ export default async function AboutVacancyPage({
           </Card>
         </div>
       </div>
-      {(vacancy.applicants && vacancy.applicants.length > 0) ? (
+      {vacancy.applicants && vacancy.applicants.length > 0 ? (
         <>
           <Flex className="mt-16 mb-11 items-center gap-4">
             <h2 className="font-medium text-3xl">Откликнувшиеся кандидаты</h2>
@@ -166,7 +166,9 @@ export default async function AboutVacancyPage({
           </div>
         </>
       ) : (
-        <h2 className="mt-16 font-medium text-3xl">К сожалению никто еще не откликунлся</h2>
+        <h2 className="mt-16 font-medium text-3xl">
+          К сожалению никто еще не откликунлся
+        </h2>
       )}
     </div>
   );
