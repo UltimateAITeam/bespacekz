@@ -29,5 +29,8 @@ declare module "next-auth/jwt" {
     id: string;
     role: Role | null;
     last_name: string | null;
+    client?: {
+      isSubscribed: boolean;
+    };
   }
 }
