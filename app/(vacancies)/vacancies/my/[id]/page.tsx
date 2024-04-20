@@ -180,7 +180,7 @@ export default async function AboutVacancyPage({
                 isApplicable={true}
                 vacancyId={vacancy.id}
                 isChosen={applicant.id === vacancy.chosenCandidate?.id}
-                chosenCandidateId={vacancy.chosenCandidate.id}
+                chosenCandidateId={vacancy.chosenCandidate?.id}
               />
             ))}
           </div>
