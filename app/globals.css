@@ -123,3 +123,8 @@ input:focus {
     @apply px-3 py-1 bg-[#f2f7f2] rounded-full text-zinc-700 font-semibold;
   }
 }
+
+
+  .ck-content ul {
+    @apply !pl-2.5;
+  }
