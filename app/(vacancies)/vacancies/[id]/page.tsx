@@ -44,15 +44,19 @@ export default async function AboutVacancyPage({
   params,
 }: AboutVacancyPageProps) {
   const vacancy = await getVacancyById<Vacancy>(params.id);
-  const applicants = await fetch(`${process.env.API_URL}/api/get_vacancies/${params.id}/count`)
-  const count = await applicants.json()
+  const applicants = await fetch(
+    `${process.env.API_URL}/api/get_vacancies/${params.id}/count`,
+  );
+  const count = await applicants.json();
   return (
     <div className="font-roboto pb-28">
       <div>
-      <h1 className="text-[38px] leading-tight font-medium">
-        {vacancy.jobTitle.name}
-      </h1>
-      <span className="mt-2 text-sm px-2 rounded-full bg-gray-50 border border-gray-300 inline-flex w-fit py-1 justify-center items-center gap-x-2"><IoMdCheckmark/> {count?._count?.applicants}</span>
+        <h1 className="text-[38px] leading-tight font-medium">
+          {vacancy.jobTitle.name}
+        </h1>
+        <span className="mt-2 text-sm px-2 rounded-full bg-gray-50 border border-gray-300 inline-flex w-fit py-1 justify-center items-center gap-x-2">
+          <IoMdCheckmark /> {count?._count?.applicants}
+        </span>
       </div>
       <div className="mt-10 flex gap-9">
         <div className="w-1/4 shrink-0">

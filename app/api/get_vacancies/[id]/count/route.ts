@@ -9,17 +9,17 @@ export async function GET(
 
   try {
     const vacancy = await prisma.vacancy.findFirst({
-        where:{
-            id,
+      where: {
+        id,
+      },
+      select: {
+        _count: {
+          select: {
+            applicants: true,
+          },
         },
-        select:{
-_count:{
-    select:{
-        applicants: true
-    }
-}
-        }
-    })
+      },
+    });
     return NextResponse.json(vacancy);
   } catch (e) {
     return NextResponse.json({ error: e?.toString }, { status: 500 });

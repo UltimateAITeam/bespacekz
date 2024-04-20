@@ -124,7 +124,6 @@ input:focus {
   }
 }
 
-
-  .ck-content ul {
-    @apply !pl-2.5;
-  }
+.ck-content ul {
+  @apply !pl-2.5;
+}
