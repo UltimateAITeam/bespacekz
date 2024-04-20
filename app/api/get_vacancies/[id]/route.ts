@@ -11,6 +11,7 @@ export async function GET(
     const vacancy = await prisma.vacancy.findFirst({
       where: {
         id: id,
+        status: "ACTIVE",
       },
       include: {
         jobTitle: true,

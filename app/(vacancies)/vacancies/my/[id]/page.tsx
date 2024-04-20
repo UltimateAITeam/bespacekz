@@ -29,6 +29,7 @@ export default async function AboutVacancyPage({
   const vacancy = await prisma.vacancy.findUniqueOrThrow({
     where: {
       id: params.id,
+      status: "ACTIVE",
     },
     select: {
       city: true,
