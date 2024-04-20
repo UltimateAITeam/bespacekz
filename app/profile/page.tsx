@@ -38,6 +38,7 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { thousandSeparator } from "@/libs/utils";
 import { BsStars } from "react-icons/bs";
+import { updateUserImage } from "./actions";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
   ssr: false,
@@ -49,6 +50,14 @@ const ProfileMultiModal = dynamic(
     ssr: false,
   },
 );
+
+const toBase64 = (file: File) =>
+  new Promise<string | ArrayBuffer>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result!);
+    reader.onerror = reject;
+  });
 
 type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
   include: {
@@ -84,6 +93,8 @@ function Page() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const session = useSession();
+  const [image, setImage] = useState("");
+
   const [data, setData] = React.useState<
     FreelancerProfileType & UserInfoType
   >();
@@ -108,6 +119,9 @@ function Page() {
       const dta = await resp.json();
       setData(dta);
 
+      if (dta.image) {
+        setImage(dta.image);
+      }
       setLoading(false);
     })();
   }, [session.status, role, session.data?.user.role]);
@@ -210,9 +224,32 @@ function Page() {
                     <Avatar
                       size={"2xl"}
                       className={"m-auto md:m-none"}
-                      src={data.image!}
+                      src={image}
                     />
-                    <button className={"text-blue-500"}>Изменить</button>
+                    <label
+                      htmlFor="avatar"
+                      className={"text-blue-500 w-fit mx-auto"}
+                    >
+                      Изменить
+                    </label>
+                    <input
+                      type="file"
+                      hidden
+                      id="avatar"
+                      accept="image/png, image/jpeg"
+                      onChange={async (event) => {
+                        const file = event?.target?.files?.item(0);
+
+                        console.log(file);
+                        if (file) {
+                          const base64 = await toBase64(file);
+
+                          setImage(base64.toString());
+
+                          await updateUserImage(data.email, base64.toString());
+                        }
+                      }}
+                    />
                   </Stack>
                   <Grid
                     templateColumns={"repeat(2, 1fr)"}
