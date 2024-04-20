@@ -48,9 +48,7 @@ function JobTitleAutoSuggest({
       })
       .finally(() => {
         setIsLoading(false);
-      }
-    )
-      ;
+      });
   }, []);
 
   return (

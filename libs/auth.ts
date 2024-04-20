@@ -9,6 +9,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { JWT } from "next-auth/jwt";
 import jsonwebtoken from "jsonwebtoken";
 import { sendVerificationEmail } from "@/services/email-verification.service";
+import { findClientSubscriptionById } from "@/services/client-subscription";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -114,7 +115,29 @@ export const authOptions: AuthOptions = {
         token.id = user.id;
         token.last_name = user.last_name;
         token.role = user.role;
+
+        const client = await prisma.clientProfile.findUnique({
+          where: {
+            userEmail: user.email!,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        if (client) {
+          const clientSubscription = await findClientSubscriptionById(
+            client.id,
+          );
+
+          if (clientSubscription) {
+            token.client = {
+              isSubscribed: true,
+            };
+          }
+        }
       }
+
       return token;
     },
     async session({ session, token }) {

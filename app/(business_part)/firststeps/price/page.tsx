@@ -39,7 +39,9 @@ function Page() {
           >
             Выберите тип занятости и сумму, которую хотите получать.
           </span>
-          <span className={"text-gray-600 2xl:font-bold lg:text-xl text-lg py-2"}>
+          <span
+            className={"text-gray-600 2xl:font-bold lg:text-xl text-lg py-2"}
+          >
             Это поможет нам лучше понимать, на какую сумму вы расчитываете.
           </span>
 
@@ -56,7 +58,9 @@ function Page() {
                 //     : [...pricingType, PricingType.FREELANCE],
                 // )
                 {
-                  const newType = pricingType.includes(PricingType.FREELANCE) ? [] : [PricingType.FREELANCE];
+                  const newType = pricingType.includes(PricingType.FREELANCE)
+                    ? []
+                    : [PricingType.FREELANCE];
                   updatePricingType(newType);
                 }
               }
@@ -109,7 +113,9 @@ function Page() {
                 //     : [...pricingType, PricingType.EMPLOYEE],
                 // )
                 {
-                  const newType = pricingType.includes(PricingType.EMPLOYEE) ? [] : [PricingType.EMPLOYEE];
+                  const newType = pricingType.includes(PricingType.EMPLOYEE)
+                    ? []
+                    : [PricingType.EMPLOYEE];
                   updatePricingType(newType);
                 }
               }
