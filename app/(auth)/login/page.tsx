@@ -46,12 +46,11 @@ export default function LoginPage() {
       setPasswordRequired(false);
     }
 
-    signIn("credentials", {
+    await signIn("credentials", {
       role: "login",
       password: password,
       email: email,
-    }).then((e) => {
-      e?.ok && router.push("/firststeps");
+      callbackUrl: "/",
     });
   };
 
