@@ -71,6 +71,10 @@ export const authOptions: AuthOptions = {
         });
 
         if (!user) {
+          if (credentials.role === "login") {
+            return null;
+          }
+
           const hashedPassword = await bcrypt.hash(credentials.password, 10);
 
           // turn off email verification for now

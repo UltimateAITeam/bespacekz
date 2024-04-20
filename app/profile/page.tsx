@@ -240,7 +240,6 @@ function Page() {
                       onChange={async (event) => {
                         const file = event?.target?.files?.item(0);
 
-                        console.log(file);
                         if (file) {
                           const base64 = await toBase64(file);
 

@@ -10,13 +10,16 @@ import { BsFillPersonFill } from "react-icons/bs";
 import LoginSignupFooter from "@/components/brenda_components/LoginSignupFooter";
 import HeadTag from "@/components/brenda_components/HeadTag";
 import LinkedInButton from "@/components/LinkedInButton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const [emailRequired, setEmailRequired] = useState(false);
-  const [invalidCredentials, setInvalidCredentials] = useState(false);
   const [passwordRequired, setPasswordRequired] = useState(false);
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const error = searchParams.get("error");
 
   const signMeIn = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,12 +46,11 @@ export default function LoginPage() {
       setPasswordRequired(false);
     }
 
-    signIn("credentials", {
+    await signIn("credentials", {
       role: "login",
       password: password,
       email: email,
-    }).then((e) => {
-      e?.ok ? router.push("/firststeps") : setInvalidCredentials(true);
+      callbackUrl: "/",
     });
   };
 
@@ -72,7 +74,7 @@ export default function LoginPage() {
                 </h2>
                 <div
                   className={
-                    invalidCredentials
+                    error === "CredentialsSignin"
                       ? "bg-red-500 py-2 px-6 rounded mt-4"
                       : "hidden"
                   }
