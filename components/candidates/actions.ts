@@ -13,7 +13,8 @@ export async function selectCandidate(vacancyId: string, candidateId: string) {
             connect:{
               id: candidateId
             }
-          }
+          },
+          status: 'IN_PROGRESS'
         }
       })
       
