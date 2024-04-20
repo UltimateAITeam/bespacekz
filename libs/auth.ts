@@ -110,7 +110,7 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        return user;
+        return { ...user, image: `/api/users/${user.id}/avatar` };
       },
     }),
   ],
