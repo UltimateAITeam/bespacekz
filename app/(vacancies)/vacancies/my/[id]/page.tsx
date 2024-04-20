@@ -29,7 +29,6 @@ export default async function AboutVacancyPage({
   const vacancy = await prisma.vacancy.findUniqueOrThrow({
     where: {
       id: params.id,
-      status: "ACTIVE",
     },
     select: {
       city: true,
@@ -54,6 +53,11 @@ export default async function AboutVacancyPage({
       },
       pricingType: true,
       currency: true,
+      _count:{
+        select:{
+          applicants: true
+        }
+      },
       applicants: {
         select: {
           user: {
@@ -148,7 +152,7 @@ export default async function AboutVacancyPage({
       {vacancy.applicants && vacancy.applicants.length > 0 ? (
         <>
           <Flex className="mt-16 mb-11 items-center gap-4">
-            <h2 className="font-medium text-3xl">Откликнувшиеся кандидаты</h2>
+            <h2 className="font-medium text-3xl">Откликнувшиеся кандидаты ({vacancy._count.applicants})</h2>
             <Button
               isLoading={false}
               isDisabled={false}
