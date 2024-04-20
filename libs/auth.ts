@@ -68,6 +68,15 @@ export const authOptions: AuthOptions = {
           where: {
             email: credentials.email,
           },
+          select:{
+            id: true,
+            password: true,
+            image: false,
+            email: true,
+            name: true,
+            last_name: true,
+            role: true
+          }
         });
 
         if (!user) {
