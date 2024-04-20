@@ -12,6 +12,7 @@ export async function GET(
     const vacancy = await prisma.vacancy.findMany({
       take: limit ? parseInt(limit) : 3,
       where: {
+        status: "ACTIVE",
         jobTitle: {
           category_id: Number(category_id),
         },

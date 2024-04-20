@@ -16,6 +16,7 @@ export async function RespondToVacancy({ idVacancy }: { idVacancy: string }) {
   const vacancy = await prisma.vacancy.findUniqueOrThrow({
     where: {
       id: idVacancy,
+      status: "ACTIVE",
     },
     select: {
       id: true,

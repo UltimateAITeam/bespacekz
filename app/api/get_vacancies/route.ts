@@ -52,6 +52,7 @@ export async function GET(req: NextRequest) {
             },
           },
         },
+        status: "ACTIVE",
         pricingType: {
           in: job_types.length > 0 ? (job_types as PricingType[]) : undefined,
         },
