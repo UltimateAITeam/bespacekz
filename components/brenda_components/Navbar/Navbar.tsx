@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import { HiX } from "react-icons/hi";
 import { GoChevronRight } from "react-icons/go";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { limitText } from "@/libs/utils";
@@ -47,6 +47,7 @@ import {
   FiArchive,
 } from "react-icons/fi";
 import VacancyCreateModal from "@/components/modals/VacancyCreateModal";
+import { Role } from "@prisma/client";
 
 const Navbar = () => {
   // ============= Router hooks ===================
@@ -217,6 +218,34 @@ const Navbar = () => {
     onOpen: onOpenVacancyCreateModal,
     onClose: onCloseVacancyCreateModal,
   } = useDisclosure();
+
+  const [role, setRole] = useState<string | null>(null);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    const storedRole =
+      typeof window !== "undefined" ? localStorage.getItem("userRole") : null;
+    setRole(session.data?.user.role || storedRole);
+    if (session.status !== "authenticated" || !role) {
+      return;
+    }
+    setLoading(true);
+
+    (async () => {
+      let resp: Response;
+      if (role === Role.FREELANCER)
+        resp = await fetch("/api/get_freelancer_profile");
+      else resp = await fetch("/api/get_client_profile");
+      const dta = await resp.json();
+      setData(dta);
+      if (dta.image) {
+        setImage(dta.image);
+      }
+      setLoading(false);
+    })();
+  }, [session.status, role, session.data?.user.role]);
 
   return (
     <div>
@@ -564,14 +593,11 @@ const Navbar = () => {
                   _focus={{ boxShadow: "none" }}
                 >
                   <HStack>
-                    <Avatar
-                      size={"sm"}
-                      src={
-                        session.data.user.image
-                          ? session.data.user.image
-                          : "https://avatars.dicebear.com/api/male/username.svg"
-                      }
-                    />
+                    {loading ? (
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
+                    ) : (
+                      <Avatar size={"sm"} src={image || "https://avatars.dicebear.com"} />
+                    )}
                     <VStack
                       display={{ base: "none", md: "flex" }}
                       alignItems="flex-start"
@@ -619,14 +645,14 @@ const Navbar = () => {
                 >
                   <br />
                   <Center>
-                    <Avatar
-                      size={"lg"}
-                      src={
-                        session.data.user.image
-                          ? session.data.user.image
-                          : "https://avatars.dicebear.com/api/male/username.svg"
-                      }
-                    />
+                    {loading ? (
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
+                    ) : (
+                      <Avatar
+                        size={"lg"}
+                        src={image || "https://avatars.dicebear.com"}
+                      />
+                    )}
                   </Center>
                   <br />
                   {(session.data.user.name || session.data.user.last_name) && (

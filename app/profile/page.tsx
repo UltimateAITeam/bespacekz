@@ -39,6 +39,10 @@ import { ru } from "date-fns/locale";
 import { thousandSeparator } from "@/libs/utils";
 import { BsStars } from "react-icons/bs";
 import { updateUserImage } from "./actions";
+import { useChat } from "ai/react";
+import { MemoizedReactMarkdown } from "@/components/ui/markdown";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
   ssr: false,
@@ -48,7 +52,7 @@ const ProfileMultiModal = dynamic(
   () => import("@/components/modals/ProfileMultiModal"),
   {
     ssr: false,
-  },
+  }
 );
 
 const toBase64 = (file: File) =>
@@ -98,6 +102,22 @@ function Page() {
   const [data, setData] = React.useState<
     FreelancerProfileType & UserInfoType
   >();
+  const [selectedMode, setSelectedMode] = useState<string>("profileAnalysis");
+  const {
+    messages,
+    input,
+    setInput,
+    handleInputChange,
+    handleSubmit: handleSubmitChat,
+    isLoading: isChatLoading,
+  } = useChat({
+    body: {
+      selectedMode
+    }
+  });
+
+  // {initialInput: "As an HR expert, anaylze and assess the profile of the candidate below: " + '\n' + JSON.stringify(data),}
+
   // || localStorage.getItem("userRole")
   // const role = session.data?.user.role || localStorage.getItem("userRole");
   const [role, setRole] = useState<string | null>(null);
@@ -118,6 +138,7 @@ function Page() {
       else resp = await fetch("/api/get_client_profile");
       const dta = await resp.json();
       setData(dta);
+      setInput(JSON.stringify(dta));
 
       if (dta.image) {
         setImage(dta.image);
@@ -186,16 +207,21 @@ function Page() {
               <h2 className="text-[#01001E] text-[30px] leading-tight font-medium">
                 Просмотр аккаунта
               </h2>
-              <Button
-                isLoading={false}
-                isDisabled={false}
-                // onClick={() => {}}
-                leftIcon={<BsStars />}
-                colorScheme="pink"
-                size="md"
-              >
-                AI анализ профиля
-              </Button>
+
+              {!(loading || session.status === "loading") && data && role === Role.FREELANCER && (
+                <form onSubmit={handleSubmitChat}>
+                <Button
+                  type="submit"
+                  isLoading={isChatLoading}
+                  isDisabled={isChatLoading}
+                  leftIcon={<BsStars />}
+                  colorScheme="pink"
+                  size="md"
+                >
+                  AI анализ профиля
+                </Button>
+                </form>
+              )}
             </Flex>
 
             {data.jobTitle && (
@@ -280,7 +306,7 @@ function Page() {
 
             {role === Role.FREELANCER && (
               <>
-                <div className="col-start-2">
+                <div className="col-start-2 row-span-10">
                   <BlockComponent
                     editForm={"edit-languages"}
                     openModal={openModal}
@@ -304,6 +330,36 @@ function Page() {
                       })}
                     </ul>
                   </BlockComponent>
+
+                  {messages.slice(-1).map(
+                    (message) =>
+                      message.role == "assistant" && (
+                        <Box
+                          key={message.id + "box"}
+                          className={`p-5 mt-6 bg-gradient-to-tr ${message.role == "assistant" ? "from-[#E0F7FA] to-[#E0F2F1]" : "from-[#FDE2E4] to-[#FAE1DD]"} rounded-lg shadow-md`}
+                        >
+                          <Text className="text-sm font-semibold pt-2">
+                            {message.role == "assistant"
+                              ? "AI HR:"
+                              : "Пользователь:"}
+                          </Text>
+                          
+                          <MemoizedReactMarkdown
+                            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
+                            remarkPlugins={[remarkGfm, remarkMath]}
+                            components={{
+                              p({ children }) {
+                                return (
+                                  <p className="mb-2 last:mb-0">{children}</p>
+                                );
+                              },
+                            }}
+                          >
+                            {message.content}
+                          </MemoizedReactMarkdown>
+                        </Box>
+                      )
+                  )}
                 </div>
 
                 <div className="col-start-1">
@@ -553,7 +609,7 @@ function Page() {
                                     {format(
                                       new Date(vacancy.createdAt),
                                       "PPP",
-                                      { locale: ru },
+                                      { locale: ru }
                                     )}
                                   </Text>
                                   <Text className="text-sm">

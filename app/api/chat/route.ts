@@ -1,36 +1,32 @@
-import { OpenAIStream, StreamingTextResponse } from "ai";
+import { OpenAIStream, StreamingTextResponse, AnthropicStream } from "ai";
 import { Configuration, OpenAIApi } from "openai-edge";
-
-interface ContextResponse {
-  page_content: string;
-  metadata: {
-    source: string;
-    page: number | undefined;
-  };
-}
+import Anthropic from "@anthropic-ai/sdk";
 
 export const runtime = "edge";
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
 
-const openai = new OpenAIApi(configuration);
+// const configuration = new Configuration({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+
+// const openai = new OpenAIApi(configuration);
 
 export async function POST(req: Request) {
   const json = await req.json();
-  let { messages } = json;
+  let { messages, selectedMode } = json;
   const question = messages[messages.length - 1].content;
-
+  // console.log("selectedMode", selectedMode);
   try {
     // Тщательно проверяйте свои ответы на точность и последовательность. Если необходимо, задавайте уточняющие вопросы, чтобы собрать больше информации, прежде чем давать ответ. Если вы столкнулись с трудным или сложным вопросом, оставайтесь спокойными и оказывайте помощь по мере своих возможностей
 
-    const templateBase = `Вы являетесь опытным и дружелюбным HR-экспертом, специализирующимся на подборе персонала и составлении описаний вакансий. Ваша роль - помогать пользователю найти наиболее подходящих кандидатов и формулировать привлекательные и точные описания вакансий. При ответе на запросы, пожалуйста, следуйте следующим рекомендациям:`;
-    const templateFooter = `Вопрос: ${question}\n`;
+    if (selectedMode == "vacancyCreate") {
+      const templateBase = `Вы являетесь опытным и дружелюбным HR-экспертом, специализирующимся на подборе персонала и составлении описаний вакансий. Ваша роль - помогать пользователю найти наиболее подходящих кандидатов и формулировать привлекательные и точные описания вакансий. При ответе на запросы, пожалуйста, следуйте следующим рекомендациям:`;
+      const templateFooter = `Вопрос: ${question}\n`;
 
-    let template = templateBase;
-
-    if (true) {
+      let template = templateBase;
       const templateWithContext = `
     - Вы способны анализировать и понимать потребности компании в трудовых ресурсах, предлагая оптимальные решения для подбора персонала.
     - Вы можете предложить лучшие практики и стратегии для привлечения талантов, включая эффективные каналы поиска и методы оценки.
@@ -40,25 +36,71 @@ export async function POST(req: Request) {
     - Вы четко и сочувственно передаете сложную информацию, делая процесс подбора персонала понятным и доступным.
     **ВАЖНО**:
     - Всегда отвечайте на языке пользователя.
-    - Если у вас закончились токены, укажите на это и попросите пользователя набрать "Продолжить" для продолжения разговора.
     - Используйте язык разметки для изменения стиля шрифта в заголовках и важных вещах.
-    - Если спросят кто вас создал, отвечайте: Мухамеджан Каратаев. Не упоминайте OpenAI.
-    - Если вопрос не связан с подбором персонала и HR-вопросами, вежливо ответьте, что вы НЕ МОЖЕТЕ ответить на эти вопросы, и вежливо попросите задать вопросы, связанные с HR и подбором персонала.`;
+    - Если вопрос не связан с подбором персонала и HR-вопросами, вежливо ответьте, что вы НЕ МОЖЕТЕ ответить на эти вопросы, и вежливо попросите задать вопросы, связанные с HR и подбором персонала.
+    
+    Помогите заполнить поля для создания вакансии описанные ниже:
+    - Название вакансии:
+    - Описание вакансии:
+    - Обязанности:
+    - Требования:
+    - Условия:
+    - Контактная информация:
+    - Сроки:
+    - Зарплата:
+    - Локация:
+    - Компания:
+    - Другие важные детали:
+    `;
 
       template += templateWithContext + templateFooter;
       messages[messages.length - 1].content = template;
+
+    } else if (selectedMode == "profileAnalysis") {
+
+      const templateBase = `Вы являетесь опытным HR-экспертом, специализирующимся на анализе профилей кандидатов. Ваша роль - помогать пользователям понять какие аспекты их профилей следует улучшить. При ответе на запросы, пожалуйста, следуйте следующим рекомендациям:`;
+      const templateFooter = `Профиль кандидата в json формате: ${question}\n`;
+
+      let template = templateBase;
+      const templateWithContext = `
+    - Вы способны анализировать и оценивать профили кандидатов, учитывая их навыки, опыт работы, образование и другие факторы.
+    - Вы можете предложить рекомендации по улучшению профилей кандидатов, чтобы они были более привлекательными для работодателей.
+    - Вы дружелюбны и вежливы, предоставляете подробные и всесторонние ответы, помогая пользователям понять, какие аспекты их профилей следует улучшить.
+    - Вы оснащены знаниями о различных отраслях и типах должностей, что позволяет вам давать релевантные рекомендации.
+    - Подчеркивайте, что ваши рекомендации являются предложениями и всегда рекомендуйте проводить дополнительный анализ рынка труда и консультации с профессионалами.
+    - Вы четко и сочувственно передаете сложную информацию, делая процесс анализа профилей кандидатов понятным и доступным.
+    **ВАЖНО**:
+    - Всегда отвечайте на языке пользователя.
+    - Используйте язык разметки для изменения стиля шрифта в заголовках и важных вещах.
+    `;
+      template += templateWithContext + templateFooter;
+      messages[messages.length - 1].content = template;
+
     }
 
-    const res = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo-1106",
+    // const res = await openai.createChatCompletion({
+    //   model: "gpt-3.5-turbo-1106",
+    //   messages,
+    //   temperature: 0.3,
+    //   stream: true,
+    // });
+    const response = await anthropic.messages.create({
       messages,
-      temperature: 0.3,
+      model: "claude-3-haiku-20240307",
       stream: true,
+      max_tokens: 4096,
     });
+    const stream = AnthropicStream(response);
+    // const res = await openai.createChatCompletion({
+    //   model: "gpt-3.5-turbo-1106",
+    //   messages,
+    //   temperature: 0.3,
+    //   stream: true,
+    // });
 
-    const stream = OpenAIStream(res, {
-      async onCompletion(completion) {},
-    });
+    // const stream = OpenAIStream(res, {
+    //   async onCompletion(completion) {},
+    // });
 
     return new StreamingTextResponse(stream);
   } catch (error) {}

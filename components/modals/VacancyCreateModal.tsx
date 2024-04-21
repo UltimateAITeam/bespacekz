@@ -84,13 +84,18 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     onClose();
     setIsLoadingForm(false);
   };
-
+  const [selectedMode, setSelectedMode] = React.useState<string>("vacancyCreate");
   const {
     messages,
     input,
     handleInputChange,
     handleSubmit: handleSubmitChat,
-  } = useChat();
+    isLoading: isLoadingChat,
+  } = useChat({
+    body: {
+      selectedMode
+    }
+  });
 
   return (
     <Modal
@@ -142,6 +147,7 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                         _active={{ border: "none" }} // Remove border on active
                       />
                       <IconButton
+                        isLoading={isLoadingChat}
                         aria-label="Send to AI"
                         icon={<BiSend />}
                         type="submit"
