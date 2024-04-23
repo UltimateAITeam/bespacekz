@@ -52,7 +52,7 @@ const ProfileMultiModal = dynamic(
   () => import("@/components/modals/ProfileMultiModal"),
   {
     ssr: false,
-  }
+  },
 );
 
 const toBase64 = (file: File) =>
@@ -112,8 +112,8 @@ function Page() {
     isLoading: isChatLoading,
   } = useChat({
     body: {
-      selectedMode
-    }
+      selectedMode,
+    },
   });
 
   // {initialInput: "As an HR expert, anaylze and assess the profile of the candidate below: " + '\n' + JSON.stringify(data),}
@@ -208,20 +208,22 @@ function Page() {
                 Просмотр аккаунта
               </h2>
 
-              {!(loading || session.status === "loading") && data && role === Role.FREELANCER && (
-                <form onSubmit={handleSubmitChat}>
-                <Button
-                  type="submit"
-                  isLoading={isChatLoading}
-                  isDisabled={isChatLoading}
-                  leftIcon={<BsStars />}
-                  colorScheme="pink"
-                  size="md"
-                >
-                  AI анализ профиля
-                </Button>
-                </form>
-              )}
+              {!(loading || session.status === "loading") &&
+                data &&
+                role === Role.FREELANCER && (
+                  <form onSubmit={handleSubmitChat}>
+                    <Button
+                      type="submit"
+                      isLoading={isChatLoading}
+                      isDisabled={isChatLoading}
+                      leftIcon={<BsStars />}
+                      colorScheme="pink"
+                      size="md"
+                    >
+                      AI анализ профиля
+                    </Button>
+                  </form>
+                )}
             </Flex>
 
             {data.jobTitle && (
@@ -343,7 +345,7 @@ function Page() {
                               ? "AI HR:"
                               : "Пользователь:"}
                           </Text>
-                          
+
                           <MemoizedReactMarkdown
                             className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
                             remarkPlugins={[remarkGfm, remarkMath]}
@@ -358,7 +360,7 @@ function Page() {
                             {message.content}
                           </MemoizedReactMarkdown>
                         </Box>
-                      )
+                      ),
                   )}
                 </div>
 
@@ -609,7 +611,7 @@ function Page() {
                                     {format(
                                       new Date(vacancy.createdAt),
                                       "PPP",
-                                      { locale: ru }
+                                      { locale: ru },
                                     )}
                                   </Text>
                                   <Text className="text-sm">

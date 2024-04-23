@@ -55,9 +55,7 @@ export async function POST(req: Request) {
 
       template += templateWithContext + templateFooter;
       messages[messages.length - 1].content = template;
-
     } else if (selectedMode == "profileAnalysis") {
-
       const templateBase = `Вы являетесь опытным HR-экспертом, специализирующимся на анализе профилей кандидатов. Ваша роль - помогать пользователям понять какие аспекты их профилей следует улучшить. При ответе на запросы, пожалуйста, следуйте следующим рекомендациям:`;
       const templateFooter = `Профиль кандидата в json формате: ${question}\n`;
 
@@ -75,7 +73,6 @@ export async function POST(req: Request) {
     `;
       template += templateWithContext + templateFooter;
       messages[messages.length - 1].content = template;
-
     }
 
     // const res = await openai.createChatCompletion({

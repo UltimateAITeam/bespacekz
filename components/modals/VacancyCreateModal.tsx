@@ -84,7 +84,8 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     onClose();
     setIsLoadingForm(false);
   };
-  const [selectedMode, setSelectedMode] = React.useState<string>("vacancyCreate");
+  const [selectedMode, setSelectedMode] =
+    React.useState<string>("vacancyCreate");
   const {
     messages,
     input,
@@ -93,8 +94,8 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     isLoading: isLoadingChat,
   } = useChat({
     body: {
-      selectedMode
-    }
+      selectedMode,
+    },
   });
 
   return (
