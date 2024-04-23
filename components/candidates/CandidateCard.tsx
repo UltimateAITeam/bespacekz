@@ -81,10 +81,11 @@ export function CandidateCard(props: ICandidateCardProps) {
                 </Button>
               </Link>
               <Button
+                as={Link}
+                href={`mailto:${user.email}`}
                 colorScheme="messenger"
                 variant="outline"
                 className="ml-3"
-                onClick={() => null}
               >
                 Ответить
               </Button>

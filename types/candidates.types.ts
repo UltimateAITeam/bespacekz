@@ -18,6 +18,7 @@ export type ICandidate = Prisma.FreelancerProfileGetPayload<{
         name: true;
         last_name: true;
         location: true;
+        email: true;
       };
     };
     Education: true;
