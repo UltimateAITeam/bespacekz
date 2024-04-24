@@ -10,6 +10,11 @@ export async function POST(req: Request) {
     const { data, session } = await checkSessionAndGetData(req);
     const FreelancerProfile = await getProfileBySession(session);
     for (const language of data) {
+      await prisma.language.deleteMany({
+        where: {
+          freelancerProfileId: FreelancerProfile.id,
+        },
+      });
       await prisma.language.create({
         data: {
           ...language,
