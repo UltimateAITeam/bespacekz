@@ -14,7 +14,11 @@ export async function POST(req: NextRequest) {
         id: FreelancerProfile.id,
       },
       data: {
-        jobTitle: data.title,
+        jobTitle: {
+          connect: {
+            name: data.title,
+          },
+        },
       },
     });
 
