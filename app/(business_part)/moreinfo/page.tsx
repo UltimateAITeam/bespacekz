@@ -61,10 +61,11 @@ function Oauth_additional() {
 
   useEffect(() => {
     if (!session.data?.user?.name || session.data?.user?.name == "") return;
-    let firstName = session.data?.user?.name?.split(" ")[1];
-    let lastName = session.data?.user?.name?.split(" ")[0];
+    let firstName = session.data?.user?.name;
+    let lastName = session.data?.user?.last_name;
     setValue("first_name", firstName as string);
     setValue("last_name", lastName as string);
+    setValue("phone", session.data.user.phone as string);
   }, [session.data?.user?.name, setValue]);
 
   const [isLoadingSubmit, setIsLoadingSubmit] = React.useState(false);
@@ -177,7 +178,7 @@ function Oauth_additional() {
                     {/* ================= first name input =============== */}
                     <div className="flex flex-col">
                       <label
-                        htmlFor="first_name"
+                        htmlFor="last_name"
                         className="font-medium px-1 pb-1"
                       >
                         Фамилия:
@@ -188,7 +189,7 @@ function Oauth_additional() {
                           type="text"
                           className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
                           placeholder="First name"
-                          {...register("first_name", {
+                          {...register("last_name", {
                             required: "Name is required",
                           })}
                         />
@@ -198,7 +199,7 @@ function Oauth_additional() {
                     {/* ================= last name input  =============== */}
                     <div className="flex flex-col">
                       <label
-                        htmlFor="last_name"
+                        htmlFor="first_name"
                         className="font-medium px-1 pb-1"
                       >
                         Имя:
@@ -208,7 +209,7 @@ function Oauth_additional() {
                           type="text"
                           className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
                           placeholder="Last name"
-                          {...register("last_name", {
+                          {...register("first_name", {
                             required: "Last name is required",
                           })}
                         />
