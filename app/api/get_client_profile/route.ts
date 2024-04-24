@@ -23,16 +23,20 @@ export async function GET(req: NextRequest) {
       email: session.user?.email,
     },
     select: {
+      id: true,
       name: true,
       last_name: true,
       phone: true,
       email: true,
-      image: true,
       location: true,
       about: true,
     },
   });
   if (!profile || !userInfo)
     return NextResponse.json({ error: "User not found" }, { status: 404 });
-  return NextResponse.json({ ...profile, ...userInfo }, { status: 200 });
+
+  return NextResponse.json(
+    { ...profile, ...userInfo, image: `/api/users/${userInfo.id}/avatar` },
+    { status: 200 },
+  );
 }

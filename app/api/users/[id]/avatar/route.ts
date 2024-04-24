@@ -21,5 +21,5 @@ export async function GET(
     return new NextResponse(blob);
   }
 
-  return new NextResponse();
+  return new NextResponse(null, { status: 404 });
 }
