@@ -18,6 +18,13 @@ import { useSWRConfig } from "swr";
 import parse from "html-react-parser";
 import { thousandSeparator } from "@/libs/utils";
 
+const vacancyStatuses = {
+  ACTIVE: "Активна",
+  ARCHIVED: "В архиве",
+  IN_PROGRESS: "Выполняется",
+  COMPLETE: "Выполнена",
+};
+
 interface IPropsVacancy extends IVacancy {}
 export default function ClientVacancyCard(props: IPropsVacancy) {
   const { status, data } = useSession();
@@ -36,6 +43,7 @@ export default function ClientVacancyCard(props: IPropsVacancy) {
     requiredSkills,
     clientProfile,
     favoritedBy,
+    status: vacancyStatus,
   } = props;
   const router = useRouter();
   const pathname = usePathname();
@@ -71,7 +79,7 @@ export default function ClientVacancyCard(props: IPropsVacancy) {
                 {clientProfile?.companyInfo}
               </p>
               <Badge className="ml-3 !text-[#7D5AE2] !bg-[#7D5AE2]/10 !normal-case	!px-[6px] !font-roboto !font-medium">
-                Новый пост
+                {vacancyStatuses[vacancyStatus]}
               </Badge>
             </div>
           </div>

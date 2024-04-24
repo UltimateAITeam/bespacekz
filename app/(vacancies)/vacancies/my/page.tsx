@@ -23,7 +23,6 @@ export default async function MyVacanciesPage() {
   const vacancies = await prisma.vacancy.findMany({
     where: {
       clientProfile: { id: client.id },
-      status: "ACTIVE",
     },
     include: {
       jobTitle: true,
