@@ -3,6 +3,7 @@ import { create } from "zustand";
 interface Skill {
   id: number;
   name: string;
+  proficiencyLevel: string;
 }
 
 interface SkillsStore {
