@@ -167,6 +167,18 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
               />
             </div>
 
+            {/* ================= phone input =============== */}
+            <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
+              <input
+                type="tel"
+                className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
+                placeholder="Phone"
+                {...register("phone", {
+                  required: "Phone is required",
+                })}
+              />
+            </div>
+
             {/* ================= password input =============== */}
             <div className="relative flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
               <input

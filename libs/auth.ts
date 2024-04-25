@@ -76,6 +76,7 @@ export const authOptions: AuthOptions = {
             name: true,
             last_name: true,
             role: true,
+            phone: true,
           },
         });
 
@@ -128,6 +129,7 @@ export const authOptions: AuthOptions = {
         token.id = user.id;
         token.last_name = user.last_name;
         token.role = user.role;
+        token.phone = user.phone;
 
         const client = await prisma.clientProfile.findUnique({
           where: {
@@ -158,6 +160,7 @@ export const authOptions: AuthOptions = {
         session.user.id = token.id;
         session.user.role = token.role;
         session.user.last_name = token.last_name;
+        session.user.phone = token.phone;
       }
       return session;
     },
