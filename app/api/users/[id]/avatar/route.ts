@@ -20,4 +20,6 @@ export async function GET(
 
     return new NextResponse(blob);
   }
+
+  return new NextResponse();
 }

@@ -16,6 +16,8 @@ import { IoLocationOutline } from "react-icons/io5";
 import parse from "html-react-parser";
 import { Button, Flex } from "@chakra-ui/react";
 import { BsStars } from "react-icons/bs";
+import { archiveVacancy } from "./actions";
+import ArchiveButton from "./archive-button";
 
 interface AboutVacancyPageProps {
   params: {
@@ -37,6 +39,7 @@ export default async function AboutVacancyPage({
         },
       },
       id: true,
+      status: true,
       city: true,
       jobTitle: {
         select: {
@@ -91,9 +94,15 @@ export default async function AboutVacancyPage({
 
   return (
     <div className="font-roboto pb-28">
-      <h1 className="text-[38px] leading-tight font-medium">
-        {vacancy.jobTitle.name}
-      </h1>
+      <div className="flex justify-between">
+        <h1 className="text-[38px] leading-tight font-medium">
+          {vacancy.jobTitle.name}
+        </h1>
+        <ArchiveButton
+          id={vacancy.id}
+          archived={vacancy.status === "ARCHIVED"}
+        />
+      </div>
       <div className="mt-10 flex gap-9">
         <div className="w-1/4 shrink-0">
           <Card className="p-5 font-roboto">
