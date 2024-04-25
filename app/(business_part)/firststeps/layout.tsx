@@ -113,7 +113,8 @@ function Layout({ children }: { children: React.ReactNode }) {
   const isFilledSkills =
     skills.length >= 1 &&
     skills.every((item) => {
-      return item.name !== "" && item.proficiencyLevel !== "";
+      // && item.proficiencyLevel !== ""
+      return item.name !== "";
     });
 
   const postData = async (url: string, data: any) => {
