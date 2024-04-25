@@ -596,7 +596,10 @@ const Navbar = () => {
                     {loading ? (
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900 mr-3"></div>
                     ) : (
-                      <Avatar size={"sm"} src={image || "https://avatars.dicebear.com"} />
+                      <Avatar
+                        size={"sm"}
+                        src={image || "https://avatars.dicebear.com"}
+                      />
                     )}
                     <VStack
                       display={{ base: "none", md: "flex" }}

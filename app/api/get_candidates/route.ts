@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
             name: true,
             last_name: true,
             location: true,
+            email: true,
           },
         },
         Education: true,

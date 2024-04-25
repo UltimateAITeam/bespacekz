@@ -22,6 +22,7 @@ export async function GET(
           name: true,
           last_name: true,
           location: true,
+          email: true,
         },
       },
       Education: true,
