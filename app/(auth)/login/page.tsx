@@ -11,6 +11,7 @@ import LoginSignupFooter from "@/components/brenda_components/LoginSignupFooter"
 import HeadTag from "@/components/brenda_components/HeadTag";
 import LinkedInButton from "@/components/LinkedInButton";
 import { useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/libs/utils";
 
 export default function LoginPage() {
   const [emailRequired, setEmailRequired] = useState(false);
@@ -105,15 +106,28 @@ export default function LoginPage() {
                       placeholder="Email"
                     />
                   </div>
-                  <label
-                    className={
-                      passwordRequired
-                        ? "text-red-600 block"
-                        : "text-red-600 hidden"
-                    }
+                  <div
+                    className={cn(
+                      "flex",
+                      passwordRequired ? "justify-between" : "justify-end",
+                    )}
                   >
-                    Password required
-                  </label>
+                    <label
+                      className={
+                        passwordRequired
+                          ? "text-red-600 block"
+                          : "text-red-600 hidden"
+                      }
+                    >
+                      Password required
+                    </label>
+                    <Link
+                      href="/password-recovery"
+                      className="text-sm text-blue-500 font-medium"
+                    >
+                      Забыли пароль?
+                    </Link>
+                  </div>
                   <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg sm:w-[25rem] items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3]">
                     <RiLockPasswordFill className="text-lg text-zinc-700 cursor-pointer hover:text-zinc-500" />
                     <input
