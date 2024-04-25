@@ -14,6 +14,7 @@ import { useFirstStepsLoading } from "@/libs/hooks";
 import useTitleStore from "@/store/titleFormStateStore";
 import useLanguagesStore from "@/store/languagesFormStore";
 import useAboutStore from "@/store/aboutFormStore";
+import useSkillsStore from "@/store/skillFormStore";
 
 // CHECK THIS PAGE
 function Layout({ children }: { children: React.ReactNode }) {
@@ -30,6 +31,12 @@ function Layout({ children }: { children: React.ReactNode }) {
       path: "/firststeps/title",
       back: "Назад",
       skip: false,
+      next: "Следующий шаг",
+    },
+    {
+      path: "/firststeps/skills",
+      back: "Назад",
+      skip: true,
       next: "Следующий шаг",
     },
     {
@@ -74,6 +81,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     usePricingStore();
   const { title } = useTitleStore();
   const { about } = useAboutStore();
+  const { skills } = useSkillsStore();
 
   // Check if all fields are filled
   const isFilledEdu =
@@ -102,6 +110,12 @@ function Layout({ children }: { children: React.ReactNode }) {
       return item.name.length > 3;
     });
 
+  const isFilledSkills =
+    skills.length >= 1 &&
+    skills.every((item) => {
+      return item.name !== "" && item.proficiencyLevel !== "";
+    });
+
   const postData = async (url: string, data: any) => {
     fetch(url, {
       method: "POST",
@@ -122,6 +136,8 @@ function Layout({ children }: { children: React.ReactNode }) {
         return isFilledEdu;
       case "/firststeps/title":
         return title.length > 5;
+      case "/firststeps/skills":
+        return isFilledSkills;
       case "/firststeps":
         return true;
       case "/firststeps/experience":
@@ -160,6 +176,16 @@ function Layout({ children }: { children: React.ReactNode }) {
           })
           .catch((reason) => {});
         break;
+
+      case "/firststeps/skills":
+        postData("/api/profile/skills", skills)
+          .then((value) => {
+            router.push(pages[pageIndex + 1].path);
+          })
+          .catch((reason) => {
+            console.log(reason);
+          });
+        break;
       case "/firststeps/experience":
         postData("/api/profile/experience", experience)
           .then((value) => {
@@ -194,6 +220,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             localStorage.removeItem("education");
             localStorage.removeItem("experience");
             localStorage.removeItem("languages");
+            localStorage.removeItem("skills");
             router.push("/");
           })
           .catch((reason) => {});

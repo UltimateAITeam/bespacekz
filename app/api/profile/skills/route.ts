@@ -9,22 +9,32 @@ export async function POST(req: Request) {
   try {
     const { data, session } = await checkSessionAndGetData(req);
     const FreelancerProfile = await getProfileBySession(session);
-    for (const language of data) {
-      await prisma.language.deleteMany({
-        where: {
-          freelancerProfileId: FreelancerProfile.id,
+    console.log(data);
+    const skills = data.map((skill: { name: string }) => skill.name);
+
+    await prisma.freelancerProfile.update({
+      where: {
+        id: FreelancerProfile.id,
+      },
+      data: {
+        Skills: {
+          set: [],
         },
-      });
-      await prisma.language.create({
-        data: {
-          ...language,
-          freelancerProfileId: FreelancerProfile.id,
-        },
-      });
-    }
+      },
+    });
+
+    await prisma.freelancerProfile.update({
+      where: {
+        id: FreelancerProfile.id,
+      },
+      data: {
+        Skills: { set: skills },
+      },
+    });
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ error: err?.toString() }, { status: 500 });
   }
 }
