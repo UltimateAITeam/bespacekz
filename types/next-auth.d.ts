@@ -15,14 +15,14 @@ declare module "next-auth" {
       last_name: string | null;
       role: Role | null;
       location: string | null;
-      phone: string;
+      phone: string | null;
     };
   }
   interface User {
     id: string;
     role: Role | null;
     last_name: string | null;
-    phone: string;
+    phone: string | null;
   }
 }
 
@@ -31,7 +31,8 @@ declare module "next-auth/jwt" {
     id: string;
     role: Role | null;
     last_name: string | null;
-    phone: string;
+    phone: string | null;
+
     client?: {
       isSubscribed: boolean;
     };
