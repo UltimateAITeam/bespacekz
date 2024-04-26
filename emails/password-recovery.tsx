@@ -14,9 +14,7 @@ interface PasswordRecoveryProps {
   token?: string;
 }
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const baseUrl = process.env.API_URL ?? "http://localhost:3000";
 
 export const PasswordRecovery = ({ token }: PasswordRecoveryProps) => (
   <Html>
