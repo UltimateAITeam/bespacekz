@@ -50,7 +50,6 @@ import VacancyCreateModal from "@/components/modals/VacancyCreateModal";
 import { Role } from "@prisma/client";
 
 const Navbar = () => {
-  // ============= Router hooks ===================
   const router = useRouter();
 
   const [dropdownState, setDropdownState] = useState(false);
