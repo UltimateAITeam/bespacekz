@@ -151,6 +151,7 @@ export const authOptions: AuthOptions = {
             };
           }
         }
+        token.picture = `/api/users/${user.id}/avatar`;
       }
 
       return token;
