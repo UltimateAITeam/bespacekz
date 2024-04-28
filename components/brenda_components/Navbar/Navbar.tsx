@@ -54,7 +54,6 @@ const Navbar = () => {
 
   const [dropdownState, setDropdownState] = useState(false);
 
-  // =========== Search List state =================
   const [searchState, setSearchState] = useState("hidden");
   // ========== More Dropdown state ====================
   const [moreDp, setMoreDp] = useState("hidden");
