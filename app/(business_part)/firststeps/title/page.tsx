@@ -1,9 +1,12 @@
 "use client";
+import CreatableSelect from "react-select/creatable";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useTitleStore from "@/store/titleFormStateStore";
 import { FormControl, FormLabel, Select, Text } from "@chakra-ui/react";
 import JobTitleAutoSuggest from "@/components/JobTitleAutoSuggest";
+import { skillsList } from "@/data/skills";
+import useSkillsStore from "@/store/skillFormStore";
 
 const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
@@ -32,6 +35,12 @@ function Page() {
   const handleCreateTitle = (value: string) => {
     updateTitle(value);
     setJobCategoryRequired((v) => true);
+  };
+
+  const { setSkills } = useSkillsStore();
+
+  const handleSelectionChange = (name: string, value: string[]) => {
+    setSkills(value);
   };
 
   return (
@@ -65,6 +74,26 @@ function Page() {
             title={title}
             setTitle={handleTitleChange}
           />
+          <div className="mt-4 w-1/2">
+            <FormLabel>Навыки</FormLabel>
+            <CreatableSelect
+              isMulti
+              options={skillsList}
+              isClearable
+              placeholder="JavaScript"
+              classNames={{
+                input: () => "!shadow-none !focus:outline-none !focus:ring-0",
+              }}
+              onChange={(newValues) => {
+                if (!newValues) return;
+                handleSelectionChange(
+                  "requiredSkills",
+                  newValues.map((v) => v.value),
+                );
+              }}
+              required
+            />
+          </div>
         </form>
       </div>
     </motion.div>

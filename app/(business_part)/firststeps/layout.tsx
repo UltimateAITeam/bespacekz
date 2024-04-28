@@ -34,12 +34,6 @@ function Layout({ children }: { children: React.ReactNode }) {
       next: "Следующий шаг",
     },
     {
-      path: "/firststeps/skills",
-      back: "Назад",
-      skip: true,
-      next: "Следующий шаг",
-    },
-    {
       path: "/firststeps/education",
       back: "Назад",
       skip: true,
@@ -136,9 +130,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       case "/firststeps/education":
         return isFilledEdu;
       case "/firststeps/title":
-        return title.length > 5;
-      case "/firststeps/skills":
-        return isFilledSkills;
+        return title.length > 5 && isFilledSkills;
       case "/firststeps":
         return true;
       case "/firststeps/experience":
@@ -158,7 +150,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     switch (pages[pageIndex].path) {
       case "/firststeps/education":
         postData("/api/profile/education", educations)
@@ -171,15 +163,12 @@ function Layout({ children }: { children: React.ReactNode }) {
         router.push(pages[pageIndex + 1].path);
         break;
       case "/firststeps/title":
-        postData("/api/profile/title", { title: title })
+        await postData("/api/profile/title", { title: title })
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
           .catch((reason) => {});
-        break;
-
-      case "/firststeps/skills":
-        postData("/api/profile/skills", skills)
+        await postData("/api/profile/skills", skills)
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })

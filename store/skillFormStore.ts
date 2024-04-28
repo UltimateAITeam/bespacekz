@@ -10,6 +10,7 @@ interface SkillsStore {
   updateSkill: (index: number, updatedSkill: Partial<Skill>) => void;
   addSkill: (newSkill: Skill) => void;
   removeSkill: (index: number) => void;
+  setSkills: (skills: string[]) => void;
 }
 
 function getSkillsInitial(): Skill[] {
@@ -45,6 +46,16 @@ const useSkillsStore = create<SkillsStore>((set) => ({
         localStorage.setItem("skills", JSON.stringify(newSkills));
       return { skills: newSkills };
     }),
+  setSkills(skills) {
+    set(() => {
+      return {
+        skills: skills.map((v, i) => ({
+          id: i,
+          name: v,
+        })),
+      };
+    });
+  },
 }));
 
 export default useSkillsStore;
