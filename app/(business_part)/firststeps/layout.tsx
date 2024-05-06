@@ -15,6 +15,7 @@ import useTitleStore from "@/store/titleFormStateStore";
 import useLanguagesStore from "@/store/languagesFormStore";
 import useAboutStore from "@/store/aboutFormStore";
 import useSkillsStore from "@/store/skillFormStore";
+import usePortfolioStore from "@/store/portfolioFormStore";
 
 // CHECK THIS PAGE
 function Layout({ children }: { children: React.ReactNode }) {
@@ -41,6 +42,12 @@ function Layout({ children }: { children: React.ReactNode }) {
     },
     {
       path: "/firststeps/experience",
+      back: "Назад",
+      skip: true,
+      next: "Следующий шаг",
+    },
+    {
+      path: "/firststeps/portfolio",
       back: "Назад",
       skip: true,
       next: "Следующий шаг",
@@ -76,6 +83,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   const { title } = useTitleStore();
   const { about } = useAboutStore();
   const { skills } = useSkillsStore();
+  const { links } = usePortfolioStore();
 
   // Check if all fields are filled
   const isFilledEdu =
@@ -111,6 +119,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       return item.name !== "";
     });
 
+  const isFilledPortfolio = links.some((v) => v.length > 0);
+
   const postData = async (url: string, data: any) => {
     fetch(url, {
       method: "POST",
@@ -135,6 +145,8 @@ function Layout({ children }: { children: React.ReactNode }) {
         return true;
       case "/firststeps/experience":
         return isFilledExp;
+      case "/firststeps/portfolio":
+        return isFilledPortfolio;
       case "/firststeps/languages":
         return isFilledLanguages;
       case "/firststeps/price":
@@ -178,6 +190,13 @@ function Layout({ children }: { children: React.ReactNode }) {
         break;
       case "/firststeps/experience":
         postData("/api/profile/experience", experience)
+          .then((value) => {
+            router.push(pages[pageIndex + 1].path);
+          })
+          .catch((reason) => {});
+        break;
+      case "/firststeps/portfolio":
+        postData("/api/profile/portfolio", links)
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
