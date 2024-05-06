@@ -43,6 +43,7 @@ import { useChat } from "ai/react";
 import { MemoizedReactMarkdown } from "@/components/ui/markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import { Price } from "./price";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
   ssr: false,
@@ -500,16 +501,7 @@ function Page() {
                     isEditable={false}
                     title={"Вид поиска работы "}
                   >
-                    {data.Pricing.map((pricing) => (
-                      <div
-                        key={pricing.id}
-                        className="text-xl py-1 px-2 font-medium text-primary-text"
-                      >
-                        {pricing.pricingType[0] === "EMPLOYEE"
-                          ? "Ищу работу на постоянной основе"
-                          : "Фрилансер"}
-                      </div>
-                    ))}
+                    <Price id={data.email} />
                   </BlockComponent>
                 </div>
 
