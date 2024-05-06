@@ -16,8 +16,9 @@ import { IoLocationOutline } from "react-icons/io5";
 import parse from "html-react-parser";
 import { Button, Flex } from "@chakra-ui/react";
 import { BsStars } from "react-icons/bs";
-import { archiveVacancy } from "./actions";
+import { archiveVacancy, completeProject } from "./actions";
 import ArchiveButton from "./archive-button";
+import CompleteButton from "./complete-button";
 
 interface AboutVacancyPageProps {
   params: {
@@ -98,10 +99,18 @@ export default async function AboutVacancyPage({
         <h1 className="text-[38px] leading-tight font-medium">
           {vacancy.jobTitle.name}
         </h1>
-        <ArchiveButton
-          id={vacancy.id}
-          archived={vacancy.status === "ARCHIVED"}
-        />
+        <div className="flex gap-x-3">
+          {vacancy.status === "IN_PROGRESS" &&
+            vacancy.pricingType === "FREELANCE" && (
+              <CompleteButton vacancyId={vacancy.id} />
+            )}
+          {!["IN_PROGRESS", "COMPLETE"].includes(vacancy.status) && (
+            <ArchiveButton
+              id={vacancy.id}
+              archived={vacancy.status === "ARCHIVED"}
+            />
+          )}
+        </div>
       </div>
       <div className="mt-10 flex gap-9">
         <div className="w-1/4 shrink-0">

@@ -25,3 +25,15 @@ export async function publishVacancy(vacancyId: string) {
   });
   revalidatePath(`/vacancies/my/${vacancyId}`);
 }
+
+export async function completeProject(vacancyId: string) {
+  await prisma.vacancy.update({
+    where: {
+      id: vacancyId,
+    },
+    data: {
+      status: "COMPLETE",
+    },
+  });
+  revalidatePath(`/vacancies/my/${vacancyId}`);
+}
