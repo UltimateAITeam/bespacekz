@@ -184,9 +184,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           .then((value) => {
             router.push(pages[pageIndex + 1].path);
           })
-          .catch((reason) => {
-            console.log(reason);
-          });
+          .catch((reason) => {});
         break;
       case "/firststeps/experience":
         postData("/api/profile/experience", experience)

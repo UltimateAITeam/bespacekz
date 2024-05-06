@@ -44,6 +44,8 @@ import { MemoizedReactMarkdown } from "@/components/ui/markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { Price } from "./price";
+import Link from "next/link";
+import usePortfolioStore from "@/store/portfolioFormStore";
 
 const RichTextEditor = dynamic(() => import("@/components/RichText"), {
   ssr: false,
@@ -147,6 +149,40 @@ function Page() {
       setLoading(false);
     })();
   }, [session.status, role, session.data?.user.role]);
+
+  const { setLinks } = usePortfolioStore();
+
+  useEffect(() => {
+    if (data?.Portfolio?.at(0)?.links) {
+      setLinks(data.Portfolio.at(0)!.links);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const intervaId = setInterval(async () => {
+      if (role === Role.FREELANCER) {
+        const response = await fetch("/api/get_freelancer_profile");
+        const json = await response.json();
+        setData(json);
+        setInput(JSON.stringify(json));
+
+        if (json.image) {
+          setImage(json.image);
+        }
+      } else {
+        const response = await fetch("/api/get_client_profile");
+        const json = await response.json();
+        setData(json);
+        setInput(JSON.stringify(json));
+
+        if (json.image) {
+          setImage(json.image);
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(intervaId);
+  }, [role]);
 
   const educations = data?.Education || [];
   const languages = data?.Languages || [];
@@ -310,59 +346,80 @@ function Page() {
             {role === Role.FREELANCER && (
               <>
                 <div className="col-start-2 row-span-10">
+                  <div>
+                    <BlockComponent
+                      editForm={"edit-languages"}
+                      openModal={openModal}
+                      isAddable={false}
+                      isEditable={true}
+                      title={"Языки"}
+                    >
+                      <ul className="mt-0 space-y-4">
+                        {languages.map((lang) => {
+                          return (
+                            <li
+                              key={lang.id}
+                              className="flex justify-between items-center w-1/2"
+                            >
+                              <span className="text-xl font-medium ">
+                                {lang.name}
+                              </span>{" "}
+                              <span>{lang.proficiencyLevel}</span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </BlockComponent>
+                    {messages.slice(-1).map(
+                      (message) =>
+                        message.role == "assistant" && (
+                          <Box
+                            key={message.id + "box"}
+                            className={`p-5 mt-6 bg-gradient-to-tr ${message.role == "assistant" ? "from-[#E0F7FA] to-[#E0F2F1]" : "from-[#FDE2E4] to-[#FAE1DD]"} rounded-lg shadow-md`}
+                          >
+                            <Text className="text-sm font-semibold pt-2">
+                              {message.role == "assistant"
+                                ? "AI HR:"
+                                : "Пользователь:"}
+                            </Text>
+                            <MemoizedReactMarkdown
+                              className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
+                              remarkPlugins={[remarkGfm, remarkMath]}
+                              components={{
+                                p({ children }) {
+                                  return (
+                                    <p className="mb-2 last:mb-0">{children}</p>
+                                  );
+                                },
+                              }}
+                            >
+                              {message.content}
+                            </MemoizedReactMarkdown>
+                          </Box>
+                        ),
+                    )}
+                  </div>
+                  <br />
                   <BlockComponent
-                    editForm={"edit-languages"}
+                    editForm={"edit-portfolio"}
                     openModal={openModal}
                     isAddable={false}
                     isEditable={true}
-                    title={"Языки"}
+                    title={"Портфолио"}
                   >
-                    <ul className="mt-0 space-y-4">
-                      {languages.map((lang) => {
-                        return (
-                          <li
-                            key={lang.id}
-                            className="flex justify-between items-center w-1/2"
-                          >
-                            <span className="text-xl font-medium ">
-                              {lang.name}
-                            </span>{" "}
-                            <span>{lang.proficiencyLevel}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </BlockComponent>
-
-                  {messages.slice(-1).map(
-                    (message) =>
-                      message.role == "assistant" && (
-                        <Box
-                          key={message.id + "box"}
-                          className={`p-5 mt-6 bg-gradient-to-tr ${message.role == "assistant" ? "from-[#E0F7FA] to-[#E0F2F1]" : "from-[#FDE2E4] to-[#FAE1DD]"} rounded-lg shadow-md`}
+                    <div className=" flex flex-col gap-y-2">
+                      {data?.Portfolio?.at(0)?.links.map((v) => (
+                        <Link
+                          key={v}
+                          href={v}
+                          className="text-[hsla(222,_91%,_59%,_1)] truncate text-base"
+                          target="_blank"
                         >
-                          <Text className="text-sm font-semibold pt-2">
-                            {message.role == "assistant"
-                              ? "AI HR:"
-                              : "Пользователь:"}
-                          </Text>
-
-                          <MemoizedReactMarkdown
-                            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
-                            remarkPlugins={[remarkGfm, remarkMath]}
-                            components={{
-                              p({ children }) {
-                                return (
-                                  <p className="mb-2 last:mb-0">{children}</p>
-                                );
-                              },
-                            }}
-                          >
-                            {message.content}
-                          </MemoizedReactMarkdown>
-                        </Box>
-                      ),
-                  )}
+                          {v}
+                        </Link>
+                      ))}
+                    </div>
+                  </BlockComponent>
                 </div>
 
                 <div className="col-start-1">

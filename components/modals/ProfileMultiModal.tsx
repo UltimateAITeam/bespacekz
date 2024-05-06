@@ -21,6 +21,7 @@ import { Role } from "@prisma/client";
 import ProfileCompanyDescriptionEditForm from "@/components/forms/ProfileCompanyDescriptionEditForm";
 import ProfileCompanyVacancyEditForm from "@/components/forms/ProfileCompanyVacancyEditForm";
 import ProfileCompanyVacancyAddForm from "@/components/forms/ProfileCompanyVacancyAddForm";
+import PortfolioForm from "../forms/PortfolioForm";
 
 interface HandleData {
   info: any;
@@ -168,6 +169,7 @@ function ProfileMultiModal({
         onClose={onClose}
       />
     ),
+    "edit-portfolio": <PortfolioForm data={data} />,
   };
   if (!forms.hasOwnProperty(form)) return null;
 

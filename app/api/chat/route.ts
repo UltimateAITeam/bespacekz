@@ -18,7 +18,6 @@ export async function POST(req: Request) {
   const json = await req.json();
   let { messages, selectedMode } = json;
   const question = messages[messages.length - 1].content;
-  // console.log("selectedMode", selectedMode);
   try {
     // Тщательно проверяйте свои ответы на точность и последовательность. Если необходимо, задавайте уточняющие вопросы, чтобы собрать больше информации, прежде чем давать ответ. Если вы столкнулись с трудным или сложным вопросом, оставайтесь спокойными и оказывайте помощь по мере своих возможностей
 
