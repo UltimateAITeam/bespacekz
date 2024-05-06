@@ -103,9 +103,9 @@ async function createInvoice(args: {
 }
 
 const planAmount: Record<string, number> = {
-  starter: 79,
-  growth: 149,
-  scale: 349,
+  base: 7000,
+  standard: 18000,
+  premium: 25000,
 };
 
 export async function GET(req: NextRequest) {

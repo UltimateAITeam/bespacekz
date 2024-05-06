@@ -16,6 +16,7 @@ import {
 import { FaCheckCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { ArrowForwardIcon, ArrowRightIcon, CheckIcon } from "@chakra-ui/icons";
 
 interface Props {
   children: React.ReactNode;
@@ -42,10 +43,6 @@ export default function ThreeTierPricing() {
   return (
     <Box py={12}>
       <VStack spacing={2} textAlign="center">
-        {/* <Heading as="h1" fontSize="4xl">
-            Для работодателя <br/> 
-            Купить доступ к базе резюме
-        </Heading> */}
         <motion.h2
           className="text-zinc-700 font-semibold 2xl:text-5xl lg:text-5xl text-4xl"
           initial={{ y: "100", opacity: 0 }}
@@ -59,193 +56,106 @@ export default function ThreeTierPricing() {
           Стоимость доступа к базе резюме зависит от количества резюме в базе.
         </Text>
       </VStack>
-      <Stack
-        direction={{ base: "column", md: "row" }}
-        textAlign="center"
-        justify="center"
-        spacing={{ base: 4, lg: 10 }}
-        py={10}
-      >
-        <PriceWrapper>
-          <Box py={4} px={12}>
-            <Text fontWeight="500" fontSize="2xl">
-              Starter
-            </Text>
-            <HStack justifyContent="center">
-              <Text fontSize="3xl" fontWeight="600">
-                $
-              </Text>
-              <Text fontSize="5xl" fontWeight="900">
-                79
-              </Text>
-              <Text fontSize="3xl" color="gray.500">
-                /month
-              </Text>
-            </HStack>
-          </Box>
-          <VStack
-            bg={useColorModeValue("gray.50", "gray.700")}
-            py={4}
-            borderBottomRadius={"xl"}
+      <div className="flex lg:flex-row items-center lg:items-baseline gap-y-12 flex-col gap-x-12 justify-center mt-12">
+        <div className="px-12 py-[72px] flex flex-col bg-[hsla(220,_100%,_97%,_1)] rounded-[10px] justify-between max-w-sm w-full shadow-sm">
+          <div>
+            <div className="font-bold text-sm uppercase text-[hsla(244,_86%,_59%,_1)]">
+              Базовый
+            </div>
+            <div className="font-bold text-black text-5xl mt-[18px]">
+              7 000 <span className="font-normal text-2xl">₸/месяц</span>
+            </div>
+            <div className="text-sm text-[hsla(224,_34%,_13%,_1)] mt-1">
+              Ежемесячная оплата
+            </div>
+            <div className="mt-[30px] flex flex-col gap-y-6">
+              <div className="flex items-center gap-x-3 text-base text-[hsla(224,_34%,_13%,_1)]">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Открытые контакты в откликах
+              </div>
+              <div className="flex items-center gap-x-3 text-base text-[hsla(224,_34%,_13%,_1)]">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Регулярное поднятие в топ поиска каждые 3 дня
+              </div>
+            </div>
+          </div>
+          <Link
+            href="/api/subscription/new?plan=base"
+            className="font-bold gap-x-3 mt-14 text-[hsla(222,_91%,_59%,_1)] text-base w-full rounded-[8px] bg-[hsla(201,_100%,_86%,_1)] flex items-center py-2 justify-center"
           >
-            <List spacing={3} textAlign="start" px={12}>
-              <ListItem>
-                <ListIcon as={FaCheckCircle} color="green.500" />
-                unlimited build minutes
-              </ListItem>
-              <ListItem>
-                <ListIcon as={FaCheckCircle} color="green.500" />
-                Lorem, ipsum dolor.
-              </ListItem>
-              <ListItem>
-                <ListIcon as={FaCheckCircle} color="green.500" />
-                100 Lorem, ipsum dolor.
-              </ListItem>
-            </List>
-            <Box w="80%" pt={7}>
-              <Button
-                as={Link}
-                href="/api/subscription/new?plan=starter"
-                target="_blank"
-                w="full"
-                colorScheme="red"
-                variant="outline"
-              >
-                Получить доступ
-              </Button>
-            </Box>
-          </VStack>
-        </PriceWrapper>
-
-        <PriceWrapper>
-          <Box position="relative">
-            <Box
-              position="absolute"
-              top="-16px"
-              left="50%"
-              style={{ transform: "translate(-50%)" }}
-            >
-              <Text
-                textTransform="uppercase"
-                bg={useColorModeValue("red.300", "red.700")}
-                px={3}
-                py={1}
-                color={useColorModeValue("gray.900", "gray.300")}
-                fontSize="sm"
-                fontWeight="600"
-                rounded="xl"
-              >
-                Most Popular
-              </Text>
-            </Box>
-            <Box py={4} px={12}>
-              <Text fontWeight="500" fontSize="2xl">
-                Growth
-              </Text>
-              <HStack justifyContent="center">
-                <Text fontSize="3xl" fontWeight="600">
-                  $
-                </Text>
-                <Text fontSize="5xl" fontWeight="900">
-                  149
-                </Text>
-                <Text fontSize="3xl" color="gray.500">
-                  /month
-                </Text>
-              </HStack>
-            </Box>
-            <VStack
-              bg={useColorModeValue("gray.50", "gray.700")}
-              py={4}
-              borderBottomRadius={"xl"}
-            >
-              <List spacing={3} textAlign="start" px={12}>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  unlimited build minutes
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  Lorem, ipsum dolor.
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  5TB Lorem, ipsum dolor.
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  5TB Lorem, ipsum dolor.
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  5TB Lorem, ipsum dolor.
-                </ListItem>
-              </List>
-              <Box w="80%" pt={7}>
-                <Button
-                  as={Link}
-                  href="/api/subscription/new?plan=growth"
-                  target="_blank"
-                  w="full"
-                  colorScheme="red"
-                >
-                  Получить доступ
-                </Button>
-              </Box>
-            </VStack>
-          </Box>
-        </PriceWrapper>
-        <PriceWrapper>
-          <Box py={4} px={12}>
-            <Text fontWeight="500" fontSize="2xl">
-              Scale
-            </Text>
-            <HStack justifyContent="center">
-              <Text fontSize="3xl" fontWeight="600">
-                $
-              </Text>
-              <Text fontSize="5xl" fontWeight="900">
-                349
-              </Text>
-              <Text fontSize="3xl" color="gray.500">
-                /month
-              </Text>
-            </HStack>
-          </Box>
-          <VStack
-            bg={useColorModeValue("gray.50", "gray.700")}
-            py={4}
-            borderBottomRadius={"xl"}
+            Перейти к покупке <ArrowForwardIcon />
+          </Link>
+        </div>
+        <div className="px-12 py-[72px] flex flex-col bg-[hsla(217,_100%,_20%,_1)] rounded-[10px] justify-between max-w-sm w-full shadow-sm">
+          <div>
+            <div className="font-bold text-sm uppercase text-[hsla(201,_100%,_86%,_1)]">
+              Cтандарт
+            </div>
+            <div className="font-bold text-[hsla(0,_0%,_100%,_1)] text-5xl mt-[18px]">
+              18 000 <span className="font-normal text-2xl">₸/месяц</span>
+            </div>
+            <div className="text-sm text-[hsla(0,_0%,_100%,_1)] mt-1">
+              Ежемесячная оплата
+            </div>
+            <div className="mt-[30px] flex flex-col gap-y-6">
+              <div className="flex items-center gap-x-3 text-base text-white">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Открытые контакты в откликах
+              </div>
+              <div className="flex items-center gap-x-3 text-base text-white">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Регулярное поднятие в топ поиска каждые 3 дня
+              </div>
+              <div className="flex items-center gap-x-3 text-base text-white">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Выделение вакансии из общей массы специальных знаком и вашим
+                логотипом
+              </div>
+            </div>
+          </div>
+          <Link
+            href="/api/subscription/new?plan=standard"
+            className="font-bold gap-x-3 mt-14 text-[hsla(217,_100%,_20%,_1)] text-base w-full rounded-[8px] bg-[hsla(201,_100%,_86%,_1)] flex items-center py-2 justify-center"
           >
-            <List spacing={3} textAlign="start" px={12}>
-              <ListItem>
-                <ListIcon as={FaCheckCircle} color="green.500" />
-                unlimited build minutes
-              </ListItem>
-              <ListItem>
-                <ListIcon as={FaCheckCircle} color="green.500" />
-                Lorem, ipsum dolor.
-              </ListItem>
-              <ListItem>
-                <ListIcon as={FaCheckCircle} color="green.500" />
-                5TB Lorem, ipsum dolor.
-              </ListItem>
-            </List>
-            <Box w="80%" pt={7}>
-              <Button
-                as={Link}
-                target="_blank"
-                href="/api/subscription/new?plan=scale"
-                w="full"
-                colorScheme="red"
-                variant="outline"
-              >
-                Получить доступ
-              </Button>
-            </Box>
-          </VStack>
-        </PriceWrapper>
-      </Stack>
+            Перейти к покупке <ArrowForwardIcon />
+          </Link>
+        </div>
+        <div className="px-12 py-[72px] flex flex-col justify-between bg-[hsla(220,_100%,_97%,_1)] rounded-[10px] max-w-sm w-full shadow-sm">
+          <div>
+            <div className="font-bold text-sm uppercase text-[hsla(244,_86%,_59%,_1)]">
+              Премиум
+            </div>
+            <div className="font-bold text-black text-5xl mt-[18px]">
+              25 000 <span className="font-normal text-2xl">₸/месяц</span>
+            </div>
+            <div className="text-sm text-[hsla(224,_34%,_13%,_1)] mt-1">
+              Открытые контакты в откликах
+            </div>
+            <div className="mt-[30px] flex flex-col gap-y-6">
+              <div className="flex items-center gap-x-3 text-base text-[hsla(224,_34%,_13%,_1)]">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Регулярное поднятие в топ поиска каждые 3 дня
+              </div>
+              <div className="flex items-center gap-x-3 text-base text-[hsla(224,_34%,_13%,_1)]">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Выделение вакансии из общей массы специальных знаком и вашим
+                логотипом
+              </div>
+              <div className="flex items-center gap-x-3 text-base text-[hsla(224,_34%,_13%,_1)]">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Закрепление в топе поиска по подходящим вакансиям на первые 7
+                дней
+              </div>{" "}
+            </div>
+          </div>
+          <Link
+            href="/api/subscription/new?plan=premium"
+            className="font-bold mt-14 gap-x-3 text-[hsla(222,_91%,_59%,_1)] text-base w-full rounded-[8px] bg-[hsla(201,_100%,_86%,_1)] flex items-center py-2 justify-center"
+          >
+            Перейти к покупке <ArrowForwardIcon />
+          </Link>
+        </div>
+      </div>
     </Box>
   );
 }
