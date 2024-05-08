@@ -72,7 +72,6 @@ const Navbar = () => {
   // ====================== SubLinks1 - Content 3 Right Bar state ============================
   const [subContntIII, setSubContentIII] = useState(false);
 
-  // ====================== Mobile State ====================================
   // =========== Mobile list show hide state ================
   const [mobilelist, setMobileList] = useState(false);
   // =========== Mobile subList show hide state =============
