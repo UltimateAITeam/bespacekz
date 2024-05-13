@@ -185,7 +185,9 @@ export default async function CandidatePage({ params }: CandidatePageProps) {
         )}
         {candidate.Skills.length > 0 ? (
           <section className="ring-1 ring-neutral-4 p-6 rounded-lg col-start-1">
-            <h3 className="text-black text-2xl font-medium">Способности</h3>
+            <h3 className="text-black text-2xl font-medium">
+              Языки программирования
+            </h3>
             <div className="mt-[42px] flex gap-2 items-center">
               {candidate.Skills.map((skill) => (
                 <div

@@ -80,6 +80,7 @@ type FreelancerProfileType = Prisma.FreelancerProfileGetPayload<{
     sphereOfWork: true;
     companyDescription: true;
     Vacancy: true;
+    contactUrl: true;
   };
 }>;
 
@@ -207,8 +208,6 @@ function Page() {
       {/* ============== Head Tag =============== */}
       <HeadTag title="Profile - Bespace" />
 
-      {/* Header */}
-      <NewHeader />
       {loading ||
         (session.status === "loading" && (
           <Box className="absolute top-0 left-0 w-screen h-screen bg-white flex items-center justify-center z-50">
@@ -534,7 +533,7 @@ function Page() {
                     isAddable={false}
                     // fix editing skills and add adding new skills
                     isEditable={false}
-                    title={"Способности "}
+                    title={"Языки программирования"}
                   >
                     <Wrap>
                       {skills.length > 0 &&
@@ -598,7 +597,7 @@ function Page() {
                       className={"w-full justify-between"}
                     >
                       <SimpleGrid
-                        columns={3}
+                        columns={2}
                         gap={{ xl: 20, sm: 5 }}
                         className={"justify-start w-full"}
                       >
@@ -613,6 +612,10 @@ function Page() {
                         <div>
                           <p className={"font-bold"}>Сфера деятельности</p>
                           <p>{data.sphereOfWork || "Не установлено"}</p>
+                        </div>
+                        <div>
+                          <p className={"font-bold"}>Веб-сайт</p>
+                          <p>{data.contactUrl || "Не установлено"}</p>
                         </div>
                       </SimpleGrid>
                     </Stack>

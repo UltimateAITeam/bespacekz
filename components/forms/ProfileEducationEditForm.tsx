@@ -130,7 +130,7 @@ function ProfileEducationEditForm({ onSubmit, onClose, data }: FormProps) {
               value={selectedEducation.degree}
               onChange={handleChange}
             >
-              <option value="Primary">Primary school</option>
+              <option value="Primary">Self-taught</option>
               <option value="Bachelor">Bachelor</option>
               <option value="Master">Master</option>
               <option value="Doctor">Doctor</option>

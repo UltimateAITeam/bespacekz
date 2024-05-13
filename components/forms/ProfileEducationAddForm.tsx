@@ -78,7 +78,7 @@ function ProfileEducationAddForm({ onSubmit, onClose, data }: FormProps) {
           onChange={handleChange}
         >
           <option value="Primary" selected={true}>
-            Primary school
+            Self-taught
           </option>
           <option value="Bachelor">Bachelor</option>
           <option value="Master">Master</option>

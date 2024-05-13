@@ -94,7 +94,6 @@ function NewHeader() {
                   ? "Ваши заказы"
                   : "Активные проекты"}
               </MenuItem>
-              <MenuItem icon={<FiSettings />}>Настройки профиля</MenuItem>
               <MenuDivider />
               <MenuItem
                 icon={<FiLogOut />}

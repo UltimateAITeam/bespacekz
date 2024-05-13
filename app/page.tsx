@@ -44,7 +44,7 @@ export default function HomePage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.9 }}
               >
-                Начни свой <br /> успех вместе <br /> с нами
+                Доверься ИИ
                 {/* Соединяя Таланты <br /> с AI! */}
               </motion.h1>
               <motion.h6
@@ -53,7 +53,7 @@ export default function HomePage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5 }}
               >
-                Мы тебе поможем быстро найти твоего клиента.{" "}
+                Открой новые возможности в поиске работы и талантов.{" "}
                 {/* <br className="lg:block md:hidden block" />
                 Здесь и сейчас – место для ведущих экспертов. */}
               </motion.h6>
@@ -107,70 +107,6 @@ export default function HomePage() {
 
       {/* ================= Main ==================== */}
       <main className="bg-mainBg">
-        {/* ================= Trusted Company Section ================ */}
-        <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
-          <h3 className="text-zinc-500 font-semibold lg:text-2xl text-xl">
-            Нам доверяют
-          </h3>
-          <motion.div
-            className="flex md:flex-row flex-col md:space-x-7 md:space-y-0 space-y-2 md:items-center"
-            initial={{ x: 20, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <div className="flex 2xl:space-x-10 xl:space-x-7 sm:space-x-6 space-x-3">
-              <span>
-                <Image
-                  src="/images/paypal.png"
-                  height={30}
-                  width={90}
-                  alt="paypal-img"
-                />
-              </span>
-
-              <span>
-                <Image
-                  src="/images/oracle.png"
-                  height={30}
-                  width={90}
-                  alt="oracle-img"
-                />
-              </span>
-              <span>
-                <Image
-                  src="/images/google.png"
-                  height={30}
-                  width={90}
-                  alt="google-img"
-                />
-              </span>
-            </div>
-            <div className="flex 2xl:space-x-10 xl:space-x-7 sm:space-x-6 space-x-4">
-              <span>
-                <Image
-                  src="/images/microsoft.png"
-                  height={30}
-                  width={110}
-                  alt="microsoft-img"
-                />
-              </span>
-              <span>
-                <Image
-                  src="/images/airnob.png"
-                  height={30}
-                  width={90}
-                  alt="airbnb-img"
-                />
-              </span>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ======================== Stats section ========================= */}
-        <section className="container mx-auto mt-3 md:mt-7 py-3 md:px-5 sm:px-7 px-3">
-          <StatsWithIcons />
-        </section>
-
         {/* ======================== Talent Category ========================= */}
         <section className="container mx-auto mt-3 md:mt-7 py-3 md:px-5 sm:px-7 px-3">
           <h2 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold mb-3">
@@ -190,51 +126,6 @@ export default function HomePage() {
           <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 2xl:gap-x-18 gap-x-10 xl:gap-y-7 sm:gap-y-4 gap-y-3 lg:mt-10 mt-7 md:px-0 sm:px-7">
             {/* ========== Компонент категории ========= */}
             <Category />
-          </div>
-        </section>
-
-        {/* ====================== Find Talent Section =================== */}
-        <section className="container mx-auto lg:mt-5 mt-3 py-3 md:px-5 sm:px-7 px-0 space-y-3">
-          <div className="bg-[url('/images/grilswork.png')] bg-top w-full sm:rounded-xl rounded-none xl:px-14 px-5 py-8">
-            <motion.h2
-              className="text-white font-semibold lg:text-3xl text-xl"
-              initial={{ y: "100%", opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              Для клиентов
-            </motion.h2>
-
-            <motion.h3
-              className="text-white 2xl:font-bold font-semibold lg:text-6xl text-4xl lg:mt-28 mt-20 leading-tight my-3"
-              initial={{ y: "100%", opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              Подбор талантов <br />
-              Под ваш запрос
-            </motion.h3>
-
-            <motion.p
-              className="text-white font-semibold lg:text-xl text-md"
-              initial={{ y: "100%", opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              Работайте с крупнейшей сетью независимых <br />
-              специалистов и реализуйте свои проекты — от быстрых <br />
-              задач до крупных трансформаций. <br />
-            </motion.p>
-
-            <motion.div
-              className="grid md:grid-cols-3 grid-cols-1 2xl:gap-x-10 md:gap-y-0 gap-y-3 xl:gap-x-7 gap-x-5 mt-10"
-              initial={{ y: "100", opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              {/* ========= для клиента ========== */}
-              <ClintCat />
-            </motion.div>
           </div>
         </section>
 
@@ -384,164 +275,6 @@ export default function HomePage() {
         {/* =================== Pricing Section ===================== */}
         <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
           <ThreeTierPricing />
-        </section>
-
-        {/* ====================== oppertunity section ==============================  */}
-        <section className="container mx-auto md:mt-5 mt-3 py-3 md:px-5 sm:px-7 px-0 space-y-3">
-          <div className="grid 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1">
-            <Image
-              src="/images/manworking.png"
-              width={1200}
-              height={1200}
-              alt="manworking-image"
-              className="md:rounded-l-xl md:rounded-tr-none sm:rounded-t-xl rounded-none flex flex-grow"
-            />
-
-            <div className="bg-gradient-to-b from-[#A5F3FC] to-[#7DD3FC] 2xl:col-span-2 col-span-1 md:rounded-r-xl md:rounded-bl-none sm:rounded-b-xl rounded-none xl:px-10 px-5 lg:py-7 py-5">
-              <motion.h5
-                className="font-semibold lg:text-2xl text-xl text-zinc-700"
-                initial={{ y: "100", opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                For Talent
-              </motion.h5>
-              <motion.h3
-                className="font-semibold lg:text-5xl text-4xl text-zinc-700 lg:mt-7 mt-5 lg:mb-3 mb-1"
-                initial={{ y: "100", opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                Find great work
-              </motion.h3>
-              <motion.p
-                className="text-zinc-500 font-semibold"
-                initial={{ y: "100", opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                Meet clients you’re excited to work with and take{" "}
-                <br className="lg:block hidden" />
-                your career or business to new heights.
-              </motion.p>
-
-              <motion.div
-                className="grid lg:grid-cols-3 grid-cols-2 2xl:gap-x-14 xl:gap-x-10 gap-x-5 gap-y-5 lg:gap-y-0 lg:mt-14 mt-4 border-t border-zinc-500 lg:py-5 py-3"
-                initial={{ y: "100", opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                <span className="2xl:text-xl xl:text-lg text-md text-zinc-700 font-semibold">
-                  Find opportunities for every stage of your freelance career
-                </span>
-                <span className="2xl:text-xl xl:text-lg text-md text-zinc-700 font-semibold">
-                  Control when, where, and how you work
-                </span>
-                <span className="2xl:text-xl xl:text-lg text-md text-zinc-700 font-semibold">
-                  Explore different ways to earn
-                </span>
-              </motion.div>
-
-              <motion.button
-                className="bg-zinc-700 py-2 px-5 text-white transition hover:bg-zinc-600 font-semibold rounded-full xl:mt-16 lg:mt-7 mt-3"
-                initial={{ x: 30, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                Find Oppartunities
-              </motion.button>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================== Trusted Section ========================== */}
-        <section className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">
-          <div className="md:mt-10 mt-5">
-            <h2 className="xl:text-5xl lg:text-4xl text-3xl font-bold text-[#374151] leading-tight">
-              Trusted by leading <br className="md:block hidden" />
-              brands and startups
-            </h2>
-
-            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-y-0 gap-y-5 xl:gap-x-14 gap-x-7 mt-7">
-              <motion.div
-                className="flex flex-col bg-[#115E59] py-5 px-7 rounded-xl"
-                initial={{ y: -30, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="text-white font-semibold sm:text-5xl text-4xl">
-                    <FaUber />
-                  </span>
-                  <h3 className="sm:text-4xl text-3xl font-semibold text-white">
-                    Ubber
-                  </h3>
-                </div>
-
-                <span className="text-white font-semibold xl:text-2xl text-xl mt-5">
-                  “Brenda enables us to differentiate ourselves from our
-                  competitors and produce content at a higher caliber.”
-                </span>
-                <span className="text-gray-300 mt-2">
-                  Josh Machiz, Chief Digital Officer
-                </span>
-
-                <div className="xl:mt-14 mt-7">
-                  <span className="text-white font-semibold">Results</span>
-
-                  <div className="flex sm:flex-row flex-col border-t border-white xl:space-x-20 sm:space-x-10 mt-2">
-                    <div className="mt-3">
-                      <h5 className="text-white font-semibold text-xl">
-                        Emmy winning
-                      </h5>
-                      <span className="text-white text-sm">
-                        Facebook watch program
-                      </span>
-                    </div>
-                    <div className="mt-3">
-                      <h5 className="text-white font-semibold text-xl">
-                        Millions
-                      </h5>
-                      <span className="text-white text-sm">
-                        of impressions generated per client per IPO
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="grid grid-cols-2"
-                initial={{ y: 30, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                <div className="bg-[url('/images/cling.png')] bg-cover bg-right rounded-l-xl"></div>
-
-                <div className="flex flex-col items-center space-y-5 py-3 px-5 bg-gray-800 rounded-r-xl">
-                  <h2 className="text-white font-semibold text-2xl xl:mt-5 mt-3">
-                    And many more..
-                  </h2>
-
-                  <span className="text-white xl:text-4xl text-3xl">
-                    <SiAdobe />
-                  </span>
-                  <span className="text-white xl:text-4xl text-3xl">
-                    <SiUdacity />
-                  </span>
-                  <span className="text-white xl:text-4xl text-3xl">
-                    <FaAtlassian />
-                  </span>
-                  <span className="text-white xl:text-4xl text-3xl">
-                    <ImGoogle />
-                  </span>
-                  <span className="text-white xl:text-4xl text-3xl">
-                    <BsWordpress />
-                  </span>
-                </div>
-              </motion.div>
-            </div>
-          </div>
         </section>
 
         <section className="container mx-auto lg:my-7 my-3 py-3 md:px-5 sm:px-7 px-3 space-y-3">

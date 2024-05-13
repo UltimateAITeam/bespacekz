@@ -17,7 +17,7 @@ import {
 import { HiX } from "react-icons/hi";
 import { GoChevronRight } from "react-icons/go";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { limitText } from "@/libs/utils";
 import {
@@ -51,6 +51,7 @@ import { Role } from "@prisma/client";
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [dropdownState, setDropdownState] = useState(false);
 
@@ -543,26 +544,30 @@ const Navbar = () => {
             <HStack spacing={{ base: "0", md: "6" }}>
               {/* fix this, when logging in as freelancer does not change role in localstorage */}
               {session.data.user.role === "CLIENT" ? (
-                <Button
-                  onClick={onOpenVacancyCreateModal}
-                  fontSize={"sm"}
-                  fontWeight={500}
-                  variant={"solid"}
-                  colorScheme={"messenger"}
-                >
-                  Создать вакансию
-                </Button>
+                pathname !== "/vacancies/my" && (
+                  <Button
+                    onClick={onOpenVacancyCreateModal}
+                    fontSize={"sm"}
+                    fontWeight={500}
+                    variant={"solid"}
+                    colorScheme={"messenger"}
+                  >
+                    Создать вакансию
+                  </Button>
+                )
               ) : !session.data.user.role &&
                 localStorage.getItem("userRole") == "CLIENT" ? (
-                <Button
-                  onClick={onOpenVacancyCreateModal}
-                  fontSize={"sm"}
-                  fontWeight={500}
-                  variant={"solid"}
-                  colorScheme={"messenger"}
-                >
-                  Создать вакансию
-                </Button>
+                pathname !== "/vacancies/my" && (
+                  <Button
+                    onClick={onOpenVacancyCreateModal}
+                    fontSize={"sm"}
+                    fontWeight={500}
+                    variant={"solid"}
+                    colorScheme={"messenger"}
+                  >
+                    Создать вакансию
+                  </Button>
+                )
               ) : (
                 <></>
               )}
@@ -693,12 +698,9 @@ const Navbar = () => {
                     </>
                   )}
                   <MenuDivider />
-                  <MenuItem icon={<FiInbox />}>
-                    {session.data.user.role === "CLIENT"
-                      ? "Ваши заказы"
-                      : "Активные проекты"}
-                  </MenuItem>
-                  <MenuItem icon={<FiSettings />}>Настройки профиля</MenuItem>
+                  {session.data.user.role === "FREELANCER" && (
+                    <MenuItem icon={<FiInbox />}>Активные проекты</MenuItem>
+                  )}
                   <MenuDivider />
                   <MenuItem
                     icon={<FiLogOut />}
@@ -929,14 +931,9 @@ const Navbar = () => {
                         </>
                       )}
                       <MenuDivider />
-                      <MenuItem icon={<FiInbox />}>
-                        {session.data.user.role === "CLIENT"
-                          ? "Ваши заказы"
-                          : "Активные проекты"}
-                      </MenuItem>
-                      <MenuItem icon={<FiSettings />}>
-                        Настройки профиля
-                      </MenuItem>
+                      {session.data.user.role === "FREELANCER" && (
+                        <MenuItem icon={<FiInbox />}>Активные проекты</MenuItem>
+                      )}
                       <MenuDivider />
                       <MenuItem
                         icon={<FiLogOut />}

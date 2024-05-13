@@ -131,3 +131,11 @@ input:focus {
 .ck-content ol {
   @apply !pl-3.5;
 }
+
+.Calendar__monthText {
+  @apply !bg-gray-200;
+}
+
+.Calendar__yearText {
+  @apply !bg-gray-200;
+}

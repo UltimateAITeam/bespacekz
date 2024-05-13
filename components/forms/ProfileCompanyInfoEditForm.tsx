@@ -15,6 +15,7 @@ interface FormData {
   sphereOfWork: string;
   mailIndex: string;
   address: string;
+  contactUrl: string;
 }
 
 interface FormProps {
@@ -28,6 +29,7 @@ function Page({ onSubmit, onClose, data }: FormProps) {
     sphereOfWork: data.sphereOfWork || "",
     address: data.address || "",
     mailIndex: data.mailIndex || "",
+    contactUrl: data.contactUrl || "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -74,6 +76,15 @@ function Page({ onSubmit, onClose, data }: FormProps) {
           name="sphereOfWork"
           type="text"
           value={formData.sphereOfWork}
+          onChange={handleChange}
+        />
+      </FormControl>
+      <FormControl mt={2} id="degree">
+        <FormLabel>Веб-сайт</FormLabel>
+        <Input
+          name="contactUrl"
+          type="url"
+          value={formData.contactUrl}
           onChange={handleChange}
         />
       </FormControl>

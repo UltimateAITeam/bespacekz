@@ -2,6 +2,7 @@ import ClientVacancyCard from "@/components/vacancies/ClientVacancyCard";
 import { prisma } from "@/libs/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import CreateVacancyButton from "./create-vacancy-button";
 
 export default async function MyVacanciesPage() {
   const session = await getServerSession();
@@ -41,9 +42,12 @@ export default async function MyVacanciesPage() {
 
   return (
     <div className="container mx-auto mt-3 py-3 md:px-5 sm:px-7 px-3 space-y-3 font-roboto">
-      <h1 className="font-medium text-[38px] !leading-tight text-[var(--Primary-10)] font-roboto">
-        Ваши вакансии
-      </h1>
+      <div className="flex justify-between">
+        <h1 className="font-medium text-[38px] !leading-tight text-[var(--Primary-10)] font-roboto">
+          Ваши вакансии
+        </h1>
+        <CreateVacancyButton />
+      </div>
       <div className="space-y-8 lg:mb-7 mb-3">
         {vacancies.map((vacancy) => (
           <ClientVacancyCard key={vacancy.id} {...vacancy} />

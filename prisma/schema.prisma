@@ -133,6 +133,7 @@ model ClientProfile {
   mailIndex          String?
   companyDescription String?
   userEmail          String    @unique
+  contactUrl         String?
   user               User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   Vacancy            Vacancy[]
   subscriptionEndsAt DateTime? @map("subscription_ends_at")

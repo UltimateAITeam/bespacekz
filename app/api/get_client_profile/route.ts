@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
       },
     },
   });
+
   const userInfo = await prisma.user.findUnique({
     where: {
       email: session.user?.email,

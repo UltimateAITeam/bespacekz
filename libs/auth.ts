@@ -56,8 +56,6 @@ export const authOptions: AuthOptions = {
         },
         name: { type: "text" },
         last_name: { type: "text" },
-        location: { type: "text" },
-        phone: { type: "text" },
         role: { type: "text" },
       },
       async authorize(credentials, req) {
@@ -95,8 +93,6 @@ export const authOptions: AuthOptions = {
               email: credentials?.email,
               name: credentials?.name,
               last_name: credentials?.last_name,
-              location: credentials?.location,
-              phone: credentials?.phone,
               password: hashedPassword,
               role: credentials?.role === "client" ? "CLIENT" : "FREELANCER",
             },

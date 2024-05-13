@@ -38,21 +38,12 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    if (password !== confirmPassword) {
-      setError("password", {
-        type: "custom",
-        message: "Passwords doesn't match",
-      });
-      return null;
-    }
     if (isValid) {
       signIn("credentials", {
         email: data.email,
         name: data.first_name,
         last_name: data.last_name,
         password: data.password,
-        phone: data.phone,
-        location: data.location_city,
         role: data.role,
         redirect: true,
         callbackUrl: "/moreinfo?role=" + data.role,
@@ -167,18 +158,6 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
               />
             </div>
 
-            {/* ================= phone input =============== */}
-            <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
-              <input
-                type="tel"
-                className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                placeholder="Phone"
-                {...register("phone", {
-                  required: "Phone is required",
-                })}
-              />
-            </div>
-
             {/* ================= password input =============== */}
             <div className="relative flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
               <input
@@ -210,66 +189,6 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
                 )}
               </span>
             </div>
-            {/* ============= confirm password input ============= */}
-            <div className="relative flex flex-grow border-2 border-gray-300 transition rounded-lg items-center xl:px-6 px-3 py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full">
-              <input
-                className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                type={showConfirm ? "text" : "password"}
-                placeholder={"Confirm password"}
-                onChange={(e) => {
-                  setConfirmPassword(e.currentTarget.value);
-                }}
-              />
-              <span
-                style={{
-                  position: "absolute",
-                  right: "24px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  cursor: "pointer",
-                  border: "none",
-                  background: "none",
-                }}
-                onClick={() => setShowConfirm(!showConfirm)}
-              >
-                {showConfirm ? (
-                  <MdOutlineVisibility />
-                ) : (
-                  <MdOutlineVisibilityOff />
-                )}
-              </span>
-            </div>
-
-            {/* ================= country select =============== */}
-            <select
-              id="Country"
-              defaultValue={"Astana"}
-              {...register("location_city", {
-                required: "Location is required!",
-              })}
-              className="px-8 py-4 bg-transparent border-2 border-gray-300 text-zinc-800 text-md rounded-lg focus:border-[#b8d8d4fd] block w-full cursor-pointer font-medium"
-            >
-              <option value="Astana">Astana</option>
-              <option value="Almaty">Almaty</option>
-              <option value="Aktau">Aktau</option>
-              <option value="Aktobe">Aktobe</option>
-              <option value="Atyrau">Atyrau</option>
-              <option value="Kostanay">Kostanay</option>
-              <option value="Karaganda">Karaganda</option>
-              <option value="Kokshetau">Kokshetau</option>
-              <option value="Shymkent">Shymkent</option>
-              <option value="Uralsk">Uralsk</option>
-              <option value="Kyzylorda">Kyzylorda</option>
-              <option value="Semey">Semey</option>
-              <option value="Pavlodar">Pavlodar</option>
-              <option value="Oskemen">Oskemen</option>
-              <option value="Petropavlovsk">Petropavlovsk</option>
-              <option value="Taldykorgan">Taldykorgan</option>
-              <option value="Turkestan">Turkestan</option>
-              <option value="Taraz">Taraz</option>
-              <option value="Temirtau">Temirtau</option>
-            </select>
-
             {/* <select
                             id="Country"
                             className="bg-transparent border-2 border-gray-300 text-zinc-800 text-sm rounded-lg focus:border-[#b8d8d4fd] block w-full px-3 py-2 cursor-pointer font-semibold"
@@ -347,7 +266,8 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
           </form>
 
           <div className={"mt-7 text-zinc-600"}>
-            Wanna join as {localType === "client" ? "freelancer" : "client"}?{" "}
+            Want to join as{" "}
+            {localType === "client" ? "freelancer or talent" : "client"}?{" "}
             <span
               className={"text-cyan-700 font-semibold cursor-pointer"}
               onClick={() => {

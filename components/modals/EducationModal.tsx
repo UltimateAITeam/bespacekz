@@ -64,7 +64,7 @@ function EducationModal({
                 <option value="none" selected disabled hidden>
                   Select an Option
                 </option>
-                <option value="Primary">Primary school</option>
+                <option value="Primary">Self-taught</option>
                 <option value="Bachelor">Bachelor</option>
                 <option value="Master">Master</option>
                 <option value="Doctor">Doctor</option>
