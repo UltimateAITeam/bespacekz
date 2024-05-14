@@ -53,7 +53,7 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [dropdownState, setDropdownState] = useState(false);
+  // const [dropdownState, setDropdownState] = useState(false);
 
   const [searchState, setSearchState] = useState("hidden");
   // ========== More Dropdown state ====================
