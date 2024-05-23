@@ -44,7 +44,7 @@ export default function HomePage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.9 }}
               >
-                Доверься ИИ
+                Доверься Искусственному Интеллекту
                 {/* Соединяя Таланты <br /> с AI! */}
               </motion.h1>
               <motion.h6
