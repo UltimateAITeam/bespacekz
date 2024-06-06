@@ -48,11 +48,11 @@ function EducationModal({
         <ModalOverlay />
         <ModalContent className="pb-4">
           <ModalHeader>
-            {item.institution ? item.institution : "Education "}
+            {item.institution ? item.institution : "Образование"}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <label htmlFor={`degree-${index}`}>Degree:</label>
+            <label htmlFor={`degree-${index}`}>Степень:</label>
             <div className="flex flex-grow border-2 border-gray-300 transition rounded-lg items-center py-1.5 hover:bg-[#F3FFFC] hover:ring-2 ring-[#729bb3] w-full mb-4">
               <select
                 value={item.degree == "" ? "none" : item.degree}
@@ -61,13 +61,10 @@ function EducationModal({
                   updateEducation(index, "degree", e.target.value)
                 }
               >
-                <option value="none" selected disabled hidden>
-                  Select an Option
-                </option>
-                <option value="Primary">Self-taught</option>
-                <option value="Bachelor">Bachelor</option>
-                <option value="Master">Master</option>
-                <option value="Doctor">Doctor</option>
+                <option value="Primary">Среднее</option>
+                <option value="Bachelor">Бакалавр</option>
+                <option value="Master">Магистр</option>
+                <option value="Doctor">Доктор</option>
               </select>
             </div>
 

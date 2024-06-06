@@ -73,10 +73,10 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
     <section className="container mx-auto xl:my-14 lg:my-10 md:my-7 my-5 py-3 md:px-5 sm:px-7 px-3 md:flex md:justify-center">
       <div className="sm:border border-gray-300 rounded-xl">
         <div className="sm:px-7 sm:pt-10 pb-10 flex flex-col justify-center md:items-center">
-          <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl text-center">
+          <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl text-center max-w-[500px]">
             {localType === "freelancer"
-              ? "Sign up to find work you love"
-              : "Sign up to find Freelancers you want"}
+              ? "Зарегистрируйтесь, чтобы найти работу мечты"
+              : "Зарегистрируйтесь, чтобы найти лучших специалистов"}
           </h2>
 
           {/* ================= Continue with section ==================== */}
@@ -104,7 +104,7 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
           {/* ================= Or section ==================== */}
           <div className="flex w-full items-center space-x-2">
             <span className="border-b w-full border-gray-300 mt-1"></span>
-            <span className="text-zinc-600">or</span>
+            <span className="text-zinc-600">или</span>
             <span className="border-b w-full border-gray-300 mt-1"></span>
           </div>
 
@@ -124,7 +124,7 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
                 <input
                   type="text"
                   className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                  placeholder="First name"
+                  placeholder="Имя"
                   {...register("first_name", { required: "Name is required" })}
                 />
               </div>
@@ -134,7 +134,7 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
                 <input
                   type="text"
                   className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
-                  placeholder="Last name"
+                  placeholder="Фамилия"
                   {...register("last_name", {
                     required: "Last name is required",
                   })}
@@ -163,7 +163,7 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
               <input
                 className="flex-grow xl:w-full w-40 focus:outline-none bg-transparent text-zinc-700 focus:ring-0 border-0"
                 type={showPassword ? "text" : "password"}
-                placeholder={"Password"}
+                placeholder={"Пароль"}
                 {...passwordRegister}
                 onChange={(e) => {
                   passwordRegister.onChange(e);
@@ -266,26 +266,26 @@ function SignupForm({ type }: { type: "client" | "freelancer" }) {
           </form>
 
           <div className={"mt-7 text-zinc-600"}>
-            Want to join as{" "}
-            {localType === "client" ? "freelancer or talent" : "client"}?{" "}
+            Хотите зарегистрироваться как{" "}
+            {localType === "client" ? "фрилансер или талант" : "клиент"}?{" "}
             <span
               className={"text-cyan-700 font-semibold cursor-pointer"}
               onClick={() => {
                 setLocalType(localType === "client" ? "freelancer" : "client");
               }}
             >
-              Click
+              Нажмите
             </span>
-          </div>
+        </div>
 
           {/* ================ alread have account section ================== */}
           <div className="mt-7">
             <p className="text-zinc-800 text-center">
-              Already have an account?
+              У вас есть аккаунт?
               <Link href="/login">
                 <span className="font-semibold text-blue-700 hover:underline">
                   {" "}
-                  Log In{" "}
+                  Войти{" "}
                 </span>
               </Link>
             </p>

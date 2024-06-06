@@ -14,7 +14,7 @@ function SignUp() {
   // ==================== Hooks Call ===========================
   const [client, setClient] = useState(false);
   const [freelancer, setFreelancer] = useState(false);
-  const [btnText, setBtnText] = useState("Create Account");
+  const [btnText, setBtnText] = useState("Продолжить");
   const [clientForm, setClientForm] = useState(false);
   const [freelancerForm, setFreelancerForm] = useState(false);
 
@@ -22,13 +22,13 @@ function SignUp() {
   const handleClient = () => {
     setClient(true);
     if (freelancer) setFreelancer(false);
-    setBtnText("Join as a Client");
+    setBtnText("Продолжить как клиент");
   };
 
   const handleFreelancer = () => {
     setFreelancer(true);
     if (client) setClient(false);
-    setBtnText("Apply as a Freelancer");
+    setBtnText("Продолжить как фрилансер");
   };
 
   const handleForm = (e: { preventDefault: () => void }) => {
@@ -65,7 +65,7 @@ function SignUp() {
               <div className="lg:px-24 md:px-20 sm:px-10 sm:pt-10 pb-10 flex flex-col justify-center md:items-center">
                 {/* ================= Login title ==================== */}
                 <h2 className="font-semibold text-zinc-800 md:text-3xl text-2xl text-center">
-                  Join as a client or freelancer
+                  Регистрация 
                   {/* Регистрация  */}
                 </h2>
 
@@ -83,7 +83,7 @@ function SignUp() {
                       <h4
                         className={`${client == true ? "text-[#e5ecea]" : "text-zinc-800"} font-semibold text-lg text-center`}
                       >
-                        I’m a client, hiring for a project
+                        Я клиент, набираю сотрудников для проекта
                       </h4>
                     </div>
                   </div>
@@ -100,7 +100,7 @@ function SignUp() {
                       <h4
                         className={`${freelancer == true ? "text-[#e5ecea]" : "text-zinc-800"} font-semibold text-lg text-center`}
                       >
-                        I’m a freelancer or talent, looking for work
+                        Я фрилансер, ищу работу
                       </h4>
                     </div>
                   </div>
@@ -117,11 +117,11 @@ function SignUp() {
                 {/* ================ alread have account section ================== */}
                 <div className="mt-7">
                   <p className="text-zinc-800 text-center">
-                    Already have an account?
+                    У вас есть аккаунт?
                     <Link href="/login">
                       <span className="font-semibold text-blue-700 hover:underline">
                         {" "}
-                        Log In{" "}
+                        Войти{" "}
                       </span>
                     </Link>
                   </p>
