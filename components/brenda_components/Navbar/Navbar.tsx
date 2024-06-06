@@ -774,9 +774,9 @@ const Navbar = () => {
           //   </div>
           // </div>
           session.status == "unauthenticated" ? (
-            <div className="flex items-center">
+            <div className="flex items-center text-[1.2rem]">
               <Link
-                className="xl:mx-7 mx-3 text-zinc-700 text-[1.03rem] font-semibold hover:text-cyan-700"
+                className="xl:mx-7 mx-3 text-zinc-700 font-semibold hover:text-cyan-700"
                 href={"/login"}
               >
                 Войти
