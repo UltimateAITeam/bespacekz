@@ -8,7 +8,7 @@ import Image from "next/image";
 import JobSuccessCard from "@/components/brenda_components/JobSuccessCard";
 import Category from "@/components/brenda_components/Category";
 import ClintCat from "@/components/brenda_components/ClintCat";
-import { FaAtlassian, FaStar, FaUber } from "react-icons/fa";
+import { FaAtlassian, FaMedal, FaRobot, FaSearch, FaStar, FaUber } from "react-icons/fa";
 import { IoLogoUsd } from "react-icons/io";
 import { BsFillTrophyFill, BsWordpress } from "react-icons/bs";
 import { ImCheckmark, ImGoogle } from "react-icons/im";
@@ -123,7 +123,7 @@ export default function HomePage() {
             </Link>
           </span>
 
-          <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 2xl:gap-x-18 gap-x-10 xl:gap-y-7 sm:gap-y-4 gap-y-3 lg:mt-10 mt-7 md:px-0 sm:px-7">
+          <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 2xl:gap-x-8 gap-x-10 xl:gap-y-7 sm:gap-y-4 gap-y-3 lg:mt-10 mt-7 md:px-0 sm:px-7">
             {/* ========== Компонент категории ========= */}
             <Category />
           </div>
@@ -150,16 +150,15 @@ export default function HomePage() {
                 transition={{ duration: 1 }}
               >
                 <span className="flex rounded-full py-1 px-1 bg-zinc-700 text-white xl:text-xl text-md mt-1">
-                  <FaStar />
+                  <FaRobot />
                 </span>
                 <div className="flex flex-col space-y-2">
                   <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                    Гарантия качества
+                    AI помощник
                   </h3>
                   <span className="text-zinc-500 font-semibold xl:text-md">
-                    Ознакомьтесь с образцами работ профессионалов, отзывами
-                    клиентов <br className="md:block hidden" />и подтверждением
-                    личности.
+                  Наши ИИ помощники предлагают автоматический анализ профилей, <br/> 
+                  мгновенное написание описаний вакансий и точный подбор кандидатов, <br/> упрощая процесс найма.
                   </span>
                 </div>
               </motion.div>
@@ -171,16 +170,16 @@ export default function HomePage() {
                 transition={{ duration: 1 }}
               >
                 <span className="flex rounded-full py-1 px-1 bg-zinc-700 text-white xl:text-xl text-md mt-1">
-                  <IoLogoUsd />
+                  <FaSearch />
                 </span>
                 <div className="flex flex-col space-y-2">
                   <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                    Оплата только после найма
+                    Поиск вакансии и не только
                   </h3>
                   <span className="text-zinc-500 font-semibold text-md">
-                    Interview potential fits for your job, negotiate{" "}
+                    Проводите собеседования с потенциальными кандидатами, договаривайтесь
                     <br className="md:block hidden" />
-                    rates, and only pay for work you approve.
+                    о ставках и оплачивайте только одобренную работу.
                   </span>
                 </div>
               </motion.div>
@@ -192,18 +191,18 @@ export default function HomePage() {
                 transition={{ duration: 1 }}
               >
                 <span className="flex rounded-full py-1 px-1 bg-zinc-700 text-white xl:text-xl text-md mt-1">
-                  <ImCheckmark />
+                  <FaMedal />
                 </span>
                 <div className="flex flex-col space-y-2">
                   <h3 className="text-zinc-700 font-semibold xl:text-3xl text-2xl">
-                    Надежность и безопасность
+                      Самый быстрый поиск <br/> фрилансеров по Казахстану
                   </h3>
                   <span className="text-zinc-500 font-semibold text-md">
-                    Focus on your work knowing we help protect{" "}
+                    Сосредоточьтесь на своей работе, зная, что мы заботимся о защите 
                     <br className="md:block hidden" />
-                    your data and privacy. We’re here with 24/7{" "}
+                    ваших данных и конфиденциальности. Мы поддерживаем вас круглосуточно,
                     <br className="md:block hidden" />
-                    support if you need it.
+                    обращайтесь за помощью в любое время.
                   </span>
                 </div>
               </motion.div>
@@ -219,17 +218,18 @@ export default function HomePage() {
             </div>
 
             <div className="bg-gradient-to-b from-[#99F6E4] to-[#A5F3FC] lg:rounded-r-xl lg:rounded-bl-none md:rounded-b-xl md:rounded-none sm:rounded-xl rounded-none px-7 pt-10 pb-15 py-10">
+              
               <motion.h2
                 className="text-zinc-700 font-semibold 2xl:text-5xl xl:text-4xl text-3xl"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1 }}
               >
-                мы являемся <br />
-                глобальной площадкой для трудоустройства
+                Ваша глобальная площадка <br />
+                для трудоустройства
               </motion.h2>
 
-              <motion.div
+              {/* <motion.div
                 className="flex items-start space-x-7 mt-10"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -247,9 +247,9 @@ export default function HomePage() {
                     Clients rate professionals on Bespace
                   </span>
                 </div>
-              </motion.div>
+              </motion.div> */}
 
-              <motion.div
+              {/* <motion.div
                 className="flex items-start space-x-7 xl:mt-10 md:mt-7 mt-5"
                 initial={{ y: "100", opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -267,7 +267,7 @@ export default function HomePage() {
                     G2’s 2021 Best Software Awards
                   </span>
                 </div>
-              </motion.div>
+              </motion.div> */}
             </div>
           </div>
         </section>

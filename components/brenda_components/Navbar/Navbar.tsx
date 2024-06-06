@@ -624,7 +624,7 @@ const Navbar = () => {
                           color="gray.600"
                           className="capitalize"
                         >
-                          {session.data.user.role as string}
+                          {session.data.user.role == 'FREELANCER' ? 'Кандидат' : 'Заказчик'}
                         </Text>
                       ) : localStorage.getItem("userRole") ? (
                         <Text
@@ -632,7 +632,7 @@ const Navbar = () => {
                           color="gray.600"
                           className="capitalize"
                         >
-                          {localStorage.getItem("userRole")}
+                          {localStorage.getItem("userRole") == 'FREELANCER' ? 'Кандидат' : 'Заказчик'}
                         </Text>
                       ) : (
                         <></>
