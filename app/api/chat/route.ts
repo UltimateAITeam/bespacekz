@@ -1,18 +1,13 @@
-import { OpenAIStream, StreamingTextResponse, AnthropicStream } from "ai";
+import { OpenAIStream, StreamingTextResponse } from "ai";
 import { Configuration, OpenAIApi } from "openai-edge";
-import Anthropic from "@anthropic-ai/sdk";
 
 export const runtime = "edge";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || "",
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
-// const configuration = new Configuration({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-
-// const openai = new OpenAIApi(configuration);
+const openai = new OpenAIApi(configuration);
 
 export async function POST(req: Request) {
   const json = await req.json();
@@ -74,29 +69,16 @@ export async function POST(req: Request) {
       messages[messages.length - 1].content = template;
     }
 
-    // const res = await openai.createChatCompletion({
-    //   model: "gpt-3.5-turbo-1106",
-    //   messages,
-    //   temperature: 0.3,
-    //   stream: true,
-    // });
-    const response = await anthropic.messages.create({
+    const res = await openai.createChatCompletion({
+      model: "gpt-5.4-nano-2026-03-17",
       messages,
-      model: "claude-3-haiku-20240307",
+      temperature: 0.3,
       stream: true,
-      max_tokens: 4096,
     });
-    const stream = AnthropicStream(response);
-    // const res = await openai.createChatCompletion({
-    //   model: "gpt-3.5-turbo-1106",
-    //   messages,
-    //   temperature: 0.3,
-    //   stream: true,
-    // });
 
-    // const stream = OpenAIStream(res, {
-    //   async onCompletion(completion) {},
-    // });
+    const stream = OpenAIStream(res, {
+      async onCompletion(completion) {},
+    });
 
     return new StreamingTextResponse(stream);
   } catch (error) {}
