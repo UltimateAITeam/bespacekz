@@ -10,7 +10,7 @@ export default function AboutUsLayout({
       <header>
         <Navbar />
       </header>
-      <main>{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

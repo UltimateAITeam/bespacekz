@@ -54,6 +54,10 @@ input:focus {
     --Neutral-4: "#F0F0F0";
     --Neutral-stroke: "#E6EBF1";
     --Neutral-gray: "C1C1C1";
+
+    /* Brand text colors used across pages (headings / body copy) */
+    --Primary-10: #002766;
+    --Primary-text: #1a3353;
   }
 
   .dark {

@@ -69,12 +69,17 @@ module.exports = {
         },
         footerBg: "#030852",
         cardBg: "#F0F5FF",
-        // mainBg: '#F3FFFC',
+        mainBg: "#F3FFFC",
+        mainText: "#0C4A6E",
         // firstStepsBg: '#F0F5FF',
         // 'character-secondary': '#72849A'
       },
       borderRadius: {
         lg: "15px",
+      },
+      boxShadow: {
+        soft: "0 8px 30px -8px rgba(12, 74, 110, 0.15)",
+        card: "0 2px 10px rgba(15, 23, 42, 0.06)",
       },
       keyframes: {
         "accordion-down": {

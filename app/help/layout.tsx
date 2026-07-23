@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import Footer from "@/components/brenda_components/Footer";
 import Navbar from "@/components/brenda_components/Navbar/Navbar";
 
-export default function AboutUsLayout({
+export default function HelpLayout({
   children,
 }: PropsWithChildren<unknown>) {
   return (
@@ -10,7 +10,7 @@ export default function AboutUsLayout({
       <header>
         <Navbar />
       </header>
-      <main>{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

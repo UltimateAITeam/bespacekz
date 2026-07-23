@@ -2,6 +2,7 @@ import { getServiceBySlug, servicesData } from "@/libs/services-data";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
 
 interface ServiceDetailPageProps {
   params: { slug: string };
@@ -36,14 +37,15 @@ export default function ServiceDetailPage({
       <div className="mt-7 mb-3">
         <Link
           href="/services"
-          className="text-primary-6 font-semibold hover:underline"
+          className="inline-flex items-center gap-2 text-primary-6 font-semibold hover:underline"
         >
-          ← Каталог проектов
+          <FaArrowLeft className="text-sm" />
+          Каталог проектов
         </Link>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-10 mb-16 items-center">
-        <div className="relative w-full h-72 md:h-96 bg-cardBg rounded-xl overflow-hidden">
+        <div className="relative w-full h-72 md:h-96 bg-cardBg rounded-xl overflow-hidden shadow-card">
           <Image
             src={service.image}
             alt={service.title}
@@ -53,7 +55,7 @@ export default function ServiceDetailPage({
         </div>
 
         <div className="flex flex-col space-y-5">
-          <h1 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold">
+          <h1 className="text-mainText lg:text-4xl text-3xl font-bold">
             {service.title}
           </h1>
           <p className="text-zinc-500 font-semibold lg:text-lg text-md">
@@ -61,10 +63,41 @@ export default function ServiceDetailPage({
           </p>
           <Link
             href="/signup"
-            className="w-fit p-3 px-6 rounded-xl bg-primary-6 text-white font-semibold"
+            className="w-fit inline-flex items-center justify-center p-3 px-6 rounded-xl bg-primary-6 text-white font-semibold shadow-soft transition hover:bg-primary-6/90 hover:scale-105"
           >
             Заказать проект
           </Link>
+        </div>
+      </div>
+
+      {/* ================= Other services ================= */}
+      <div className="mb-16">
+        <h2 className="text-mainText lg:text-2xl text-xl font-bold mb-6">
+          Другие проекты
+        </h2>
+        <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
+          {servicesData
+            .filter((item) => item.slug !== service.slug)
+            .slice(0, 4)
+            .map((item) => (
+              <Link href={`/services/${item.slug}`} key={item.id}>
+                <div className="bg-cardBg rounded-xl overflow-hidden cursor-pointer transition duration-300 shadow-card hover:shadow-soft hover:-translate-y-1 h-full flex flex-col">
+                  <div className="relative w-full h-32 bg-white">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-contain p-3"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-zinc-700 font-semibold text-base">
+                      {item.title}
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+            ))}
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ export default function ServicesPage() {
   return (
     <div className="container mx-auto py-3 md:px-5 sm:px-7 px-3 space-y-3">
       <div className="mt-7 mb-10">
-        <h1 className="text-[#0C4A6E] lg:text-4xl text-3xl font-bold mb-3">
+        <h1 className="text-mainText lg:text-4xl text-3xl font-bold mb-3">
           Каталог проектов
         </h1>
         <p className="text-zinc-500 font-semibold lg:text-lg text-md">
@@ -23,7 +23,7 @@ export default function ServicesPage() {
       <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mb-16">
         {servicesData.map((service) => (
           <Link href={`/services/${service.slug}`} key={service.id}>
-            <div className="bg-cardBg rounded-xl overflow-hidden cursor-pointer transition hover:scale-105 h-full flex flex-col">
+            <div className="bg-cardBg rounded-xl overflow-hidden cursor-pointer transition duration-300 shadow-card hover:shadow-soft hover:-translate-y-1 h-full flex flex-col">
               <div className="relative w-full h-44 bg-white">
                 <Image
                   src={service.image}
@@ -39,6 +39,9 @@ export default function ServicesPage() {
                 <p className="text-zinc-500 font-medium text-sm">
                   {service.description}
                 </p>
+                <span className="text-primary-6 font-semibold text-sm !mt-auto pt-2">
+                  Подробнее →
+                </span>
               </div>
             </div>
           </Link>

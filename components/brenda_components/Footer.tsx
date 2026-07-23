@@ -8,8 +8,6 @@ import {
   FaTwitter,
   FaYoutube,
   FaInstagram,
-  FaApple,
-  FaAndroid,
   FaChevronDown,
 } from "react-icons/fa";
 
@@ -23,37 +21,28 @@ const Footer = () => {
 
   // ==================== List Data Store =============================
   const listI = [
-    { id: 1, name: "Как нанять", link: "/how-to-hire" },
-    { id: 2, name: "Торговая площадка талантов", link: "/talent-marketplace" },
-    { id: 3, name: "Каталог проектов", link: "/services" },
-    { id: 4, name: "Поиск талантов", link: "/staffing" },
-    { id: 5, name: "Нанять агентство", link: "#" },
-    { id: 6, name: "Для крупного бизнеса", link: "/enterprise" },
-    { id: 7, name: "Наймите по всему миру", link: "#" },
+    { id: 1, name: "Каталог проектов", link: "/services" },
+    { id: 2, name: "Поиск талантов", link: "/candidates" },
+    { id: 3, name: "Создать вакансию", link: "/vacancies/my" },
+    { id: 4, name: "Тарифы", link: "/profile" },
   ];
 
   const listII = [
-    { id: 1, name: "Как найти работу", link: "/how-to-find-work" },
-    { id: 2, name: "Прямые контракты", link: "#" },
-    { id: 3, name: "Найти фриланс работу по всему миру", link: "#" },
+    { id: 1, name: "Найти вакансию", link: "/vacancies" },
+    { id: 2, name: "Создать профиль", link: "/signup" },
+    { id: 3, name: "Мои отклики", link: "/profile" },
   ];
 
   const listIII = [
-    { id: 1, name: "Помощь и поддержка", link: "#" },
-    { id: 2, name: "Истории успеха", link: "/success-stories" },
-    { id: 3, name: "Отзывы о Bespace", link: "#" },
-    { id: 4, name: "Ресурсы", link: "#" },
-    { id: 5, name: "Блог", link: "#" },
-    { id: 7, name: "Сообщество", link: "#" },
-    { id: 8, name: "Партнерская программа", link: "#" },
+    { id: 1, name: "Помощь и поддержка", link: "/help" },
+    { id: 2, name: "О нас", link: "/about" },
   ];
 
   const listIV = [
     { id: 1, name: "О нас", link: "/about" },
-    { id: 2, name: "Руководство", link: "#" },
-    { id: 3, name: "Отношения с инвесторами", link: "#" },
-    { id: 4, name: "Карьера", link: "#" },
-    { id: 5, name: "Связаться с нами", link: "/contact" },
+    { id: 2, name: "Помощь", link: "/help" },
+    { id: 3, name: "Войти", link: "/login" },
+    { id: 4, name: "Регистрация", link: "/signup" },
   ];
 
   return (
@@ -118,9 +107,9 @@ const Footer = () => {
           <div className="py-5 lg:px-3 border-b md:border-none border-zinc-400">
             <div
               className="font-semibold text-gray-300 flex md:block items-center justify-between"
-              onClick={() => setShowIII(!setShowIII)}
+              onClick={() => setShowIII(!showIII)}
             >
-              Для Клиентов
+              Ресурсы
               <FaChevronDown
                 className={`md:hidden block transition ${showIII === true ? "rotate-180" : "rotate-0"}`}
               />
@@ -144,9 +133,9 @@ const Footer = () => {
           <div className="py-5 lg:px-3 border-b md:border-none border-zinc-400">
             <div
               className="font-semibold text-gray-300 flex md:block items-center justify-between"
-              onClick={() => setShowIv(!setShowIv)}
+              onClick={() => setShowIv(!showIv)}
             >
-              Для Клиентов
+              Компания
               <FaChevronDown
                 className={`md:hidden block transition ${showIv === true ? "rotate-180" : "rotate-0"}`}
               />
@@ -169,7 +158,7 @@ const Footer = () => {
 
         <div className="flex md:flex-row flex-col md:space-y-0 space-y-5 justify-between lg:px-3 md:px-0 sm:px-10 px-3 py-3 mt-5 border-b border-[#9AAA97]">
           <div className="flex sm:flex-row flex-col md:space-x-7 sm:space-x-5 sm:items-center sm:space-y-0 space-y-3">
-            <span className="text-gray-300 font-semibold">Follow Us</span>
+            <span className="text-gray-300 font-semibold">Мы в соцсетях</span>
             <div className="flex items-center space-x-3">
               <span className="rounded-md px-1 py-1 border border-zinc-800 transition hover:bg-zinc-800 cursor-pointer text-gray-300 sm:text-xl text-md hover:text-zinc-100">
                 <FaFacebookF />
@@ -213,16 +202,16 @@ const Footer = () => {
           </div>
           <ul className="flex md:flex-row flex-col md:items-center xl:space-x-20 md:space-x-7 md:space-y-0 space-y-3">
             <li className="text-[15px] text-gray-300 font-semibold hover:underline">
-              <Link href="/">Terms of Service</Link>
+              <Link href="/help">Условия использования</Link>
             </li>
             <li className="text-[15px] text-gray-300 font-semibold hover:underline">
-              <Link href="/">Privecy Policy</Link>
+              <Link href="/help">Политика конфиденциальности</Link>
             </li>
             <li className="text-[15px] text-gray-300 font-semibold hover:underline">
-              <Link href="/">Cokkie Settings</Link>
+              <Link href="/help">Настройки cookie</Link>
             </li>
             <li className="text-[15px] text-gray-300 font-semibold hover:underline">
-              <Link href="/">Accessibility</Link>
+              <Link href="/help">Доступность</Link>
             </li>
           </ul>
         </div>

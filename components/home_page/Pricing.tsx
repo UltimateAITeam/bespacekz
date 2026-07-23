@@ -86,10 +86,13 @@ export default function ThreeTierPricing() {
             Перейти к покупке <ArrowForwardIcon />
           </Link>
         </div>
-        <div className="px-12 py-[72px] flex flex-col bg-[hsla(217,_100%,_20%,_1)] rounded-[10px] justify-between max-w-sm w-full shadow-sm">
+        <div className="relative px-12 py-[72px] flex flex-col bg-[hsla(217,_100%,_20%,_1)] rounded-[10px] justify-between max-w-sm w-full shadow-lg lg:scale-105">
+          <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[hsla(201,_100%,_86%,_1)] px-4 py-1 text-xs font-bold uppercase text-[hsla(217,_100%,_20%,_1)] shadow-sm">
+            Популярный
+          </span>
           <div>
             <div className="font-bold text-sm uppercase text-[hsla(201,_100%,_86%,_1)]">
-              Cтандарт
+              Стандарт
             </div>
             <div className="font-bold text-[hsla(0,_0%,_100%,_1)] text-5xl mt-[18px]">
               18 000 <span className="font-normal text-2xl">₸/месяц</span>
@@ -129,9 +132,13 @@ export default function ThreeTierPricing() {
               25 000 <span className="font-normal text-2xl">₸/месяц</span>
             </div>
             <div className="text-sm text-[hsla(224,_34%,_13%,_1)] mt-1">
-              Открытые контакты в откликах
+              Ежемесячная оплата
             </div>
             <div className="mt-[30px] flex flex-col gap-y-6">
+              <div className="flex items-center gap-x-3 text-base text-[hsla(224,_34%,_13%,_1)]">
+                <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
+                Открытые контакты в откликах
+              </div>
               <div className="flex items-center gap-x-3 text-base text-[hsla(224,_34%,_13%,_1)]">
                 <CheckIcon color={"hsla(136, 56%, 62%, 1)"} />
                 Регулярное поднятие в топ поиска каждые 3 дня

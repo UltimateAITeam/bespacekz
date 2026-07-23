@@ -5,9 +5,9 @@ import { cn } from "@/libs/utils";
 import { dmSans, inter, roboto } from "@/libs/fonts";
 
 export const metadata: Metadata = {
-  title: "Bespace - Платформа для профессиалов и клиентов",
+  title: "Bespace - Платформа для профессионалов и клиентов",
   description:
-    "Bespace is a platform for connecting professionals with clients.",
+    "Bespace — платформа, соединяющая профессионалов и клиентов с помощью искусственного интеллекта.",
   icons: {
     icon: "bespace/favicon.png",
     shortcut: "bespace/favicon.png",
