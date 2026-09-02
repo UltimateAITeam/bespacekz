@@ -14,32 +14,61 @@ const SubLinks1 = [
     },
 
     sublink: [
-      { id: 1, linktext: "Разработка и IT", link: "/cat/dev-it" },
+      {
+        id: 1,
+        linktext: "Разработка и IT",
+        link: "/candidates?category=" + encodeURIComponent("Разработка и IT"),
+      },
       {
         id: 2,
         linktext: "Административная поддержка и обслуживание клиентов",
-        link: "/cat/admin-customer-support",
+        link:
+          "/candidates?category=" +
+          encodeURIComponent("Административная поддержка и обслуживание клиентов"),
       },
       {
         id: 3,
         linktext: "Инженерия и архитектура",
-        link: "/cat/engineering-architecture",
+        link:
+          "/candidates?category=" +
+          encodeURIComponent("Инженерия и архитектура"),
       },
-      { id: 4, linktext: "Дизайн и креатив", link: "/cat/design-creative" },
+      {
+        id: 4,
+        linktext: "Дизайн и креатив",
+        link: "/candidates?category=" + encodeURIComponent("Дизайн и креатив"),
+      },
       {
         id: 5,
         linktext: "Финансы и бухгалтерский учет",
-        link: "/cat/finance-accounting",
+        link:
+          "/candidates?category=" +
+          encodeURIComponent("Финансы и бухгалтерский учет"),
       },
-      { id: 7, linktext: "Продажи и маркетинг", link: "/cat/sales-marketing" },
-      { id: 8, linktext: "HR и обучение", link: "/cat/hr-training" },
+      {
+        id: 7,
+        linktext: "Продажи и маркетинг",
+        link:
+          "/candidates?category=" + encodeURIComponent("Продажи и маркетинг"),
+      },
+      {
+        id: 8,
+        linktext: "HR и обучение",
+        link: "/candidates?category=" + encodeURIComponent("HR и обучение"),
+      },
       {
         id: 9,
         linktext: "Письмо и переводы",
-        link: "/cat/writing-translation",
+        link:
+          "/candidates?category=" + encodeURIComponent("Письмо и переводы"),
       },
-      { id: 10, linktext: "Юридические услуги", link: "/cat/legal" },
-      { id: 6, linktext: "Наймите фрилансеров", link: "/hire" },
+      {
+        id: 10,
+        linktext: "Юридические услуги",
+        link:
+          "/candidates?category=" + encodeURIComponent("Юридические услуги"),
+      },
+      { id: 6, linktext: "Наймите фрилансеров", link: "/candidates" },
     ],
   },
 
