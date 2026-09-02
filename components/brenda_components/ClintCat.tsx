@@ -12,7 +12,7 @@ const ClintCat = () => {
       leftIcon: <FaKeyboard />,
       linkText: "Выбор топ-специалистов",
       rightIcon: <FiArrowRight />,
-      link: "#",
+      link: "/candidates",
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ const ClintCat = () => {
       leftIcon: <BsFillBagFill />,
       linkText: "Обзор готовых решений",
       rightIcon: <FiArrowRight />,
-      link: "#",
+      link: "/services",
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ const ClintCat = () => {
       leftIcon: <AiFillTrophy />,
       linkText: "Услуги поиска талантов",
       rightIcon: <FiArrowRight />,
-      link: "#",
+      link: "/staffing",
     },
   ];
 
