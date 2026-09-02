@@ -47,6 +47,7 @@ import {
   FiArchive,
 } from "react-icons/fi";
 import VacancyCreateModal from "@/components/modals/VacancyCreateModal";
+import ChoosePlanModal from "@/components/modals/ChoosePlanModal";
 import { Role } from "@prisma/client";
 
 const Navbar = () => {
@@ -216,6 +217,17 @@ const Navbar = () => {
     onOpen: onOpenVacancyCreateModal,
     onClose: onCloseVacancyCreateModal,
   } = useDisclosure();
+
+  const {
+    isOpen: isOpenChoosePlanModal,
+    onOpen: onOpenChoosePlanModal,
+    onClose: onCloseChoosePlanModal,
+  } = useDisclosure();
+
+  const handleContinueToCreateVacancy = () => {
+    onCloseChoosePlanModal();
+    onOpenVacancyCreateModal();
+  };
 
   const [role, setRole] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -546,7 +558,7 @@ const Navbar = () => {
               {session.data.user.role === "CLIENT" ? (
                 pathname !== "/vacancies/my" && (
                   <Button
-                    onClick={onOpenVacancyCreateModal}
+                    onClick={onOpenChoosePlanModal}
                     fontSize={"sm"}
                     fontWeight={500}
                     variant={"solid"}
@@ -559,7 +571,7 @@ const Navbar = () => {
                 localStorage.getItem("userRole") == "CLIENT" ? (
                 pathname !== "/vacancies/my" && (
                   <Button
-                    onClick={onOpenVacancyCreateModal}
+                    onClick={onOpenChoosePlanModal}
                     fontSize={"sm"}
                     fontWeight={500}
                     variant={"solid"}
@@ -1243,6 +1255,11 @@ const Navbar = () => {
         </div>
         {/* ==================== Mobile Nav Bar end ====================== */}
       </nav>
+      <ChoosePlanModal
+        isOpen={isOpenChoosePlanModal}
+        onClose={onCloseChoosePlanModal}
+        onContinue={handleContinueToCreateVacancy}
+      />
       <VacancyCreateModal
         isOpen={isOpenVacancyCreateModal}
         onClose={onCloseVacancyCreateModal}

@@ -57,15 +57,16 @@ function Oauth_additional() {
     setValue,
     register,
     formState: { errors, isValid },
-  } = useForm<ClientValues>();
+  } = useForm<ClientValues>({ mode: "onChange" });
 
   useEffect(() => {
     if (!session.data?.user?.name || session.data?.user?.name == "") return;
     let firstName = session.data?.user?.name;
     let lastName = session.data?.user?.last_name;
-    setValue("first_name", firstName as string);
-    setValue("last_name", lastName as string);
-    setValue("phone", session.data.user.phone as string);
+    const validate = { shouldValidate: true };
+    setValue("first_name", firstName as string, validate);
+    setValue("last_name", lastName as string, validate);
+    setValue("phone", session.data.user.phone as string, validate);
   }, [session.data?.user?.name, setValue]);
 
   const [isLoadingSubmit, setIsLoadingSubmit] = React.useState(false);

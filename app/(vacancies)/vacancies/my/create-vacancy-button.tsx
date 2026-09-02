@@ -1,19 +1,30 @@
 "use client";
 
 import VacancyCreateModal from "@/components/modals/VacancyCreateModal";
+import ChoosePlanModal from "@/components/modals/ChoosePlanModal";
 import { Button, useDisclosure } from "@chakra-ui/react";
 
 export default function CreateVacancyButton() {
   const {
-    isOpen: isOpenVacancyCreateModal,
-    onOpen: onOpenVacancyCreateModal,
-    onClose: onCloseVacancyCreateModal,
+    isOpen: isPlanOpen,
+    onOpen: onPlanOpen,
+    onClose: onPlanClose,
   } = useDisclosure();
+  const {
+    isOpen: isCreateOpen,
+    onOpen: onCreateOpen,
+    onClose: onCreateClose,
+  } = useDisclosure();
+
+  const handleContinueToCreate = () => {
+    onPlanClose();
+    onCreateOpen();
+  };
 
   return (
     <>
       <Button
-        onClick={onOpenVacancyCreateModal}
+        onClick={onPlanOpen}
         fontSize={"sm"}
         fontWeight={500}
         variant={"solid"}
@@ -21,10 +32,12 @@ export default function CreateVacancyButton() {
       >
         Создать вакансию
       </Button>
-      <VacancyCreateModal
-        isOpen={isOpenVacancyCreateModal}
-        onClose={onCloseVacancyCreateModal}
+      <ChoosePlanModal
+        isOpen={isPlanOpen}
+        onClose={onPlanClose}
+        onContinue={handleContinueToCreate}
       />
+      <VacancyCreateModal isOpen={isCreateOpen} onClose={onCreateClose} />
     </>
   );
 }

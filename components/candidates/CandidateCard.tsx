@@ -4,7 +4,7 @@ import { ICandidate } from "@/types/candidates.types";
 import { Badge, Button, ButtonGroup } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { CiCalendar, CiClock2 } from "react-icons/ci";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineBank } from "react-icons/ai";
@@ -16,8 +16,6 @@ import { Skeleton } from "../ui/skeleton";
 import { format } from "date-fns";
 import Link from "next/link";
 import parse from "html-react-parser";
-import { prisma } from "@/libs/prisma";
-import { revalidatePath } from "next/cache";
 import { selectCandidate } from "./actions";
 
 interface ICandidateCardProps extends ICandidate {
@@ -41,6 +39,18 @@ export function CandidateCard(props: ICandidateCardProps) {
     chosenCandidateId,
   } = props;
   const router = useRouter();
+  const [isSelecting, setIsSelecting] = useState(false);
+
+  const handleSelect = async () => {
+    if (!vacancyId) return;
+    setIsSelecting(true);
+    try {
+      await selectCandidate(vacancyId, id);
+      router.refresh();
+    } finally {
+      setIsSelecting(false);
+    }
+  };
 
   return (
     <div className="max-w-[1280px] block">
@@ -106,7 +116,9 @@ export function CandidateCard(props: ICandidateCardProps) {
                     colorScheme="messenger"
                     variant="solid"
                     className="ml-3"
-                    onClick={() => selectCandidate(vacancyId!, id)}
+                    isLoading={isSelecting}
+                    isDisabled={!vacancyId}
+                    onClick={handleSelect}
                   >
                     Выбрать
                   </Button>

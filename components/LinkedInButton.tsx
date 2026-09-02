@@ -7,13 +7,23 @@ interface LinkedInButtonProps extends React.ComponentProps<"button"> {
   options?: SignInOptions;
 }
 
-function GitHubButton({
+// The LinkedIn OAuth app is currently disabled on LinkedIn's side, which makes
+// the provider return "The application is disabled." Keep the button hidden
+// until the integration is re-enabled by setting
+// NEXT_PUBLIC_LINKEDIN_ENABLED="true".
+const LINKEDIN_ENABLED = process.env.NEXT_PUBLIC_LINKEDIN_ENABLED === "true";
+
+function LinkedInButton({
   text,
   onClick,
   className,
   options,
   ...props
 }: LinkedInButtonProps) {
+  if (!LINKEDIN_ENABLED) {
+    return null;
+  }
+
   return (
     <button
       {...props}
@@ -42,4 +52,4 @@ function GitHubButton({
   );
 }
 
-export default GitHubButton;
+export default LinkedInButton;

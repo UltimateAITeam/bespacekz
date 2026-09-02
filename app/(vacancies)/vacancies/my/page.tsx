@@ -2,6 +2,8 @@ import ClientVacancyCard from "@/components/vacancies/ClientVacancyCard";
 import { prisma } from "@/libs/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import { FaDatabase } from "react-icons/fa";
 import CreateVacancyButton from "./create-vacancy-button";
 
 export default async function MyVacanciesPage() {
@@ -46,7 +48,16 @@ export default async function MyVacanciesPage() {
         <h1 className="font-medium text-[38px] !leading-tight text-[var(--Primary-10)] font-roboto">
           Ваши вакансии
         </h1>
-        <CreateVacancyButton />
+        <div className="flex items-center gap-3">
+          <Link
+            href="/#pricing"
+            className="inline-flex items-center gap-2 rounded-md border border-[#4299e1] px-4 py-2 text-sm font-medium text-[#4299e1] transition hover:bg-[#4299e1] hover:text-white"
+          >
+            <FaDatabase />
+            Купить доступ к базе резюме
+          </Link>
+          <CreateVacancyButton />
+        </div>
       </div>
       <div className="space-y-8 lg:mb-7 mb-3">
         {vacancies.map((vacancy) => (
