@@ -40,9 +40,8 @@ import { thousandSeparator } from "@/libs/utils";
 import { BsStars } from "react-icons/bs";
 import { updateUserImage } from "./actions";
 import { useChat } from "ai/react";
-import { MemoizedReactMarkdown } from "@/components/ui/markdown";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
+import { AiMarkdown } from "@/components/ui/markdown";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Price } from "./price";
 import Link from "next/link";
 import usePortfolioStore from "@/store/portfolioFormStore";
@@ -376,24 +375,14 @@ function Page() {
                             key={message.id + "box"}
                             className={`p-5 mt-6 bg-gradient-to-tr ${message.role == "assistant" ? "from-[#E0F7FA] to-[#E0F2F1]" : "from-[#FDE2E4] to-[#FAE1DD]"} rounded-lg shadow-md`}
                           >
-                            <Text className="text-sm font-semibold pt-2">
+                            <Text className="text-sm font-semibold pt-2 pb-1">
                               {message.role == "assistant"
                                 ? "AI HR:"
                                 : "Пользователь:"}
                             </Text>
-                            <MemoizedReactMarkdown
-                              className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
-                              remarkPlugins={[remarkGfm, remarkMath]}
-                              components={{
-                                p({ children }) {
-                                  return (
-                                    <p className="mb-2 last:mb-0">{children}</p>
-                                  );
-                                },
-                              }}
-                            >
-                              {message.content}
-                            </MemoizedReactMarkdown>
+                            <ScrollArea className="max-h-[60vh] pr-2">
+                              <AiMarkdown>{message.content}</AiMarkdown>
+                            </ScrollArea>
                           </Box>
                         ),
                     )}

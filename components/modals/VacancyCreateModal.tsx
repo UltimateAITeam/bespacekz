@@ -31,10 +31,9 @@ import { useToast } from "@chakra-ui/react";
 import { BsStars } from "react-icons/bs";
 import { BiSend } from "react-icons/bi";
 import { useChat } from "ai/react";
-import { MemoizedReactMarkdown } from "../../components/ui/markdown";
+import { AiMarkdown } from "../../components/ui/markdown";
+import { ScrollArea } from "../../components/ui/scroll-area";
 import { Message } from "ai";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
 
 type ModalProps = {
   isOpen: boolean;
@@ -156,36 +155,23 @@ const VacancyCreateModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     </Flex>
                   </form>
 
-                  {messages.slice(-2).map((message) => (
-                    <div key={message.id} className="pt-4 pb-4">
-                      <Box
-                        key={message.id + "box"}
-                        className={`p-5 bg-gradient-to-tr ${message.role == "assistant" ? "from-[#E0F7FA] to-[#E0F2F1]" : "from-[#FDE2E4] to-[#FAE1DD]"} rounded-lg shadow-md`}
-                      >
-                        <Text className="text-sm font-semibold pt-2">
-                          {message.role == "assistant"
-                            ? "AI HR:"
-                            : "Пользователь:"}
-                        </Text>
-                        {/* <Text className='text-[1rem] font-normal'>
-                        {message.content}
-                      </Text> */}
-                        <MemoizedReactMarkdown
-                          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm font-normal"
-                          remarkPlugins={[remarkGfm, remarkMath]}
-                          components={{
-                            p({ children }) {
-                              return (
-                                <p className="mb-2 last:mb-0">{children}</p>
-                              );
-                            },
-                          }}
+                  <ScrollArea className="max-h-[50vh] pr-2" pinToBottom>
+                    {messages.slice(-2).map((message) => (
+                      <div key={message.id} className="pt-4 pb-4">
+                        <Box
+                          key={message.id + "box"}
+                          className={`p-5 bg-gradient-to-tr ${message.role == "assistant" ? "from-[#E0F7FA] to-[#E0F2F1]" : "from-[#FDE2E4] to-[#FAE1DD]"} rounded-lg shadow-md`}
                         >
-                          {message.content}
-                        </MemoizedReactMarkdown>
-                      </Box>
-                    </div>
-                  ))}
+                          <Text className="text-sm font-semibold pt-2 pb-1">
+                            {message.role == "assistant"
+                              ? "AI HR:"
+                              : "Пользователь:"}
+                          </Text>
+                          <AiMarkdown>{message.content}</AiMarkdown>
+                        </Box>
+                      </div>
+                    ))}
+                  </ScrollArea>
                 </PopoverBody>
               </PopoverContent>
             </Popover>
