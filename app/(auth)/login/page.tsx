@@ -22,6 +22,11 @@ export default function LoginPage() {
 
   const error = searchParams.get("error");
 
+  // Only honour internal (same-origin) callback paths to avoid open redirects.
+  const callbackParam = searchParams.get("callbackUrl");
+  const callbackUrl =
+    callbackParam && callbackParam.startsWith("/") ? callbackParam : "/";
+
   const signMeIn = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -51,7 +56,7 @@ export default function LoginPage() {
       role: "login",
       password: password,
       email: email,
-      callbackUrl: "/",
+      callbackUrl,
     });
   };
 

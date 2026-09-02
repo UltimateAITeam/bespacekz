@@ -17,6 +17,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowForwardIcon, ArrowRightIcon, CheckIcon } from "@chakra-ui/icons";
+import { SUBSCRIPTION_PLANS, formatKzt } from "@/libs/subscription-plans";
 
 interface Props {
   children: React.ReactNode;
@@ -63,7 +64,8 @@ export default function ThreeTierPricing() {
               Базовый
             </div>
             <div className="font-bold text-black text-5xl mt-[18px]">
-              7 000 <span className="font-normal text-2xl">₸/месяц</span>
+              {formatKzt(SUBSCRIPTION_PLANS.base.amount)}{" "}
+              <span className="font-normal text-2xl">₸/месяц</span>
             </div>
             <div className="text-sm text-[hsla(224,_34%,_13%,_1)] mt-1">
               Ежемесячная оплата
@@ -80,7 +82,7 @@ export default function ThreeTierPricing() {
             </div>
           </div>
           <Link
-            href="/api/subscription/new?plan=base"
+            href={`/api/subscription/new?plan=${SUBSCRIPTION_PLANS.base.id}`}
             className="font-bold gap-x-3 mt-14 text-[hsla(222,_91%,_59%,_1)] text-base w-full rounded-[8px] bg-[hsla(201,_100%,_86%,_1)] flex items-center py-2 justify-center"
           >
             Перейти к покупке <ArrowForwardIcon />
@@ -95,7 +97,8 @@ export default function ThreeTierPricing() {
               Стандарт
             </div>
             <div className="font-bold text-[hsla(0,_0%,_100%,_1)] text-5xl mt-[18px]">
-              18 000 <span className="font-normal text-2xl">₸/месяц</span>
+              {formatKzt(SUBSCRIPTION_PLANS.standard.amount)}{" "}
+              <span className="font-normal text-2xl">₸/месяц</span>
             </div>
             <div className="text-sm text-[hsla(0,_0%,_100%,_1)] mt-1">
               Ежемесячная оплата
@@ -117,7 +120,7 @@ export default function ThreeTierPricing() {
             </div>
           </div>
           <Link
-            href="/api/subscription/new?plan=standard"
+            href={`/api/subscription/new?plan=${SUBSCRIPTION_PLANS.standard.id}`}
             className="font-bold gap-x-3 mt-14 text-[hsla(217,_100%,_20%,_1)] text-base w-full rounded-[8px] bg-[hsla(201,_100%,_86%,_1)] flex items-center py-2 justify-center"
           >
             Перейти к покупке <ArrowForwardIcon />
@@ -129,7 +132,8 @@ export default function ThreeTierPricing() {
               Премиум
             </div>
             <div className="font-bold text-black text-5xl mt-[18px]">
-              25 000 <span className="font-normal text-2xl">₸/месяц</span>
+              {formatKzt(SUBSCRIPTION_PLANS.premium.amount)}{" "}
+              <span className="font-normal text-2xl">₸/месяц</span>
             </div>
             <div className="text-sm text-[hsla(224,_34%,_13%,_1)] mt-1">
               Ежемесячная оплата
@@ -156,7 +160,7 @@ export default function ThreeTierPricing() {
             </div>
           </div>
           <Link
-            href="/api/subscription/new?plan=premium"
+            href={`/api/subscription/new?plan=${SUBSCRIPTION_PLANS.premium.id}`}
             className="font-bold mt-14 gap-x-3 text-[hsla(222,_91%,_59%,_1)] text-base w-full rounded-[8px] bg-[hsla(201,_100%,_86%,_1)] flex items-center py-2 justify-center"
           >
             Перейти к покупке <ArrowForwardIcon />

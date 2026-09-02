@@ -2,6 +2,11 @@ import { prisma } from "@/libs/prisma";
 import { randomInt } from "node:crypto";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "@/libs/auth";
+import {
+  SUBSCRIPTION_PLANS,
+  isSubscriptionPlanId,
+} from "@/libs/subscription-plans";
 
 function randomId() {
   return Array.from({ length: 15 }, () => randomInt(9)).join("");
@@ -102,17 +107,27 @@ async function createInvoice(args: {
   return response.json();
 }
 
-const planAmount: Record<string, number> = {
-  base: 7000,
-  standard: 18000,
-  premium: 25000,
-};
-
 export async function GET(req: NextRequest) {
-  const session = await getServerSession();
+  const origin = req.nextUrl.origin;
+  const plan = req.nextUrl.searchParams.get("plan");
 
-  if (!session) {
-    return NextResponse.redirect("/login");
+  // Contact fallback keeps the selected plan so users can still reach out
+  // whenever the automated payment flow is unavailable.
+  const contactUrl = new URL("/purchase/resume-access", origin);
+  if (isSubscriptionPlanId(plan)) {
+    contactUrl.searchParams.set("plan", plan);
+  }
+
+  if (!isSubscriptionPlanId(plan)) {
+    return NextResponse.redirect(contactUrl);
+  }
+
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    const loginUrl = new URL("/login", origin);
+    loginUrl.searchParams.set("callbackUrl", `/api/subscription/new?plan=${plan}`);
+    return NextResponse.redirect(loginUrl);
   }
 
   const client = await prisma.clientProfile.findUnique({
@@ -124,25 +139,27 @@ export async function GET(req: NextRequest) {
     },
   });
 
+  // Resume-database access is a client-only product; route everyone else to
+  // the contact page rather than a dead end.
   if (!client) {
-    return NextResponse.redirect("/login");
+    return NextResponse.redirect(contactUrl);
   }
 
-  const plan = req.nextUrl.searchParams.get("plan");
+  try {
+    const invoice = await createInvoice({
+      amount: SUBSCRIPTION_PLANS[plan].amount,
+      account_id: client.id,
+      recipient_contact: session.user.email,
+    });
 
-  if (!plan) {
-    return NextResponse.error();
+    if (!invoice?.invoice_url) {
+      throw new Error("ePay response did not contain an invoice_url");
+    }
+
+    return NextResponse.redirect(invoice.invoice_url);
+  } catch (error) {
+    console.error("Failed to create ePay invoice", error);
+    contactUrl.searchParams.set("reason", "payment");
+    return NextResponse.redirect(contactUrl);
   }
-
-  if (!(plan in planAmount)) {
-    return NextResponse.error();
-  }
-
-  const invoice = await createInvoice({
-    amount: planAmount[plan],
-    account_id: client.id,
-    recipient_contact: session.user.email,
-  });
-
-  return NextResponse.redirect(invoice.invoice_url);
 }

@@ -260,7 +260,10 @@ export default function HomePage() {
         </section>
 
         {/* =================== Pricing Section ===================== */}
-        <section className="container mx-auto lg:mt-16 mt-10 py-3 md:px-5 sm:px-7 px-3 space-y-3">
+        <section
+          id="pricing"
+          className="container mx-auto lg:mt-16 mt-10 py-3 md:px-5 sm:px-7 px-3 space-y-3 scroll-mt-24"
+        >
           <ThreeTierPricing />
         </section>
 
